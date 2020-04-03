@@ -11,10 +11,10 @@ import {
     LOGOUT_USER,
     saveChampionship
 } from '../actions';
-const { defaultConfig: { PLATFORM, LOCATION } } = require(`../../../config/default`);
-const api = require(`../../../shared/${PLATFORM}/api`);
-const { updateAuthToken, postRequestNoAuth, postRequest } = require(`../../../helpers/${PLATFORM}`);
-const { STATUS_CODE } = require(`../../../shared/${PLATFORM}/constants`);
+const { defaultConfig: { LOCATION } } = require(`../../config/default`);
+const api = require(`../../shared/api`);
+const { updateAuthToken, postRequestNoAuth, postRequest } = require(`../../helpers`);
+const { STATUS_CODE } = require(`../../shared/constants`);
 
 function* setUserToken({ userToken }) {
     try {

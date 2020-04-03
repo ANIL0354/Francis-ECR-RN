@@ -6,11 +6,10 @@ import {
     SET_PLATFORM_TYPE,
     STOP_LOADER,
     START_LOADER,
-    SAVE_CHAMPIONSHIP
 } from '../actions';
 
-const { defaultConfig: { PLATFORM } } = require(`../../../config/default`);
-const { updateAuthToken } = require(`../../../helpers/${PLATFORM}/axios`);
+const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
+const { updateAuthToken } = require(`../../helpers`);
 
 const initialCommonState = {
     userToken: '',

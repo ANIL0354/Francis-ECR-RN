@@ -2,8 +2,8 @@ import axios from "axios";
 
 import pickBy from "lodash/pickBy";
 
-const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
-const api = require(`../../shared/${PLATFORM}/api`);
+const { defaultConfig: {  } } = require(`../config/default`);
+const api = require(`../shared/api`);
 
 const defaulHeader = {
     headers: {

@@ -1,7 +1,5 @@
-const {
-  defaultConfig: { LOCATION }
-} = require(`../../../config/default`);
-const { STRINGS } = require(`./${LOCATION}/strings`);
+const { defaultConfig: { LOCATION } } = require(`../../config/default`);
+const { STRINGS } = require(`./us/strings`);
 
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
