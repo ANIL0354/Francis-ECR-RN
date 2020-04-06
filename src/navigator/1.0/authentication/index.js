@@ -1,21 +1,20 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen } from '../../../views/us/1.0/authenticated-screens/home'
-// import { navigationRef, isMountedRef } from '../../../shared/services';
+import AuthHoc from '../../../components/hoc/AuthHoc';
+import {
+    LoginScreen,
+    ForgotScreen
+} from '../../../views/us/1.0/auth-screens';
+import { APP_LOGO, MENU_LOGO } from '../../../shared/constants'
 import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const AuthenticatedNavigator = () => {
-    // React.useEffect(() => {
-    //     isMountedRef.current = true;
-
-    //     return () => (isMountedRef.current = false);
-    // }, []);
-
     return (
-        <Stack.Navigator headerMode={'none'} >
-            <Stack.Screen name={'HOME_SCREEN'} component={HomeScreen} />
+        <Stack.Navigator headerMode={'none'} initialRouteName={'LOGIN_SCREEN'} >
+            <Stack.Screen name={'LOGIN_SCREEN'} component={LoginScreen} />
+            <Stack.Screen name={'FORGOT_PASSWORD_SCREEN'} component={ForgotScreen} />
         </Stack.Navigator>
     )
 }
@@ -25,4 +24,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(AuthenticatedNavigator);
+export default connect(mapStateToProps, null)(AuthenticatedNavigator);

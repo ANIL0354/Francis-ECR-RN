@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { HomeScreen } from '../../../views/us/1.0/authenticated-screens/home';
 // import { navigationRef, isMountedRef } from '../../../shared/services';
 import { connect } from 'react-redux';
 
@@ -16,9 +17,9 @@ const AuthNavigator = () => {
     <React.Fragment>
       <Stack.Navigator
         headerMode={'none'}
+        initialRouteName={'HOME_SCREEN'}
       >
-        <Stack.Screen name={'LOGIN_SCREEN'} component={LoginScreen} />
-        <Stack.Screen name={'FORGOT_PASSWORD_SCREEN'} component={ForgotScreen} />
+        <Stack.Screen name={'HOME_SCREEN'} component={HomeScreen} />
       </Stack.Navigator>
     </React.Fragment>
   )
