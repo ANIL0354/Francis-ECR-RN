@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     },
     subHeaderText: {
         color: 'white',
+        height: 18,
+        textAlign: 'center',
         textTransform: 'uppercase'
     },
     authTabContainer: {
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
     authTabButtonText: {
         color: 'white',
         opacity: 1,
+        height: 16,
         textTransform: 'uppercase'
     },
     formContainer: {

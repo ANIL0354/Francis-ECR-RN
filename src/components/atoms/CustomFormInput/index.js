@@ -29,6 +29,8 @@ const CustomFormInput = ({
                     fontSize: scaledFont.fontSize,
                     paddingHorizontal: 10,
                     paddingVertical: 2,
+                    paddingBottom: 0,
+                    marginBottom: 0,
                     ...style
                 }}
                 returnKeyType={returnKeyType}
@@ -36,10 +38,11 @@ const CustomFormInput = ({
                 {...input}
                 {...props}
             />
-            {!!validationMessage && <Text style={{
+            <Text style={{
                 color: 'red',
+                paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
-            }}>{validationMessage}</Text>}
+            }}>{validationMessage}</Text>
         </View>
     )
 }
