@@ -39,5 +39,7 @@ export const STRINGS = {
   DOB_IS_REQUIRED: 'D.O.B. is required.',
   CITY_IS_REQUIRED: 'City is required.',
   COUNTRY_IS_REQUIRED: 'Country is required.',
+  PASSWORD_LENGTH_ERROR: 'Password should be 6 to 8 characters long.',
+  PASSWORD_DOESNOT_MATCH: 'Your passwords doesnot match.',
   RE_ENTER_PASSWORD: 'Re-enter your password.'
 }

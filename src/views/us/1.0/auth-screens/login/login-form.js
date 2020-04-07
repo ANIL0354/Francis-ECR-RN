@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import validator from "./validator";
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import { Button, View } from "react-native";
+import Captcha from '../../../../../components/atoms/Captcha';
 import { STRINGS } from "../../../../../shared/constants/us/strings";
 const { onSubmitFail } = require(`../../../../../helpers`);
 
@@ -26,6 +27,7 @@ const Form = ({
                 returnKeyType={'go'}
                 placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
             />
+            {/* <Captcha /> */}
             <Button title={STRINGS.LOGIN} onPress={handleSubmit(onSubmit)} />
         </View>
     );

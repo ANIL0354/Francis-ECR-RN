@@ -20,6 +20,7 @@ export const Screen = () => {
                     style={{
                         ...styles.subHeaderText,
                         fontSize: scaleText(18).fontSize,
+                        lineHeight: scaleText(18).lineHeight
                     }}>
                     {'Login Or Register'}
                 </Text>
@@ -31,22 +32,26 @@ export const Screen = () => {
                         style={{
                             ...styles.authTabButton,
                             fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight,
                             backgroundColor: signUpTab ? '#0091ff' : '#7fc8ff',
                         }}>
                         <Text style={{
                             ...styles.authTabButtonText,
-                            fontSize: scaleText(16).fontSize
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight
                         }}>{"I'm New"}</Text></TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => setSignUpTab(false)}
                         style={{
                             ...styles.authTabButton,
                             fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight,
                             backgroundColor: signUpTab ? '#7fc8ff' : '#0091ff',
                         }}>
                         <Text style={{
                             ...styles.authTabButtonText,
-                            fontSize: scaleText(16).fontSize
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight
                         }}>{"Login"}</Text>
                     </TouchableOpacity>
                 </View>

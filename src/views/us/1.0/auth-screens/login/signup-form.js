@@ -4,6 +4,7 @@ import { Button, View, KeyboardAvoidingView, Platform } from "react-native";
 import { connect } from 'react-redux';
 import validator from "./validator";
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
+import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
 import { CHECKBOX_ICON } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
@@ -38,7 +39,7 @@ const Form = ({
             <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
                 <Field
                     name={STRINGS.DOB_INPUT}
-                    component={CustomFormInput}
+                    component={CustomDatePicker}
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     style={{ minWidth: 150, maxWidth: 150 }}

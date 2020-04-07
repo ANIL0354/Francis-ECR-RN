@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { scaleText } from '../../../../../helpers'
 
 const styles = StyleSheet.create({
     childContainer: {
@@ -14,7 +13,6 @@ const styles = StyleSheet.create({
     },
     subHeaderText: {
         color: 'white',
-        height: 18,
         textAlign: 'center',
         textTransform: 'uppercase'
     },
@@ -39,7 +37,6 @@ const styles = StyleSheet.create({
     authTabButtonText: {
         color: 'white',
         opacity: 1,
-        height: 16,
         textTransform: 'uppercase'
     },
     formContainer: {
