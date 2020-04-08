@@ -27,7 +27,7 @@ const Form = ({
                 returnKeyType={'go'}
                 placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
             />
-            {/* <Captcha /> */}
+            <Captcha />
             <Button title={STRINGS.LOGIN} onPress={handleSubmit(onSubmit)} />
         </View>
     );

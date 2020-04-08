@@ -42,6 +42,7 @@ const CustomFormInput = ({
                 color: 'red',
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
+                ...style
             }}>{validationMessage}</Text>
         </View>
     )
