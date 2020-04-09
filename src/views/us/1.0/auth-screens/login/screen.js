@@ -14,7 +14,9 @@ import styles from "./style.js";
 
 
 export const Screen = ({
-    registerUser
+    registerUser,
+    checkLogin,
+    stopLoader
 }) => {
 
     const [signUpTab, setSignUpTab] = useState(false);
@@ -67,20 +69,25 @@ export const Screen = ({
                 <View style={styles.formContainer}>
                     {signUpTab && <SignupForm
                         onSubmit={(formData) => {
-                            // console.warn('formData', formData);
+                            console.warn('formData', formData);
+                            var dobStamp = new Date(formData.dob);
+                            dobStamp = new Date(formData.dob).getTime();
+                            // console.log('dobStamp', new Date(dobStamp).getTime())
                             registerUser({
                                 email: formData.email,
                                 password: formData.password,
                                 name: formData.name,
                                 surname: formData.surname,
-                                dob: formData.dob,
+                                dob: dobStamp,
                                 city: formData.city,
                                 country: formData.country
                             }, (response) => {
+                                stopLoader();
                                 console.warn('res', response.msg)
                                 console.log('res', response.msg)
                                 alert('response', response.msg)
                             }, (response) => {
+                                stopLoader();
                                 console.warn('res', response.msg)
                                 console.log('res', response.msg)
                                 alert('response', response.msg)
@@ -88,7 +95,25 @@ export const Screen = ({
                         }}
                     />}
                     {!signUpTab && <LoginForm
-                        onSubmit={(formData) => { console.warn('formData', formData) }}
+                        onSubmit={(formData) => {
+                            checkLogin({
+                                deviceToken: "string",
+                                email: formData.email,
+                                password: formData.password,
+                                role: 1
+                            }, (response) => {
+                                stopLoader();
+                                console.warn('login res', response.msg)
+                                console.log('login res', response)
+                                alert('login success', response.msg)
+                            }, (response) => {
+                                stopLoader();
+                                console.warn('login res', response.msg)
+                                console.log('login res', response.msg)
+                                alert('login response', response.msg)
+                            })
+                            console.warn('formData', formData)
+                        }}
                     />}
 
                 </View>

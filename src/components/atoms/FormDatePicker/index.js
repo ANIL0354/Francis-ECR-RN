@@ -21,7 +21,6 @@ const CustomDatePicker = ({
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
-
     return (
         <View>
             <DatePicker
@@ -36,7 +35,7 @@ const CustomDatePicker = ({
                     padding: 0,
                     margin: 0
                 }}
-                date={input.value}
+                getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateIcon: {
                         display: 'none',
@@ -79,7 +78,8 @@ const CustomDatePicker = ({
                         padding: 0
                     }
                 }}
-                onDateChange={(date) => { setSelectedDate(date); onDateChange(date) }}
+
+                onDateChange={(date) => { setSelectedDate(date) }}
                 {...input}
                 {...props}
             />

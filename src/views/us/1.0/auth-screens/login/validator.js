@@ -46,10 +46,10 @@ const validator = values => {
         errors[STRINGS.DOB_INPUT] =
             VALIDATION_MESSAGES.DOB_REQUIRED;
     }
-    if (values[STRINGS.DOB_INPUT] && !(values[STRINGS.DOB_INPUT].trim())) {
-        errors[STRINGS.DOB_INPUT] =
-            VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
-    }
+    // if (values[STRINGS.DOB_INPUT] && !(values[STRINGS.DOB_INPUT].trim())) {
+    //     errors[STRINGS.DOB_INPUT] =
+    //         VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    // }
     if (!values[STRINGS.CITY_INPUT]) {
         errors[STRINGS.CITY_INPUT] =
             VALIDATION_MESSAGES.CITY_REQUIRED;

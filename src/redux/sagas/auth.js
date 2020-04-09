@@ -3,14 +3,11 @@ import { takeLatest, all, put, delay } from "redux-saga/effects";
 import {
     SET_AUTHORIZATION,
     CHECK_LOGIN,
-    SEND_FORGOT_EMAIL,
     REGISTER_USER,
     setAuthorization,
     startLoader,
     stopLoader,
-    setPlatformType,
     LOGOUT_USER,
-    saveChampionship
 } from '../actions';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const api = require(`../../shared/api`);
@@ -27,8 +24,6 @@ function* setUserToken({ userToken }) {
 }
 
 function* registerNewUser({ data, success, failure }) {
-    console.log('saga called');
-    console.warn('saga called')
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
@@ -44,51 +39,30 @@ function* registerNewUser({ data, success, failure }) {
             success(response.data);
             yield put(stopLoader());
         }
-        console.log('saga res', response)
     }
     catch (error) {
+        console.log('catch', error)
         return;
     }
 }
 
-function* checkAdminLogin({ credentials, success, onError }) {
+function* checkLogin({ credentials, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: credentials });
+        console.log(response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-            onError(response.data);
+            failure(response.data);
             yield put(stopLoader());
         }
         else {
             yield put(setAuthorization(response.data.data.token));
             yield put(setPlatformType(response.data.data.role));
             yield put(saveChampionship(response.data.data.championship))
-            success();
-            yield put(stopLoader());
-        }
-    }
-    catch (error) {
-        return;
-    }
-}
-
-function* sendRecoveryMail({ email, success, error }) {
-    try {
-        yield put(startLoader());
-        const response = yield postRequestNoAuth({ API: `${api.URL.FORGOT_PASSWORD}`, DATA: email });
-        if (response.status === STATUS_CODE.unAuthorized) {
-            yield put(setAuthorization(null));
-            return;
-        }
-        if (response.status !== STATUS_CODE.successful) {
-            error(response.data);
-            yield put(stopLoader());
-        }
-        else {
             success(response.data);
             yield put(stopLoader());
         }
@@ -97,6 +71,7 @@ function* sendRecoveryMail({ email, success, error }) {
         return;
     }
 }
+
 
 function* logoutUser({ token, success }) {
 
@@ -121,8 +96,7 @@ function* logoutUser({ token, success }) {
 function* AuthSaga() {
     yield all([
         takeLatest(SET_AUTHORIZATION, setUserToken),
-        takeLatest(CHECK_LOGIN, checkAdminLogin),
-        takeLatest(SEND_FORGOT_EMAIL, sendRecoveryMail),
+        takeLatest(CHECK_LOGIN, checkLogin),
         takeLatest(LOGOUT_USER, logoutUser),
         takeLatest(REGISTER_USER, registerNewUser)
     ]);

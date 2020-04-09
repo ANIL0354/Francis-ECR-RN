@@ -198,8 +198,6 @@ const Form = ({
                 uncheckedIcon={CHECKBOX_ICON}
             />
             <Text style={{ textAlign: 'center' }}>{'Or Connect With'}</Text>
-            {/* <View style={{ flexDirection: 'row', marginVertical: 30, }}> */}
-
             <Button
                 icon={<Image source={GOOGLE_ICON} height={50} width={50} />}
                 titleStyle={{ textAlign: 'center' }}
@@ -213,7 +211,6 @@ const Form = ({
                 buttonStyle={{ backgroundColor: 'darkblue', color: 'white', padding: 0, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }}
                 title={'Sign Up with Facebook'} onPress={() => getUserData()} />
 
-            {/* </View> */}
             <Button title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
         </KeyboardAvoidingView>
     );

@@ -1,10 +1,8 @@
 export const SET_AUTHORIZATION = 'SET_AUTHORIZATION';
 export const CHECK_LOGIN = 'CHECK_LOGIN';
-export const SEND_FORGOT_EMAIL = 'SEND_FORGOT_EMAIL';
-export const REMEMBER_ME = 'REMEMBER_ME';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const SET_PLATFORM_TYPE = 'SET_PLATFORM_TYPE';
 export const REGISTER_USER = 'REGISTER_USER';
+export const SOCIAL_LOGIN = 'SOCIAL_LOGIN';
 
 export const setAuthorization = (userToken) => {
     return {
@@ -13,21 +11,23 @@ export const setAuthorization = (userToken) => {
     };
 };
 
-export const setPlatformType = (role) => {
-    return {
-        type: SET_PLATFORM_TYPE,
-        role
-    }
-};
-
-export const checkLogin = (credentials, success, onError) => {
+export const checkLogin = (credentials, success, failure) => {
     return {
         type: CHECK_LOGIN,
         credentials,
         success,
-        onError
+        failure
     }
 };
+
+export const socialLogin = (data, success, failure) => {
+    return {
+        type: SOCIAL_LOGIN,
+        data,
+        success,
+        failure
+    }
+}
 
 export const registerUser = (data, success, failure) => {
     return {
@@ -37,22 +37,6 @@ export const registerUser = (data, success, failure) => {
         failure
     }
 }
-
-export const sendForgotEmail = (email, success, error) => {
-    return {
-        type: SEND_FORGOT_EMAIL,
-        email,
-        success,
-        error
-    }
-};
-
-export const rememberMe = credentials => {
-    return {
-        type: REMEMBER_ME,
-        credentials
-    }
-};
 
 export const logout = (token, success) => {
     return {
