@@ -10,6 +10,3 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export const HomeScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);
-
-
-

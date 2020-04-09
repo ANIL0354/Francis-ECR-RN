@@ -13,6 +13,7 @@ const CustomDatePicker = ({
     placeholder,
     fontSize = 14,
     returnKeyType,
+    onDateChange = () => { },
     meta: { touched, error, visited },
     ...props
 }) => {
@@ -21,10 +22,8 @@ const CustomDatePicker = ({
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
 
-    console.warn('error', error, 'touched', touched)
     return (
         <View>
-            {/* {Platform.OS==='ios'?<DatePickerIOS/>:<DatePickerAndroid/>} */}
             <DatePicker
                 mode="date"
                 placeholder={placeholder}
@@ -37,14 +36,17 @@ const CustomDatePicker = ({
                     padding: 0,
                     margin: 0
                 }}
+                date={input.value}
                 customStyles={{
                     dateIcon: {
-                        display: 'none'
+                        display: 'none',
+                        padding: 0
                     },
                     dateInput: {
                         textAlign: 'left',
                         margin: 0,
                         padding: 0,
+                        height: 2 * scaledFont.lineHeight,
                         borderColor: 'transparent',
                         width: '100%', borderColor: 'black',
                         borderRadius: 25,
@@ -69,18 +71,22 @@ const CustomDatePicker = ({
                     placeholderText: {
                         textAlign: 'left',
                         margin: 0,
+                        alignSelf: 'flex-start',
+                        color: 'darkgrey',
+                        // display: 'none',
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         padding: 0
                     }
                 }}
-                onDateChange={(date) => setSelectedDate(date)}
+                onDateChange={(date) => { setSelectedDate(date); onDateChange(date) }}
                 {...input}
                 {...props}
             />
             <Text style={{
                 color: 'red',
                 paddingVertical: 0,
+                height: scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
             }}>{validationMessage}</Text>

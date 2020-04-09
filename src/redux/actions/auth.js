@@ -4,6 +4,7 @@ export const SEND_FORGOT_EMAIL = 'SEND_FORGOT_EMAIL';
 export const REMEMBER_ME = 'REMEMBER_ME';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_PLATFORM_TYPE = 'SET_PLATFORM_TYPE';
+export const REGISTER_USER = 'REGISTER_USER';
 
 export const setAuthorization = (userToken) => {
     return {
@@ -27,6 +28,15 @@ export const checkLogin = (credentials, success, onError) => {
         onError
     }
 };
+
+export const registerUser = (data, success, failure) => {
+    return {
+        type: REGISTER_USER,
+        data,
+        success,
+        failure
+    }
+}
 
 export const sendForgotEmail = (email, success, error) => {
     return {

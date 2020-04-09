@@ -4,6 +4,7 @@ import {
     SET_AUTHORIZATION,
     CHECK_LOGIN,
     SEND_FORGOT_EMAIL,
+    REGISTER_USER,
     setAuthorization,
     startLoader,
     stopLoader,
@@ -19,6 +20,31 @@ const { STATUS_CODE } = require(`../../shared/constants`);
 function* setUserToken({ userToken }) {
     try {
         yield updateAuthToken(userToken);
+    }
+    catch (error) {
+        return;
+    }
+}
+
+function* registerNewUser({ data, success, failure }) {
+    console.log('saga called');
+    console.warn('saga called')
+    try {
+        yield put(startLoader())
+        const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure(response.data);
+            yield put(stopLoader());
+        }
+        else {
+            success(response.data);
+            yield put(stopLoader());
+        }
+        console.log('saga res', response)
     }
     catch (error) {
         return;
@@ -97,7 +123,8 @@ function* AuthSaga() {
         takeLatest(SET_AUTHORIZATION, setUserToken),
         takeLatest(CHECK_LOGIN, checkAdminLogin),
         takeLatest(SEND_FORGOT_EMAIL, sendRecoveryMail),
-        takeLatest(LOGOUT_USER, logoutUser)
+        takeLatest(LOGOUT_USER, logoutUser),
+        takeLatest(REGISTER_USER, registerNewUser)
     ]);
 }
 

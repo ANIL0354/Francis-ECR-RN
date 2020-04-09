@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { LoginButton, LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'; import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-community/google-signin';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, MENU_LOGO } from '../../../../../shared/constants'
 import { LoginForm } from './login-form';
@@ -7,7 +12,11 @@ import { SignupForm } from './signup-form';
 import { scaleText } from '../../../../../helpers'
 import styles from "./style.js";
 
-export const Screen = () => {
+
+export const Screen = ({
+    registerUser
+}) => {
+
     const [signUpTab, setSignUpTab] = useState(false);
     return (
         <AuthHoc
@@ -57,11 +66,31 @@ export const Screen = () => {
                 </View>
                 <View style={styles.formContainer}>
                     {signUpTab && <SignupForm
-                        onSubmit={(formData) => { console.warn('formData', formData) }}
+                        onSubmit={(formData) => {
+                            // console.warn('formData', formData);
+                            registerUser({
+                                email: formData.email,
+                                password: formData.password,
+                                name: formData.name,
+                                surname: formData.surname,
+                                dob: formData.dob,
+                                city: formData.city,
+                                country: formData.country
+                            }, (response) => {
+                                console.warn('res', response.msg)
+                                console.log('res', response.msg)
+                                alert('response', response.msg)
+                            }, (response) => {
+                                console.warn('res', response.msg)
+                                console.log('res', response.msg)
+                                alert('response', response.msg)
+                            })
+                        }}
                     />}
                     {!signUpTab && <LoginForm
                         onSubmit={(formData) => { console.warn('formData', formData) }}
                     />}
+
                 </View>
             </View>
         </AuthHoc >

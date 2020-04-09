@@ -42,6 +42,9 @@ const CustomFormInput = ({
                 color: 'red',
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
+                lineHeight: scaledFont.lineHeight,
+                height: secureTextEntry ?
+                    2 * scaledFont.lineHeight : scaledFont.lineHeight,
                 ...style
             }}>{validationMessage}</Text>
         </View>
