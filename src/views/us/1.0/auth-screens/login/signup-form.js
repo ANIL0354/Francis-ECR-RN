@@ -25,9 +25,7 @@ const Form = ({
     const today = new Date();
     const maxDate = today.setFullYear(today.getFullYear() - 16)
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        >
+        <React.Fragment>
             <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
                 <Field
                     name={STRINGS.NAME_INPUT}
@@ -151,7 +149,7 @@ const Form = ({
                 title={'Sign Up with Facebook'} onPress={facebookAuth} />
             {/* </View> */}
             <Button title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
-        </KeyboardAvoidingView>
+        </React.Fragment>
     );
 };
 
