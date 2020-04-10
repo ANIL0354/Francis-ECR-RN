@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, StatusBar, SafeAreaView } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
+import { stopLoader } from '../../../redux/actions'
 import CustomLoader from '../../atoms/Loader';
 
 const AuthHoc = ({
@@ -9,6 +10,7 @@ const AuthHoc = ({
     leftIcon,
     centerIcon,
     loader,
+    stopLoader,
     children
 }) => {
     return (
@@ -20,7 +22,7 @@ const AuthHoc = ({
                     centerIcon={centerIcon}
                     leftIcon={leftIcon}
                 />
-                <CustomLoader loader={loader} />
+                <CustomLoader stopLoader={stopLoader} loader={loader} />
                 {children}
             </SafeAreaView>
         </View>
@@ -34,6 +36,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
+        stopLoader: () => dispatch(stopLoader())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AuthHoc);

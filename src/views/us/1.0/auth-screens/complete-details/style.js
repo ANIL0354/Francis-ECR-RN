@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         padding: 15
     },
     iconContainerStyle: { alignContent: 'flex-start', alignSelf: 'flex-start' },
-    socialButton: { backgroundColor: 'darkblue', color: 'white', padding: 0, width: 200, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }
+    socialButton: { backgroundColor: 'darkblue', color: 'white', padding: 0, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }
 });
 
 export default styles;

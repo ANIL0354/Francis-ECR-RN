@@ -1,7 +1,7 @@
 import { REHYDRATE } from "redux-persist";
 import {
     SET_AUTHORIZATION,
-    CHECK_LOGIN,
+    SAVE_USER_INFO,
     REMEMBER_ME,
     SET_PLATFORM_TYPE,
     STOP_LOADER,
@@ -13,6 +13,7 @@ const { updateAuthToken } = require(`../../helpers`);
 
 const initialCommonState = {
     userToken: '',
+    userInfo: null,
     platformType: null,
     rememberCredentials: null,
     loader: false,
@@ -41,9 +42,10 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
                 ...state,
                 platformType: action.role
             }
-        case CHECK_LOGIN:
+        case SAVE_USER_INFO:
             return {
                 ...state,
+                userInfo: action.data
             }
         case REMEMBER_ME:
             return {

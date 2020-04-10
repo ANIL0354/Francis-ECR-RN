@@ -13,7 +13,7 @@ const CustomLoader = ({
                 <View style={{
                     flex: 1,
                     backgroundColor: 'rgba(0,0,0,0.5)',
-                    position: 'absolute', zIndex: 100000,
+                    position: 'absolute', zIndex: 10089000,
 
                 }}>
                     <ActivityIndicator size={'large'} color={'red'} />

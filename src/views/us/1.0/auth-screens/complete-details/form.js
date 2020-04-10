@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { reduxForm, Field, change as changeField } from "redux-form";
-import { Button } from 'react-native-elements';
+import { Button } from 'react-native-elements'
+import { LoginButton, LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+} from '@react-native-community/google-signin';
 import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { connect } from 'react-redux';
 import validator from "./validator";
@@ -8,20 +14,33 @@ import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import CountryCodePicker from '../../../../../components/atoms/CountryCodePicker';
 import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
-import { CHECKBOX_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
+import { CHECKBOX_ICON, } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
-import styles from './style';
+const { onSubmitFail } = require(`../../../../../helpers`);
 
 const Form = ({
     handleSubmit,
     onSubmit,
     changeField,
-    googleAuth,
-    facebookAuth,
+    email,
+    name,
+    surname,
     subscribed,
     saveDateString,
     setSubscribed
 }) => {
+    useEffect(() => {
+        changeField('details', 'email', email);
+        changeField('details', 'name', name);
+        changeField('details', 'surname', surname);
+    }, [name, email, surname])
+    GoogleSignin.configure({
+        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+        webClientId: '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com',
+        offlineAccess: true,
+        loginHint: '',
+        forceCodeForRefreshToken: false,
+    });
     const today = new Date();
     const maxDate = today.setFullYear(today.getFullYear() - 16)
     return (
@@ -53,7 +72,7 @@ const Form = ({
                     returnKeyType={'next'}
                     onDateChange={(date) => {
                         console.warn('date', date);
-                        changeField('signup', STRINGS.DOB_INPUT, date)
+                        changeField('details', STRINGS.DOB_INPUT, date)
                     }}
                     saveDateString={(date) => {
                         saveDateString(date)
@@ -81,6 +100,7 @@ const Form = ({
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
                     component={CustomFormInput}
+                    editable={false}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
                     style={{ minWidth: 150, maxWidth: 150 }}
@@ -92,7 +112,7 @@ const Form = ({
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
                         console.warn('date', value);
-                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
+                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     secureTextEntry={true}
                     returnKeyType={'go'}
@@ -109,24 +129,6 @@ const Form = ({
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
-                <Field
-                    name={STRINGS.PASSWORD_INPUT_NAME}
-                    component={CustomFormInput}
-                    secureTextEntry={true}
-                    returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
-                    placeholder={STRINGS.PASSWORD_PLACEHOLDER}
-                />
-                <Field
-                    name={STRINGS.RE_PASSWORD_INPUT_NAME}
-                    component={CustomFormInput}
-                    secureTextEntry={true}
-                    returnKeyType={'go'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
-                    placeholder={STRINGS.RE_PASSWORD_PLACEHOLDER}
-                />
-            </View>
 
             <Checkbox
                 title={'Subscribe for news and promotions.'}
@@ -135,22 +137,8 @@ const Form = ({
                 checkedIcon={CHECKBOX_ICON}
                 uncheckedIcon={CHECKBOX_ICON}
             />
-            <Text style={{ textAlign: 'center', marginTop: -10 }}>{'Or Connect With'}</Text>
-            {/* <View style={{ flexDirect: 'row', justifyContent: 'space-between', padding: 5 }}> */}
-            <Button
-                icon={<Image source={GOOGLE_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={styles.iconContainerStyle}
-                buttonStyle={styles.socialButton}
-                title={'Sign Up with Google'} onPress={googleAuth} />
-            <Button
-                icon={<Image source={FACEBOOK_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={styles.iconContainerStyle}
-                buttonStyle={styles.socialButton}
-                title={'Sign Up with Facebook'} onPress={facebookAuth} />
-            {/* </View> */}
-            <Button title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
+
+            <Button title={STRINGS.SAVE} onPress={handleSubmit(onSubmit)} />
         </KeyboardAvoidingView>
     );
 };
@@ -161,11 +149,11 @@ const mapStateToProps = (state, props) => {
 }
 
 const reduxFormFunction = reduxForm({
-    form: "signup",
-    fields: ['email', 'password'],
+    form: "details",
+    // fields: ['email', 'password'],
     // onSubmitFail,
     validate: validator,
     enableReinitialize: true
 })(Form);
 
-export const SignupForm = connect(mapStateToProps, { changeField })(reduxFormFunction);
+export const DetailsForm = connect(mapStateToProps, { changeField })(reduxFormFunction);

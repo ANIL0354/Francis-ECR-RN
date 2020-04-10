@@ -3,6 +3,9 @@ export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const SOCIAL_LOGIN = 'SOCIAL_LOGIN';
+export const SAVE_USER_INFO = 'SAVE_USER_INFO';
+export const COMPLETE_USER_PROFILE = 'COMPLETE_USER_PROFILE';
+export const SEND_RECOVERY_EMAIL = 'SEND_RECOVERY_EMAIL';
 
 export const setAuthorization = (userToken) => {
     return {
@@ -29,9 +32,32 @@ export const socialLogin = (data, success, failure) => {
     }
 }
 
+export const saveUserInfo = (data) => {
+    return {
+        type: SAVE_USER_INFO,
+        data
+    }
+};
+
+export const completeProfile = (data, success, failure) => {
+    return {
+        type: COMPLETE_USER_PROFILE,
+        data, success, failure
+    }
+}
+
 export const registerUser = (data, success, failure) => {
     return {
         type: REGISTER_USER,
+        data,
+        success,
+        failure
+    }
+};
+
+export const sendRecoveryEmail = (data, success, failure) => {
+    return {
+        type: SEND_RECOVERY_EMAIL,
         data,
         success,
         failure

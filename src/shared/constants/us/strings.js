@@ -41,5 +41,10 @@ export const STRINGS = {
   COUNTRY_IS_REQUIRED: 'Country is required.',
   PASSWORD_LENGTH_ERROR: 'Password should be 6 to 8 characters long.',
   PASSWORD_DOESNOT_MATCH: 'Your passwords doesnot match.',
-  RE_ENTER_PASSWORD: 'Re-enter your password.'
+  RE_ENTER_PASSWORD: 'Re-enter your password.',
+  COUNTRY_CODE_INPUT: 'country-code',
+  PHONE_PLACEHOLDER: 'Phone',
+  PHONE_NUMBER: 'phone',
+  SAVE: 'Save',
+  SUBMIT: 'Submit'
 }
