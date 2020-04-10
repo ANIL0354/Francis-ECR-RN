@@ -99,7 +99,7 @@ const Form = ({
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
                     component={CustomFormInput}
-                    editable={false}
+                    editable={email ? false : true}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
                     style={{ minWidth: 150, maxWidth: 150 }}
@@ -113,7 +113,6 @@ const Form = ({
                         // console.warn('country code', value);
                         changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
-                    secureTextEntry={true}
                     returnKeyType={'go'}
                     style={{ minWidth: 150, maxWidth: 150 }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
@@ -121,7 +120,6 @@ const Form = ({
                 <Field
                     name={STRINGS.PHONE_NUMBER}
                     component={CustomFormInput}
-                    secureTextEntry={true}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
                     style={{ minWidth: 150, maxWidth: 150 }}
