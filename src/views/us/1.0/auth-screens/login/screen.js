@@ -44,7 +44,7 @@ export const Screen = ({
                 } else {
                     AccessToken.getCurrentAccessToken().then(
                         (data) => {
-                            console.warn('data', data.accessToken)
+                            // console.warn('data', data.accessToken)
                             const accessToken = data.accessToken;
                             const responseInfoCallback = (error, result) => {
                                 if (error) {
@@ -116,7 +116,7 @@ export const Screen = ({
                 name: userInfo.user.givenName,
                 surname: userInfo.user.familyName
             }, (response) => {
-                console.warn('here s', response);
+                // console.warn('here s', response);
                 navigation.navigate('COMPLETE_DETAILS_SCREEN');
                 stopLoader();
             }, (response) => {

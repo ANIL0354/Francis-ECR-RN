@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-native-datepicker';
-import { View, Text, DatePickerAndroid, DatePickerIOS, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import { scaleText } from '../../../helpers';
+import moment from 'moment';
 
 const CustomDatePicker = ({
     label,
@@ -25,7 +26,7 @@ const CustomDatePicker = ({
         <View>
             <DatePicker
                 mode="date"
-                placeholder={placeholder}
+                placeholder={input.value ? `${moment(input.value).format(dateFormat)}` : placeholder}
                 format={dateFormat}
                 // minDate={minDate}
                 maxDate={maxDate}
@@ -71,7 +72,7 @@ const CustomDatePicker = ({
                         textAlign: 'left',
                         margin: 0,
                         alignSelf: 'flex-start',
-                        color: 'darkgrey',
+                        color: input.value ? 'black' : 'darkgrey',
                         // display: 'none',
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,

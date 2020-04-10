@@ -91,7 +91,7 @@ const Form = ({
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
-                        console.warn('date', value);
+                        console.warn('country code', value);
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     secureTextEntry={true}

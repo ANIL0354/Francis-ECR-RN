@@ -95,7 +95,6 @@ export const Screen = ({
                     <View style={styles.formContainer}>
                         <ForgotForm
                             onSubmit={(formData) => {
-                                console.warn('formData', formData);
                                 setEmail(formData.email)
                                 sendRecoveryEmail({
                                     email: formData.email,

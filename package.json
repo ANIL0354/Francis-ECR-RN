@@ -17,6 +17,7 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "axios": "^0.19.2",
+    "moment": "^2.24.0",
     "react": "16.11.0",
     "react-native": "0.62.0",
     "react-native-country-code-list": "^1.1.2",

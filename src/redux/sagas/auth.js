@@ -31,6 +31,7 @@ function* registerNewUser({ data, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
+        console.log('register rep', response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             return;

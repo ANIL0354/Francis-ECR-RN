@@ -90,7 +90,7 @@ const CountryCodePicker = ({
                     style={{
                         color: 'black'
                     }}
-                    placeholder={'Code'}
+                    placeholder={'Country Code'}
                     // containerButtonStyle={{
                     //     flex: 1,
                     //     flexDirection: 'row',

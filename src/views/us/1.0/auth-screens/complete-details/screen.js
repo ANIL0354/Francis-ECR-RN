@@ -14,7 +14,7 @@ export const Screen = ({
     userInfo,
     stopLoader
 }) => {
-    console.log('userInfo complete screen', userInfo);
+    // console.log('userInfo complete screen', userInfo);
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
     return (
@@ -36,14 +36,13 @@ export const Screen = ({
             <View style={{ padding: 5 }}>
                 <View style={styles.formContainer}>
                     <DetailsForm
-                        email={userInfo.email}
-                        name={userInfo.name}
-                        surname={userInfo.surname}
+                        email={userInfo && userInfo.email ? userInfo.email : ''}
+                        name={userInfo && userInfo.name ? userInfo.name : ''}
+                        surname={userInfo && userInfo.surname ? userInfo.surname : ''}
                         saveDateString={(dateString) => setDateString(dateString)}
                         setSubscribed={setSubscribed}
-                        subscribed={userInfo.subscribe ? userInfo.subscribe : subscribed}
+                        subscribed={userInfo && userInfo.subscribe ? userInfo.subscribe : subscribed}
                         onSubmit={(formData) => {
-                            console.warn('formData', formData);
                             var dobStamp = new Date(formData.dob);
                             dobStamp = new Date(formData.dob).getTime();
                             completeProfile({

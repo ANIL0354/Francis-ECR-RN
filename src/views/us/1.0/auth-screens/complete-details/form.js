@@ -71,7 +71,6 @@ const Form = ({
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     onDateChange={(date) => {
-                        console.warn('date', date);
                         changeField('details', STRINGS.DOB_INPUT, date)
                     }}
                     saveDateString={(date) => {
@@ -111,7 +110,7 @@ const Form = ({
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
-                        console.warn('date', value);
+                        // console.warn('country code', value);
                         changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     secureTextEntry={true}
