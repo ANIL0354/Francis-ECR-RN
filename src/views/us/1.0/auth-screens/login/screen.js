@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import {
     LoginManager,
     AccessToken,
@@ -44,7 +44,6 @@ export const Screen = ({
                 } else {
                     AccessToken.getCurrentAccessToken().then(
                         (data) => {
-                            // console.warn('data', data.accessToken)
                             const accessToken = data.accessToken;
                             const responseInfoCallback = (error, result) => {
                                 if (error) {
@@ -61,7 +60,7 @@ export const Screen = ({
                                         surname: result.last_name
                                     }, (response) => {
                                         console.warn(response);
-                                        navigation.navigate('COMPLETE_DETAILS_SCREEN');
+                                        navigation.navigate('HOME_SCREEN');
                                     }, (response) => {
                                         console.warn(response)
                                     })
@@ -117,7 +116,7 @@ export const Screen = ({
                 surname: userInfo.user.familyName
             }, (response) => {
                 // console.warn('here s', response);
-                navigation.navigate('COMPLETE_DETAILS_SCREEN');
+                navigation.navigate('HOME_SCREEN');
                 stopLoader();
             }, (response) => {
                 console.warn('here err', response);
@@ -140,117 +139,119 @@ export const Screen = ({
 
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        <AuthHoc
+            rightIcon={MENU_LOGO}
+            leftIcon={APP_LOGO}
+            centerIcon={null}
         >
-            <AuthHoc
-                rightIcon={MENU_LOGO}
-                leftIcon={APP_LOGO}
-                centerIcon={null}
-            >
-                <View style={styles.childContainer}>
-                    <Text
+            <View style={styles.childContainer}>
+                <Text
+                    style={{
+                        ...styles.subHeaderText,
+                        height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
+                        fontSize: scaleText(18).fontSize,
+                        lineHeight: scaleText(18).lineHeight
+                    }}>
+                    {'Login Or Register'}
+                </Text>
+            </View>
+            <View style={{ padding: 5 }}>
+                <View style={styles.authTabContainer}>
+                    <TouchableOpacity
+                        onPress={() => setSignUpTab(true)}
                         style={{
-                            ...styles.subHeaderText,
-                            fontSize: scaleText(18).fontSize,
-                            lineHeight: scaleText(18).lineHeight
+                            ...styles.authTabButton,
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight,
+                            backgroundColor: signUpTab ? '#0091ff' : '#7fc8ff',
                         }}>
-                        {'Login Or Register'}
-                    </Text>
+                        <Text style={{
+                            ...styles.authTabButtonText,
+                            height: Platform.OS == 'ios' ? scaleText(16).lineHeight + 2 : 'auto',
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight
+                        }}>{"I'm New"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setSignUpTab(false)}
+                        style={{
+                            ...styles.authTabButton,
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight,
+                            backgroundColor: signUpTab ? '#7fc8ff' : '#0091ff',
+                        }}>
+                        <Text style={{
+                            ...styles.authTabButtonText,
+                            height: Platform.OS == 'ios' ? scaleText(16).lineHeight + 2 : 'auto',
+                            fontSize: scaleText(16).fontSize,
+                            lineHeight: scaleText(16).lineHeight
+                        }}>{"Login"}</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ padding: 5 }}>
-                    <View style={styles.authTabContainer}>
-                        <TouchableOpacity
-                            onPress={() => setSignUpTab(true)}
-                            style={{
-                                ...styles.authTabButton,
-                                fontSize: scaleText(16).fontSize,
-                                lineHeight: scaleText(16).lineHeight,
-                                backgroundColor: signUpTab ? '#0091ff' : '#7fc8ff',
-                            }}>
-                            <Text style={{
-                                ...styles.authTabButtonText,
-                                fontSize: scaleText(16).fontSize,
-                                lineHeight: scaleText(16).lineHeight
-                            }}>{"I'm New"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => setSignUpTab(false)}
-                            style={{
-                                ...styles.authTabButton,
-                                fontSize: scaleText(16).fontSize,
-                                lineHeight: scaleText(16).lineHeight,
-                                backgroundColor: signUpTab ? '#7fc8ff' : '#0091ff',
-                            }}>
-                            <Text style={{
-                                ...styles.authTabButtonText,
-                                fontSize: scaleText(16).fontSize,
-                                lineHeight: scaleText(16).lineHeight
-                            }}>{"Login"}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.formContainer}>
-                        {signUpTab && <SignupForm
-                            socialLogin={socialLogin}
-                            googleAuth={googleAuth}
-                            facebookAuth={facebookAuth}
-                            saveDateString={(dateString) => setDateString(dateString)}
-                            setSubscribed={setSubscribed}
-                            subscribed={subscribed}
-                            onSubmit={(formData) => {
-                                console.warn('formData', formData);
-                                var dobStamp = new Date(formData.dob);
-                                dobStamp = new Date(formData.dob).getTime();
-                                registerUser({
-                                    email: formData.email,
-                                    password: formData.password,
-                                    name: formData.name,
-                                    surname: formData.surname,
-                                    dob: dobStamp,
-                                    phoneNumber: {
-                                        code: formData['country-code'],
-                                        phone: formData.phone,
-                                    },
-                                    city: formData.city,
-                                    country: formData.country,
-                                    subscribe: subscribed
-                                }, (response) => {
-                                    stopLoader();
-                                    console.log('res', response.msg);
-                                }, (response) => {
-                                    stopLoader();
-                                    console.log('res', response.msg)
-                                })
-                            }}
-                        />}
-                        {!signUpTab && <LoginForm
-                            socialLogin={socialLogin}
-                            googleAuth={() => googleAuth()}
-                            facebookAuth={() => facebookAuth()}
-                            onSubmit={(formData) => {
-                                checkLogin({
-                                    deviceToken: "string",
-                                    email: formData.email,
-                                    password: formData.password,
-                                    role: 1
-                                }, (response) => {
-                                    stopLoader();
-                                    console.log('login res', response);
-                                    navigation.navigate('AUTHENTICATED_SCREEN')
-                                }, (response) => {
-                                    stopLoader();
-                                    console.log('login res', response.msg)
-                                })
-                            }}
-                        />}
+                <View style={styles.formContainer}>
+                    {signUpTab && <SignupForm
+                        socialLogin={socialLogin}
+                        googleAuth={googleAuth}
+                        facebookAuth={facebookAuth}
+                        saveDateString={(dateString) => setDateString(dateString)}
+                        setSubscribed={setSubscribed}
+                        subscribed={subscribed}
+                        onSubmit={(formData) => {
+                            console.warn('formData', formData);
+                            var dobStamp = new Date(formData.dob);
+                            dobStamp = new Date(formData.dob).getTime();
+                            registerUser({
+                                email: formData.email,
+                                password: formData.password,
+                                name: formData.name,
+                                surname: formData.surname,
+                                dob: dobStamp,
+                                phoneNumber: {
+                                    code: formData['country-code'],
+                                    phone: formData.phone,
+                                },
+                                city: formData.city,
+                                country: formData.country,
+                                subscribe: subscribed
+                            }, (response) => {
+                                stopLoader();
+                                console.log('res', response.msg);
+                            }, (response) => {
+                                stopLoader();
+                                console.log('res', response.msg)
+                            })
+                        }}
+                    />}
+                    {!signUpTab && <LoginForm
+                        socialLogin={socialLogin}
+                        googleAuth={() => googleAuth()}
+                        facebookAuth={() => facebookAuth()}
+                        onSubmit={(formData) => {
+                            checkLogin({
+                                deviceToken: "string",
+                                email: formData.email,
+                                password: formData.password,
+                                role: 1
+                            }, (response) => {
+                                stopLoader();
+                                console.log('login res', response);
+                                navigation.navigate('AUTHENTICATED_SCREEN')
+                            }, (response) => {
+                                stopLoader();
+                                console.log('login res', response.msg)
+                            })
+                        }}
+                    />}
 
-                        {!signUpTab && <Text style={{ marginLeft: 5, color: '#0091ff', textAlign: 'center' }} onPress={() =>
-                            navigation.navigate('FORGOT_PASSWORD_SCREEN')
-                        }>{'Forgot Password?'}</Text>}
-                    </View>
+                    {!signUpTab && <Text style={{
+                        marginLeft: 5,
+                        color: '#0091ff',
+                        textAlign: 'center'
+                    }} onPress={() =>
+                        navigation.navigate('FORGOT_PASSWORD_SCREEN')
+                    }>{'Forgot Password?'}</Text>}
                 </View>
-            </AuthHoc >
-        </KeyboardAvoidingView>
+            </View>
+        </AuthHoc >
     );
 }

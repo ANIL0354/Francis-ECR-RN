@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements';
-import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, Platform } from "react-native";
+import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { connect } from 'react-redux';
 import validator from "./validator";
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
@@ -10,7 +10,6 @@ import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
 import { CHECKBOX_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
-import styles from './style';
 
 const Form = ({
     handleSubmit,
@@ -50,7 +49,7 @@ const Form = ({
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     onDateChange={(date) => {
-                        console.warn('date', date);
+                        // console.warn('date', date);
                         changeField('signup', STRINGS.DOB_INPUT, date)
                     }}
                     saveDateString={(date) => {
@@ -89,10 +88,9 @@ const Form = ({
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
-                        console.warn('country code', value);
+                        // console.warn('country code', value);
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
-                    secureTextEntry={true}
                     returnKeyType={'go'}
                     style={{ minWidth: 150, maxWidth: 150 }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
@@ -100,7 +98,6 @@ const Form = ({
                 <Field
                     name={STRINGS.PHONE_NUMBER}
                     component={CustomFormInput}
-                    secureTextEntry={true}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
                     style={{ minWidth: 150, maxWidth: 150 }}
@@ -134,20 +131,49 @@ const Form = ({
                 uncheckedIcon={CHECKBOX_ICON}
             />
             <Text style={{ textAlign: 'center', marginTop: -10 }}>{'Or Connect With'}</Text>
-            {/* <View style={{ flexDirect: 'row', justifyContent: 'space-between', padding: 5 }}> */}
-            <Button
-                icon={<Image source={GOOGLE_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={styles.iconContainerStyle}
-                buttonStyle={styles.socialButton}
-                title={'Sign Up with Google'} onPress={googleAuth} />
-            <Button
-                icon={<Image source={FACEBOOK_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={styles.iconContainerStyle}
-                buttonStyle={styles.socialButton}
-                title={'Sign Up with Facebook'} onPress={facebookAuth} />
-            {/* </View> */}
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 30
+            }}>
+                <Button
+                    icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
+                    titleStyle={{
+                        textAlign: 'center',
+                        flexWrap: 'wrap',
+                        margin: 0,
+                        padding: 10,
+                    }}
+                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
+                    buttonStyle={{
+                        backgroundColor: '#4c8bf5',
+                        justifyContent: 'space-evenly',
+                        height: 30,
+                        maxWidth: 150,
+                        minWidth: 150,
+                        minHeight: 50,
+                        marginVertical: 5
+                    }}
+                    title={'Log In with Google'} onPress={googleAuth} />
+                <Button
+                    icon={<Image source={FACEBOOK_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
+                    titleStyle={{
+                        textAlign: 'center',
+                        flexWrap: 'wrap',
+                    }}
+                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
+                    buttonStyle={{
+                        backgroundColor: '#3b5998',
+                        justifyContent: 'space-evenly',
+                        height: 30,
+                        maxWidth: 150,
+                        minWidth: 150,
+                        minHeight: 50,
+                        marginVertical: 5
+                    }}
+                    title={'Log In with Facebook'} onPress={facebookAuth} />
+
+            </View>
             <Button title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
         </React.Fragment>
     );

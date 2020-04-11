@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import validator from "./validator";
 import { Button } from 'react-native-elements';
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import Captcha from '../../../../../components/atoms/Captcha';
 import { CHECKBOX_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
@@ -52,19 +52,49 @@ const Form = ({
             />
             {/* <Captcha /> */}
             <Text style={{ textAlign: 'center' }}>{'Or Connect With'}</Text>
-            <Button
-                icon={<Image source={GOOGLE_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
-                buttonStyle={{ backgroundColor: 'darkblue', color: 'white', padding: 0, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }}
-                title={'Log In with Google'} onPress={googleAuth} />
-            <Button
-                icon={<Image source={FACEBOOK_ICON} height={50} width={50} />}
-                titleStyle={{ textAlign: 'center' }}
-                iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
-                buttonStyle={{ backgroundColor: 'darkblue', color: 'white', padding: 0, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }}
-                title={'Log In with Facebook'} onPress={facebookAuth} />
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 50
+            }}>
+                <Button
+                    icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
+                    titleStyle={{
+                        textAlign: 'center',
+                        flexWrap: 'wrap',
+                        margin: 0,
+                        padding: 10,
+                    }}
+                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
+                    buttonStyle={{
+                        backgroundColor: '#4c8bf5',
+                        justifyContent: 'space-evenly',
+                        height: 30,
+                        maxWidth: 150,
+                        minWidth: 150,
+                        minHeight: 50,
+                        marginVertical: 5
+                    }}
+                    title={'Log In with Google'} onPress={googleAuth} />
+                <Button
+                    icon={<Image source={FACEBOOK_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
+                    titleStyle={{
+                        textAlign: 'center',
+                        flexWrap: 'wrap',
+                    }}
+                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
+                    buttonStyle={{
+                        backgroundColor: '#3b5998',
+                        justifyContent: 'space-evenly',
+                        height: 30,
+                        maxWidth: 150,
+                        minWidth: 150,
+                        minHeight: 50,
+                        marginVertical: 5
+                    }}
+                    title={'Log In with Facebook'} onPress={facebookAuth} />
 
+            </View>
             <Button style={{ marginTop: 100, position: 'relative' }} title={STRINGS.LOGIN} onPress={handleSubmit(onSubmit)} />
 
         </View>

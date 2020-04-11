@@ -39,17 +39,18 @@ const CountryCodePicker = ({
                 onPress={() => setShowCountries(true)}
                 style={{
                     borderColor: 'black',
-                    borderRadius: 25,
+                    borderRadius: 5,
                     borderWidth: 0.8,
-                    marginVertical: 10,
+                    height: 2.5 * scaledFont.lineHeight,
+                    marginTop: -5,
+                    justifyContent: 'center',
+                    alignContent: 'center',
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
-                    alignContent: 'center',
                     paddingHorizontal: 10,
-                    paddingVertical: 2,
+                    paddingVertical: countryCode ? 2 : 15,
                     paddingBottom: 0,
                     marginBottom: 0,
-                    marginTop: 0,
                     ...style
                 }}>
                 <CountryPicker
@@ -65,6 +66,8 @@ const CountryCodePicker = ({
                     }}
                     theme={{
                         margin: 0,
+                        fontSize: scaledFont.fontSize,
+                        lineHeight: scaledFont.lineHeight,
                     }}
                     containerButtonStyle={{
                         margin: 0,
@@ -72,6 +75,7 @@ const CountryCodePicker = ({
                         margin: 0,
                         padding: 0,
                         alignContent: 'center',
+                        color: 'darkgrey',
                         display: countryCode ? 'none' : 'flex',
                     }}
                     onSelect={(value) => {
@@ -88,24 +92,22 @@ const CountryCodePicker = ({
                         onRequestClose: () => setShowCountries(false)
                     }}
                     style={{
-                        color: 'black'
+                        color: 'darkgrey'
                     }}
                     placeholder={'Country Code'}
-                    // containerButtonStyle={{
-                    //     flex: 1,
-                    //     flexDirection: 'row',
-                    //     padding: 0,
-                    //     margin: 0
-                    // }}
                     visible
                 />
                 {country !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
-                            value={input.value}
+                            value={`+${input.value}`}
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',
+                                fontSize: scaledFont.fontSize,
+                                lineHeight: scaledFont.lineHeight,
+                                marginBottom: -17,
+                                marginLeft: -5,
                                 ...styles.data
                             }} editable={false} />
                     </TouchableOpacity>

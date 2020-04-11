@@ -38,6 +38,10 @@ const CustomDatePicker = ({
                 }}
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
+                    dateTouchBody: {
+                        marginTop: 10,
+                        marginLeft: 6
+                    },
                     dateIcon: {
                         display: 'none',
                         padding: 0
@@ -46,12 +50,12 @@ const CustomDatePicker = ({
                         textAlign: 'left',
                         margin: 0,
                         padding: 0,
-                        height: 2 * scaledFont.lineHeight,
+                        height: 2.5 * scaledFont.lineHeight,
                         borderColor: 'transparent',
                         width: '100%', borderColor: 'black',
-                        borderRadius: 25,
+                        borderRadius: 5,
                         borderWidth: 0.8,
-                        marginVertical: 10,
+                        // marginTop: 20,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         paddingHorizontal: 10,

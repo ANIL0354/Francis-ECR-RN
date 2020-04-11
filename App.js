@@ -26,13 +26,11 @@ import RootNavigator from './src/navigator/1.0/root-navigator';
 
 const App = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <PersistGate persistor={persistor}>
-        <Provider store={store}>
-          <RootNavigator />
-        </Provider>
-      </PersistGate>
-    </View>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+        <RootNavigator />
+      </Provider>
+    </PersistGate>
   );
 };
 

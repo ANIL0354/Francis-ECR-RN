@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, PixelRatio } from 'react-native';
+import { View, Text, TextInput, Platform } from 'react-native';
 import { scaleText } from '../../../helpers';
 
 const CustomFormInput = ({
@@ -23,10 +23,12 @@ const CustomFormInput = ({
                 placeholder={placeholder}
                 style={{
                     borderColor: 'black',
-                    borderRadius: 25,
+                    borderRadius: 5,
                     borderWidth: 0.8,
+                    height: 2.5 * scaledFont.lineHeight,
                     marginVertical: 10,
                     fontSize: scaledFont.fontSize,
+                    lineHeight: scaledFont.lineHeight,
                     paddingHorizontal: 10,
                     paddingVertical: 2,
                     paddingBottom: 0,
