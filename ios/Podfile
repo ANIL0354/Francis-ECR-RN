@@ -58,6 +58,10 @@ target 'Francis_ECR_RN' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
   pod 'GoogleSignIn', '~> 5.0.2'
+  pod 'react-native-spinkit', :path => '../node_modules/react-native-spinkit'
+
+  pod 'react-native-simple-toast', :path => '../node_modules/react-native-simple-toast'
+
   target 'Francis_ECR_RNTests' do
     inherit! :complete
     # Pods for testing

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import {
     LoginManager,
     AccessToken,
@@ -60,7 +60,7 @@ export const Screen = ({
                                         surname: result.last_name
                                     }, (response) => {
                                         console.warn(response);
-                                        navigation.navigate('HOME_SCREEN');
+                                        // navigation.navigate('HOME_SCREEN');
                                     }, (response) => {
                                         console.warn(response)
                                     })
@@ -116,7 +116,7 @@ export const Screen = ({
                 surname: userInfo.user.familyName
             }, (response) => {
                 // console.warn('here s', response);
-                navigation.navigate('HOME_SCREEN');
+                // navigation.navigate('HOME_SCREEN');
                 stopLoader();
             }, (response) => {
                 console.warn('here err', response);
@@ -136,13 +136,16 @@ export const Screen = ({
             }
         }
     };
-
+    const [toastVisibility, setToastVisibility] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     return (
         <AuthHoc
             rightIcon={MENU_LOGO}
             leftIcon={APP_LOGO}
             centerIcon={null}
+            toastVisibility={toastVisibility}
+            toastMessage={toastMessage}
         >
             <View style={styles.childContainer}>
                 <Text
@@ -188,69 +191,79 @@ export const Screen = ({
                         }}>{"Login"}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.formContainer}>
-                    {signUpTab && <SignupForm
-                        socialLogin={socialLogin}
-                        googleAuth={googleAuth}
-                        facebookAuth={facebookAuth}
-                        saveDateString={(dateString) => setDateString(dateString)}
-                        setSubscribed={setSubscribed}
-                        subscribed={subscribed}
-                        onSubmit={(formData) => {
-                            console.warn('formData', formData);
-                            var dobStamp = new Date(formData.dob);
-                            dobStamp = new Date(formData.dob).getTime();
-                            registerUser({
-                                email: formData.email,
-                                password: formData.password,
-                                name: formData.name,
-                                surname: formData.surname,
-                                dob: dobStamp,
-                                phoneNumber: {
-                                    code: formData['country-code'],
-                                    phone: formData.phone,
-                                },
-                                city: formData.city,
-                                country: formData.country,
-                                subscribe: subscribed
-                            }, (response) => {
-                                stopLoader();
-                                console.log('res', response.msg);
-                            }, (response) => {
-                                stopLoader();
-                                console.log('res', response.msg)
-                            })
-                        }}
-                    />}
-                    {!signUpTab && <LoginForm
-                        socialLogin={socialLogin}
-                        googleAuth={() => googleAuth()}
-                        facebookAuth={() => facebookAuth()}
-                        onSubmit={(formData) => {
-                            checkLogin({
-                                deviceToken: "string",
-                                email: formData.email,
-                                password: formData.password,
-                                role: 1
-                            }, (response) => {
-                                stopLoader();
-                                console.log('login res', response);
-                                navigation.navigate('AUTHENTICATED_SCREEN')
-                            }, (response) => {
-                                stopLoader();
-                                console.log('login res', response.msg)
-                            })
-                        }}
-                    />}
 
-                    {!signUpTab && <Text style={{
-                        marginLeft: 5,
-                        color: '#0091ff',
-                        textAlign: 'center'
-                    }} onPress={() =>
-                        navigation.navigate('FORGOT_PASSWORD_SCREEN')
-                    }>{'Forgot Password?'}</Text>}
-                </View>
+                <ScrollView
+                    style={{
+                        flex: 1, minHeight: 500, width: '100%',
+                        marginVertical: 20,
+                        padding: 0
+                    }}>
+                    <View style={styles.formContainer}>
+                        {signUpTab &&
+                            <SignupForm
+                                socialLogin={socialLogin}
+                                googleAuth={googleAuth}
+                                facebookAuth={facebookAuth}
+                                saveDateString={(dateString) => setDateString(dateString)}
+                                setSubscribed={setSubscribed}
+                                subscribed={subscribed}
+                                onSubmit={(formData) => {
+                                    console.warn('formData', formData);
+                                    var dobStamp = new Date(formData.dob);
+                                    dobStamp = new Date(formData.dob).getTime();
+                                    registerUser({
+                                        email: formData.email,
+                                        password: formData.password,
+                                        name: formData.name,
+                                        surname: formData.surname,
+                                        dob: dobStamp,
+                                        phoneNumber: {
+                                            code: formData['country-code'],
+                                            phone: formData.phone,
+                                        },
+                                        city: formData.city,
+                                        country: formData.country,
+                                        subscribe: subscribed
+                                    }, (response) => {
+                                        stopLoader();
+                                        console.log('res', response.msg);
+                                    }, (response) => {
+                                        stopLoader();
+                                        console.log('res', response.msg)
+                                    })
+                                }}
+                            />
+                        }
+                        {!signUpTab && <LoginForm
+                            socialLogin={socialLogin}
+                            googleAuth={() => googleAuth()}
+                            facebookAuth={() => facebookAuth()}
+                            onSubmit={(formData) => {
+                                checkLogin({
+                                    deviceToken: "string",
+                                    email: formData.email,
+                                    password: formData.password,
+                                    role: 1
+                                }, (response) => {
+                                    stopLoader();
+                                    console.log('login res', response);
+                                    // navigation.navigate('HOME_SCREEN')
+                                }, (response) => {
+                                    stopLoader();
+                                    console.log('login res', response.msg)
+                                })
+                            }}
+                        />}
+
+                        {!signUpTab && <Text style={{
+                            marginLeft: 5,
+                            color: '#0091ff',
+                            textAlign: 'center'
+                        }} onPress={() =>
+                            navigation.navigate('FORGOT_PASSWORD_SCREEN')
+                        }>{'Forgot Password?'}</Text>}
+                    </View>
+                </ScrollView>
             </View>
         </AuthHoc >
     );

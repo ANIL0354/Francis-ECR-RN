@@ -55,8 +55,13 @@ const Form = ({
                 returnKeyType={'next'}
             />
 
-
-            <Button title={STRINGS.SUBMIT} onPress={handleSubmit(onSubmit)} />
+            <Button
+                titleStyle={{
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                }}
+                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginTop: 25, marginBottom: 10, alignSelf: 'flex-end' }}
+                title={STRINGS.SUBMIT} onPress={handleSubmit(onSubmit)} />
         </KeyboardAvoidingView>
     );
 };

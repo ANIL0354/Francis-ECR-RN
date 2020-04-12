@@ -5,7 +5,7 @@ import AppHeader from '../../atoms/AppHeader';
 import { stopLoader } from '../../../redux/actions'
 import CustomLoader from '../../atoms/Loader';
 
-const AuthHoc = ({
+const AppHoc = ({
     rightIcon,
     leftIcon,
     centerIcon,
@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
         stopLoader: () => dispatch(stopLoader())
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AuthHoc);
+export default connect(mapStateToProps, mapDispatchToProps)(AppHoc);

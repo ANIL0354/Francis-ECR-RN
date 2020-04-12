@@ -1,5 +1,5 @@
 import { takeLatest, all, put, delay } from "redux-saga/effects";
-
+import Toast from 'react-native-root-toast';
 import {
     SET_AUTHORIZATION,
     CHECK_LOGIN,
@@ -39,10 +39,26 @@ function* registerNewUser({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         else {
             success(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
     }
     catch (error) {
@@ -63,10 +79,26 @@ function* checkLogin({ credentials, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         else {
             success(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
     }
     catch (error) {
@@ -87,12 +119,28 @@ function* checkSocialLogin({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         else {
             yield put(setAuthorization(response.data.token));
             yield put(saveUserInfo(response.data.data))
             success(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
     }
     catch (error) {
@@ -113,10 +161,26 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         else {
             success(response.data);
             yield put(stopLoader());
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
     }
     catch (error) {
@@ -134,11 +198,27 @@ function* completeUserProfile({ data, success, failure }) {
             return;
         }
         else if (response.status !== STATUS_CODE.successful) {
-            failure(response.data)
+            failure(response.data);
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         else {
             success(response.data);
-            console.log('complete profile res', response.data)
+            console.log('complete profile res', response.data);
+            Toast.show(response.data.msg, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         }
         console.log('result', response.data)
     }

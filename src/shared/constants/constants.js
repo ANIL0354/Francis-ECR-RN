@@ -4,6 +4,7 @@ const { STRINGS } = require(`./us/strings`);
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const NAME_REGX = /^[A-Z.a-z ]+$/;
+export const PHONE_REGX = /^[0-9]+$/;
 
 export const KEY_CODES = {
   enterKey: 13,
@@ -24,6 +25,9 @@ export const VALIDATION_MESSAGES = {
   RE_ENTER_PASSWORD: STRINGS.RE_ENTER_PASSWORD,
   PASSWORD_LENGTH_ERROR: STRINGS.PASSWORD_LENGTH_ERROR,
   PASSWORD_DOESNOT_MATCH: STRINGS.PASSWORD_DOESNOT_MATCH,
+  COUNTRY_CODE_REQUIRED: STRINGS.COUNTRY_CODE_REQUIRED,
+  PHONE_NUMBER_REQUIRED: STRINGS.PHONE_NUMBER_REQUIRED,
+  PHONE_INVALID: STRINGS.PHONE_INVALID,
   VALUE_CANNOT_BE_EMPTY_SPACES: STRINGS.VALUE_CANNOT_BE_ONLY_SPACES
 };
 

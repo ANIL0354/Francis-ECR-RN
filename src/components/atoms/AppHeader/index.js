@@ -14,7 +14,7 @@ const AppHeader = ({
                 {leftIcon && <Image source={leftIcon} />}
             </View>
             <View style={{ flex: 1, height: '100%', justifyContent: 'space-between', alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-                {centerIcon && <TouchableOpacity>
+                {centerIcon && <TouchableOpacity onPress={() => alert('user icon pressed.')}>
                     <Image
                         source={centerIcon}
                         style={{

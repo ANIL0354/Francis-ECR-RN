@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 10,
-        marginVertical: 20,
-        padding: 15
+        // marginVertical: 20,
+        padding: 10
     },
     iconContainerStyle: { alignContent: 'flex-start', alignSelf: 'flex-start' },
     socialButton: { backgroundColor: 'darkblue', color: 'white', padding: 0, width: 200, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }

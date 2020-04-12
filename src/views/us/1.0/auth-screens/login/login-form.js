@@ -12,7 +12,7 @@ import { Button } from 'react-native-elements';
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import { View, Text, Image, ScrollView } from "react-native";
 import Captcha from '../../../../../components/atoms/Captcha';
-import { CHECKBOX_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
+import { DIVIDING_LINE, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
 const { onSubmitFail } = require(`../../../../../helpers`);
 import styles from './style';
@@ -55,7 +55,7 @@ const Form = ({
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 50
+                marginBottom: 10
             }}>
                 <Button
                     icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
@@ -92,10 +92,18 @@ const Form = ({
                         minHeight: 50,
                         marginVertical: 5
                     }}
-                    title={'Log In with Facebook'} onPress={facebookAuth} />
+                    title={'Log In with Facebook'}
+                    onPress={facebookAuth} />
 
             </View>
-            <Button style={{ marginTop: 100, position: 'relative' }} title={STRINGS.LOGIN} onPress={handleSubmit(onSubmit)} />
+            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 2, marginVertical: 15 }} />
+            <Button
+                titleStyle={{
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                }}
+                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginBottom: 10, alignSelf: 'flex-end' }}
+                title={STRINGS.LOGIN} onPress={handleSubmit(onSubmit)} />
 
         </View>
     );

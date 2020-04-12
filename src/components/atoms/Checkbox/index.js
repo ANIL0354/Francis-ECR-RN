@@ -1,21 +1,20 @@
 import React from 'react';
 import { CheckBox, Icon } from 'react-native-elements';
 import { Image } from 'react-native';
-import { CHECKBOX_ICON, CHECKBOX_ACTIVE } from '../../../shared/constants'
 
 const Checkbox = ({
     title = '',
     checked = false,
-    toggleCheck
+    toggleCheck,
+    checkedIcon,
+    uncheckedIcon
 }) => {
     return (
         <CheckBox
             title={title}
-            containerStyle={{ backgroundColor: 'transparent', marginLeft: 0, borderColor: 'transparent', paddingHorizontal: 0, }}
-            // iconType={''}
-            checkedIcon={<Image source={CHECKBOX_ACTIVE} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
-            uncheckedIcon={<Image source={CHECKBOX_ICON} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
-            // checkedColor='green'
+            containerStyle={{ backgroundColor: 'transparent', marginLeft: 0, marginTop: -10, borderColor: 'transparent', paddingHorizontal: 0, }}
+            checkedIcon={<Image source={checkedIcon} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
+            uncheckedIcon={<Image source={uncheckedIcon} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
             onPress={(event) => toggleCheck(event)}
             checked={checked}
         />

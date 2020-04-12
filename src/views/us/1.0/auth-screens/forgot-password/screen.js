@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Button, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Button } from 'react-native-elements';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON, MAIL_ICON } from '../../../../../shared/constants';
 import { ForgotForm } from './form';
@@ -21,7 +22,7 @@ export const Screen = ({
             centerIcon={null}
         >
             <View style={styles.childContainer}>
-                <TouchableOpacity style={{ height: 20, width: 20 }} onPress={() => navigation.navigate('LOGIN_SCREEN')}>
+                <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center' }} onPress={() => navigation.navigate('LOGIN_SCREEN')}>
                     <Image source={NAV_ARROW_ICON} height={20} width={20} />
                 </TouchableOpacity>
                 <Text
@@ -57,7 +58,9 @@ export const Screen = ({
                         {'We just sent you a reset password link on your registered email address.'}
                     </Text>
 
-                    <Button title={'LOGIN'} style={{ display: 'flex' }} onPress={() => navigation.navigate('LOGIN_SCREEN')} />
+                    <Button title={'LOGIN'}
+                        buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'center' }}
+                        onPress={() => navigation.navigate('LOGIN_SCREEN')} />
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 40 }}>
                         <Text
                             style={{
@@ -87,6 +90,7 @@ export const Screen = ({
                     <Text
                         style={{
                             textAlign: 'center',
+                            marginTop: 10,
                             fontSize: scaleText(18).fontSize,
                             lineHeight: scaleText(18).lineHeight
                         }}>

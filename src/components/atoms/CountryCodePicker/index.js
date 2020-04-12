@@ -42,13 +42,13 @@ const CountryCodePicker = ({
                     borderRadius: 5,
                     borderWidth: 0.8,
                     height: 2.5 * scaledFont.lineHeight,
-                    marginTop: -5,
+                    marginTop: 10,
                     justifyContent: 'center',
                     alignContent: 'center',
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
                     paddingHorizontal: 10,
-                    paddingVertical: countryCode ? 2 : 15,
+                    paddingVertical: 2,
                     paddingBottom: 0,
                     marginBottom: 0,
                     ...style
@@ -68,6 +68,8 @@ const CountryCodePicker = ({
                         margin: 0,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
+                        primaryColor: 'darkgrey',
+                        primaryColorVariant: 'darkgrey',
                     }}
                     containerButtonStyle={{
                         margin: 0,
@@ -75,7 +77,6 @@ const CountryCodePicker = ({
                         margin: 0,
                         padding: 0,
                         alignContent: 'center',
-                        color: 'darkgrey',
                         display: countryCode ? 'none' : 'flex',
                     }}
                     onSelect={(value) => {
@@ -106,21 +107,22 @@ const CountryCodePicker = ({
                                 color: 'black',
                                 fontSize: scaledFont.fontSize,
                                 lineHeight: scaledFont.lineHeight,
-                                marginBottom: -17,
+                                marginBottom: -5,
                                 marginLeft: -5,
                                 ...styles.data
                             }} editable={false} />
                     </TouchableOpacity>
                 )}
-                <Text style={{
-                    color: 'red',
-                    paddingVertical: 0,
-                    fontSize: scaledFont.fontSize,
-                    lineHeight: scaledFont.lineHeight,
-                    height: scaledFont.lineHeight,
-                    ...style
-                }}>{validationMessage}</Text>
             </TouchableOpacity>
+
+            <Text style={{
+                color: 'red',
+                paddingVertical: 0,
+                fontSize: scaledFont.fontSize,
+                lineHeight: scaledFont.lineHeight,
+                height: scaledFont.lineHeight,
+                ...style
+            }}>{validationMessage}</Text>
         </View>
     )
 }

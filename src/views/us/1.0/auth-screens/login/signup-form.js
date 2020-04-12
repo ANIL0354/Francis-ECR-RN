@@ -8,7 +8,7 @@ import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import CountryCodePicker from '../../../../../components/atoms/CountryCodePicker';
 import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
-import { CHECKBOX_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
+import { CHECKBOX_ICON, CHECKBOX_ACTIVE, GOOGLE_ICON, FACEBOOK_ICON, DIVIDING_LINE } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
 
 const Form = ({
@@ -127,14 +127,14 @@ const Form = ({
                 title={'Subscribe for news and promotions.'}
                 toggleCheck={() => setSubscribed(!subscribed)}
                 checked={subscribed}
-                checkedIcon={CHECKBOX_ICON}
+                checkedIcon={CHECKBOX_ACTIVE}
                 uncheckedIcon={CHECKBOX_ICON}
             />
             <Text style={{ textAlign: 'center', marginTop: -10 }}>{'Or Connect With'}</Text>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 30
+                marginBottom: 10
             }}>
                 <Button
                     icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
@@ -174,7 +174,15 @@ const Form = ({
                     title={'Log In with Facebook'} onPress={facebookAuth} />
 
             </View>
-            <Button title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
+            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 2, marginVertical: 15 }} />
+            <Button
+                titleStyle={{
+                    textAlign: 'center',
+                    flexWrap: 'wrap',
+                }}
+                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'flex-end' }}
+                title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
+
         </React.Fragment>
     );
 };

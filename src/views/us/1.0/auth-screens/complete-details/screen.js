@@ -61,7 +61,7 @@ export const Screen = ({
                             }, (response) => {
                                 stopLoader();
                                 console.log('res', response.msg);
-                                navigation.navigate('HOME_SCREEN');
+                                // navigation.navigate('HOME_SCREEN');
                             }, (response) => {
                                 stopLoader();
                                 console.log('res', response.msg)

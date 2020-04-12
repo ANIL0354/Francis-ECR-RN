@@ -44,6 +44,9 @@ export const STRINGS = {
   RE_ENTER_PASSWORD: 'Re-enter your password.',
   COUNTRY_CODE_INPUT: 'country-code',
   PHONE_PLACEHOLDER: 'Phone',
+  COUNTRY_CODE_REQUIRED: 'Country code is required.',
+  PHONE_NUMBER_REQUIRED: 'Phone is required.',
+  PHONE_INVALID: 'Invalid phone no.',
   PHONE_NUMBER: 'phone',
   SAVE: 'Save',
   SUBMIT: 'Submit'
