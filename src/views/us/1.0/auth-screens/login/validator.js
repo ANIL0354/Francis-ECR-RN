@@ -1,5 +1,5 @@
 const { STRINGS } = require(`../../../../../shared/constants/us/strings`);
-const { VALIDATION_MESSAGES, EMAIL_REGX, PHONE_REGX } = require(`../../../../../shared/constants`)
+const { VALIDATION_MESSAGES, EMAIL_REGX, PHONE_REGX, NAME_REGX } = require(`../../../../../shared/constants`)
 
 const validator = values => {
     const errors = {};
@@ -33,6 +33,12 @@ const validator = values => {
     if (values[STRINGS.NAME_INPUT] && !(values[STRINGS.NAME_INPUT].trim())) {
         errors[STRINGS.NAME_INPUT] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    } else if (
+        !NAME_REGX.test(
+            values[STRINGS.NAME_INPUT]
+        )
+    ) {
+        errors[STRINGS.NAME_INPUT] = 'Can only have alphabets.';
     }
     if (!values[STRINGS.SURNAME_INPUT]) {
         errors[STRINGS.SURNAME_INPUT] =
@@ -41,6 +47,12 @@ const validator = values => {
     if (values[STRINGS.SURNAME_INPUT] && !(values[STRINGS.SURNAME_INPUT].trim())) {
         errors[STRINGS.SURNAME_INPUT] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    } else if (
+        !NAME_REGX.test(
+            values[STRINGS.SURNAME_INPUT]
+        )
+    ) {
+        errors[STRINGS.SURNAME_INPUT] = 'Can only have alphabets.';
     }
     if (!values[STRINGS.DOB_INPUT]) {
         errors[STRINGS.DOB_INPUT] =
@@ -53,6 +65,12 @@ const validator = values => {
     if (values[STRINGS.CITY_INPUT] && !(values[STRINGS.CITY_INPUT].trim())) {
         errors[STRINGS.CITY_INPUT] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    } else if (
+        !NAME_REGX.test(
+            values[STRINGS.CITY_INPUT]
+        )
+    ) {
+        errors[STRINGS.CITY_INPUT] = 'Can only have alphabets.';
     }
     if (!values[STRINGS.COUNTRY_INPUT]) {
         errors[STRINGS.COUNTRY_INPUT] =
@@ -61,6 +79,12 @@ const validator = values => {
     if (values[STRINGS.COUNTRY_INPUT] && !(values[STRINGS.COUNTRY_INPUT].trim())) {
         errors[STRINGS.COUNTRY_INPUT] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    } else if (
+        !NAME_REGX.test(
+            values[STRINGS.COUNTRY_INPUT]
+        )
+    ) {
+        errors[STRINGS.COUNTRY_INPUT] = 'Can only have alphabets.';
     }
     if (!values[STRINGS.COUNTRY_CODE_INPUT]) {
         errors[STRINGS.COUNTRY_CODE_INPUT] =

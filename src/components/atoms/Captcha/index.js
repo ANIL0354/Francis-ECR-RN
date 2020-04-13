@@ -10,10 +10,8 @@ class Captcha extends React.Component {
                 this.captchaForm.hide();
                 return;
             } else {
-                console.log('Verified code from Google', event.nativeEvent.data);
                 setTimeout(() => {
                     this.captchaForm.hide();
-                    // console.log()
                     // do what ever you want here
                 }, 1500);
             }

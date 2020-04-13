@@ -2,7 +2,7 @@ import axios from "axios";
 
 import pickBy from "lodash/pickBy";
 
-const { defaultConfig: {  } } = require(`../config/default`);
+const { defaultConfig: { } } = require(`../config/default`);
 const api = require(`../shared/api`);
 
 const defaulHeader = {
@@ -19,7 +19,7 @@ const instance = axios.create({
 
 const requestWithoutAuth = axios.create({
     baseURL: api.BASE_URL,
-    timeout: 6000,
+    timeout: 120000,
     defaulHeader
 });
 

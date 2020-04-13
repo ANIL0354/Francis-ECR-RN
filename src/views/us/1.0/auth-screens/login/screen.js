@@ -40,16 +40,13 @@ export const Screen = ({
         LoginManager.logInWithPermissions(["public_profile", 'email']).then(
             function (result) {
                 if (result.isCancelled) {
-                    console.log("Login cancelled");
                 } else {
                     AccessToken.getCurrentAccessToken().then(
                         (data) => {
                             const accessToken = data.accessToken;
                             const responseInfoCallback = (error, result) => {
                                 if (error) {
-                                    console.log('Error fetching data=', JSON.stringify(error));
                                 } else {
-                                    console.log('Success fetching data=', JSON.stringify(result));
                                     socialLogin({
                                         loginType: 2,
                                         socialId: result.id,
@@ -59,10 +56,8 @@ export const Screen = ({
                                         name: result.first_name,
                                         surname: result.last_name
                                     }, (response) => {
-                                        console.warn(response);
                                         // navigation.navigate('HOME_SCREEN');
                                     }, (response) => {
-                                        console.warn(response)
                                     })
                                     return;
                                 }
@@ -82,17 +77,11 @@ export const Screen = ({
                             new GraphRequestManager().addRequest(infoRequest).start();
                             return;
                         }, (error) => {
-                            console.log('error', error)
                         }
                     )
-                    console.log(
-                        "Login success with permissions: " +
-                        result.grantedPermissions.toString()
-                    );
                 }
             },
             function (error) {
-                console.log("Login fail with error: " + error);
             }
         ).catch((error) => {
             console.log('error', error)
@@ -105,7 +94,6 @@ export const Screen = ({
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            console.log('userInfo', userInfo)
             socialLogin({
                 loginType: 3,
                 socialId: userInfo.user.id,
@@ -115,24 +103,18 @@ export const Screen = ({
                 name: userInfo.user.givenName,
                 surname: userInfo.user.familyName
             }, (response) => {
-                // console.warn('here s', response);
                 // navigation.navigate('HOME_SCREEN');
                 stopLoader();
             }, (response) => {
-                console.warn('here err', response);
                 stopLoader();
             })
 
             stopLoader();
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                console.log('error', error)
             } else if (error.code === statusCodes.IN_PROGRESS) {
-                console.log('error', error)
             } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                console.log('error', error)
             } else {
-                console.log('error', error)
             }
         }
     };
@@ -208,7 +190,6 @@ export const Screen = ({
                                 setSubscribed={setSubscribed}
                                 subscribed={subscribed}
                                 onSubmit={(formData) => {
-                                    console.warn('formData', formData);
                                     var dobStamp = new Date(formData.dob);
                                     dobStamp = new Date(formData.dob).getTime();
                                     registerUser({
@@ -226,10 +207,8 @@ export const Screen = ({
                                         subscribe: subscribed
                                     }, (response) => {
                                         stopLoader();
-                                        console.log('res', response.msg);
                                     }, (response) => {
                                         stopLoader();
-                                        console.log('res', response.msg)
                                     })
                                 }}
                             />
@@ -246,11 +225,9 @@ export const Screen = ({
                                     role: 1
                                 }, (response) => {
                                     stopLoader();
-                                    console.log('login res', response);
                                     // navigation.navigate('HOME_SCREEN')
                                 }, (response) => {
                                     stopLoader();
-                                    console.log('login res', response.msg)
                                 })
                             }}
                         />}

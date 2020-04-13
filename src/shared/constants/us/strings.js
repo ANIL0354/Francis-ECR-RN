@@ -33,7 +33,7 @@ export const STRINGS = {
   CITY_PLACEHOLDER: 'City',
   COUNTRY_PLACEHOLDER: 'Country',
   RE_PASSWORD_PLACEHOLDER: 'Re-enter password',
-  VALUE_CANNOT_BE_ONLY_SPACES: 'Only spaces are not allowed as value.',
+  VALUE_CANNOT_BE_ONLY_SPACES: 'Only spaces not allowed.',
   NAME_IS_REQUIRED: 'Name is required.',
   SURNAME_IS_REQUIRED: 'Surname is required.',
   DOB_IS_REQUIRED: 'D.O.B. is required.',
@@ -49,5 +49,6 @@ export const STRINGS = {
   PHONE_INVALID: 'Invalid phone no.',
   PHONE_NUMBER: 'phone',
   SAVE: 'Save',
-  SUBMIT: 'Submit'
+  SUBMIT: 'Submit',
+  LOGOUT: 'Logout'
 }

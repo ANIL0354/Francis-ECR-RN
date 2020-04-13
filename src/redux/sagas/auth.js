@@ -1,5 +1,5 @@
 import { takeLatest, all, put, delay } from "redux-saga/effects";
-import Toast from 'react-native-root-toast';
+import Toast from 'react-native-simple-toast';
 import {
     SET_AUTHORIZATION,
     CHECK_LOGIN,
@@ -31,34 +31,20 @@ function* registerNewUser({ data, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
-        console.log('register rep', response)
-        if (response.status === STATUS_CODE.unAuthorized) {
+        if (response.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
             return;
         }
-        if (response.status !== STATUS_CODE.successful) {
+        if (response.statusCode !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
@@ -67,11 +53,10 @@ function* registerNewUser({ data, success, failure }) {
     }
 }
 
-function* checkLogin({ credentials, success, failure }) {
+function* checkLogin({ data, success, failure }) {
     try {
         yield put(startLoader())
-        const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: credentials });
-        console.log(response)
+        const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             return;
@@ -79,26 +64,13 @@ function* checkLogin({ credentials, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
+            yield put(setAuthorization(response.data.data.token))
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
@@ -111,7 +83,6 @@ function* checkSocialLogin({ data, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
-        console.log(response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             return;
@@ -119,28 +90,14 @@ function* checkSocialLogin({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
-            yield put(setAuthorization(response.data.token));
+            yield put(setAuthorization(response.data.data.token));
             yield put(saveUserInfo(response.data.data))
-            success(response.data);
+            success(response.data.msg);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
@@ -153,7 +110,6 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.FORGOT_PASSWORD}`, DATA: data });
-        console.log(response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             return;
@@ -161,26 +117,12 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
@@ -190,7 +132,6 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
 };
 
 function* completeUserProfile({ data, success, failure }) {
-    console.log('saga')
     try {
         const response = yield postRequest({ API: `${api.URL.CHALLENGES}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
@@ -199,28 +140,12 @@ function* completeUserProfile({ data, success, failure }) {
         }
         else if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
             success(response.data);
-            console.log('complete profile res', response.data);
-            Toast.show(response.data.msg, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
-        console.log('result', response.data)
     }
     catch (error) {
         return;
@@ -230,22 +155,31 @@ function* completeUserProfile({ data, success, failure }) {
 }
 
 
-function* logoutUser({ token, success }) {
-
+function* logoutUser({ token, success, failure }) {
+    yield put(startLoader())
     try {
-        const response = yield postRequest({ API: `${api.URL.LOGOUT}`, DATA: {} });
+        const response = yield postRequest({ API: `${api.URL.LOGOUT}`, DATA: token });
         if (response.status === STATUS_CODE.unAuthorized) {
+
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-            yield put(setAuthorization(null))
+
+            yield put(setAuthorization(null));
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            yield put(stopLoader());
         }
         else {
-            success();
+            yield put(setAuthorization(null));
+            yield put(stopLoader());
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
+        console.log('catch', error)
+        yield put(stopLoader());
         return;
     }
 }

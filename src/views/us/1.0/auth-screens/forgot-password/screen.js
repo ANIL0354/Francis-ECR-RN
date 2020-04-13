@@ -15,6 +15,8 @@ export const Screen = ({
 }) => {
     const [emailSent, setEmailSent] = useState(false);
     const [email, setEmail] = useState('');
+    const largeScaledFont = scaleText(18);
+    const mediumScaledFont = scaleText(16)
     return (
         <AuthHoc
             rightIcon={MENU_LOGO}
@@ -28,8 +30,8 @@ export const Screen = ({
                 <Text
                     style={{
                         ...styles.subHeaderText,
-                        fontSize: scaleText(18).fontSize,
-                        lineHeight: scaleText(18).lineHeight
+                        fontSize: largeScaledFont.fontSize,
+                        lineHeight: largeScaledFont.lineHeight
                     }}>
                     {'Forgot Password'}
                 </Text>
@@ -42,8 +44,8 @@ export const Screen = ({
                             fontWeight: 'bold',
                             textAlign: 'center',
                             marginVertical: 5,
-                            fontSize: scaleText(18).fontSize,
-                            lineHeight: scaleText(18).lineHeight
+                            fontSize: largeScaledFont.fontSize,
+                            lineHeight: largeScaledFont.lineHeight
                         }}>
                         {'Check your email!'}
                     </Text>
@@ -52,8 +54,8 @@ export const Screen = ({
                             textAlign: 'center',
                             marginTop: 10,
                             marginBottom: 50,
-                            fontSize: scaleText(16).fontSize,
-                            lineHeight: scaleText(16).lineHeight
+                            fontSize: mediumScaledFont.fontSize,
+                            lineHeight: mediumScaledFont.lineHeight
                         }}>
                         {'We just sent you a reset password link on your registered email address.'}
                     </Text>
@@ -66,8 +68,8 @@ export const Screen = ({
                             style={{
                                 textAlign: 'center',
                                 marginVertical: 5,
-                                fontSize: scaleText(16).fontSize,
-                                lineHeight: scaleText(16).lineHeight
+                                fontSize: mediumScaledFont.fontSize,
+                                lineHeight: mediumScaledFont.lineHeight
                             }}>
                             {"Didn't receive the link?"}
                         </Text>
@@ -77,10 +79,8 @@ export const Screen = ({
                             }, (response) => {
                                 setEmailSent(true);
                                 stopLoader();
-                                console.log('res', response.msg)
                             }, (response) => {
                                 stopLoader();
-                                console.log('res', response.msg)
                             })
                         }>{'Resend'}</Text>
                     </View>
@@ -91,8 +91,8 @@ export const Screen = ({
                         style={{
                             textAlign: 'center',
                             marginTop: 10,
-                            fontSize: scaleText(18).fontSize,
-                            lineHeight: scaleText(18).lineHeight
+                            fontSize: largeScaledFont.fontSize,
+                            lineHeight: largeScaledFont.lineHeight
                         }}>
                         {'We will email you a link to reset your password.'}
                     </Text>
@@ -105,10 +105,8 @@ export const Screen = ({
                                 }, (response) => {
                                     setEmailSent(true);
                                     stopLoader();
-                                    console.log('res', response.msg)
                                 }, (response) => {
                                     stopLoader();
-                                    console.log('res', response.msg)
                                 })
                             }}
                         />

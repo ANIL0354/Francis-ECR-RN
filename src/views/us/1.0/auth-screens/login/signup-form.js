@@ -49,7 +49,6 @@ const Form = ({
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     onDateChange={(date) => {
-                        // console.warn('date', date);
                         changeField('signup', STRINGS.DOB_INPUT, date)
                     }}
                     saveDateString={(date) => {
@@ -88,7 +87,6 @@ const Form = ({
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
-                        // console.warn('country code', value);
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     returnKeyType={'go'}

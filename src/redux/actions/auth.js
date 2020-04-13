@@ -14,10 +14,10 @@ export const setAuthorization = (userToken) => {
     };
 };
 
-export const checkLogin = (credentials, success, failure) => {
+export const checkLogin = (data, success, failure) => {
     return {
         type: CHECK_LOGIN,
-        credentials,
+        data,
         success,
         failure
     }
@@ -64,10 +64,8 @@ export const sendRecoveryEmail = (data, success, failure) => {
     }
 }
 
-export const logout = (token, success) => {
+export const logout = (token, success, failure) => {
     return {
-        type: LOGOUT_USER,
-        token,
-        success
+        type: LOGOUT_USER, token, success, failure
     }
 };

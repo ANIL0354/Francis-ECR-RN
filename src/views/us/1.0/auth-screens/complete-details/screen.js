@@ -14,7 +14,6 @@ export const Screen = ({
     userInfo,
     stopLoader
 }) => {
-    // console.log('userInfo complete screen', userInfo);
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
     return (
@@ -60,11 +59,9 @@ export const Screen = ({
                                 subscribe: subscribed
                             }, (response) => {
                                 stopLoader();
-                                console.log('res', response.msg);
                                 // navigation.navigate('HOME_SCREEN');
                             }, (response) => {
                                 stopLoader();
-                                console.log('res', response.msg)
                             })
                         }}
                     />

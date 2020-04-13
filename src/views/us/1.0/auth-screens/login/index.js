@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     registerUser: (data, success, failure) => dispatch(registerUser(data, success, failure)),
-    checkLogin: (credentials, success, failure) => dispatch(checkLogin(credentials, success, failure)),
+    checkLogin: (data, success, failure) => dispatch(checkLogin(data, success, failure)),
     stopLoader: () => dispatch(stopLoader()),
     socialLogin: (data, success, failure) => dispatch(socialLogin(data, success, failure))
   }

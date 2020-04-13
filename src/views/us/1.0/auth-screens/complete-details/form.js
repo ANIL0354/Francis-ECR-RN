@@ -110,7 +110,6 @@ const Form = ({
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
                     setCallingCode={(value) => {
-                        // console.warn('country code', value);
                         changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     returnKeyType={'go'}
