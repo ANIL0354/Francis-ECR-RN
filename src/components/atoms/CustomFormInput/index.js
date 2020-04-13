@@ -21,6 +21,8 @@ const CustomFormInput = ({
         <View style={{ justifyContent: 'center' }}>
             <TextInput
                 placeholder={placeholder}
+                placeholderTextColor={'black'}
+            underlineColorAndroid = {"transparent"}
                 style={{
                     borderColor: 'black',
                     borderRadius: 5,

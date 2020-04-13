@@ -45,8 +45,63 @@ const styles = StyleSheet.create({
         // marginVertical: 20,
         padding: 10
     },
-    iconContainerStyle: { alignContent: 'flex-start', alignSelf: 'flex-start' },
-    socialButton: { backgroundColor: 'darkblue', color: 'white', padding: 0, width: 200, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }
+    iconContainerStyle: { 
+        alignContent: 'flex-start', 
+        alignSelf: 'flex-start' 
+    },
+    socialButton: { 
+        backgroundColor: 'darkblue', 
+        color: 'white', 
+        padding: 0, 
+        width: 200, 
+        justifyContent: 'space-evenly', 
+        height: 30, 
+        marginVertical: 5 
+    },
+    loginSubmit:{ 
+        backgroundColor: '#009000', 
+        maxWidth: 200, 
+        minWidth: 200, 
+        marginBottom: 10, 
+        alignSelf: 'flex-end' 
+    },
+    loginSubmitTitle: {
+        textAlign: 'center',
+        flexWrap: 'wrap',
+    },
+    facebookButton: {
+        backgroundColor: '#3b5998',
+        justifyContent: 'space-evenly',
+        height: 30,
+        maxWidth: 150,
+        minWidth: 150,
+        minHeight: 50,
+        marginVertical: 5
+    },
+    facebookButtonTitle: {
+        textAlign: 'center',
+        flexWrap: 'wrap',
+    },
+    googleButton: {
+        backgroundColor: '#4c8bf5',
+        justifyContent: 'space-evenly',
+        height: 30,
+        maxWidth: 150,
+        minWidth: 150,
+        minHeight: 50,
+        marginVertical: 5
+    },
+    googleButtonTitle: {
+        textAlign: 'center',
+        flexWrap: 'wrap',
+        margin: 0,
+        padding: 10,
+    },
+    socialButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10
+    }
 });
 
 export default styles;
