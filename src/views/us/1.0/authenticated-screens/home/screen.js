@@ -25,6 +25,7 @@ export const Screen = ({
                     <Text
                         style={{
                             ...styles.subHeaderText,
+                            textTransform: 'uppercase',
                             height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
                             fontSize: scaleText(18).fontSize,
                             lineHeight: scaleText(18).lineHeight

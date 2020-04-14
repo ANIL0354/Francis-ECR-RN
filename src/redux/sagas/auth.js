@@ -45,14 +45,14 @@ function* registerNewUser({ data, success, failure }) {
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
             return;
         }
-        if (response.statusCode !== STATUS_CODE.successful) {
+
+        else if (response.statusCode === 400) {
             failure(response.data);
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
-            success(response.data);
-            yield put(stopLoader());
+            success(response.data)
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }

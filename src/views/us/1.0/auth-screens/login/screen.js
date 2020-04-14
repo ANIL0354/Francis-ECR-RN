@@ -207,8 +207,6 @@ export const Screen = ({
                                         country: formData.country,
                                         subscribe: subscribed
                                     }, (response) => {
-                                        console.log('')
-                                        // navigation.navigate('LOGIN_SCREEN');
                                         stopLoader();
                                         setSignUpTab(false);
                                     }, (response) => {

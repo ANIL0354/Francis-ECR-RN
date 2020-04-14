@@ -101,8 +101,8 @@ const validator = values => {
         errors[STRINGS.PHONE_NUMBER] =
             VALIDATION_MESSAGES.PHONE_INVALID;
     }
-    if (values[STRINGS.PHONE_NUMBER] && (values[STRINGS.PHONE_NUMBER].length < 8 || values[STRINGS.PHONE_NUMBER].length > 15)) {
-        errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 8-15 characters long.'
+    if (values[STRINGS.PHONE_NUMBER] && (values[STRINGS.PHONE_NUMBER].length < 7 || values[STRINGS.PHONE_NUMBER].length > 15)) {
+        errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 7-15 characters long.'
     }
     if (!values[STRINGS.RE_PASSWORD_INPUT_NAME]) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
