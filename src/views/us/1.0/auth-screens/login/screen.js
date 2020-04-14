@@ -187,7 +187,6 @@ export const Screen = ({
                                 setSubscribed={setSubscribed}
                                 subscribed={subscribed}
                                 onSubmit={(formData) => {
-                                    console.warn('formData', formData)
                                     var dobStamp = new Date(formData.dob);
                                     dobStamp = new Date(formData.dob).getTime();
                                     registerUser({
