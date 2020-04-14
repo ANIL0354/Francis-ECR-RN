@@ -33,6 +33,7 @@ function* registerNewUser({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
         if (response.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
             return;
         }
@@ -59,6 +60,7 @@ function* checkLogin({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
@@ -75,6 +77,7 @@ function* checkLogin({ data, success, failure }) {
     }
     catch (error) {
         console.log('catch', error)
+        yield put(stopLoader());
         return;
     }
 }
@@ -85,6 +88,7 @@ function* checkSocialLogin({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
@@ -102,6 +106,7 @@ function* checkSocialLogin({ data, success, failure }) {
     }
     catch (error) {
         console.log('catch', error)
+        yield put(stopLoader());
         return;
     }
 };
@@ -112,6 +117,7 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.FORGOT_PASSWORD}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
@@ -127,6 +133,7 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
     }
     catch (error) {
         console.log('catch', error)
+        yield put(stopLoader());
         return;
     }
 };
@@ -136,21 +143,26 @@ function* completeUserProfile({ data, success, failure }) {
         const response = yield postRequest({ API: `${api.URL.CHALLENGES}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(stopLoader());
             return;
         }
         else if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
+            yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
             success(response.data);
+            yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }
     catch (error) {
+        yield put(stopLoader());
         return;
     }
     finally {
+        yield put(stopLoader());
     }
 }
 

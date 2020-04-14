@@ -203,6 +203,7 @@ export const Screen = ({
                                         country: formData.country,
                                         subscribe: subscribed
                                     }, (response) => {
+                                        setSignUpTab(false)
                                         stopLoader();
                                     }, (response) => {
                                         stopLoader();

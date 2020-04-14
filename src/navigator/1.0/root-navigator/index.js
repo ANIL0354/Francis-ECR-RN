@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { SplashScreen } from '../../../views/us/1.0/splash/screen.js';
+import Toast from 'react-native-simple-toast';
 import AuthNavigator from '../authentication';
 import AuthenticatedNavigator from '../authenticated';
 import { connect } from 'react-redux';
@@ -11,6 +8,10 @@ import { connect } from 'react-redux';
 const RootNavigator = ({
     userToken
 }) => {
+    NetInfo.addEventListener(state => {
+        console.log('state', state)
+        Toast.show(state, Toast.LONG, Toast.BOTTOM);
+    });
     const [userAuthenticated, setUserAuthenticated] = useState(null)
     useEffect(() => {
         setUserAuthenticated(userToken)

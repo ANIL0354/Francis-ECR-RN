@@ -57,7 +57,7 @@ export const Screen = ({
                             fontSize: mediumScaledFont.fontSize,
                             lineHeight: mediumScaledFont.lineHeight
                         }}>
-                        {'We just sent you a reset password link on your registered email address.'}
+                        {'Reset password link has been sent to your email address.'}
                     </Text>
 
                     <Button title={'LOGIN'}
