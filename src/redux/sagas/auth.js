@@ -39,20 +39,20 @@ function* registerNewUser({ data, success, failure }) {
         })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
-        if (response.statusCode === STATUS_CODE.unAuthorized) {
+        if (response.data.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
             return;
         }
-
-        else if (response.statusCode === 400) {
+        if (response.data.statusCode !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
-            success(response.data)
+            success(response.data);
+            yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
     }

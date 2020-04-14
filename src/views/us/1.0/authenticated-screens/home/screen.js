@@ -38,7 +38,7 @@ export const Screen = ({
             <View>
                 <Text style={{ textAlign: 'center', marginTop: 30 }}>{'Home screen content coming soon.'}</Text>
             </View>
-            <Text style={{ backgroundColor: '#009000', maxWidth: 100, textAlign: 'center', color: 'white', minWidth: 100, marginVertical: 20, padding: 10, alignSelf: 'center' }}
+            <Text style={{ backgroundColor: '#009000', maxWidth: 100, textAlign: 'center', color: 'white', textTransform: 'uppercase', minWidth: 100, marginVertical: 20, padding: 10, alignSelf: 'center' }}
                 onPress={() => Alert.alert(
                     'Logout',
                     'Are you sure you want to logout?',
