@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import { APP_LOGO, MENU_LOGO, USER_ICON, MAIL_ICON } from '../../../../../shared/constants';
@@ -38,7 +38,19 @@ export const Screen = ({
                 <Text style={{ textAlign: 'center', marginTop: 30 }}>{'Home screen content coming soon.'}</Text>
             </View>
             <Text style={{ backgroundColor: '#009000', maxWidth: 100, textAlign: 'center', color: 'white', minWidth: 100, marginVertical: 20, padding: 10, alignSelf: 'center' }}
-                onPress={() => logout(userToken, () => { }, () => { })}>{STRINGS.LOGOUT}</Text>
+                onPress={() => Alert.alert(
+                    'Logout',
+                    'Are you sure you want to logout?',
+                    [{
+                        text: 'Cancel',
+                        onPress: () => { }
+                    },
+                    {
+                        text: 'Confirm',
+                        onPress: () => logout(userToken, () => { }, () => { })
+                    }
+                    ]
+                )}>{STRINGS.LOGOUT}</Text>
         </AppHoc >
     );
 }

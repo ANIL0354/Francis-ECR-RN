@@ -22,6 +22,7 @@ const Form = ({
             <Field
                 name={STRINGS.EMAIL_INPUT_NAME}
                 component={CustomFormInput}
+                keyboardType={'email-address'}
                 placeholder={STRINGS.LOGIN_EMAIL_PLACEHOLDER}
                 returnKeyType={'next'}
             />
@@ -33,14 +34,14 @@ const Form = ({
                 placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
             />
             {/* <Captcha /> */}
-            <Text style={{ textAlign: 'center' }}>{'Or Connect With'}</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 5 }}>{'Or Connect with'}</Text>
             <View style={styles.socialButtonContainer}>
                 <Button
                     icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
                     titleStyle={styles.googleButtonTitle}
                     iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
                     buttonStyle={styles.googleButton}
-                    title={'Log In with Google'} 
+                    title={'Log In with Google'}
                     onPress={googleAuth} />
                 <Button
                     icon={<Image source={FACEBOOK_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
@@ -51,7 +52,7 @@ const Form = ({
                     onPress={facebookAuth} />
 
             </View>
-            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 2, marginVertical: 15 }} />
+            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 1.5, marginVertical: 20 }} />
             <Button
                 titleStyle={styles.loginSubmitTitle}
                 buttonStyle={styles.loginSubmit}

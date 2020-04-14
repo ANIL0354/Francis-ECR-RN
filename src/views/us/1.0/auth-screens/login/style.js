@@ -45,29 +45,30 @@ const styles = StyleSheet.create({
         // marginVertical: 20,
         padding: 10
     },
-    iconContainerStyle: { 
-        alignContent: 'flex-start', 
-        alignSelf: 'flex-start' 
+    iconContainerStyle: {
+        alignContent: 'flex-start',
+        alignSelf: 'flex-start'
     },
-    socialButton: { 
-        backgroundColor: 'darkblue', 
-        color: 'white', 
-        padding: 0, 
-        width: 200, 
-        justifyContent: 'space-evenly', 
-        height: 30, 
-        marginVertical: 5 
+    socialButton: {
+        backgroundColor: 'darkblue',
+        color: 'white',
+        padding: 0,
+        width: 200,
+        justifyContent: 'space-evenly',
+        height: 30,
+        marginVertical: 5
     },
-    loginSubmit:{ 
-        backgroundColor: '#009000', 
-        maxWidth: 200, 
-        minWidth: 200, 
-        marginBottom: 10, 
-        alignSelf: 'flex-end' 
+    loginSubmit: {
+        backgroundColor: '#009000',
+        maxWidth: 200,
+        minWidth: 200,
+        marginBottom: 10,
+        alignSelf: 'flex-end'
     },
     loginSubmitTitle: {
         textAlign: 'center',
         flexWrap: 'wrap',
+        textTransform: 'uppercase'
     },
     facebookButton: {
         backgroundColor: '#3b5998',
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     socialButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10
+        marginBottom: 15
     }
 });
 

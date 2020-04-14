@@ -22,13 +22,13 @@ const CustomFormInput = ({
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor={'black'}
-            underlineColorAndroid = {"transparent"}
+                underlineColorAndroid={"transparent"}
                 style={{
                     borderColor: 'black',
                     borderRadius: 5,
                     borderWidth: 0.8,
                     height: 2.5 * scaledFont.lineHeight,
-                    marginVertical: 10,
+                    marginBottom: 10,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
                     paddingHorizontal: 10,
@@ -47,8 +47,7 @@ const CustomFormInput = ({
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-                height: secureTextEntry ?
-                    2 * scaledFont.lineHeight : scaledFont.lineHeight,
+                height: 2 * scaledFont.lineHeight,
                 ...style
             }}>{validationMessage}</Text>
         </View>

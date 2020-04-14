@@ -103,7 +103,6 @@ export const Screen = ({
                 name: userInfo.user.givenName,
                 surname: userInfo.user.familyName
             }, (response) => {
-                // navigation.navigate('HOME_SCREEN');
                 stopLoader();
             }, (response) => {
                 stopLoader();
@@ -123,9 +122,7 @@ export const Screen = ({
 
     return (
         <AuthHoc
-            rightIcon={MENU_LOGO}
             leftIcon={APP_LOGO}
-            centerIcon={null}
             toastVisibility={toastVisibility}
             toastMessage={toastMessage}
         >
@@ -190,6 +187,7 @@ export const Screen = ({
                                 setSubscribed={setSubscribed}
                                 subscribed={subscribed}
                                 onSubmit={(formData) => {
+                                    console.warn('formData', formData)
                                     var dobStamp = new Date(formData.dob);
                                     dobStamp = new Date(formData.dob).getTime();
                                     registerUser({
@@ -234,6 +232,7 @@ export const Screen = ({
 
                         {!signUpTab && <Text style={{
                             marginLeft: 5,
+                            marginTop: 30,
                             color: '#0091ff',
                             textAlign: 'center'
                         }} onPress={() =>

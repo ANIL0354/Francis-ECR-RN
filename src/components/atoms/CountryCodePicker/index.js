@@ -14,8 +14,11 @@ const CountryCodePicker = ({
     fontSize = 14,
     style,
     input,
+    placeholder,
+    countryDrop = false,
     meta: { touched, error, visited },
-    setCallingCode = () => { }
+    setCallingCode = () => { },
+    setSelectedCountry = () => { }
 }) => {
     const scaledFont = scaleText(fontSize)
     const [countryCode, setCountryCode] = useState('')
@@ -24,9 +27,9 @@ const CountryCodePicker = ({
     const [withCountryNameButton, setWithCountryNameButton] = useState(false)
     const [withFlag, setWithFlag] = useState(true)
     const [withEmoji, setWithEmoji] = useState(true)
-    const [withFilter, setWithFilter] = useState(false)
+    const [withFilter, setWithFilter] = useState(true)
     const [withAlphaFilter, setWithAlphaFilter] = useState(false)
-    const [withCallingCode, setWithCallingCode] = useState(true)
+    const [withCallingCode, setWithCallingCode] = useState(countryDrop ? false : true)
     const onSelect = (country) => {
         setCountryCode(country.cca2)
         setCountry(country)
@@ -42,7 +45,7 @@ const CountryCodePicker = ({
                     borderRadius: 5,
                     borderWidth: 0.8,
                     height: 2.5 * scaledFont.lineHeight,
-                    marginTop: 10,
+                    marginTop: 0,
                     justifyContent: 'center',
                     alignContent: 'center',
                     fontSize: scaledFont.fontSize,
@@ -81,8 +84,9 @@ const CountryCodePicker = ({
                     }}
                     onSelect={(value) => {
                         setShowCountries(false);
-                        setCountryCode(value.cca2)
-                        setCountry(value.country)
+                        setCountryCode(value.cca2);
+                        setCountry(value.country);
+                        setSelectedCountry(value.name);
                         setCallingCode(value.callingCode[0]);
                     }}
                     onClose={() => {
@@ -95,13 +99,13 @@ const CountryCodePicker = ({
                     style={{
                         color: 'darkgrey'
                     }}
-                    placeholder={'Country Code'}
+                    placeholder={placeholder}
                     visible
                 />
                 {country !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
-                            value={`+${input.value}`}
+                            value={countryDrop ? `${input.value}` : `+${input.value}`}
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',
@@ -120,7 +124,7 @@ const CountryCodePicker = ({
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-                height: scaledFont.lineHeight,
+                height: 2 * scaledFont.lineHeight,
                 ...style
             }}>{validationMessage}</Text>
         </View>

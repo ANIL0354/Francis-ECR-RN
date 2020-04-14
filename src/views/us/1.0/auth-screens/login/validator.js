@@ -38,7 +38,7 @@ const validator = values => {
             values[STRINGS.NAME_INPUT]
         )
     ) {
-        errors[STRINGS.NAME_INPUT] = 'Can only have alphabets.';
+        errors[STRINGS.NAME_INPUT] = 'Name cannot have digits or special symbols.';
     }
     if (!values[STRINGS.SURNAME_INPUT]) {
         errors[STRINGS.SURNAME_INPUT] =
@@ -52,7 +52,7 @@ const validator = values => {
             values[STRINGS.SURNAME_INPUT]
         )
     ) {
-        errors[STRINGS.SURNAME_INPUT] = 'Can only have alphabets.';
+        errors[STRINGS.SURNAME_INPUT] = 'Surname cannot have digits or special symbols.';
     }
     if (!values[STRINGS.DOB_INPUT]) {
         errors[STRINGS.DOB_INPUT] =
@@ -70,7 +70,7 @@ const validator = values => {
             values[STRINGS.CITY_INPUT]
         )
     ) {
-        errors[STRINGS.CITY_INPUT] = 'Can only have alphabets.';
+        errors[STRINGS.CITY_INPUT] = 'City cannot have digits or special symbols.';
     }
     if (!values[STRINGS.COUNTRY_INPUT]) {
         errors[STRINGS.COUNTRY_INPUT] =
@@ -84,7 +84,7 @@ const validator = values => {
             values[STRINGS.COUNTRY_INPUT]
         )
     ) {
-        errors[STRINGS.COUNTRY_INPUT] = 'Can only have alphabets.';
+        errors[STRINGS.COUNTRY_INPUT] = 'Country cannot have digits or special symbols.';
     }
     if (!values[STRINGS.COUNTRY_CODE_INPUT]) {
         errors[STRINGS.COUNTRY_CODE_INPUT] =
@@ -101,6 +101,9 @@ const validator = values => {
         errors[STRINGS.PHONE_NUMBER] =
             VALIDATION_MESSAGES.PHONE_INVALID;
     }
+    if (values[STRINGS.PHONE_NUMBER] && (values[STRINGS.PHONE_NUMBER].length < 8 || values[STRINGS.PHONE_NUMBER].length > 15)) {
+        errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 8-15 characters long.'
+    }
     if (!values[STRINGS.RE_PASSWORD_INPUT_NAME]) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.RE_ENTER_PASSWORD;
@@ -109,7 +112,7 @@ const validator = values => {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
     }
-    if (values[STRINGS.RE_PASSWORD_INPUT_NAME] && (values[STRINGS.RE_PASSWORD_INPUT_NAME].length < 6 || values[STRINGS.RE_PASSWORD_INPUT_NAME].length > 8)) {
+    if (values[STRINGS.RE_PASSWORD_INPUT_NAME] && (values[STRINGS.RE_PASSWORD_INPUT_NAME].length < 6)) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.PASSWORD_LENGTH_ERROR;
     }

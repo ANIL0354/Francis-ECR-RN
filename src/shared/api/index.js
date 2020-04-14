@@ -1,5 +1,5 @@
-const SERVER_URL = process.env.REACT_APP_API_URL || 'http://3.230.70.17:4000'; //Live URL
-const API_VERSION = process.env.REACT_API_VERSION || '/v1'
+const SERVER_URL = 'http://3.230.70.17:4000'; //Live URL
+const API_VERSION = '/v1'
 
 module.exports = {
   URL: {

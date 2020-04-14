@@ -69,14 +69,19 @@ const Form = ({
             <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
                 <Field
                     name={STRINGS.COUNTRY_INPUT}
-                    component={CustomFormInput}
-                    placeholder={STRINGS.COUNTRY_PLACEHOLDER}
-                    returnKeyType={'next'}
+                    component={CountryCodePicker}
+                    setSelectedCountry={(value) => {
+                        changeField('signup', STRINGS.COUNTRY_INPUT, value);
+                    }}
+                    returnKeyType={'go'}
+                    countryDrop={true}
+                    placeholder={'Country'}
                     style={{ minWidth: 150, maxWidth: 150 }}
                 />
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
                     component={CustomFormInput}
+                    keyboardType={'email-address'}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
                     style={{ minWidth: 150, maxWidth: 150 }}
@@ -90,14 +95,15 @@ const Form = ({
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
                     }}
                     returnKeyType={'go'}
+                    placeholder={'Country Code'}
                     style={{ minWidth: 150, maxWidth: 150 }}
-                    placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                 />
                 <Field
                     name={STRINGS.PHONE_NUMBER}
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
+                    maxLength={15}
                     style={{ minWidth: 150, maxWidth: 150 }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
@@ -108,6 +114,7 @@ const Form = ({
                     component={CustomFormInput}
                     secureTextEntry={true}
                     returnKeyType={'next'}
+                    maxLength={15}
                     style={{ minWidth: 150, maxWidth: 150 }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                 />
@@ -116,6 +123,7 @@ const Form = ({
                     component={CustomFormInput}
                     secureTextEntry={true}
                     returnKeyType={'go'}
+                    maxLength={15}
                     style={{ minWidth: 150, maxWidth: 150 }}
                     placeholder={STRINGS.RE_PASSWORD_PLACEHOLDER}
                 />
@@ -128,11 +136,11 @@ const Form = ({
                 checkedIcon={CHECKBOX_ACTIVE}
                 uncheckedIcon={CHECKBOX_ICON}
             />
-            <Text style={{ textAlign: 'center', marginTop: -10 }}>{'Or Connect With'}</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 15 }}>{'Or Connect with'}</Text>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 10
+                marginBottom: 15
             }}>
                 <Button
                     icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
@@ -172,13 +180,14 @@ const Form = ({
                     title={'Log In with Facebook'} onPress={facebookAuth} />
 
             </View>
-            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 2, marginVertical: 15 }} />
+            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 1.5, marginVertical: 20 }} />
             <Button
                 titleStyle={{
                     textAlign: 'center',
                     flexWrap: 'wrap',
+                    textTransform: 'uppercase'
                 }}
-                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'flex-end' }}
+                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginBottom: 30, alignSelf: 'flex-end' }}
                 title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
 
         </React.Fragment>

@@ -51,6 +51,7 @@ const Form = ({
             <Field
                 name={STRINGS.EMAIL_INPUT_NAME}
                 component={CustomFormInput}
+                keyboardType={'email-address'}
                 placeholder={STRINGS.EMAIL_PLACEHOLDER}
                 returnKeyType={'next'}
             />
@@ -59,6 +60,7 @@ const Form = ({
                 titleStyle={{
                     textAlign: 'center',
                     flexWrap: 'wrap',
+                    textTransform: 'uppercase'
                 }}
                 buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginTop: 25, marginBottom: 10, alignSelf: 'flex-end' }}
                 title={STRINGS.SUBMIT} onPress={handleSubmit(onSubmit)} />

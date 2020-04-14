@@ -22,9 +22,9 @@ const AuthHoc = ({
                 <StatusBar barStyle="light-content" />
                 <SafeAreaView>
                     <AppHeader
-                        rightIcon={rightIcon}
-                        centerIcon={centerIcon}
-                        leftIcon={leftIcon}
+                        rightIcon={rightIcon ? rightIcon : null}
+                        centerIcon={centerIcon ? centerIcon : null}
+                        leftIcon={leftIcon ? leftIcon : null}
                     />
                     {children}
                 </SafeAreaView>

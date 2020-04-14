@@ -34,12 +34,12 @@ const CustomDatePicker = ({
                 cancelBtnText="Cancel"
                 style={{
                     padding: 0,
-                    margin: 0
+                    margin: 0,
                 }}
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateTouchBody: {
-                        marginTop: 10,
+                        marginTop: 0,
                         marginLeft: 6
                     },
                     dateIcon: {
@@ -65,6 +65,10 @@ const CustomDatePicker = ({
                         textAlign: 'left',
                         ...style
                     },
+                    datePickerCon: {
+                        backgroundColor: 'red',
+                        backfaceVisibility: false
+                    },
                     dateText: {
                         textAlign: 'left',
                         margin: 0,
@@ -76,7 +80,7 @@ const CustomDatePicker = ({
                         textAlign: 'left',
                         margin: 0,
                         alignSelf: 'flex-start',
-                        color: input.value ? 'black' : 'darkgrey',
+                        color: 'black',
                         // display: 'none',
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
@@ -91,7 +95,7 @@ const CustomDatePicker = ({
             <Text style={{
                 color: 'red',
                 paddingVertical: 0,
-                height: scaledFont.lineHeight,
+                height: 2 * scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
             }}>{validationMessage}</Text>

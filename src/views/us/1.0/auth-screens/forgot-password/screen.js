@@ -19,9 +19,7 @@ export const Screen = ({
     const mediumScaledFont = scaleText(16)
     return (
         <AuthHoc
-            rightIcon={MENU_LOGO}
             leftIcon={APP_LOGO}
-            centerIcon={null}
         >
             <View style={styles.childContainer}>
                 <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center' }} onPress={() => navigation.navigate('LOGIN_SCREEN')}>
@@ -61,7 +59,8 @@ export const Screen = ({
                     </Text>
 
                     <Button title={'LOGIN'}
-                        buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'center' }}
+                        titleStyle={{ textTransform: 'uppercase' }}
+                        buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'center', }}
                         onPress={() => navigation.navigate('LOGIN_SCREEN')} />
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 40 }}>
                         <Text
@@ -86,7 +85,7 @@ export const Screen = ({
                     </View>
 
                 </View>
-                : <View style={{ padding: 5 }}>
+                : <View style={{ padding: 5, justifyContent: 'center' }}>
                     <Text
                         style={{
                             textAlign: 'center',

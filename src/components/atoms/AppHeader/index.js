@@ -11,19 +11,20 @@ const AppHeader = ({
             <View style={{
                 flex: centerIcon && rightIcon ? 3 : 7
             }}>
-                {leftIcon && <Image source={leftIcon} />}
+                {leftIcon && <Image style={{ height: 35, width: 90 }} source={leftIcon} />}
             </View>
             <View style={{ flex: 1, height: '100%', justifyContent: 'space-between', alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center' }}>
-                {centerIcon && <TouchableOpacity onPress={() => alert('user icon pressed.')}>
+                {centerIcon && <TouchableOpacity onPress={() => { }}>
                     <Image
                         source={centerIcon}
                         style={{
+                            marginLeft: 10,
                             justifyContent: 'flex-start',
                             height: 20,
                             width: 20
                         }}
                     /></TouchableOpacity>}
-                {rightIcon && <TouchableOpacity onPress={() => alert('menu pressed')}>
+                {rightIcon && <TouchableOpacity onPress={() => { }}>
                     <Image
                         source={rightIcon}
                         style={{
