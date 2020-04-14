@@ -41,6 +41,7 @@ export const Screen = ({
                         style={{
                             fontWeight: 'bold',
                             textAlign: 'center',
+                            color: 'black',
                             marginVertical: 5,
                             fontSize: largeScaledFont.fontSize,
                             lineHeight: largeScaledFont.lineHeight
@@ -52,6 +53,7 @@ export const Screen = ({
                             textAlign: 'center',
                             marginTop: 10,
                             marginBottom: 50,
+                            color: 'black',
                             fontSize: mediumScaledFont.fontSize,
                             lineHeight: mediumScaledFont.lineHeight
                         }}>
@@ -66,6 +68,7 @@ export const Screen = ({
                         <Text
                             style={{
                                 textAlign: 'center',
+                                color: 'black',
                                 marginVertical: 5,
                                 fontSize: mediumScaledFont.fontSize,
                                 lineHeight: mediumScaledFont.lineHeight
@@ -90,6 +93,7 @@ export const Screen = ({
                         style={{
                             textAlign: 'center',
                             marginTop: 10,
+                            color: 'black',
                             fontSize: largeScaledFont.fontSize,
                             lineHeight: largeScaledFont.lineHeight
                         }}>
