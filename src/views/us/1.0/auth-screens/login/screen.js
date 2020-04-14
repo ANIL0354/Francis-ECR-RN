@@ -213,7 +213,6 @@ export const Screen = ({
                                         setSignUpTab(false);
                                     }, (response) => {
                                         stopLoader();
-                                        setSignUpTab(false);
                                     })
                                 }}
                             />
