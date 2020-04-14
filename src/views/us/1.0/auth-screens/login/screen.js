@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
 import {
     LoginManager,
@@ -120,6 +120,10 @@ export const Screen = ({
     const [toastVisibility, setToastVisibility] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
 
+    useEffect(() => {
+        setSubscribed(false);
+    }, [signUpTab])
+
     return (
         <AuthHoc
             leftIcon={APP_LOGO}
@@ -203,10 +207,13 @@ export const Screen = ({
                                         country: formData.country,
                                         subscribe: subscribed
                                     }, (response) => {
-                                        setSignUpTab(false)
+                                        console.log('')
+                                        // navigation.navigate('LOGIN_SCREEN');
                                         stopLoader();
+                                        setSignUpTab(false);
                                     }, (response) => {
                                         stopLoader();
+                                        setSignUpTab(false);
                                     })
                                 }}
                             />

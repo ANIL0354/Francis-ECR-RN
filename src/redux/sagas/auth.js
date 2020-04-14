@@ -1,4 +1,5 @@
 import { takeLatest, all, put, delay } from "redux-saga/effects";
+import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-simple-toast';
 import {
     SET_AUTHORIZATION,
@@ -29,6 +30,13 @@ function* setUserToken({ userToken }) {
 
 function* registerNewUser({ data, success, failure }) {
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
         if (response.statusCode === STATUS_CODE.unAuthorized) {
@@ -56,6 +64,13 @@ function* registerNewUser({ data, success, failure }) {
 
 function* checkLogin({ data, success, failure }) {
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
@@ -84,6 +99,13 @@ function* checkLogin({ data, success, failure }) {
 
 function* checkSocialLogin({ data, success, failure }) {
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
@@ -113,6 +135,13 @@ function* checkSocialLogin({ data, success, failure }) {
 
 function* sendRecoverPasswordEmail({ data, success, failure }) {
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.FORGOT_PASSWORD}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
@@ -140,6 +169,13 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
 
 function* completeUserProfile({ data, success, failure }) {
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         const response = yield postRequest({ API: `${api.URL.CHALLENGES}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
@@ -170,6 +206,13 @@ function* completeUserProfile({ data, success, failure }) {
 function* logoutUser({ token, success, failure }) {
     yield put(startLoader())
     try {
+        NetInfo.addEventListener((state) => {
+            if (!state.isConnected) {
+                stopLoader();
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                return;
+            }
+        })
         const response = yield postRequest({ API: `${api.URL.LOGOUT}`, DATA: token });
         if (response.status === STATUS_CODE.unAuthorized) {
 

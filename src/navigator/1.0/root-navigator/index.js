@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-simple-toast';
 import AuthNavigator from '../authentication';
 import AuthenticatedNavigator from '../authenticated';
+import { stopLoader } from '../../../redux/actions';
 import { connect } from 'react-redux';
 
 
 const RootNavigator = ({
-    userToken
+    userToken,
+    stopLoader,
 }) => {
-    NetInfo.addEventListener(state => {
-        console.log('state', state)
-        Toast.show(state, Toast.LONG, Toast.BOTTOM);
-    });
+    NetInfo.addEventListener((state) => {
+        if (!state.isConnected) {
+            stopLoader();
+            Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+        }
+    })
     const [userAuthenticated, setUserAuthenticated] = useState(null)
     useEffect(() => {
         setUserAuthenticated(userToken)
@@ -34,5 +39,9 @@ const mapStateToProps = state => {
         userToken: state.CommonReducer.userToken
     }
 }
-
-export default connect(mapStateToProps, null)(RootNavigator);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        stopLoader: () => dispatch(stopLoader()),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RootNavigator);
