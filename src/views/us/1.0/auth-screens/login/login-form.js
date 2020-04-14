@@ -34,7 +34,7 @@ const Form = ({
                 placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
             />
             {/* <Captcha /> */}
-            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 5 }}>{'Or Connect with'}</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 5, color: 'black' }}>{'Or Connect with'}</Text>
             <View style={styles.socialButtonContainer}>
                 <Button
                     icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}

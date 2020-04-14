@@ -136,7 +136,7 @@ const Form = ({
                 checkedIcon={CHECKBOX_ACTIVE}
                 uncheckedIcon={CHECKBOX_ICON}
             />
-            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 15 }}>{'Or Connect with'}</Text>
+            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 15, color: 'black' }}>{'Or Connect with'}</Text>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',

@@ -12,9 +12,9 @@ const Checkbox = ({
     return (
         <CheckBox
             title={title}
-            containerStyle={{ backgroundColor: 'transparent', marginLeft: 0, marginTop: -10, borderColor: 'transparent', paddingHorizontal: 0, }}
-            checkedIcon={<Image source={checkedIcon} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
-            uncheckedIcon={<Image source={uncheckedIcon} style={{ resizeMode: 'contain', height: 15, width: 15 }} height={80} width={80} />}
+            containerStyle={{ backgroundColor: 'transparent', maxWidth: '80%', marginLeft: 0, marginTop: -10, borderColor: 'transparent', paddingHorizontal: 0, }}
+            checkedIcon={<Image source={checkedIcon} style={{ height: 15, width: 15, resizeMode: 'center' }} height={15} width={15} />}
+            uncheckedIcon={<Image source={uncheckedIcon} style={{ height: 15, width: 15, resizeMode: 'center' }} height={15} width={15} />}
             onPress={(event) => toggleCheck(event)}
             checked={checked}
         />
