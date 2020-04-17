@@ -9,9 +9,12 @@ import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
-import { CAR } from '../../../../../shared/constants'
+import { CAR } from '../../../../../shared/constants';
+import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from "./style.js";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
+import CustomSlider from '../../../../../components/atoms/CustomSlider';
+import LocationSearch from '../../../../../components/atoms/LocationSearch';
 import { startLoader, stopLoader } from "../../../../../redux/actions";
 import { AskPermission, CheckPermission, requestGPSPermission } from '../../../../../helpers';
 
@@ -27,6 +30,7 @@ export const Screen = ({
     const [email, setEmail] = useState('');
     const [appState, setAppState] = useState('active');
     const [dateValue, onDateChange] = useState(null);
+    const [filterMenu, showFilterMenu] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null)
 
     const scaledFont = scaleText(14);
@@ -109,6 +113,7 @@ export const Screen = ({
             centerIcon={USER_ICON}
         >
 
+            {filterMenu && <AdvanceSearchFilter onClose={() => showFilterMenu(false)} />}
             <ScrollView >
                 <View style={styles.childContainer}>
                     <View style={styles.childContainer}>
@@ -214,6 +219,7 @@ export const Screen = ({
                             </View>
                             <CustomButton
                                 title={'Search Now'}
+                                onPress={() => showFilterMenu(true)}
                                 buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center' }}
                                 titleStyle={{ color: 'black' }} />
                         </View>
