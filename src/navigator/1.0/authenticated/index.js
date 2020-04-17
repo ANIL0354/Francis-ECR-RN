@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
 
-const AuthNavigator = () => {
+const AuthenticatedNavigator = () => {
 
   return (
     <NavigationContainer>
@@ -26,4 +26,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(AuthNavigator);
+export default connect(mapStateToProps)(AuthenticatedNavigator);

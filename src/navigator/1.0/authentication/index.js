@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
 
-const AuthenticatedNavigator = () => {
+const AuthNavigator = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator headerMode={'none'} initialRouteName={'LOGIN_SCREEN'} >
@@ -28,4 +28,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(AuthenticatedNavigator);
+export default connect(mapStateToProps, null)(AuthNavigator);

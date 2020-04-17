@@ -6,6 +6,10 @@ import {
     SET_PLATFORM_TYPE,
     STOP_LOADER,
     START_LOADER,
+    SET_GPS_ENABLED,
+    UPDATE_INTERNET_STATUS,
+    SET_LOCATION_ENABLED,
+    SET_NEVER_ASK_PERMISSION,
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -17,10 +21,13 @@ const initialCommonState = {
     platformType: null,
     rememberCredentials: null,
     loader: false,
+    gpsEnabled: false,
+    locationEnabled: false,
+    isNetConnected: true,
+    neverAskPermission: false,
 };
 
 const CommonReducer = (state = { ...initialCommonState }, action) => {
-
     switch (action.type) {
         case SET_AUTHORIZATION:
             return {
@@ -51,6 +58,26 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 rememberCredentials: action.credentials
+            }
+        case UPDATE_INTERNET_STATUS:
+            return {
+                ...state,
+                isNetConnected: action.isNetConnected
+            };
+        case SET_GPS_ENABLED:
+            return {
+                ...state,
+                gpsEnabled: action.gpsEnabled || false
+            }
+        case SET_LOCATION_ENABLED:
+            return {
+                ...state,
+                locationEnabled: action.locationEnabled || false
+            }
+        case SET_NEVER_ASK_PERMISSION:
+            return {
+                ...state,
+                neverAskPermission: action.neverAskPermission || false
             }
         case REHYDRATE:
             let common = ((action || {}).payload || {}).CommonReducer || initialCommonState

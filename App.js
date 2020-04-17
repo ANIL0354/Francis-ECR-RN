@@ -1,22 +1,7 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import InternetCheckWrapper from './src/components/hoc/InternetCheckWrapper';
 
 const {
   store,
@@ -28,7 +13,9 @@ const App = () => {
   return (
     <PersistGate persistor={persistor}>
       <Provider store={store}>
-        <RootNavigator />
+        <InternetCheckWrapper>
+          <RootNavigator />
+        </InternetCheckWrapper>
       </Provider>
     </PersistGate>
   );

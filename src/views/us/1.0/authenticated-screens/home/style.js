@@ -5,15 +5,17 @@ const styles = StyleSheet.create({
     childContainer: {
         flex: 1,
         backgroundColor: '#0091ff',
-        paddingHorizontal: 30,
-        paddingVertical: 25,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     subHeaderText: {
         color: 'white',
         textAlign: 'center',
-        textTransform: 'uppercase'
+        fontWeight: 'bold',
+        maxWidth: '50%',
+        marginBottom: 10,
     },
     authTabContainer: {
         flex: 1,

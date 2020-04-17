@@ -34,4 +34,4 @@ export const VALIDATION_MESSAGES = {
 export const STATUS_CODE = {
   successful: 200,
   unAuthorized: 401
-}
+};
