@@ -1,5 +1,7 @@
+import { CAR } from './icons';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const { STRINGS } = require(`./us/strings`);
+
 
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,3 +37,82 @@ export const STATUS_CODE = {
   successful: 200,
   unAuthorized: 401
 };
+
+export const FILTER_OPTIONS = [
+  {
+    title: 'Fuel Options'
+  },
+  {
+    title: 'Number of Seats'
+  },
+  {
+    title: 'Vehicle Type'
+  },
+  {
+    title: 'Transmission Options'
+  },
+  {
+    title: 'Free Days'
+  }
+];
+
+export const FUEL_OPTIONS = [
+  { title: 'Petrol' },
+  { title: 'Diesel' },
+  { title: 'CNG' },
+  { title: 'Bio Diesel' }
+];
+
+export const VEHICLE_TYPE_OPTIONS = [
+  { title: 'Cars' },
+  { title: 'Passenger Vans' },
+  { title: 'Recreational Vehicles' },
+  { title: 'Trucks & Vans' }
+];
+
+export const TRANSMISSION_OPTIONS = [
+  { title: 'Automatic' },
+  { title: 'Manual' },
+];
+
+export const POPULAR_PLACES_DATA = [
+  {
+    id: '1',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  }, {
+    id: '2',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  }, {
+    id: '3',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  }, {
+    id: '4',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  },
+  {
+    id: '5',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  },
+  {
+    id: '6',
+    icon: CAR,
+    availableCount: 29,
+    placeRange: 'Wellington to Auckland',
+    buttonText: 'See All'
+  }
+]

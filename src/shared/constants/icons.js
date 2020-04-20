@@ -10,3 +10,5 @@ export const MAIL_ICON = require(`../../assets/email_icon.png`);
 export const DIVIDING_LINE = require(`../../assets/dividing.png`);
 export const CAR = require(`../../assets/car.png`);
 export const CANCEL_ICON = require(`../../assets/cancel.png`);
+export const CAR_CHECKLIST = require(`../../assets/images/car_washer_checklist.png`);
+export const CAR_WASHER = require(`../../assets/images/car_washer.png`)

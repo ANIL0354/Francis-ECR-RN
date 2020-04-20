@@ -5,18 +5,19 @@ import { View, Text } from 'react-native';
 const CustomSlider = ({
     minValue = 0,
     maxValue = 10,
-    step = 1
+    step = 1,
+    sliderValue,
+    setSliderValue = () => { }
 }) => {
-    const [value, setValue] = useState(0);
     return (
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Slider
-                value={value}
+                value={sliderValue}
                 step={step}
                 minimumValue={minValue}
                 maximumValue={maxValue}
                 style={{ flex: 7 }}
-                onValueChange={value => setValue(value)}
+                onValueChange={value => setSliderValue(value)}
                 trackStyle={{
                     height: 6,
                     borderRadius: 5
@@ -25,7 +26,7 @@ const CustomSlider = ({
                 minimumTrackTintColor={'#0091ff'}
                 maximumTrackTintColor={'lightgray'}
             />
-            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', maxHeight: 35, fontSize: 16 }}>{value}</Text>
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', maxHeight: 35, fontSize: 16 }}>{sliderValue}</Text>
         </View>
     )
 }
