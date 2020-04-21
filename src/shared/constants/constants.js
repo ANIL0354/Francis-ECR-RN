@@ -1,4 +1,5 @@
 import { CAR } from './icons';
+import { NORMAL_CAR, PASSENGER_CAR, RECREATIONAL_CAR, TRUCKS } from './images';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const { STRINGS } = require(`./us/strings`);
 
@@ -114,5 +115,24 @@ export const POPULAR_PLACES_DATA = [
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
     buttonText: 'See All'
+  }
+];
+
+export const VEHICLE_TYPE_LISTING = [
+  {
+    title: 'Cars',
+    icon: NORMAL_CAR
+  },
+  {
+    title: 'Passenger Vans',
+    icon: PASSENGER_CAR
+  },
+  {
+    title: 'Recreational Vehicles',
+    icon: RECREATIONAL_CAR
+  },
+  {
+    title: 'Trucks & Vans',
+    icon: TRUCKS
   }
 ]

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Text } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
 const LocationSearch = () => {
+    const [address, setAddress] = useState('');
     return (<GooglePlacesAutocomplete
         placeholder="Search"
         minLength={2}
@@ -15,7 +16,10 @@ const LocationSearch = () => {
         onPress={(data, details = null) => {
             console.log(data);
             console.log(details);
+            setAddress(details.formatted_address);
         }}
+        setAddressText={address}
+        getAddressText={text => { setAddress(text); console.log(text) }}
         getDefaultValue={() => {
             return ''; // text input default value
         }}
@@ -50,6 +54,7 @@ const LocationSearch = () => {
                 backgroundColor: 'white',
                 position: 'absolute',
                 top: 44,
+                zIndex: 10,
                 // maxHeight: 50
             }
         }}

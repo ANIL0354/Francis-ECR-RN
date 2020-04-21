@@ -7,7 +7,8 @@ const PopularPlace = ({
     icon,
     availableCount,
     placeRange,
-    buttonText
+    buttonText,
+    onPress = () => { }
 }) => {
     return (
         <View style={styles.container}>
@@ -20,6 +21,7 @@ const PopularPlace = ({
             <CustomButton
                 title={buttonText}
                 titleStyle={{ color: 'white' }}
+                onPress={onPress}
                 buttonStyle={{ backgroundColor: '#0091ff', width: 150, alignSelf: 'center' }} />
         </View>
     )

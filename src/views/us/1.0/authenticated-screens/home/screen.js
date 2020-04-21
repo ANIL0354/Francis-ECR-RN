@@ -6,7 +6,7 @@ import NetInfo from '@react-native-community/netinfo';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { APP_LOGO, MENU_LOGO, USER_ICON, POPULAR_PLACES_DATA, CAR_WASHER, CAR_CHECKLIST } from '../../../../../shared/constants';
+import { APP_LOGO, MENU_LOGO, USER_ICON, CAR, CAR_WASHER, CAR_CHECKLIST } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
@@ -16,13 +16,17 @@ import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilt
 import styles from "./style.js";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { startLoader, stopLoader } from "../../../../../redux/actions";
+import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
 export const Screen = ({
     logout,
     userToken,
+    navigation,
     neverAskPermission,
     setLocationEnabled,
     setGpsEnabled,
+    popularPlaces,
+    getPopularPlaces,
     setNeverAskPermission,
     updateInternetStatus
 }) => {
@@ -35,10 +39,11 @@ export const Screen = ({
 
     const scaledFont = scaleText(14);
     useEffect(() => {
+        getPopularPlaces({}, () => { }, () => { });
         checkInternetConnection();
         checkLocationPermissions();
         AppState.addEventListener('change', handleAppStateChange);
-    })
+    }, [])
 
     const checkInternetConnection = () => {
         NetInfo.addEventListener((state) => {
@@ -229,15 +234,17 @@ export const Screen = ({
                     <FlatList
                         style={{ paddingHorizontal: 40, backgroundColor: 'white' }}
                         contentContainerStyle={{}}
-                        data={POPULAR_PLACES_DATA}
+                        data={popularPlaces}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => {
                             return (
                                 <PopularPlace
-                                    icon={item.icon}
-                                    availableCount={item.availableCount}
-                                    placeRange={item.placeRange}
-                                    buttonText={item.buttonText} />
+                                    icon={CAR}
+                                    availableCount={item.count}
+                                    placeRange={`${item._id.fromCity} to ${item._id.toCity}`}
+                                    buttonText={item.buttonText}
+                                    onPress={() => navigation.navigate('VEHICLE_SCREEN')}
+                                />
                             )
                         }}
                     />

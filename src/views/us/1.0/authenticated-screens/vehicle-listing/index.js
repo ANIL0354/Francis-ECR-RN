@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Screen } from "./screen";
-import { logout, setGpsEnabled, setLocationEnabled, setNeverAskPermission, updateInternetStatus, getPopularPlaces } from '../../../../../redux/actions';
+import { logout, setGpsEnabled, setLocationEnabled, setNeverAskPermission, updateInternetStatus } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
     return ({
@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
         locationEnabled: state.CommonReducer.locationEnabled,
         neverAskPermission: state.CommonReducer.neverAskPermission,
         isNetConnected: state.CommonReducer.isNetConnected,
-        popularPlaces: state.ListsReducer.popularPlaces
     });
 }
 const mapDispatchToProps = (dispatch) => {
@@ -19,7 +18,6 @@ const mapDispatchToProps = (dispatch) => {
         updateInternetStatus: status => dispatch(updateInternetStatus(status)),
         setLocationEnabled: status => dispatch(setLocationEnabled(status)),
         setNeverAskPermission: status => dispatch(setNeverAskPermission(status)),
-        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure))
     }
 }
-export const HomeScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);
+export const VehicleListing = connect(mapStateToProps, mapDispatchToProps)(Screen);
