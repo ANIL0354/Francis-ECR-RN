@@ -5,6 +5,13 @@ export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const SET_NEVER_ASK_PERMISSION = 'SET_NEVER_ASK_PERMISSION';
 export const SET_GPS_ENABLED = 'SET_GPS_ENABLED';
 export const SET_LOCATION_ENABLED = 'SET_LOCATION_ENABLED';
+export const SET_SEATS_VALUE = 'SET_SEATS_VALUE';
+export const SET_FREE_DAYS = 'SET_FREE_DAYS';
+export const SET_VEHICLE_TYPE = 'SET_VEHICLE_TYPE';
+export const SET_TRANSMISSION_TYPE = 'SET_TRANSMISSION_TYPE';
+export const SET_FUEL_TYPE = 'SET_FUEL_TYPE';
+export const SET_PICKUP_LOCATION = 'SET_PICKUP_LOCATION';
+export const SET_PICKUP_DATE = 'SET_PICKUP_DATE';
 
 export const setUserLocation = userLocation => ({
     type: SET_USER_LOCATION,
@@ -43,4 +50,53 @@ export const stopLoader = () => {
     return {
         type: STOP_LOADER,
     };
+};
+
+export const setFuelType = value => {
+    return {
+        type: SET_FUEL_TYPE,
+        value
+    }
+};
+
+export const setTransmissionType = value => {
+    return {
+        type: SET_TRANSMISSION_TYPE,
+        value
+    }
+};
+
+export const setVehicleType = value => {
+    return {
+        type: SET_VEHICLE_TYPE,
+        value
+    }
+};
+
+export const setFreeDays = value => {
+    return {
+        type: SET_FREE_DAYS,
+        value
+    }
+};
+
+export const setSeatsValue = value => {
+    return {
+        type: SET_SEATS_VALUE,
+        value
+    }
+};
+
+export const setPickupLocation = value => {
+    return {
+        type: SET_PICKUP_LOCATION,
+        value
+    }
+};
+
+export const setPickupDate = value => {
+    return {
+        type: SET_PICKUP_DATE,
+        value
+    }
 }

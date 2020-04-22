@@ -6,7 +6,7 @@ import NetInfo from '@react-native-community/netinfo';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { APP_LOGO, MENU_LOGO, USER_ICON, CAR, CAR_WASHER, CAR_CHECKLIST } from '../../../../../shared/constants';
+import { APP_LOGO, MENU_LOGO, USER_ICON, CAR, CAR_WASHER, CAR_CHECKLIST, SEARCH_ICON } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
@@ -14,26 +14,41 @@ import { STRINGS } from '../../../../../shared/constants/us/strings';
 import { CheckPermission } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from "./style.js";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import { startLoader, stopLoader } from "../../../../../redux/actions";
+import { FlatList, ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
 export const Screen = ({
     logout,
     userToken,
     navigation,
+    fuelType,
+    vehicleType,
+    transmissionType,
+    seatsValue,
+    freeDays,
     neverAskPermission,
     setLocationEnabled,
     setGpsEnabled,
     popularPlaces,
     getPopularPlaces,
+    setPickupLocation,
+    pickupLocation,
+    setSeatsValue,
+    setFuelType,
+    setPickupDate,
+    setFreeDays,
+    startLoader,
+    pickupDate,
+    stopLoader,
+    setVehicleType,
+    setTransmissionType,
     setNeverAskPermission,
     updateInternetStatus
 }) => {
     const [emailSent, setEmailSent] = useState(false);
     const [email, setEmail] = useState('');
     const [appState, setAppState] = useState('active');
-    const [dateValue, onDateChange] = useState(null);
+    const [dateValue, onDateChange] = useState(pickupDate);
     const [filterMenu, showFilterMenu] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null)
 
@@ -97,6 +112,7 @@ export const Screen = ({
         else {
             getUserLocation()
         }
+        stopLoader()
     }
 
     const getUserLocation = () => {
@@ -116,7 +132,20 @@ export const Screen = ({
             leftIcon={APP_LOGO}
             centerIcon={USER_ICON}
         >
-            {filterMenu && <AdvanceSearchFilter onClose={() => showFilterMenu(false)} />}
+            {filterMenu && <AdvanceSearchFilter
+
+                fuelType={fuelType}
+                vehicleType={vehicleType}
+                transmissionType={transmissionType}
+                seatsValue={seatsValue}
+                freeDays={freeDays}
+                setFuelType={setFuelType}
+                setTransmissionType={setTransmissionType}
+                setVehicleType={setVehicleType}
+                setFreeDays={setFreeDays}
+                setSeatsValue={setSeatsValue}
+                onClose={() => showFilterMenu(false)}
+            />}
             <ScrollView>
                 <View style={{ backgroundColor: '#0091ff', paddingBottom: 200 }}>
                     <View style={styles.childContainer}>
@@ -151,22 +180,23 @@ export const Screen = ({
                                             paddingBottom: 0,
                                             marginBottom: 0,
                                         }}
+                                        value={pickupLocation}
+                                        onChangeText={value => setPickupLocation(value)}
                                         returnKeyType={'next'}
                                     />
 
                                     <DatePicker
                                         mode="date"
-                                        placeholder={dateValue && `${moment(dateValue).format('DD-MM-YYYY')}`}
+                                        placeholder={dateValue ? `${moment(dateValue).format('DD-MM-YYYY')}` : 'Pick-up date'}
                                         format={'DD-MM-YYYY'}
                                         minDate={new Date()}
-                                        date={selectedDate}
                                         confirmBtnText="Confirm"
                                         cancelBtnText="Cancel"
                                         style={{
                                             padding: 0,
                                             margin: 0,
                                         }}
-                                        getDateStr={(date) => { onDateChange(date) }}
+                                        getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
                                         customStyles={{
                                             dateTouchBody: {
                                                 marginVertical: 5,
@@ -222,10 +252,16 @@ export const Screen = ({
                                         onDateChange={(date) => { setSelectedDate(date) }}
                                     />
                                 </View>
+                                <TouchableOpacity
+                                    onPress={() => showFilterMenu(true)}
+                                    style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottomColor: 'white', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderWidth: 1, marginBottom: 2 }}>
+                                    <Text style={{ color: 'white', fontSize: scaleText(18).fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
+                                    <Image source={SEARCH_ICON} />
+                                </TouchableOpacity>
                                 <CustomButton
                                     title={'Search Now'}
-                                    onPress={() => showFilterMenu(true)}
-                                    buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center' }}
+                                    onPress={() => navigation.navigate('VEHICLE_SCREEN')}
+                                    buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
                                     titleStyle={{ color: 'black' }} />
                             </View>
                         </View>

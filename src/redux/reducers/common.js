@@ -10,6 +10,13 @@ import {
     UPDATE_INTERNET_STATUS,
     SET_LOCATION_ENABLED,
     SET_NEVER_ASK_PERMISSION,
+    SET_SEATS_VALUE,
+    SET_FREE_DAYS,
+    SET_VEHICLE_TYPE,
+    SET_TRANSMISSION_TYPE,
+    SET_FUEL_TYPE,
+    SET_PICKUP_LOCATION,
+    SET_PICKUP_DATE
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -25,6 +32,13 @@ const initialCommonState = {
     locationEnabled: false,
     isNetConnected: true,
     neverAskPermission: false,
+    seatsValue: 0,
+    freeDays: 0,
+    vehicleType: 0,
+    transmissionType: 0,
+    fuelType: 0,
+    pickupLocation: '',
+    pickupDate: null
 };
 
 const CommonReducer = (state = { ...initialCommonState }, action) => {
@@ -78,6 +92,41 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 neverAskPermission: action.neverAskPermission || false
+            }
+        case SET_FUEL_TYPE:
+            return {
+                ...state,
+                fuelType: action.value
+            }
+        case SET_TRANSMISSION_TYPE:
+            return {
+                ...state,
+                transmissionType: action.value
+            }
+        case SET_VEHICLE_TYPE:
+            return {
+                ...state,
+                vehicleType: action.value
+            }
+        case SET_FREE_DAYS:
+            return {
+                ...state,
+                freeDays: action.value
+            }
+        case SET_SEATS_VALUE:
+            return {
+                ...state,
+                seatsValue: action.value
+            }
+        case SET_PICKUP_LOCATION:
+            return {
+                ...state,
+                pickupLocation: action.value
+            }
+        case SET_PICKUP_DATE:
+            return {
+                ...state,
+                pickupDate: action.value
             }
         case REHYDRATE:
             let common = ((action || {}).payload || {}).CommonReducer || initialCommonState

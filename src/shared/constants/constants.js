@@ -1,5 +1,11 @@
 import { CAR } from './icons';
-import { NORMAL_CAR, PASSENGER_CAR, RECREATIONAL_CAR, TRUCKS } from './images';
+import {
+  NORMAL_CAR,
+  PASSENGER_CAR,
+  RECREATIONAL_CAR,
+  TRUCKS,
+  BIG_NORMAL_CAR
+} from './images';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const { STRINGS } = require(`./us/strings`);
 
@@ -60,8 +66,7 @@ export const FILTER_OPTIONS = [
 export const FUEL_OPTIONS = [
   { title: 'Petrol' },
   { title: 'Diesel' },
-  { title: 'CNG' },
-  { title: 'Bio Diesel' }
+  { title: 'Electric' },
 ];
 
 export const VEHICLE_TYPE_OPTIONS = [
@@ -120,19 +125,82 @@ export const POPULAR_PLACES_DATA = [
 
 export const VEHICLE_TYPE_LISTING = [
   {
+    id: '1',
     title: 'Cars',
     icon: NORMAL_CAR
   },
   {
+    id: '2',
     title: 'Passenger Vans',
     icon: PASSENGER_CAR
   },
   {
+    id: '3',
     title: 'Recreational Vehicles',
     icon: RECREATIONAL_CAR
   },
   {
+    id: '4',
     title: 'Trucks & Vans',
     icon: TRUCKS
   }
-]
+];
+
+export const VEHICLE_DETAILS_LISTING = [
+  {
+    id: '1',
+    title: 'Hatch Back - Medium Size',
+    carImage: BIG_NORMAL_CAR,
+    freeDays: 2,
+    pickupLocation: 'Auckland Airport',
+    dropoffLocation: 'Wellington Airport',
+    seats: 5,
+    luggageCapacity: 4,
+    doors: 5,
+    conditioning: 'Air Conditioning',
+    transmission: 'Automatic',
+    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+  },
+  {
+    id: '2',
+    title: 'Passenger Vans',
+    carImage: BIG_NORMAL_CAR,
+    freeDays: 1,
+    pickupLocation: 'Auckland Airport',
+    dropoffLocation: 'Wellington Airport',
+    seats: 5,
+    luggageCapacity: 3,
+    doors: 10,
+    conditioning: 'Non-Air Conditioning',
+    transmission: 'Manual',
+    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+  },
+  {
+    id: '3',
+    title: 'Recreational Vehicles',
+    carImage: BIG_NORMAL_CAR,
+    freeDays: 5,
+    pickupLocation: 'Auckland Airport',
+    dropoffLocation: 'Wellington Airport',
+    seats: 5,
+    luggageCapacity: 2,
+    doors: 5,
+    conditioning: 'Air Conditioning',
+    transmission: 'Automatic',
+    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+  },
+  {
+    id: '4',
+    title: 'Trucks & Vans',
+    carImage: BIG_NORMAL_CAR,
+    freeDays: 2,
+    pickupLocation: 'Auckland Airport',
+    dropoffLocation: 'Wellington Airport',
+    seats: 5,
+    luggageCapacity: 5,
+    doors: 2,
+    conditioning: 'Air Conditioning',
+    transmission: 'Automatic',
+    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+  }
+];

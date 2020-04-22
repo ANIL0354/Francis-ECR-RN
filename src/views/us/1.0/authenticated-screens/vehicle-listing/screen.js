@@ -1,5 +1,18 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Image, ScrollView, FlatList } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    Image,
+    ScrollView,
+    FlatList,
+    Animated,
+    LayoutAnimation,
+    UIManager,
+    TouchableOpacity
+} from 'react-native';
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import {
     APP_LOGO,
@@ -9,158 +22,381 @@ import {
     BIG_NORMAL_CAR,
     CAR_SEATS_ICON,
     AC_ICON,
+    TURN_RIGHT,
     DOORS_ICON,
+    VEHICLE_DETAILS_LISTING,
     GEAR_ICON,
+    SEARCH_ICON,
     LUGGAGE_ICON
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from "./styles.js";
 import IconText from "../../../../../components/atoms/IconTextComponent";
+import CustomButton from "../../../../../components/atoms/CustomButton";
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
-
+    navigation,
+    fuelType,
+    vehicleType,
+    transmissionType,
+    seatsValue,
+    freeDays,
+    setPickupLocation,
+    pickupLocation,
+    setSeatsValue,
+    setFuelType,
+    setFreeDays,
+    startLoader,
+    stopLoader,
+    pickupDate,
+    setVehicleType,
+    setTransmissionType,
 }) => {
-    const scaledFont = scaleText(12);
     const [filterMenu, showFilterMenu] = useState(false);
+    const [modifySearch, setModifySearch] = useState(false);
+
+    const scaledLargerFont = scaleText(20);
+    const scaledLargeFont = scaleText(18);
+    const scaledMediumFont = scaleText(16);
+    const scaledSmallFont = scaleText(14);
+    const scaledSmallerFont = scaleText(12);
+
+    // let scale = new Animated.ValueXY({ x: 0, y: 0 });
+    let animatedValue = new Animated.Value(0);
+
+    useEffect(() => {
+    }, [modifySearch])
+
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
             leftIcon={APP_LOGO}
             centerIcon={USER_ICON}
         >
-            {filterMenu && <AdvanceSearchFilter onClose={() => showFilterMenu(false)} />}
-            <View style={styles.childContainer}>
-                <Text
-                    style={{
-                        ...styles.subHeaderText,
-                        height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
-                        fontSize: scaleText(20).fontSize,
-                        lineHeight: scaleText(20).lineHeight
-                    }}>
-                    {'Great deals on vehicle relocation'}
-                </Text>
-            </View>
-            <View style={{ backgroundColor: 'white' }}>
-                <Text
-                    style={{
-                        color: 'black',
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        paddingVertical: 10,
-                        maxWidth: '80%',
-                        alignSelf: 'center',
-                        height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
-                        fontSize: scaleText(18).fontSize,
-                        lineHeight: scaleText(18).lineHeight
-                    }}>
-                    {'We have found 20 vehicles available from Wellington.'}
-                </Text>
-                <FlatList
-                    style={{ paddingVertical: 10, borderTopColor: 'lightgray', borderBottomColor: 'lightgray', borderRightColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}
-                    contentContainerStyle={{}}
-                    data={VEHICLE_TYPE_LISTING}
-                    horizontal={true}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={{ flexDirection: 'row', paddingVertical: 5, backgroundColor: 'white' }}>
-                                <View style={{ flexDirection: 'column', paddingHorizontal: 5, borderRightColor: 'lightgray', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderBottomColor: 'transparent', borderWidth: 1, }}>
-                                    <Text style={{
-                                        fontSize: scaledFont.fontSize,
-                                        textAlign: 'center',
+            {filterMenu && <AdvanceSearchFilter
+
+                fuelType={fuelType}
+                vehicleType={vehicleType}
+                transmissionType={transmissionType}
+                seatsValue={seatsValue}
+                freeDays={freeDays}
+                setFuelType={setFuelType}
+                setTransmissionType={setTransmissionType}
+                setVehicleType={setVehicleType}
+                setFreeDays={setFreeDays}
+                setSeatsValue={setSeatsValue}
+                onClose={() => showFilterMenu(false)}
+            />}
+
+
+            {modifySearch &&
+                <View
+                    // onLayout={() => {
+                    //     LayoutAnimation.configureNext({
+                    //         duration: 250,
+                    //         create: {
+                    //             property: LayoutAnimation.Properties.scaleXY,
+                    //             type: 'easeIn'
+                    //         },
+                    //         delete: {
+                    //             property: LayoutAnimation.Properties.scaleXY,
+                    //             type: 'easeOut'
+                    //         }
+                    //     })
+                    // }}
+                    style={{ backgroundColor: '#0091ff', padding: 20, paddingVertical: 40 }}>
+                    <View style={{ backgroundColor: '#1e5e9e', minWidth: '100%', minHeight: 100, padding: 20 }}>
+                        <View style={{ flexDirection: 'column', minWidth: '100%', justifyContent: 'space-between', }}>
+                            {/* <LocationSearch /> */}
+                            <TextInput
+                                placeholder={'Pick-up location'}
+                                placeholderTextColor={'black'}
+                                underlineColorAndroid={"transparent"}
+                                style={{
+                                    borderColor: 'black',
+                                    borderRadius: 5,
+                                    borderWidth: 0.8,
+                                    backgroundColor: 'white',
+                                    height: 2.5 * scaledSmallerFont.lineHeight,
+                                    marginBottom: 10,
+                                    fontSize: scaledSmallerFont.fontSize,
+                                    lineHeight: scaledSmallerFont.lineHeight,
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 2,
+                                    paddingBottom: 0,
+                                    marginBottom: 0,
+                                }}
+                                value={pickupLocation}
+                                onChangeText={value => setPickupLocation(value)}
+                                returnKeyType={'next'}
+                            />
+
+                            <DatePicker
+                                mode="date"
+                                placeholder={pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : 'Pick-up date'}
+                                format={'DD-MM-YYYY'}
+                                minDate={new Date()}
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                style={{
+                                    padding: 0,
+                                    margin: 0,
+                                }}
+                                getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
+                                customStyles={{
+                                    dateTouchBody: {
+                                        marginVertical: 5,
+                                        minWidth: 280,
+                                        zIndex: 99999
+                                    },
+                                    dateIcon: {
+                                        padding: 0,
+                                        marginLeft: -40,
+                                        display: 'none'
+                                    },
+                                    dateInput: {
+                                        textAlign: 'left',
+                                        minWidth: '40%',
+                                        margin: 0,
+                                        backgroundColor: 'white',
+                                        padding: 0,
+                                        height: 2.5 * scaledSmallerFont.lineHeight,
+                                        borderColor: 'transparent',
+                                        borderColor: 'black',
+                                        borderRadius: 5,
+                                        borderWidth: 0.8,
+                                        fontSize: scaledSmallerFont.fontSize,
+                                        lineHeight: scaledSmallerFont.lineHeight,
+                                        paddingHorizontal: 10,
+                                        alignSelf: 'center',
+                                        paddingVertical: 2,
+                                        paddingBottom: 0,
+                                        marginBottom: 0,
+                                        textAlign: 'left',
+                                    },
+                                    datePickerCon: {
+                                        backgroundColor: 'red',
+                                        backfaceVisibility: false
+                                    },
+                                    dateText: {
+                                        textAlign: 'left',
+                                        margin: 0,
+                                        fontSize: scaledSmallerFont.fontSize,
+                                        lineHeight: scaledSmallerFont.lineHeight,
+                                        padding: 0
+                                    },
+                                    placeholderText: {
+                                        textAlign: 'left',
+                                        margin: 0,
+                                        alignSelf: 'flex-start',
                                         color: 'black',
-                                        textAlignVertical: 'center',
-                                    }}>{item.title}</Text>
-                                    <Image style={{ alignSelf: 'center' }} source={item.icon} />
-                                </View>
-                            </View>
-                        )
-                    }}
-                />
-                <Text
-                    onPress={() => showFilterMenu(true)}
-                    style={{
-                        color: 'gray',
-                        textAlign: 'center',
-                        paddingTop: 20,
-                        width: '100%',
-                        alignSelf: 'center',
-                        height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
-                        fontSize: scaleText(14).fontSize,
-                        lineHeight: scaleText(14).lineHeight
-                    }}>
-                    {'Advanced Filters'}
-                </Text>
-                <FlatList
-                    style={{ paddingVertical: 10, minHeight: 100 }}
-                    contentContainerStyle={{}}
-                    data={VEHICLE_TYPE_LISTING}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={{
-                                flexDirection: 'row',
-                                paddingVertical: 10,
-                                borderColor: 'lightgray',
-                                borderWidth: 1,
-                                borderRadius: 10,
-                                margin: 10
+                                        fontSize: scaledSmallerFont.fontSize,
+                                        lineHeight: scaledSmallerFont.lineHeight,
+                                        padding: 0
+                                    }
+                                }}
+                                onDateChange={(date) => { setSelectedDate(date) }}
+                            />
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => showFilterMenu(true)}
+                            style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottomColor: 'white', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderWidth: 1, marginBottom: 2 }}>
+                            <Text style={{ color: 'white', fontSize: scaledLargeFont.fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
+                            <Image source={SEARCH_ICON} />
+                        </TouchableOpacity>
+                        <CustomButton
+                            title={'Modify Search'}
+                            onPress={() => setModifySearch(false)}
+                            buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
+                            titleStyle={{ color: 'black' }} />
+                    </View>
+                </View>
+            }
+            {!modifySearch && <View
+                // onLayout={() => {
+                //     LayoutAnimation.configureNext({
+                //         duration: 250,
+                //         create: {
+                //             property: LayoutAnimation.Properties.scaleXY,
+                //             type: 'easeIn'
+                //         },
+                //         delete: {
+                //             property: LayoutAnimation.Properties.scaleXY,
+                //             type: 'easeOut'
+                //         }
+                //     })
+                // }}
+                style={styles.childContainer}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
+                        <Text
+                            style={{
+                                ...styles.subHeaderText,
+                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledLargeFont.fontSize,
+                                lineHeight: scaledLargeFont.lineHeight
                             }}>
-                                <View style={{ flexDirection: 'column', backgroundColor: 'red', maxWidth: '40%' }}>
-                                    <Image style={{ alignSelf: 'center' }} source={BIG_NORMAL_CAR} />
+                            {'Pick-up Location:'}
+                        </Text>
+                        <Text
+                            style={{
+                                ...styles.subHeaderText,
+                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledLargeFont.fontSize,
+                                lineHeight: scaledLargeFont.lineHeight
+                            }}>
+                            {pickupLocation}
+                        </Text>
+                    </View>
+                    <View style={{ paddingLeft: 10 }}>
+                        <Text
+                            style={{
+                                ...styles.subHeaderText,
+                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledLargeFont.fontSize,
+                                lineHeight: scaledLargeFont.lineHeight
+                            }}>
+                            {'Pick-up Date:'}
+                        </Text>
+                        <Text
+                            style={{
+                                ...styles.subHeaderText,
+                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledLargeFont.fontSize,
+                                lineHeight: scaledLargeFont.lineHeight
+                            }}>
+                            {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
+                        </Text>
+                    </View>
+                </View>
+                <TouchableOpacity onPress={() => setModifySearch(true)}>
+                    <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
+                </TouchableOpacity>
+            </View>}
+            <ScrollView>
+                <View style={{ backgroundColor: 'white' }}>
+                    <Text
+                        style={{
+                            height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                            fontSize: scaledLargeFont.fontSize,
+                            lineHeight: scaledLargeFont.lineHeight,
+                            ...styles.pageHeading
+                        }}>
+                        {'We have found 20 vehicles available from Wellington.'}
+                    </Text>
+                    <FlatList
+                        style={styles.vehicleTypeList}
+                        contentContainerStyle={{}}
+                        data={VEHICLE_TYPE_LISTING}
+                        horizontal={true}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.vehicleTypeWrapper}>
+                                    <View style={styles.vehicleTypeContainer}>
+                                        <Text style={{
+                                            fontSize: scaledSmallerFont.fontSize,
+                                            ...styles.vehicleTypeTitle
+                                        }}>{item.title}</Text>
+                                        <Image style={styles.alignSelfCenter} source={item.icon} />
+                                    </View>
                                 </View>
-                                <View style={{ flexDirection: 'column', flexWrap: 'wrap', minWidth: '60%', }}>
-                                    <Text
-                                        onPress={() => showFilterMenu(true)}
-                                        style={{
-                                            color: 'black',
-                                            fontWeight: 'bold',
-                                            width: '100%',
-                                        }}>{'Hatch Back - Medium Size'}</Text>
-                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', maxWidth: '90%', }}>
-                                        <IconText
-                                            icon={CAR_SEATS_ICON}
-                                            title={'5 seats'}
-                                            titleFontSize={14}
-                                            titleStyle={{ color: 'gray', }}
-                                            containerStyle={{ paddingVertical: 5, marginRight: 10, maxWidth: '40%', }}
-                                        />
-                                        <IconText
-                                            icon={LUGGAGE_ICON}
-                                            title={'2 Bags'}
-                                            titleFontSize={14}
-                                            titleStyle={{ color: 'gray', }}
-                                            containerStyle={{ paddingVertical: 5, marginRight: 10, maxWidth: '40%', }}
-                                        />
-                                        <IconText
-                                            icon={DOORS_ICON}
-                                            title={'5 Doors'}
-                                            titleFontSize={14}
-                                            titleStyle={{ color: 'gray', }}
-                                            containerStyle={{ paddingVertical: 5, marginRight: 10, maxWidth: '40%', }}
-                                        />
-                                        <IconText
-                                            icon={AC_ICON}
-                                            title={'Air Conditioning'}
-                                            titleFontSize={14}
-                                            titleStyle={{ color: 'gray', }}
-                                            containerStyle={{ paddingVertical: 5, marginRight: 10, maxWidth: '40%', }}
-                                        />
-                                        <IconText
-                                            icon={GEAR_ICON}
-                                            title={'Automatic'}
-                                            titleFontSize={14}
-                                            titleStyle={{ color: 'gray', }}
-                                            containerStyle={{ paddingVertical: 5, marginRight: 10, maxWidth: '40%', }}
+                            )
+                        }}
+                    />
+                    <Text
+                        onPress={() => showFilterMenu(true)}
+                        style={{
+
+                            height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
+                            fontSize: scaledSmallFont.fontSize,
+                            lineHeight: scaledSmallFont.lineHeight,
+                            ...styles.advanceFilterText
+                        }}>
+                        {'Advanced Filters'}
+                    </Text>
+                    <FlatList
+                        style={styles.detailsList}
+                        contentContainerStyle={{}}
+                        data={VEHICLE_DETAILS_LISTING}
+                        scrollEnabled={true}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.detailsWrapper}>
+                                    <View style={styles.rowFlex}>
+                                        <View style={styles.detailsLeftContainer}>
+                                            <Image style={styles.alignSelfCenter} source={item.carImage} />
+                                            <Text style={styles.freeDaysText}>{`Free Days: ${item.freeDays}`}</Text>
+                                        </View>
+                                        <View style={styles.detailsRightContainer}>
+                                            <Text
+                                                onPress={() => showFilterMenu(true)}
+                                                style={styles.carTitle}>{item.title}</Text>
+                                            <View style={styles.carFeaturesWrapper}>
+                                                <IconText
+                                                    icon={CAR_SEATS_ICON}
+                                                    title={`${item.seats} seats`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={LUGGAGE_ICON}
+                                                    title={`${item.luggageCapacity} bags`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={DOORS_ICON}
+                                                    title={`${item.doors} doors`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={AC_ICON}
+                                                    title={item.conditioning}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={GEAR_ICON}
+                                                    title={item.transmission}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                            </View>
+                                            <View style={styles.listLocationWrapper}>
+                                                <Text style={styles.listPickupText}>{item.pickupLocation}</Text>
+                                                <View style={styles.listDropoffWrapper}>
+                                                    <Image source={TURN_RIGHT} />
+                                                    <Text style={styles.listDropoffText}>{item.dropoffLocation}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                    <View>
+                                        <View style={styles.offerTextWrapper}>
+                                            <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
+                                            <Text style={styles.carOfferText}>{item.includes}</Text>
+                                        </View>
+                                        <CustomButton title={'View'}
+                                            buttonStyle={styles.vehicleListButton}
                                         />
                                     </View>
                                 </View>
-                            </View>
-                        )
-                    }}
-                />
-            </View>
+                            )
+                        }}
+                    />
+                </View>
+            </ScrollView>
         </AppHoc >
     );
 }

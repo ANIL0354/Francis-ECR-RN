@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         backgroundColor: 'white',
         minHeight: 360,
-        maxHeight: 360,
+        maxHeight: 500,
         minWidth: '100%',
         marginTop: '75%',
         borderTopLeftRadius: 20,

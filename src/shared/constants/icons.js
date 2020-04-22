@@ -17,3 +17,5 @@ export const LUGGAGE_ICON = require(`../../assets/LUGGAGE.png`);
 export const GEAR_ICON = require(`../../assets/GEAR.png`);
 export const DOORS_ICON = require(`../../assets/DOORS.png`);
 export const AC_ICON = require(`../../assets/ac.png`);
+export const SEARCH_ICON = require(`../../assets/Search.png`);
+export const TURN_RIGHT = require(`../../assets/turn_right.png`)

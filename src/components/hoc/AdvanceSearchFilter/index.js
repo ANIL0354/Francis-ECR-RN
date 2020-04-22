@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { CANCEL_ICON } from '../../../shared/constants';
 import Slider from '../../atoms/CustomSlider';
@@ -13,14 +13,33 @@ import {
 } from '../../../shared/constants';
 
 const AdvanceSearchFilter = ({
-    onClose = () => { }
+    fuelType,
+    vehicleType,
+    transmissionType,
+    seatsValue,
+    freeDays,
+    onClose = () => { },
+    setFuelType = () => { },
+    setTransmissionType = () => { },
+    setVehicleType = () => { },
+    setFreeDays = () => { },
+    setSeatsValue = () => { }
 }) => {
     const [filterValue, setFilterValue] = useState(0);
-    const [fuelType, setFuelType] = useState(0);
-    const [vehicleType, setVehicleType] = useState(0);
-    const [transmissionType, setTransmissionType] = useState(0);
-    const [seatsValue, setSeatsValue] = useState(0);
-    const [freeDays, setFreeDays] = useState(0)
+    const [fuelValue, setFuel] = useState(fuelType);
+    const [vehicleValue, setVehicle] = useState(vehicleType);
+    const [transmissionValue, setTransmission] = useState(transmissionType);
+    const [seats, setSeats] = useState(seatsValue);
+    const [freeDaysValue, setFreeDaysValue] = useState(freeDays);
+
+    useEffect(() => {
+        setFuel(fuelType);
+        setVehicle(vehicleType);
+        setTransmission(transmissionType);
+        setSeats(seatsValue);
+        setFreeDaysValue(freeDays);
+    }, [fuelType, vehicleType, transmissionType, seatsValue, freeDays])
+
     return (
         <View style={styles.filterModal}>
             <View style={styles.filterWrapper}>
@@ -47,45 +66,59 @@ const AdvanceSearchFilter = ({
                     <View style={{ flex: 1, padding: 20 }}>
                         {filterValue === 0 && <CheckboxGroup
                             checkboxOptions={FUEL_OPTIONS}
-                            selectedValue={fuelType}
-                            setSelectedValue={(value) => setFuelType(value)}
+                            selectedValue={fuelValue}
+                            setSelectedValue={(value) => setFuel(value)}
                         />}
                         {filterValue === 1 && <Slider
-                            sliderValue={seatsValue}
-                            setSliderValue={(value) => setSeatsValue(value)}
+                            sliderValue={seats}
+                            setSliderValue={(value) => setSeats(value)}
                         />}
                         {filterValue === 2 && <CheckboxGroup
                             checkboxOptions={VEHICLE_TYPE_OPTIONS}
-                            selectedValue={vehicleType}
-                            setSelectedValue={(value) => setVehicleType(value)}
+                            selectedValue={vehicleValue}
+                            setSelectedValue={(value) => setVehicle(value)}
                         />}
                         {filterValue === 3 && <CheckboxGroup
                             checkboxOptions={TRANSMISSION_OPTIONS}
-                            selectedValue={transmissionType}
-                            setSelectedValue={(value) => setTransmissionType(value)}
+                            selectedValue={transmissionValue}
+                            setSelectedValue={(value) => setTransmission(value)}
                         />}
                         {filterValue === 4 && <Slider
-                            sliderValue={freeDays}
-                            setSliderValue={(value) => setFreeDays(value)}
+                            sliderValue={freeDaysValue}
+                            setSliderValue={(value) => setFreeDaysValue(value)}
                         />}
 
                     </View>
+
                 </View>
-                <View style={{ flexDirection: 'row', borderTopColor: 'gray', borderWidth: 1, borderBottomColor: 'transparent', borderRightColor: 'transparent', borderLeftColor: 'transparent', backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingVertical: 10 }}>
+                <View style={{ flexDirection: 'row', zIndex: 1000, borderTopColor: 'gray', borderWidth: 1, borderBottomColor: 'transparent', borderRightColor: 'transparent', borderLeftColor: 'transparent', backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingVertical: 10 }}>
                     {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}> */}
                     <CustomButton
                         buttonStyle={{ paddingHorizontal: 30, backgroundColor: 'white' }}
                         titleStyle={{ color: '#0091ff' }}
                         onPress={() => {
-                            console.log('reset pressed')
                             setFuelType(0);
                             setFreeDays(0);
                             setTransmissionType(0);
                             setVehicleType(0);
                             setSeatsValue(0);
+                            setFuel(fuelType);
+                            setVehicle(vehicleType);
+                            setTransmission(transmissionType);
+                            setSeats(seatsValue);
+                            setFreeDaysValue(freeDays);
                         }}
                         title={'Reset'} />
-                    <CustomButton buttonStyle={{ paddingHorizontal: 30 }} title={'Apply'} />
+                    <CustomButton
+                        buttonStyle={{ paddingHorizontal: 30 }}
+                        title={'Apply'}
+                        onPress={() => {
+                            setFuelType(fuelValue);
+                            setFreeDays(freeDaysValue);
+                            setTransmissionType(transmissionValue);
+                            setVehicleType(vehicleValue);
+                            setSeatsValue(seats);
+                        }} />
                 </View>
             </View>
         </View>
