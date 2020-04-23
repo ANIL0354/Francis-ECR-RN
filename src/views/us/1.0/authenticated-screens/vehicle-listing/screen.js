@@ -50,24 +50,27 @@ export const Screen = ({
     setFreeDays,
     startLoader,
     stopLoader,
+    setPickupDate,
     pickupDate,
     setVehicleType,
     setTransmissionType,
 }) => {
     const [filterMenu, showFilterMenu] = useState(false);
     const [modifySearch, setModifySearch] = useState(false);
+    const [dateValue, onDateChange] = useState(pickupDate);
+    const [selectedDate, setSelectedDate] = useState(null)
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
     const scaledMediumFont = scaleText(16);
     const scaledSmallFont = scaleText(14);
     const scaledSmallerFont = scaleText(12);
-
-    // let scale = new Animated.ValueXY({ x: 0, y: 0 });
     let animatedValue = new Animated.Value(0);
 
-    useEffect(() => {
-    }, [modifySearch])
+    const showSearchBarAnimation = () => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setModifySearch(!modifySearch);
+    }
 
     return (
         <AppHoc
@@ -90,22 +93,8 @@ export const Screen = ({
                 onClose={() => showFilterMenu(false)}
             />}
 
-
             {modifySearch &&
                 <View
-                    // onLayout={() => {
-                    //     LayoutAnimation.configureNext({
-                    //         duration: 250,
-                    //         create: {
-                    //             property: LayoutAnimation.Properties.scaleXY,
-                    //             type: 'easeIn'
-                    //         },
-                    //         delete: {
-                    //             property: LayoutAnimation.Properties.scaleXY,
-                    //             type: 'easeOut'
-                    //         }
-                    //     })
-                    // }}
                     style={{ backgroundColor: '#0091ff', padding: 20, paddingVertical: 40 }}>
                     <View style={{ backgroundColor: '#1e5e9e', minWidth: '100%', minHeight: 100, padding: 20 }}>
                         <View style={{ flexDirection: 'column', minWidth: '100%', justifyContent: 'space-between', }}>
@@ -115,18 +104,11 @@ export const Screen = ({
                                 placeholderTextColor={'black'}
                                 underlineColorAndroid={"transparent"}
                                 style={{
-                                    borderColor: 'black',
-                                    borderRadius: 5,
-                                    borderWidth: 0.8,
-                                    backgroundColor: 'white',
+
                                     height: 2.5 * scaledSmallerFont.lineHeight,
-                                    marginBottom: 10,
                                     fontSize: scaledSmallerFont.fontSize,
                                     lineHeight: scaledSmallerFont.lineHeight,
-                                    paddingHorizontal: 10,
-                                    paddingVertical: 2,
-                                    paddingBottom: 0,
-                                    marginBottom: 0,
+                                    ...styles.pickupLocationInput
                                 }}
                                 value={pickupLocation}
                                 onChangeText={value => setPickupLocation(value)}
@@ -208,26 +190,13 @@ export const Screen = ({
                         </TouchableOpacity>
                         <CustomButton
                             title={'Modify Search'}
-                            onPress={() => setModifySearch(false)}
+                            onPress={() => showSearchBarAnimation()}
                             buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
                             titleStyle={{ color: 'black' }} />
                     </View>
                 </View>
             }
             {!modifySearch && <View
-                // onLayout={() => {
-                //     LayoutAnimation.configureNext({
-                //         duration: 250,
-                //         create: {
-                //             property: LayoutAnimation.Properties.scaleXY,
-                //             type: 'easeIn'
-                //         },
-                //         delete: {
-                //             property: LayoutAnimation.Properties.scaleXY,
-                //             type: 'easeOut'
-                //         }
-                //     })
-                // }}
                 style={styles.childContainer}>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
@@ -241,8 +210,11 @@ export const Screen = ({
                             {'Pick-up Location:'}
                         </Text>
                         <Text
+                            ellipsizeMode={'tail'}
+                            numberOfLines={1}
                             style={{
                                 ...styles.subHeaderText,
+                                maxWidth: 150,
                                 height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
                                 fontSize: scaledLargeFont.fontSize,
                                 lineHeight: scaledLargeFont.lineHeight
@@ -271,10 +243,11 @@ export const Screen = ({
                         </Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => setModifySearch(true)}>
+                <TouchableOpacity onPress={() => showSearchBarAnimation()}>
                     <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
                 </TouchableOpacity>
             </View>}
+
             <ScrollView>
                 <View style={{ backgroundColor: 'white' }}>
                     <Text

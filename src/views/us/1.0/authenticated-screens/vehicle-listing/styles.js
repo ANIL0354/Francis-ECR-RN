@@ -51,6 +51,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10
     },
+    pickupLocationInput: {
+        borderColor: 'black',
+        borderRadius: 5,
+        borderWidth: 0.8,
+        backgroundColor: 'white',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        paddingBottom: 0,
+        marginBottom: 0,
+    },
     pageHeading: {
         color: 'black',
         fontWeight: 'bold',

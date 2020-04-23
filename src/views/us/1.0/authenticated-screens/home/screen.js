@@ -3,10 +3,21 @@ import { View, Text, TextInput, Image, Alert, AppState, PermissionsAndroid } fro
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import NetInfo from '@react-native-community/netinfo';
+import Geocoder from 'react-native-geocoding';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { APP_LOGO, MENU_LOGO, USER_ICON, CAR, CAR_WASHER, CAR_CHECKLIST, SEARCH_ICON } from '../../../../../shared/constants';
+import {
+    APP_LOGO,
+    MENU_LOGO,
+    USER_ICON,
+    CAR,
+    CAR_WASHER,
+    CAR_CHECKLIST,
+    SEARCH_ICON,
+    LIMITS,
+    GOOGLE_API_KEY
+} from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
@@ -43,7 +54,8 @@ export const Screen = ({
     setVehicleType,
     setTransmissionType,
     setNeverAskPermission,
-    updateInternetStatus
+    updateInternetStatus,
+    fetchVehicleListing
 }) => {
     const [emailSent, setEmailSent] = useState(false);
     const [email, setEmail] = useState('');
@@ -54,10 +66,10 @@ export const Screen = ({
 
     const scaledFont = scaleText(14);
     useEffect(() => {
-        getPopularPlaces({}, () => { }, () => { });
-        checkInternetConnection();
         checkLocationPermissions();
+        checkInternetConnection();
         AppState.addEventListener('change', handleAppStateChange);
+        getPopularPlaces({}, () => { }, () => { });
     }, [])
 
     const checkInternetConnection = () => {
@@ -116,8 +128,14 @@ export const Screen = ({
     }
 
     const getUserLocation = () => {
+        Geocoder.init(GOOGLE_API_KEY)
         Geolocation.getCurrentPosition(info => {
-            console.log('info', info)
+            Geocoder.from(info.coords.latitude, info.coords.longitude)
+                .then(json => {
+                    var addressComponent = json.results[json.results.length - 2].address_components[0];
+                    setPickupLocation(addressComponent.long_name);
+                })
+                .catch(error => console.warn(error));
         }, error => {
             console.log('error', error)
         }, {
@@ -167,18 +185,10 @@ export const Screen = ({
                                         placeholderTextColor={'black'}
                                         underlineColorAndroid={"transparent"}
                                         style={{
-                                            borderColor: 'black',
-                                            borderRadius: 5,
-                                            borderWidth: 0.8,
-                                            backgroundColor: 'white',
                                             height: 2.5 * scaledFont.lineHeight,
-                                            marginBottom: 10,
                                             fontSize: scaledFont.fontSize,
                                             lineHeight: scaledFont.lineHeight,
-                                            paddingHorizontal: 10,
-                                            paddingVertical: 2,
-                                            paddingBottom: 0,
-                                            marginBottom: 0,
+                                            ...styles.pickupLocationInput
                                         }}
                                         value={pickupLocation}
                                         onChangeText={value => setPickupLocation(value)}
@@ -260,7 +270,23 @@ export const Screen = ({
                                 </TouchableOpacity>
                                 <CustomButton
                                     title={'Search Now'}
-                                    onPress={() => navigation.navigate('VEHICLE_SCREEN')}
+                                    onPress={() => {
+                                        startLoader();
+                                        fetchVehicleListing({
+                                            fromCity: pickupLocation,
+                                            pickupDate: pickupDate,
+                                            adultSeats: seatsValue,
+                                            childSeats: 0,
+                                            fuelType: fuelType + 1,
+                                            limit: LIMITS.vehicleList,
+                                            index: 0
+                                        }, () => {
+                                            stopLoader();
+                                            navigation.navigate('VEHICLE_SCREEN')
+                                        }, () => {
+
+                                        })
+                                    }}
                                     buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
                                     titleStyle={{ color: 'black' }} />
                             </View>

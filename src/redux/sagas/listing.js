@@ -3,6 +3,7 @@ import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-simple-toast';
 import {
     GET_POPULAR_PLACES,
+    FETCH_VEHICLE_LISTING,
     setAuthorization,
     startLoader,
     stopLoader,
@@ -23,13 +24,35 @@ function* fetchPopularPlaces({ data, success, failure }) {
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-            // failure(response.data);
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
         }
         else {
-            // success(response.data);
             yield put(savePopularPlaces(response.data.data))
-            // Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+        }
+    }
+    catch (error) {
+        console.log('catch', error)
+        return;
+    }
+}
+
+function* fetchVehicleList({ data, success, failure }) {
+    try {
+        console.log('pickupDate', data.pickupDate);
+        let { fromCity, pickupDate, fuelType, limit, index } = data;
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=${fuelType}&limit=${limit}6&index=${index}` });
+        console.log('response', response);
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure();
+            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+        }
+        else {
+            success();
         }
     }
     catch (error) {
@@ -41,6 +64,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
 function* ListsSaga() {
     yield all([
         takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
+        takeLatest(FETCH_VEHICLE_LISTING, fetchVehicleList)
     ]);
 }
 

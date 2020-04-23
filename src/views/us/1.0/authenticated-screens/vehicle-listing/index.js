@@ -8,16 +8,19 @@ import {
     setVehicleType,
     setSeatsValue,
     startLoader,
+    setPickupDate,
     stopLoader,
     setGpsEnabled,
     setLocationEnabled,
     setNeverAskPermission,
     setPickupLocation,
-    updateInternetStatus
+    updateInternetStatus,
+    fetchVehicleListing,
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
     return ({
+        vehicleListing: state.ListsReducer.vehicleListing,
         seatsValue: state.CommonReducer.seatsValue,
         freeDays: state.CommonReducer.freeDays,
         vehicleType: state.CommonReducer.vehicleType,
@@ -48,6 +51,7 @@ const mapDispatchToProps = (dispatch) => {
         updateInternetStatus: status => dispatch(updateInternetStatus(status)),
         setLocationEnabled: status => dispatch(setLocationEnabled(status)),
         setNeverAskPermission: status => dispatch(setNeverAskPermission(status)),
+        fetchVehicleListing: (data, success, failure) => dispatch(fetchVehicleListing(data, success, failure))
     }
 }
 export const VehicleListing = connect(mapStateToProps, mapDispatchToProps)(Screen);

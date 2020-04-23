@@ -1,11 +1,13 @@
 import {
-    SAVE_POPULAR_PLACES
+    SAVE_POPULAR_PLACES,
+    SAVE_VEHICLE_LISTING
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
 
 const initialCommonState = {
-    popularPlaces: null
+    popularPlaces: null,
+    vehicleListing: null
 };
 
 const ListsReducer = (state = { ...initialCommonState }, action) => {
@@ -14,6 +16,11 @@ const ListsReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 popularPlaces: action.data
+            }
+        case SAVE_VEHICLE_LISTING:
+            return {
+                ...state,
+                vehicleListing: action.data
             }
         default:
             return state;

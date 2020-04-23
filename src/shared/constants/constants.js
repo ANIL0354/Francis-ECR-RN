@@ -9,7 +9,7 @@ import {
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const { STRINGS } = require(`./us/strings`);
 
-
+export const GOOGLE_API_KEY = 'AIzaSyCwe-4k_nGXdLcNt9YcIy0WeJzlL1Ot77k';
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const NAME_REGX = /^[A-Z.a-z ]+$/;
@@ -204,3 +204,7 @@ export const VEHICLE_DETAILS_LISTING = [
     includes: 'Unlimited kms, free tank of fuel and standard insuarance'
   }
 ];
+
+export const LIMITS = {
+  vehicleList: 6,
+};

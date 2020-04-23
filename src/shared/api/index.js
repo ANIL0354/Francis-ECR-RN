@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://13.238.207.250:5001'; //Live URL
+const SERVER_URL = 'https://ccc5d0e1.ngrok.io'; //Live URL
 const API_VERSION = '/v1'
 
 module.exports = {
@@ -9,6 +9,7 @@ module.exports = {
     REGISTER_USER: SERVER_URL + API_VERSION + '/user/register',
     SOCIAL_LOGIN: SERVER_URL + API_VERSION + '/user/social-login',
     FORGOT_PASSWORD: SERVER_URL + API_VERSION + '/user/forgot-password',
-    POPULAR_PLACES: SERVER_URL + API_VERSION + '/listing/popular_places'
+    POPULAR_PLACES: SERVER_URL + API_VERSION + '/listing/popular_places',
+    VEHICLE_LISTING: SERVER_URL + API_VERSION + '/listing'
   }
 };

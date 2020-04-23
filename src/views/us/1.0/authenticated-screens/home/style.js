@@ -47,6 +47,17 @@ const styles = StyleSheet.create({
         // marginVertical: 20,
         padding: 10
     },
+    pickupLocationInput: {
+        borderColor: 'black',
+        borderRadius: 5,
+        borderWidth: 0.8,
+        backgroundColor: 'white',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        paddingBottom: 0,
+        marginBottom: 0,
+    },
     iconContainerStyle: { alignContent: 'flex-start', alignSelf: 'flex-start' },
     socialButton: { backgroundColor: 'darkblue', color: 'white', padding: 0, width: 200, justifyContent: 'space-evenly', height: 30, marginVertical: 5 }
 });

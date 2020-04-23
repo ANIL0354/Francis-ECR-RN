@@ -15,7 +15,8 @@ import {
     startLoader,
     stopLoader,
     setPickupLocation,
-    setPickupDate
+    setPickupDate,
+    fetchVehicleListing
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -52,7 +53,8 @@ const mapDispatchToProps = (dispatch) => {
         updateInternetStatus: status => dispatch(updateInternetStatus(status)),
         setLocationEnabled: status => dispatch(setLocationEnabled(status)),
         setNeverAskPermission: status => dispatch(setNeverAskPermission(status)),
-        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure))
+        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure)),
+        fetchVehicleListing: (data, success, failure) => dispatch(fetchVehicleListing(data, success, failure))
     }
 }
 export const HomeScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);
