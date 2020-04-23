@@ -10,7 +10,7 @@ const CustomSlider = ({
     setSliderValue = () => { }
 }) => {
     return (
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Slider
                 value={sliderValue}
                 step={step}
@@ -19,8 +19,12 @@ const CustomSlider = ({
                 style={{ flex: 7 }}
                 onValueChange={value => setSliderValue(value)}
                 trackStyle={{
-                    height: 6,
+                    height: 10,
                     borderRadius: 5
+                }}
+                thumbStyle={{
+                    borderColor: '#0057b3',
+                    borderWidth: 2
                 }}
                 thumbTintColor={'#0091ff'}
                 minimumTrackTintColor={'#0091ff'}

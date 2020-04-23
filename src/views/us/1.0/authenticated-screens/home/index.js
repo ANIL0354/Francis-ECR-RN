@@ -11,7 +11,8 @@ import {
     setFreeDays,
     setFuelType,
     setVehicleType,
-    setSeatsValue,
+    setChildSeats,
+    setAdultSeats,
     startLoader,
     stopLoader,
     setPickupLocation,
@@ -21,7 +22,8 @@ import {
 
 const mapStateToProps = (state) => {
     return ({
-        seatsValue: state.CommonReducer.seatsValue,
+        childSeatsValue: state.CommonReducer.childSeatsValue,
+        adultSeatsValue: state.CommonReducer.adultSeatsValue,
         freeDays: state.CommonReducer.freeDays,
         vehicleType: state.CommonReducer.vehicleType,
         transmissionType: state.CommonReducer.transmissionType,
@@ -40,14 +42,14 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
-        setSeatsValue: value => dispatch(setSeatsValue(value)),
+        setChildSeats: value => dispatch(setChildSeats(value)),
+        setAdultSeats: value => dispatch(setAdultSeats(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),
         setPickupDate: value => dispatch(setPickupDate(value)),
         setFuelType: value => dispatch(setFuelType(value)),
         setFreeDays: value => dispatch(setFreeDays(value)),
         setTransmissionType: value => dispatch(setTransmissionType(value)),
         setVehicleType: value => dispatch(setVehicleType(value)),
-        setSeatsValue: value => dispatch(setSeatsValue(value)),
         logout: (token, success, failure) => dispatch(logout(token, success, failure)),
         setGpsEnabled: status => dispatch(setGpsEnabled(status)),
         updateInternetStatus: status => dispatch(updateInternetStatus(status)),

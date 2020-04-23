@@ -35,7 +35,8 @@ export const Screen = ({
     fuelType,
     vehicleType,
     transmissionType,
-    seatsValue,
+    childSeatsValue,
+    adultSeatsValue,
     freeDays,
     neverAskPermission,
     setLocationEnabled,
@@ -44,7 +45,8 @@ export const Screen = ({
     getPopularPlaces,
     setPickupLocation,
     pickupLocation,
-    setSeatsValue,
+    setChildSeats,
+    setAdultSeats,
     setFuelType,
     setPickupDate,
     setFreeDays,
@@ -155,13 +157,15 @@ export const Screen = ({
                 fuelType={fuelType}
                 vehicleType={vehicleType}
                 transmissionType={transmissionType}
-                seatsValue={seatsValue}
+                childSeatsValue={childSeatsValue}
+                adultSeatsValue={adultSeatsValue}
                 freeDays={freeDays}
                 setFuelType={setFuelType}
                 setTransmissionType={setTransmissionType}
                 setVehicleType={setVehicleType}
                 setFreeDays={setFreeDays}
-                setSeatsValue={setSeatsValue}
+                setChildSeats={setChildSeats}
+                setAdultSeats={setAdultSeats}
                 onClose={() => showFilterMenu(false)}
             />}
             <ScrollView>
@@ -179,8 +183,8 @@ export const Screen = ({
                             </Text>
                             <View style={{ backgroundColor: '#1e5e9e', minWidth: '100%', minHeight: 100, padding: 20 }}>
                                 <View style={{ flexDirection: 'column', minWidth: '100%', justifyContent: 'space-between', }}>
-                                    <LocationSearch />
-                                    {/* <TextInput
+                                    {/* <LocationSearch /> */}
+                                    <TextInput
                                         placeholder={'Pick-up location'}
                                         placeholderTextColor={'black'}
                                         underlineColorAndroid={"transparent"}
@@ -193,7 +197,7 @@ export const Screen = ({
                                         value={pickupLocation}
                                         onChangeText={value => setPickupLocation(value)}
                                         returnKeyType={'next'}
-                                    /> */}
+                                    />
 
                                     <DatePicker
                                         mode="date"
@@ -275,8 +279,8 @@ export const Screen = ({
                                         fetchVehicleListing({
                                             fromCity: pickupLocation,
                                             pickupDate: pickupDate,
-                                            adultSeats: seatsValue,
-                                            childSeats: 0,
+                                            adultSeats: adultSeatsValue,
+                                            childSeats: childSeatsValue,
                                             fuelType: fuelType + 1,
                                             limit: LIMITS.vehicleList,
                                             index: 0

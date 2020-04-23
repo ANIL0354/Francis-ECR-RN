@@ -10,7 +10,8 @@ import {
     UPDATE_INTERNET_STATUS,
     SET_LOCATION_ENABLED,
     SET_NEVER_ASK_PERMISSION,
-    SET_SEATS_VALUE,
+    SET_CHILD_SEATS_VALUE,
+    SET_ADULT_SEATS_VALUE,
     SET_FREE_DAYS,
     SET_VEHICLE_TYPE,
     SET_TRANSMISSION_TYPE,
@@ -32,7 +33,8 @@ const initialCommonState = {
     locationEnabled: false,
     isNetConnected: true,
     neverAskPermission: false,
-    seatsValue: 0,
+    childSeatsValue: 0,
+    adultSeatsValue: 0,
     freeDays: 0,
     vehicleType: 0,
     transmissionType: 0,
@@ -113,10 +115,15 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
                 ...state,
                 freeDays: action.value
             }
-        case SET_SEATS_VALUE:
+        case SET_CHILD_SEATS_VALUE:
             return {
                 ...state,
-                seatsValue: action.value
+                childSeatsValue: action.value
+            }
+        case SET_ADULT_SEATS_VALUE:
+            return {
+                ...state,
+                adultSeatsValue: action.value
             }
         case SET_PICKUP_LOCATION:
             return {

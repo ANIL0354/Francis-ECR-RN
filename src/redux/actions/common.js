@@ -5,7 +5,8 @@ export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const SET_NEVER_ASK_PERMISSION = 'SET_NEVER_ASK_PERMISSION';
 export const SET_GPS_ENABLED = 'SET_GPS_ENABLED';
 export const SET_LOCATION_ENABLED = 'SET_LOCATION_ENABLED';
-export const SET_SEATS_VALUE = 'SET_SEATS_VALUE';
+export const SET_CHILD_SEATS_VALUE = 'SET_CHILD_SEATS_VALUE';
+export const SET_ADULT_SEATS_VALUE = 'SET_ADULT_SEATS_VALUE';
 export const SET_FREE_DAYS = 'SET_FREE_DAYS';
 export const SET_VEHICLE_TYPE = 'SET_VEHICLE_TYPE';
 export const SET_TRANSMISSION_TYPE = 'SET_TRANSMISSION_TYPE';
@@ -80,9 +81,16 @@ export const setFreeDays = value => {
     }
 };
 
-export const setSeatsValue = value => {
+export const setChildSeats = value => {
     return {
-        type: SET_SEATS_VALUE,
+        type: SET_CHILD_SEATS_VALUE,
+        value
+    }
+};
+
+export const setAdultSeats = value => {
+    return {
+        type: SET_ADULT_SEATS_VALUE,
         value
     }
 };

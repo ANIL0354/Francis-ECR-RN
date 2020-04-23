@@ -16,29 +16,33 @@ const AdvanceSearchFilter = ({
     fuelType,
     vehicleType,
     transmissionType,
-    seatsValue,
+    childSeatsValue,
+    adultSeatsValue,
     freeDays,
     onClose = () => { },
     setFuelType = () => { },
     setTransmissionType = () => { },
     setVehicleType = () => { },
     setFreeDays = () => { },
-    setSeatsValue = () => { }
+    setChildSeats = () => { },
+    setAdultSeats = () => { }
 }) => {
     const [filterValue, setFilterValue] = useState(0);
     const [fuelValue, setFuel] = useState(fuelType);
     const [vehicleValue, setVehicle] = useState(vehicleType);
     const [transmissionValue, setTransmission] = useState(transmissionType);
-    const [seats, setSeats] = useState(seatsValue);
+    const [childSeats, setChildsSeatValue] = useState(childSeatsValue);
+    const [adultSeats, setAdultsSeatValue] = useState(adultSeatsValue);
     const [freeDaysValue, setFreeDaysValue] = useState(freeDays);
 
     useEffect(() => {
         setFuel(fuelType);
         setVehicle(vehicleType);
         setTransmission(transmissionType);
-        setSeats(seatsValue);
+        setChildsSeatValue(childSeatsValue);
+        setAdultsSeatValue(adultSeatsValue);
         setFreeDaysValue(freeDays);
-    }, [fuelType, vehicleType, transmissionType, seatsValue, freeDays])
+    }, [fuelType, vehicleType, transmissionType, childSeatsValue, adultSeatsValue, freeDays])
 
     return (
         <View style={styles.filterModal}>
@@ -69,10 +73,22 @@ const AdvanceSearchFilter = ({
                             selectedValue={fuelValue}
                             setSelectedValue={(value) => setFuel(value)}
                         />}
-                        {filterValue === 1 && <Slider
-                            sliderValue={seats}
-                            setSliderValue={(value) => setSeats(value)}
-                        />}
+                        {filterValue === 1 && <View style={{ justifyContent: 'space-between' }}>
+                            <View style={{ marginBottom: 50, minWidth: '100%' }}>
+                                <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
+                                <Slider
+                                    sliderValue={childSeats}
+                                    setSliderValue={(value) => setChildsSeatValue(value)}
+                                />
+                            </View>
+                            <View>
+                                <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Adult Seat'}</Text>
+                                <Slider
+                                    sliderValue={adultSeats}
+                                    setSliderValue={(value) => setAdultsSeatValue(value)}
+                                />
+                            </View>
+                        </View>}
                         {filterValue === 2 && <CheckboxGroup
                             checkboxOptions={VEHICLE_TYPE_OPTIONS}
                             selectedValue={vehicleValue}
@@ -101,12 +117,14 @@ const AdvanceSearchFilter = ({
                             setFreeDays(0);
                             setTransmissionType(0);
                             setVehicleType(0);
-                            setSeatsValue(0);
-                            setFuel(fuelType);
-                            setVehicle(vehicleType);
-                            setTransmission(transmissionType);
-                            setSeats(seatsValue);
-                            setFreeDaysValue(freeDays);
+                            setChildsSeatValue(0);
+                            setAdultsSeatValue(0);
+                            setFuel(0);
+                            setVehicle(0);
+                            setTransmission(0);
+                            setChildSeats(0);
+                            setAdultSeats(0);
+                            setFreeDaysValue(0);
                         }}
                         title={'Reset'} />
                     <CustomButton
@@ -117,7 +135,8 @@ const AdvanceSearchFilter = ({
                             setFreeDays(freeDaysValue);
                             setTransmissionType(transmissionValue);
                             setVehicleType(vehicleValue);
-                            setSeatsValue(seats);
+                            setChildSeats(childSeats);
+                            setAdultSeats(adultSeats);
                         }} />
                 </View>
             </View>
