@@ -179,8 +179,8 @@ export const Screen = ({
                             </Text>
                             <View style={{ backgroundColor: '#1e5e9e', minWidth: '100%', minHeight: 100, padding: 20 }}>
                                 <View style={{ flexDirection: 'column', minWidth: '100%', justifyContent: 'space-between', }}>
-                                    {/* <LocationSearch /> */}
-                                    <TextInput
+                                    <LocationSearch />
+                                    {/* <TextInput
                                         placeholder={'Pick-up location'}
                                         placeholderTextColor={'black'}
                                         underlineColorAndroid={"transparent"}
@@ -193,7 +193,7 @@ export const Screen = ({
                                         value={pickupLocation}
                                         onChangeText={value => setPickupLocation(value)}
                                         returnKeyType={'next'}
-                                    />
+                                    /> */}
 
                                     <DatePicker
                                         mode="date"

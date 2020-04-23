@@ -6,32 +6,31 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 const LocationSearch = () => {
     const [address, setAddress] = useState('');
     return (<GooglePlacesAutocomplete
-        placeholder="Search"
+        placeholder="Pick-up location"
         minLength={2}
         autoFocus={false}
-        returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
-        listViewDisplayed="auto" // true/false/undefined
+        returnKeyType={'search'}
+        listViewDisplayed={false}
         fetchDetails={true}
-        renderDescription={row => row.description} // custom description render
+        renderDescription={row => row.description}
         onPress={(data, details = null) => {
             console.log(data);
-            console.log(details);
+            console.log('details', details);
             setAddress(details.formatted_address);
         }}
         setAddressText={address}
-        getAddressText={text => { setAddress(text); console.log(text) }}
-        getDefaultValue={() => {
-            return ''; // text input default value
+        getAddressText={text => { setAddress(text); console.log('text', text) }}
+        getDefaultValue={(value) => {
+            console.log('default Value', value)
+            return '';
         }}
         query={{
-            // available options: https://developers.google.com/places/web-service/autocomplete
-            key: 'AIzaSyAevQalBYq5ZtK9pf4-4Mun2RG-d1kSDJU',
-            language: 'en', // language of the results
-            types: '(cities)', // default: 'geocode'
+            key: 'AIzaSyCwe-4k_nGXdLcNt9YcIy0WeJzlL1Ot77k',
+            language: 'en',
+            types: '(cities)',
         }}
         styles={{
             container: {
-                // maxHeight: 43,
                 zIndex: 10,
             },
             textInputContainer: {
@@ -58,23 +57,6 @@ const LocationSearch = () => {
                 // maxHeight: 50
             }
         }}
-        currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-        currentLocationLabel="Current location"
-        nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-        GoogleReverseGeocodingQuery={{
-            // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-        }}
-        GooglePlacesSearchQuery={{
-            // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-            rankby: 'distance',
-            types: 'food',
-        }}
-        filterReverseGeocodingByTypes={[
-            'locality',
-            'administrative_area_level_3',
-        ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-        predefinedPlaces={[]}
-        debounce={200}
     />
 
     );
