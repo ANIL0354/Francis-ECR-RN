@@ -17,7 +17,7 @@ const { STATUS_CODE } = require(`../../shared/constants`);
 
 function* fetchPopularPlaces({ data, success, failure }) {
     try {
-        const response = yield getRequest({ API: `${api.URL.POPULAR_PLACES}?limit=6&sortOrder=1` });
+        const response = yield getRequest({ API: `${api.URL.POPULAR_PLACES}?limit=6&sortOrder=-1` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
@@ -38,8 +38,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
 
 function* fetchVehicleList({ data, success, failure }) {
     try {
-        console.log('pickupDate', data.pickupDate);
-        let { fromCity, pickupDate, fuelType, limit, index } = data;
+        let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
         const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=${fuelType}&limit=${limit}6&index=${index}` });
         console.log('response', response);
         if (response.status === STATUS_CODE.unAuthorized) {

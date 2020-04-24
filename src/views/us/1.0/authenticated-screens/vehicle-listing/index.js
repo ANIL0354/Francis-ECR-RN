@@ -10,6 +10,8 @@ import {
     startLoader,
     setPickupDate,
     stopLoader,
+    setAdultSeats,
+    setChildSeats,
     setGpsEnabled,
     setLocationEnabled,
     setNeverAskPermission,
@@ -21,7 +23,8 @@ import {
 const mapStateToProps = (state) => {
     return ({
         vehicleListing: state.ListsReducer.vehicleListing,
-        seatsValue: state.CommonReducer.seatsValue,
+        childSeatsValue: state.CommonReducer.childSeatsValue,
+        adultSeatsValue: state.CommonReducer.adultSeatsValue,
         freeDays: state.CommonReducer.freeDays,
         vehicleType: state.CommonReducer.vehicleType,
         transmissionType: state.CommonReducer.transmissionType,
@@ -39,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
-        setSeatsValue: value => dispatch(setSeatsValue(value)),
+        setChildSeats: value => dispatch(setChildSeats(value)),
+        setAdultSeats: value => dispatch(setAdultSeats(value)),
         setFuelType: value => dispatch(setFuelType(value)),
         setFreeDays: value => dispatch(setFreeDays(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),

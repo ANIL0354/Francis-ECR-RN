@@ -215,7 +215,7 @@ export const Screen = ({
                                             dateTouchBody: {
                                                 marginVertical: 5,
                                                 minWidth: 280,
-                                                zIndex: 99999
+                                                zIndex: 99999,
                                             },
                                             dateIcon: {
                                                 padding: 0,
@@ -229,7 +229,6 @@ export const Screen = ({
                                                 backgroundColor: 'white',
                                                 padding: 0,
                                                 height: 2.5 * scaledFont.lineHeight,
-                                                borderColor: 'transparent',
                                                 borderColor: 'black',
                                                 borderRadius: 5,
                                                 borderWidth: 0.8,
@@ -277,7 +276,7 @@ export const Screen = ({
                                     onPress={() => {
                                         if (!(!!pickupLocation)) {
                                             Alert.alert(
-                                                'Error',
+                                                'Select Pick-up Location',
                                                 'Please select a pick-up location before proceeding.',
                                                 [{
                                                     text: 'Okay',
@@ -288,7 +287,7 @@ export const Screen = ({
                                         }
                                         else if (!pickupDate) {
                                             Alert.alert(
-                                                'Error',
+                                                'Select Pick-up Date',
                                                 'Please select a pick-up date before proceeding.',
                                                 [{
                                                     text: 'Okay',
@@ -298,10 +297,12 @@ export const Screen = ({
                                             return;
                                         }
                                         else {
+                                            let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                                            console.log('formattedDate', formattedDate)
                                             startLoader();
                                             fetchVehicleListing({
                                                 fromCity: pickupLocation,
-                                                pickupDate: pickupDate,
+                                                pickupDate: formattedDate,
                                                 adultSeats: adultSeatsValue,
                                                 childSeats: childSeatsValue,
                                                 fuelType: fuelType + 1,
