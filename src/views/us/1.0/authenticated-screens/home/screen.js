@@ -213,7 +213,6 @@ export const Screen = ({
                                         getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
                                         customStyles={{
                                             dateTouchBody: {
-                                                marginVertical: 5,
                                                 marginVertical: scaleText(20).fontSize,
                                                 zIndex: 99999
                                             },

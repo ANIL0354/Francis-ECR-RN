@@ -3,12 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     filterModal: {
         flex: 1,
-        flexDirection: 'column',
-        position: 'absolute',
-        zIndex: 9999999999,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: 'rgba(0,0,0,0.4)'
     },
     filterWrapper: {
         alignSelf: 'flex-end',

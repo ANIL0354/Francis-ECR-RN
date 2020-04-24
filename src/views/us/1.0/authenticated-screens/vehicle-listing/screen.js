@@ -80,7 +80,6 @@ export const Screen = ({
             centerIcon={USER_ICON}
         >
             {filterMenu && <AdvanceSearchFilter
-
                 fuelType={fuelType}
                 vehicleType={vehicleType}
                 transmissionType={transmissionType}
@@ -126,12 +125,12 @@ export const Screen = ({
                                 style={{
                                     padding: 0,
                                     margin: 0,
+                                    width: '100%'
                                 }}
                                 getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
                                 customStyles={{
                                     dateTouchBody: {
-                                        marginVertical: 5,
-                                        minWidth: 280,
+                                        marginVertical: scaleText(20).fontSize,
                                         zIndex: 99999
                                     },
                                     dateIcon: {
@@ -160,7 +159,6 @@ export const Screen = ({
                                         textAlign: 'left',
                                     },
                                     datePickerCon: {
-                                        backgroundColor: 'red',
                                         backfaceVisibility: false
                                     },
                                     dateText: {
@@ -189,8 +187,9 @@ export const Screen = ({
                             <Text style={{ color: 'white', fontSize: scaledLargeFont.fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
                             <Image source={SEARCH_ICON} />
                         </TouchableOpacity>
-                        <CustomButton
-                            title={'Modify Search'}
+                        <TouchableOpacity
+                            style={{ backgroundColor: '#fff93e', alignItems: 'center', borderRadius: 5, padding: scaleText(10).fontSize, marginTop: scaleText(20).fontSize }}
+                            activeOpacity={0.7}
                             onPress={() => {
                                 if (!(!!pickupLocation)) {
                                     Alert.alert(
@@ -218,8 +217,9 @@ export const Screen = ({
                                     showSearchBarAnimation()
                                 }
                             }}
-                            buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
-                            titleStyle={{ color: 'black' }} />
+                        >
+                            <Text style={{ fontWeight: '700', fontSize: scaleText(16).fontSize }}>Search Now</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             }
@@ -279,7 +279,6 @@ export const Screen = ({
                 <View style={{ backgroundColor: 'white' }}>
                     <Text
                         style={{
-                            height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
                             fontSize: scaledLargeFont.fontSize,
                             lineHeight: scaledLargeFont.lineHeight,
                             ...styles.pageHeading
@@ -309,8 +308,6 @@ export const Screen = ({
                     <Text
                         onPress={() => showFilterMenu(true)}
                         style={{
-
-                            height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
                             fontSize: scaledSmallFont.fontSize,
                             lineHeight: scaledSmallFont.lineHeight,
                             ...styles.advanceFilterText
