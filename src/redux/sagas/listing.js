@@ -20,11 +20,11 @@ function* fetchPopularPlaces({ data, success, failure }) {
         const response = yield getRequest({ API: `${api.URL.POPULAR_PLACES}?limit=6&sortOrder=-1` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             yield put(savePopularPlaces(response.data.data))
@@ -43,12 +43,12 @@ function* fetchVehicleList({ data, success, failure }) {
         console.log('response', response);
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
             failure();
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             success();

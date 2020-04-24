@@ -33,7 +33,7 @@ function* registerNewUser({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -42,18 +42,18 @@ function* registerNewUser({ data, success, failure }) {
         if (response.data.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
             return;
         }
         if (response.data.statusCode !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {
@@ -67,7 +67,7 @@ function* checkLogin({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -81,13 +81,13 @@ function* checkLogin({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             yield put(setAuthorization(response.data.data.token))
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {
@@ -102,7 +102,7 @@ function* checkSocialLogin({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -116,14 +116,14 @@ function* checkSocialLogin({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             yield put(setAuthorization(response.data.data.token));
             yield put(saveUserInfo(response.data.data))
             success(response.data.msg);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {
@@ -138,7 +138,7 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -152,12 +152,12 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {
@@ -172,7 +172,7 @@ function* completeUserProfile({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -185,12 +185,12 @@ function* completeUserProfile({ data, success, failure }) {
         else if (response.status !== STATUS_CODE.successful) {
             failure(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
         else {
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {
@@ -209,7 +209,7 @@ function* logoutUser({ token, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -223,13 +223,13 @@ function* logoutUser({ token, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
 
             yield put(setAuthorization(null));
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
             yield put(stopLoader());
         }
         else {
             yield put(setAuthorization(null));
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG, Toast.BOTTOM);
+            Toast.show(response.data.msg, Toast.LONG);
         }
     }
     catch (error) {

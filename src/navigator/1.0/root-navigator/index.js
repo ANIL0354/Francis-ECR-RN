@@ -14,7 +14,7 @@ const RootNavigator = ({
     NetInfo.addEventListener((state) => {
         if (!state.isConnected) {
             stopLoader();
-            Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG, Toast.BOTTOM);
+            Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
         }
     })
     const [userAuthenticated, setUserAuthenticated] = useState(null)

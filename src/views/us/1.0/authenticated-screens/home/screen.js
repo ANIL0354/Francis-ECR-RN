@@ -315,7 +315,7 @@ export const Screen = ({
                                         }
                                     }}
                                 >
-                                    <Text style={{ fontWeight: '700', fontSize: scaleText(16).fontSize }}>Search Now</Text>
+                                    <Text style={{ fontWeight: '700', color: 'black', fontSize: scaleText(16).fontSize }}>Search Now</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
