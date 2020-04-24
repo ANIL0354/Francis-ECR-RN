@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     childContainer: {
         flexDirection: 'row',
         backgroundColor: '#0091ff',
         paddingHorizontal: 30,
-        paddingVertical: 25,
+        paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
-        // justifyContent: 'space-bet'
     },
     subHeaderText: {
         color: 'white',

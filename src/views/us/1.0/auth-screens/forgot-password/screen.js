@@ -29,7 +29,6 @@ export const Screen = ({
                     style={{
                         ...styles.subHeaderText,
                         fontSize: largeScaledFont.fontSize,
-                        lineHeight: largeScaledFont.lineHeight
                     }}>
                     {'Forgot Password'}
                 </Text>

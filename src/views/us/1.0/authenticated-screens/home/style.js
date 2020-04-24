@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     childContainer: {
         flex: 1,
         backgroundColor: '#0091ff',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        padding: scaleText(10).fontSize,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
-        maxWidth: '50%',
-        marginBottom: 10,
+        flex: 1,
+        marginBottom: scaleText(15).fontSize,
     },
     authTabContainer: {
         flex: 1,

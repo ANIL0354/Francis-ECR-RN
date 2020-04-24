@@ -169,15 +169,14 @@ export const Screen = ({
                 onClose={() => showFilterMenu(false)}
             />}
             <ScrollView>
-                <View style={{ backgroundColor: '#0091ff', paddingBottom: 200 }}>
+                <View style={{ backgroundColor: '#0091ff' }}>
                     <View style={styles.childContainer}>
                         <View style={styles.childContainer}>
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
                                     height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
-                                    fontSize: scaleText(20).fontSize,
-                                    lineHeight: scaleText(20).lineHeight
+                                    fontSize: scaleText(20).fontSize
                                 }}>
                                 {'Great deals on vehicle relocation'}
                             </Text>
@@ -209,17 +208,16 @@ export const Screen = ({
                                         style={{
                                             padding: 0,
                                             margin: 0,
+                                            width: '100%'
                                         }}
                                         getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
                                         customStyles={{
                                             dateTouchBody: {
                                                 marginVertical: 5,
-                                                minWidth: 280,
+                                                marginVertical: scaleText(20).fontSize,
                                                 zIndex: 99999
                                             },
                                             dateIcon: {
-                                                padding: 0,
-                                                marginLeft: -40,
                                                 display: 'none'
                                             },
                                             dateInput: {
@@ -243,7 +241,6 @@ export const Screen = ({
                                                 textAlign: 'left',
                                             },
                                             datePickerCon: {
-                                                backgroundColor: 'red',
                                                 backfaceVisibility: false
                                             },
                                             dateText: {
@@ -272,8 +269,9 @@ export const Screen = ({
                                     <Text style={{ color: 'white', fontSize: scaleText(18).fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
                                     <Image source={SEARCH_ICON} />
                                 </TouchableOpacity>
-                                <CustomButton
-                                    title={'Search Now'}
+                                <TouchableOpacity
+                                    style={{ backgroundColor: '#fff93e', alignItems: 'center', borderRadius: 5, padding: scaleText(10).fontSize, marginTop: scaleText(20).fontSize }}
+                                    activeOpacity={0.7}
                                     onPress={() => {
                                         if (!(!!pickupLocation)) {
                                             Alert.alert(
@@ -315,8 +313,9 @@ export const Screen = ({
                                             })
                                         }
                                     }}
-                                    buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
-                                    titleStyle={{ color: 'black' }} />
+                                >
+                                    <Text style={{ fontWeight: '700', fontSize: scaleText(16).fontSize }}>Search Now</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
 
