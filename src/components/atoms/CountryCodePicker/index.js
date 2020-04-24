@@ -111,8 +111,6 @@ const CountryCodePicker = ({
                                 color: 'black',
                                 fontSize: scaledFont.fontSize,
                                 lineHeight: scaledFont.lineHeight,
-                                marginBottom: -5,
-                                marginLeft: -5,
                                 ...styles.data
                             }} editable={false} />
                     </TouchableOpacity>

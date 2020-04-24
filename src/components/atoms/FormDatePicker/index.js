@@ -39,8 +39,7 @@ const CustomDatePicker = ({
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateTouchBody: {
-                        marginTop: 0,
-                        marginLeft: 6
+                        ...style,
                     },
                     dateIcon: {
                         display: 'none',
@@ -66,7 +65,6 @@ const CustomDatePicker = ({
                         ...style
                     },
                     datePickerCon: {
-                        backgroundColor: 'red',
                         backfaceVisibility: false
                     },
                     dateText: {
