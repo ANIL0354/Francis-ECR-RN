@@ -14,8 +14,8 @@ const AuthHoc = ({
     children
 }) => {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar barStyle="light-content" />
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', }}>
+            <StatusBar backgroundColor='white' barStyle="dark-content" />
             <AppHeader
                 rightIcon={rightIcon ? rightIcon : null}
                 centerIcon={centerIcon ? centerIcon : null}

@@ -32,14 +32,14 @@ const Form = ({
                     component={CustomFormInput}
                     placeholder={STRINGS.NAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
                 <Field
                     name={STRINGS.SURNAME_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.SURNAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
             </View>
 
@@ -56,14 +56,14 @@ const Form = ({
                         saveDateString(date)
                     }}
                     maxDate={new Date(maxDate)}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
                 <Field
                     name={STRINGS.CITY_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.CITY_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
             </View>
 
@@ -77,7 +77,7 @@ const Form = ({
                     returnKeyType={'go'}
                     countryDrop={true}
                     placeholder={'Country'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
@@ -85,7 +85,7 @@ const Form = ({
                     keyboardType={'email-address'}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
             </View>
             <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
@@ -97,7 +97,7 @@ const Form = ({
                     }}
                     returnKeyType={'go'}
                     placeholder={'Country Code'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                 />
                 <Field
                     name={STRINGS.PHONE_NUMBER}
@@ -105,7 +105,7 @@ const Form = ({
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
                     maxLength={15}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
@@ -116,7 +116,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'next'}
                     maxLength={15}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                 />
                 <Field
@@ -125,7 +125,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'go'}
                     maxLength={15}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ width: scaleText(160).fontSize }}
                     placeholder={STRINGS.RE_PASSWORD_PLACEHOLDER}
                 />
             </View>
