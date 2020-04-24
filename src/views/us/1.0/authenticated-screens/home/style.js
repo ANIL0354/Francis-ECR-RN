@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#0091ff',
         padding: scaleText(10).fontSize,
-        alignItems: 'center',
         justifyContent: 'center',
     },
     subHeaderText: {
