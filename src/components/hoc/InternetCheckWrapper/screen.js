@@ -86,9 +86,7 @@ export default InternetCheckWrapper = ({
 
     return (
         <View style={styles.screen}>
-            <View style={styles.body}>
-                {children}
-            </View>
+            {children}
 
             <Modal
                 visible={!isNetConnected}
