@@ -10,6 +10,7 @@ import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
 import { CHECKBOX_ICON, CHECKBOX_ACTIVE, GOOGLE_ICON, FACEBOOK_ICON, DIVIDING_LINE } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
+import { scaleText } from "../../../../../helpers";
 
 const Form = ({
     handleSubmit,
@@ -137,49 +138,18 @@ const Form = ({
                 uncheckedIcon={CHECKBOX_ICON}
             />
             <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 15, color: 'black' }}>{'Or Connect with'}</Text>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 15
-            }}>
-                <Button
-                    icon={<Image source={GOOGLE_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
-                    titleStyle={{
-                        textAlign: 'center',
-                        flexWrap: 'wrap',
-                        margin: 0,
-                        padding: 10,
-                    }}
-                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
-                    buttonStyle={{
-                        backgroundColor: '#4c8bf5',
-                        justifyContent: 'space-evenly',
-                        height: 30,
-                        maxWidth: 150,
-                        minWidth: 150,
-                        minHeight: 50,
-                        marginVertical: 5
-                    }}
-                    title={'Log In with Google'} onPress={googleAuth} />
-                <Button
-                    icon={<Image source={FACEBOOK_ICON} style={{ marginLeft: 10 }} height={50} width={50} />}
-                    titleStyle={{
-                        textAlign: 'center',
-                        flexWrap: 'wrap',
-                    }}
-                    iconContainerStyle={{ alignContent: 'flex-start', alignSelf: 'flex-start' }}
-                    buttonStyle={{
-                        backgroundColor: '#3b5998',
-                        justifyContent: 'space-evenly',
-                        height: 30,
-                        maxWidth: 150,
-                        minWidth: 150,
-                        minHeight: 50,
-                        marginVertical: 5
-                    }}
-                    title={'Log In with Facebook'} onPress={facebookAuth} />
+            <View style={{ flexDirection: 'row', padding: scaleText(10).fontSize }}>
+                <TouchableOpacity onPress={googleAuth} style={{ backgroundColor: '#4c8bf5', marginRight: scaleText(20).fontSize, flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
+                    <Image source={GOOGLE_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
+                    <Text style={{ flex: 1, textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with Google</Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity onPress={facebookAuth} style={{ backgroundColor: '#3b5998', flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
+                    <Image source={FACEBOOK_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
+                    <Text style={{ flex: 1, textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with Facebook</Text>
+                </TouchableOpacity>
             </View>
+
             <Image source={DIVIDING_LINE} style={{ width: '100%', height: 1.5, marginVertical: 20 }} />
             <Button
                 titleStyle={{
@@ -190,7 +160,7 @@ const Form = ({
                 buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginBottom: 30, alignSelf: 'flex-end' }}
                 title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
 
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 

@@ -141,9 +141,10 @@ export const Screen = ({
                     {'Login Or Register'}
                 </Text>
             </View>
-            <View style={{ padding: 5 }}>
+            <View style={{ padding: 5, flex: 1, }}>
                 <View style={styles.authTabContainer}>
                     <TouchableOpacity
+                        activeOpacity={0.8}
                         onPress={() => setSignUpTab(true)}
                         style={{
                             ...styles.authTabButton,
@@ -159,6 +160,7 @@ export const Screen = ({
                         }}>{"I'm New"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        activeOpacity={0.8}
                         onPress={() => setSignUpTab(false)}
                         style={{
                             ...styles.authTabButton,
@@ -176,11 +178,9 @@ export const Screen = ({
                 </View>
 
                 <ScrollView
-                    style={{
-                        flex: 1, minHeight: 500, width: '100%',
-                        marginVertical: 20,
-                        padding: 0
-                    }}>
+                    showsVerticalScrollIndicator={false}
+                    alwaysBounceVertical={false}
+                >
                     <View style={styles.formContainer}>
                         {signUpTab &&
                             <SignupForm

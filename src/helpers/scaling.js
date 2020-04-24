@@ -1,5 +1,5 @@
-import { useScaleText } from 'react-native-text';
+import { scaleText as scale } from 'react-native-text';
 
 export const scaleText = (fontSize) => {
-    return useScaleText({ fontSize });
+    return scale({ fontSize });
 }

@@ -6,11 +6,6 @@ export default StyleSheet.create({
     screen: {
         flex: 1,
         backgroundColor: '#009000',
-        width: width
-    },
-    body: {
-        flex: 1,
-        width: width
     },
     container: {
         flex: 1,

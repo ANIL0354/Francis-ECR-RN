@@ -7,7 +7,7 @@ const AppHeader = ({
     rightIcon
 }) => {
     return (
-        <View style={{ flex: 1, backgroundColor: 'white', padding: 10, minHeight: 50, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ backgroundColor: 'white', padding: 10, minHeight: 50, flexDirection: 'row', alignItems: 'center' }}>
             <View style={{
                 flex: centerIcon && rightIcon ? 3 : 7
             }}>

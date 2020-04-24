@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     childContainer: {
-        flex: 1,
         backgroundColor: '#0091ff',
         paddingHorizontal: 30,
-        paddingVertical: 25,
+        paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -16,10 +16,9 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     authTabContainer: {
-        flex: 1,
         flexDirection: 'row',
-        paddingHorizontal: 50,
-        paddingVertical: 20,
+        paddingHorizontal: scaleText(50).fontSize,
+        paddingTop: scaleText(20).fontSize,
         justifyContent: 'center'
     },
     authTabButton: {
@@ -27,8 +26,7 @@ const styles = StyleSheet.create({
         maxWidth: 150,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 40,
-        paddingVertical: 20,
+        paddingVertical: scaleText(10).fontSize,
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
         marginHorizontal: 2
@@ -42,6 +40,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 10,
+        flex: 1,
         // marginVertical: 20,
         padding: 10
     },
