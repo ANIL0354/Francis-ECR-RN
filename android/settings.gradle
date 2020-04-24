@@ -1,6 +1,6 @@
 rootProject.name = 'Francis_ECR_RN'
 include ':react-native-android-location-enabler'
-project(':react-native-android-location-enabler').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-android-location-enabler/android'
+project(':react-native-android-location-enabler').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-android-location-enabler/android')
 include ':@react-native-community_netinfo'
 project(':@react-native-community_netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
 include ':react-native-spinkit'
