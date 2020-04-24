@@ -7,6 +7,7 @@ import {
     ScrollView,
     FlatList,
     Animated,
+    Alert,
     LayoutAnimation,
     UIManager,
     TouchableOpacity
@@ -190,7 +191,33 @@ export const Screen = ({
                         </TouchableOpacity>
                         <CustomButton
                             title={'Modify Search'}
-                            onPress={() => showSearchBarAnimation()}
+                            onPress={() => {
+                                if (!(!!pickupLocation)) {
+                                    Alert.alert(
+                                        'Error',
+                                        'Please select a pick-up location before proceeding.',
+                                        [{
+                                            text: 'Okay',
+                                            onPress: () => { }
+                                        }]
+                                    )
+                                    return;
+                                }
+                                else if (!pickupDate) {
+                                    Alert.alert(
+                                        'Error',
+                                        'Please select a pick-up date before proceeding.',
+                                        [{
+                                            text: 'Okay',
+                                            onPress: () => { }
+                                        }]
+                                    )
+                                    return;
+                                }
+                                else {
+                                    showSearchBarAnimation()
+                                }
+                            }}
                             buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
                             titleStyle={{ color: 'black' }} />
                     </View>

@@ -201,7 +201,7 @@ export const Screen = ({
 
                                     <DatePicker
                                         mode="date"
-                                        placeholder={dateValue ? `${moment(dateValue).format('DD-MM-YYYY')}` : 'Pick-up date'}
+                                        placeholder={pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : 'Pick-up date'}
                                         format={'DD-MM-YYYY'}
                                         minDate={new Date()}
                                         confirmBtnText="Confirm"
@@ -275,21 +275,45 @@ export const Screen = ({
                                 <CustomButton
                                     title={'Search Now'}
                                     onPress={() => {
-                                        startLoader();
-                                        fetchVehicleListing({
-                                            fromCity: pickupLocation,
-                                            pickupDate: pickupDate,
-                                            adultSeats: adultSeatsValue,
-                                            childSeats: childSeatsValue,
-                                            fuelType: fuelType + 1,
-                                            limit: LIMITS.vehicleList,
-                                            index: 0
-                                        }, () => {
-                                            stopLoader();
-                                            navigation.navigate('VEHICLE_SCREEN')
-                                        }, () => {
+                                        if (!(!!pickupLocation)) {
+                                            Alert.alert(
+                                                'Error',
+                                                'Please select a pick-up location before proceeding.',
+                                                [{
+                                                    text: 'Okay',
+                                                    onPress: () => { }
+                                                }]
+                                            )
+                                            return;
+                                        }
+                                        else if (!pickupDate) {
+                                            Alert.alert(
+                                                'Error',
+                                                'Please select a pick-up date before proceeding.',
+                                                [{
+                                                    text: 'Okay',
+                                                    onPress: () => { }
+                                                }]
+                                            )
+                                            return;
+                                        }
+                                        else {
+                                            startLoader();
+                                            fetchVehicleListing({
+                                                fromCity: pickupLocation,
+                                                pickupDate: pickupDate,
+                                                adultSeats: adultSeatsValue,
+                                                childSeats: childSeatsValue,
+                                                fuelType: fuelType + 1,
+                                                limit: LIMITS.vehicleList,
+                                                index: 0
+                                            }, () => {
+                                                stopLoader();
+                                                navigation.navigate('VEHICLE_SCREEN')
+                                            }, () => {
 
-                                        })
+                                            })
+                                        }
                                     }}
                                     buttonStyle={{ backgroundColor: '#fff93e', minWidth: '100%', alignSelf: 'center', marginTop: 5 }}
                                     titleStyle={{ color: 'black' }} />
