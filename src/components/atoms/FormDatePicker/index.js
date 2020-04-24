@@ -54,7 +54,6 @@ const CustomDatePicker = ({
                         width: '100%', borderColor: 'black',
                         borderRadius: 5,
                         borderWidth: 0.8,
-                        // marginTop: 20,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         paddingHorizontal: 10,
@@ -79,7 +78,6 @@ const CustomDatePicker = ({
                         margin: 0,
                         alignSelf: 'flex-start',
                         color: 'black',
-                        // display: 'none',
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         padding: 0

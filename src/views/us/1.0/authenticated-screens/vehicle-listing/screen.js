@@ -44,8 +44,12 @@ export const Screen = ({
     transmissionType,
     seatsValue,
     freeDays,
+    setChildSeats,
+    setAdultSeats,
     setPickupLocation,
     pickupLocation,
+    childSeatsValue,
+    adultSeatsValue,
     setSeatsValue,
     setFuelType,
     setFreeDays,
@@ -83,16 +87,17 @@ export const Screen = ({
                 fuelType={fuelType}
                 vehicleType={vehicleType}
                 transmissionType={transmissionType}
-                seatsValue={seatsValue}
+                childSeatsValue={childSeatsValue}
+                adultSeatsValue={adultSeatsValue}
                 freeDays={freeDays}
                 setFuelType={setFuelType}
                 setTransmissionType={setTransmissionType}
                 setVehicleType={setVehicleType}
                 setFreeDays={setFreeDays}
-                setSeatsValue={setSeatsValue}
+                setChildSeats={setChildSeats}
+                setAdultSeats={setAdultSeats}
                 onClose={() => showFilterMenu(false)}
             />}
-
             {modifySearch &&
                 <View
                     style={{ backgroundColor: '#0091ff', padding: 20, paddingVertical: 40 }}>
