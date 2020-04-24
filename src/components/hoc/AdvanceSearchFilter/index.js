@@ -49,6 +49,7 @@ const AdvanceSearchFilter = ({
         <Modal
             transparent
             animated
+            onRequestClose={onClose}
         >
             <View style={styles.filterModal}>
                 <View style={{ flex: 1 }} />

@@ -214,7 +214,7 @@ export const Screen = ({
                                         customStyles={{
                                             dateTouchBody: {
                                                 marginVertical: scaleText(20).fontSize,
-                                                zIndex: 99999
+                                                zIndex: 10
                                             },
                                             dateIcon: {
                                                 display: 'none'

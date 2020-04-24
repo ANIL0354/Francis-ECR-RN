@@ -15,7 +15,7 @@ const AppHoc = ({
 }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-            <StatusBar backgroundColor='white' barStyle="light-content" />
+            <StatusBar backgroundColor='white' barStyle='dark-content' />
             <AppHeader
                 rightIcon={rightIcon}
                 centerIcon={centerIcon}

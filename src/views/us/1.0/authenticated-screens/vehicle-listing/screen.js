@@ -20,7 +20,7 @@ import {
     MENU_LOGO,
     USER_ICON,
     VEHICLE_TYPE_LISTING,
-    BIG_NORMAL_CAR,
+    NAV_ARROW_ICON,
     CAR_SEATS_ICON,
     AC_ICON,
     TURN_RIGHT,
@@ -230,7 +230,10 @@ export const Screen = ({
             }
             {!modifySearch && <View
                 style={styles.childContainer}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', marginHorizontal: 5 }} onPress={() => navigation.navigate('HOME_SCREEN')}>
+                        <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                    </TouchableOpacity>
                     <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
                         <Text
                             style={{
