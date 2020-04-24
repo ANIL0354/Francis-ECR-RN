@@ -59,10 +59,18 @@ const AdvanceSearchFilter = ({
                     <View style={styles.filterTabContainer}>
                         {
                             FILTER_OPTIONS.map((item, index) => (
-                                <Text onPress={() => setFilterValue(index)} style={{
+                                <View style={{
                                     backgroundColor: filterValue === index ? 'rgba(0,0,0,0.08)' : 'white',
-                                    ...styles.filterTab
-                                }}>{item.title}</Text>
+                                    ...styles.filterTab,
+                                }}>
+                                    <Image style={{ marginRight: 10 }} source={filterValue === index ? item.activeIcon : item.inactiveIcon} />
+                                    <Text
+                                        style={{
+                                            color: index === filterValue ? '#0091ff' : 'black',
+                                            ...styles.filterTabText
+                                        }}
+                                        onPress={() => setFilterValue(index)}>{item.title}</Text>
+                                </View>
                             ))
                         }
 
@@ -74,7 +82,7 @@ const AdvanceSearchFilter = ({
                             setSelectedValue={(value) => setFuel(value)}
                         />}
                         {filterValue === 1 && <View style={{ justifyContent: 'space-between' }}>
-                            <View style={{ marginBottom: 50, minWidth: '100%' }}>
+                            <View style={{ marginBottom: 30, minWidth: '100%' }}>
                                 <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
                                 <Slider
                                     sliderValue={childSeats}

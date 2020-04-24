@@ -1,4 +1,16 @@
-import { CAR } from './icons';
+import {
+  CAR,
+  FUEL_ACTIVE,
+  FUEL_INACTIVE,
+  SEAT_ACTIVE,
+  SEAT_INACTIVE,
+  VEHICLE_ACTIVE,
+  VEHICLE_INACTIVE,
+  TRANSMISSION_ACTIVE,
+  TRANSMISSION_INACTIVE,
+  FREE_ACTIVE,
+  FREE_INACTIVE
+} from './icons';
 import {
   NORMAL_CAR,
   PASSENGER_CAR,
@@ -47,19 +59,29 @@ export const STATUS_CODE = {
 
 export const FILTER_OPTIONS = [
   {
-    title: 'Fuel Options'
+    title: 'Fuel Options',
+    activeIcon: FUEL_ACTIVE,
+    inactiveIcon: FUEL_INACTIVE
   },
   {
-    title: 'Number of Seats'
+    title: 'Number of Seats',
+    activeIcon: SEAT_ACTIVE,
+    inactiveIcon: SEAT_INACTIVE
   },
   {
-    title: 'Vehicle Type'
+    title: 'Vehicle Type',
+    activeIcon: VEHICLE_ACTIVE,
+    inactiveIcon: VEHICLE_INACTIVE
   },
   {
-    title: 'Transmission Options'
+    title: 'Transmission Options',
+    activeIcon: TRANSMISSION_ACTIVE,
+    inactiveIcon: TRANSMISSION_INACTIVE
   },
   {
-    title: 'Free Days'
+    title: 'Free Days',
+    activeIcon: FREE_ACTIVE,
+    inactiveIcon: FREE_INACTIVE
   }
 ];
 
