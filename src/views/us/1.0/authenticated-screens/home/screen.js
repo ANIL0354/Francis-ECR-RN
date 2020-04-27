@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -26,11 +26,11 @@ import {
   LIMITS,
   GOOGLE_API_KEY,
 } from '../../../../../shared/constants';
-import {scaleText} from '../../../../../helpers';
+import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
-import {STRINGS} from '../../../../../shared/constants/us/strings';
-import {CheckPermission} from '../../../../../helpers';
+import { STRINGS } from '../../../../../shared/constants/us/strings';
+import { CheckPermission } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from './style.js';
 import {
@@ -85,8 +85,8 @@ export const Screen = ({
     AppState.addEventListener('change', handleAppStateChange);
     getPopularPlaces(
       {},
-      () => {},
-      () => {},
+      () => { },
+      () => { },
     );
   }, []);
 
@@ -151,6 +151,7 @@ export const Screen = ({
   };
 
   const getUserLocation = () => {
+    startLoader();
     Geocoder.init(GOOGLE_API_KEY);
     Geolocation.getCurrentPosition(
       (info) => {
@@ -159,6 +160,7 @@ export const Screen = ({
             var addressComponent =
               json.results[json.results.length - 2].address_components[0];
             setPickupLocation(addressComponent.long_name);
+            stopLoader();
           })
           .catch((error) => console.warn(error));
       },
@@ -189,10 +191,59 @@ export const Screen = ({
           setChildSeats={setChildSeats}
           setAdultSeats={setAdultSeats}
           onClose={() => showFilterMenu(false)}
+          onSubmit={() => {
+            if (!!!pickupLocation) {
+              Alert.alert(
+                'Select Pick-up Location',
+                'Please select a pick-up location before proceeding.',
+                [
+                  {
+                    text: 'Okay',
+                    onPress: () => { },
+                  },
+                ],
+              );
+              return;
+            } else if (!pickupDate) {
+              Alert.alert(
+                'Select Pick-up Date',
+                'Please select a pick-up date before proceeding.',
+                [
+                  {
+                    text: 'Okay',
+                    onPress: () => { },
+                  },
+                ],
+              );
+              return;
+            } else {
+              showFilterMenu(false)
+              let formattedDate = moment(pickupDate).format(
+                'YYYY-MM-DD',
+              );
+              startLoader();
+              fetchVehicleListing(
+                {
+                  fromCity: pickupLocation,
+                  pickupDate: formattedDate,
+                  adultSeats: adultSeatsValue,
+                  childSeats: childSeatsValue,
+                  fuelType: fuelType + 1,
+                  limit: LIMITS.vehicleList,
+                  index: 0,
+                },
+                () => {
+                  stopLoader();
+                  navigation.navigate('VEHICLE_SCREEN');
+                },
+                () => { },
+              );
+            }
+          }}
         />
       )}
       <ScrollView keyboardShouldPersistTaps="always">
-        <View style={{backgroundColor: '#0091ff'}}>
+        <View style={{ backgroundColor: '#0091ff' }}>
           <View style={styles.childContainer}>
             <View style={styles.childContainer}>
               <Text
@@ -219,7 +270,15 @@ export const Screen = ({
                     minWidth: '100%',
                     justifyContent: 'space-between',
                   }}>
-                  <LocationSearch />
+                  <LocationSearch
+                    pickupLocation={pickupLocation}
+                    setPickupLocation={(value) => setPickupLocation(value)}
+                    inputStyle={{
+                      height: 2.5 * scaledFont.lineHeight,
+                      fontSize: scaledFont.fontSize,
+                      lineHeight: scaledFont.lineHeight,
+                      ...styles.pickupLocationInput
+                    }} />
                   {/* <TextInput
                                         placeholder={'Pick-up location'}
                                         placeholderTextColor={'black'}
@@ -348,7 +407,7 @@ export const Screen = ({
                         [
                           {
                             text: 'Okay',
-                            onPress: () => {},
+                            onPress: () => { },
                           },
                         ],
                       );
@@ -360,7 +419,7 @@ export const Screen = ({
                         [
                           {
                             text: 'Okay',
-                            onPress: () => {},
+                            onPress: () => { },
                           },
                         ],
                       );
@@ -369,7 +428,6 @@ export const Screen = ({
                       let formattedDate = moment(pickupDate).format(
                         'YYYY-MM-DD',
                       );
-                      console.log('formattedDate', formattedDate);
                       startLoader();
                       fetchVehicleListing(
                         {
@@ -385,7 +443,7 @@ export const Screen = ({
                           stopLoader();
                           navigation.navigate('VEHICLE_SCREEN');
                         },
-                        () => {},
+                        () => { },
                       );
                     }
                   }}>
@@ -402,11 +460,11 @@ export const Screen = ({
             </View>
           </View>
           <FlatList
-            style={{paddingHorizontal: 40, backgroundColor: 'white'}}
+            style={{ paddingHorizontal: 40, backgroundColor: 'white' }}
             contentContainerStyle={{}}
             data={popularPlaces}
             keyExtractor={(item) => item.id}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               return (
                 <PopularPlace
                   icon={CAR}
@@ -418,7 +476,7 @@ export const Screen = ({
               );
             }}
           />
-          <View style={{backgroundColor: 'white'}}>
+          <View style={{ backgroundColor: 'white' }}>
             <Text
               style={{
                 fontWeight: 'bold',
@@ -431,7 +489,7 @@ export const Screen = ({
               {'Helpful Information'}
             </Text>
           </View>
-          <View style={{backgroundColor: 'white'}}>
+          <View style={{ backgroundColor: 'white' }}>
             <Image
               style={{
                 alignSelf: 'center',
@@ -465,7 +523,7 @@ export const Screen = ({
               }
             </Text>
           </View>
-          <View style={{backgroundColor: 'white'}}>
+          <View style={{ backgroundColor: 'white' }}>
             <Image
               style={{
                 alignSelf: 'center',
@@ -520,15 +578,15 @@ export const Screen = ({
               Alert.alert('Logout', 'Are you sure you want to logout?', [
                 {
                   text: 'Cancel',
-                  onPress: () => {},
+                  onPress: () => { },
                 },
                 {
                   text: 'Confirm',
                   onPress: () =>
                     logout(
                       userToken,
-                      () => {},
-                      () => {},
+                      () => { },
+                      () => { },
                     ),
                 },
               ])

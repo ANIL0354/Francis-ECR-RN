@@ -28,13 +28,15 @@ import {
     VEHICLE_DETAILS_LISTING,
     GEAR_ICON,
     SEARCH_ICON,
-    LUGGAGE_ICON
+    LUGGAGE_ICON,
+    LIMITS
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from "./styles.js";
 import IconText from "../../../../../components/atoms/IconTextComponent";
 import CustomButton from "../../../../../components/atoms/CustomButton";
+import LocationSearch from '../../../../../components/atoms/LocationSearch';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
@@ -58,6 +60,7 @@ export const Screen = ({
     setPickupDate,
     pickupDate,
     setVehicleType,
+    fetchVehicleListing,
     setTransmissionType,
 }) => {
     const [filterMenu, showFilterMenu] = useState(false);
@@ -70,6 +73,7 @@ export const Screen = ({
     const scaledMediumFont = scaleText(16);
     const scaledSmallFont = scaleText(14);
     const scaledSmallerFont = scaleText(12);
+    const scaledFont = scaleText(14)
     let animatedValue = new Animated.Value(0);
 
     const showSearchBarAnimation = () => {
@@ -97,150 +101,251 @@ export const Screen = ({
                 setChildSeats={setChildSeats}
                 setAdultSeats={setAdultSeats}
                 onClose={() => showFilterMenu(false)}
+                onSubmit={() => {
+                    if (!!!pickupLocation) {
+                        Alert.alert(
+                            'Select Pick-up Location',
+                            'Please select a pick-up location before proceeding.',
+                            [
+                                {
+                                    text: 'Okay',
+                                    onPress: () => { },
+                                },
+                            ],
+                        );
+                        return;
+                    } else if (!pickupDate) {
+                        Alert.alert(
+                            'Select Pick-up Date',
+                            'Please select a pick-up date before proceeding.',
+                            [
+                                {
+                                    text: 'Okay',
+                                    onPress: () => { },
+                                },
+                            ],
+                        );
+                        return;
+                    } else {
+                        showFilterMenu(false)
+                        let formattedDate = moment(pickupDate).format(
+                            'YYYY-MM-DD',
+                        );
+                        startLoader();
+                        fetchVehicleListing(
+                            {
+                                fromCity: pickupLocation,
+                                pickupDate: formattedDate,
+                                adultSeats: adultSeatsValue,
+                                childSeats: childSeatsValue,
+                                fuelType: fuelType + 1,
+                                limit: LIMITS.vehicleList,
+                                index: 0,
+                            },
+                            () => {
+                                stopLoader();
+                                // navigation.navigate('VEHICLE_SCREEN');
+                            },
+                            () => { },
+                        );
+                    }
+                }}
             />}
             {modifySearch &&
-                <View
-                    style={{ backgroundColor: '#0091ff', padding: 20, paddingVertical: 40 }}>
-                    <View style={{ backgroundColor: '#1e5e9e', minWidth: '100%', minHeight: 100, padding: 20 }}>
-                        <View style={{ flexDirection: 'column', minWidth: '100%', justifyContent: 'space-between', }}>
-                            {/* <LocationSearch /> */}
-                            <TextInput
-                                placeholder={'Pick-up location'}
-                                placeholderTextColor={'black'}
-                                underlineColorAndroid={"transparent"}
-                                style={{
+                <View style={{ flex: 1, padding: scaleText(10).fontSize, minHeight: scaleText(320).fontSize, backgroundColor: '#0091ff', }}>
+                    <View style={styles.searchChildContainer}>
+                        <View style={{
+                            backgroundColor: '#1e5e9e',
+                            minWidth: '100%',
+                            minHeight: 100,
+                            padding: 20,
+                        }}>
+                            <View style={{
+                                flexDirection: 'column',
+                                minWidth: '100%',
+                                justifyContent: 'space-between',
+                            }}>
+                                {/* <LocationSearch
+                                    pickupLocation={pickupLocation}
+                                    setPickupLocation={(value) => {
+                                        console.log('value', value);
+                                        setPickupLocation(value)
+                                    }}
+                                    inputStyle={{
+                                        height: 2.5 * scaledFont.lineHeight,
+                                        fontSize: scaledFont.fontSize,
+                                        lineHeight: scaledFont.lineHeight,
+                                        ...styles.pickupLocationInput
+                                    }} /> */}
+                                <TextInput
+                                    placeholder={'Pick-up location'}
+                                    placeholderTextColor={'black'}
+                                    underlineColorAndroid={"transparent"}
+                                    style={{
 
-                                    height: 2.5 * scaledSmallerFont.lineHeight,
-                                    fontSize: scaledSmallerFont.fontSize,
-                                    lineHeight: scaledSmallerFont.lineHeight,
-                                    ...styles.pickupLocationInput
-                                }}
-                                value={pickupLocation}
-                                onChangeText={value => setPickupLocation(value)}
-                                returnKeyType={'next'}
-                            />
+                                        height: 2.5 * scaledSmallFont.lineHeight,
+                                        fontSize: scaledSmallFont.fontSize,
+                                        lineHeight: scaledSmallFont.lineHeight,
+                                        ...styles.normalLocationInput
+                                    }}
+                                    value={pickupLocation}
+                                    onChangeText={value => setPickupLocation(value)}
+                                    returnKeyType={'next'}
+                                />
 
-                            <DatePicker
-                                mode="date"
-                                placeholder={pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : 'Pick-up date'}
-                                format={'DD-MM-YYYY'}
-                                minDate={new Date()}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
+                                <DatePicker
+                                    mode="date"
+                                    placeholder={pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : 'Pick-up date'}
+                                    format={'DD-MM-YYYY'}
+                                    minDate={new Date()}
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    style={{
+                                        padding: 0,
+                                        margin: 0,
+                                        width: '100%',
+                                        // marginTop: 40,
+                                    }}
+                                    getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
+                                    customStyles={{
+                                        dateTouchBody: {
+                                            marginVertical: scaleText(20).fontSize,
+                                            zIndex: 10,
+                                        },
+                                        dateIcon: {
+                                            display: 'none',
+                                        },
+                                        dateInput: {
+                                            textAlign: 'left',
+                                            minWidth: '40%',
+                                            margin: 0,
+                                            backgroundColor: 'white',
+                                            padding: 0,
+                                            height: 2.5 * scaledFont.lineHeight,
+                                            borderColor: 'black',
+                                            borderRadius: 5,
+                                            borderWidth: 0.8,
+                                            fontSize: scaledFont.fontSize,
+                                            lineHeight: scaledFont.lineHeight,
+                                            paddingHorizontal: 10,
+                                            alignSelf: 'center',
+                                            paddingVertical: 2,
+                                            paddingBottom: 0,
+                                            marginBottom: 0,
+                                            textAlign: 'left',
+                                        },
+                                        datePickerCon: {
+                                            backfaceVisibility: false,
+                                        },
+                                        dateText: {
+                                            textAlign: 'left',
+                                            margin: 0,
+                                            fontSize: scaledFont.fontSize,
+                                            lineHeight: scaledFont.lineHeight,
+                                            padding: 0,
+                                        },
+                                        placeholderText: {
+                                            textAlign: 'left',
+                                            margin: 0,
+                                            alignSelf: 'flex-start',
+                                            color: 'black',
+                                            fontSize: scaledFont.fontSize,
+                                            lineHeight: scaledFont.lineHeight,
+                                            padding: 0,
+                                        },
+                                    }}
+                                    onDateChange={(date) => { setSelectedDate(date) }}
+                                />
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => showFilterMenu(true)}
+                                style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottomColor: 'white', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderWidth: 1, marginBottom: 2 }}>
+                                <Text style={{ color: 'white', fontSize: scaledLargeFont.fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
+                                <Image source={SEARCH_ICON} />
+                            </TouchableOpacity>
+                            <TouchableOpacity
                                 style={{
-                                    padding: 0,
-                                    margin: 0,
-                                    width: '100%'
+                                    backgroundColor: '#fff93e',
+                                    alignItems: 'center',
+                                    borderRadius: 5,
+                                    padding: scaleText(10).fontSize,
+                                    marginTop: scaleText(20).fontSize,
                                 }}
-                                getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
-                                customStyles={{
-                                    dateTouchBody: {
-                                        marginVertical: scaleText(20).fontSize,
-                                        zIndex: 99999
-                                    },
-                                    dateIcon: {
-                                        padding: 0,
-                                        marginLeft: -40,
-                                        display: 'none'
-                                    },
-                                    dateInput: {
-                                        textAlign: 'left',
-                                        minWidth: '40%',
-                                        margin: 0,
-                                        backgroundColor: 'white',
-                                        padding: 0,
-                                        height: 2.5 * scaledSmallerFont.lineHeight,
-                                        borderColor: 'transparent',
-                                        borderColor: 'black',
-                                        borderRadius: 5,
-                                        borderWidth: 0.8,
-                                        fontSize: scaledSmallerFont.fontSize,
-                                        lineHeight: scaledSmallerFont.lineHeight,
-                                        paddingHorizontal: 10,
-                                        alignSelf: 'center',
-                                        paddingVertical: 2,
-                                        paddingBottom: 0,
-                                        marginBottom: 0,
-                                        textAlign: 'left',
-                                    },
-                                    datePickerCon: {
-                                        backfaceVisibility: false
-                                    },
-                                    dateText: {
-                                        textAlign: 'left',
-                                        margin: 0,
-                                        fontSize: scaledSmallerFont.fontSize,
-                                        lineHeight: scaledSmallerFont.lineHeight,
-                                        padding: 0
-                                    },
-                                    placeholderText: {
-                                        textAlign: 'left',
-                                        margin: 0,
-                                        alignSelf: 'flex-start',
-                                        color: 'black',
-                                        fontSize: scaledSmallerFont.fontSize,
-                                        lineHeight: scaledSmallerFont.lineHeight,
-                                        padding: 0
+                                activeOpacity={0.7}
+                                onPress={() => {
+                                    if (!(!!pickupLocation)) {
+                                        Alert.alert(
+                                            'Error',
+                                            'Please select a pick-up location before proceeding.',
+                                            [{
+                                                text: 'Okay',
+                                                onPress: () => { }
+                                            }]
+                                        )
+                                        return;
+                                    }
+                                    else if (!pickupDate) {
+                                        Alert.alert(
+                                            'Error',
+                                            'Please select a pick-up date before proceeding.',
+                                            [{
+                                                text: 'Okay',
+                                                onPress: () => { }
+                                            }]
+                                        )
+                                        return;
+                                    }
+                                    else {
+                                        showSearchBarAnimation();
+                                        let formattedDate = moment(pickupDate).format(
+                                            'YYYY-MM-DD',
+                                        );
+                                        startLoader();
+                                        fetchVehicleListing(
+                                            {
+                                                fromCity: pickupLocation,
+                                                pickupDate: formattedDate,
+                                                adultSeats: adultSeatsValue,
+                                                childSeats: childSeatsValue,
+                                                fuelType: fuelType + 1,
+                                                limit: LIMITS.vehicleList,
+                                                index: 0,
+                                            },
+                                            () => {
+                                                stopLoader();
+                                                navigation.navigate('VEHICLE_SCREEN');
+                                            },
+                                            () => { },
+                                        );
                                     }
                                 }}
-                                onDateChange={(date) => { setSelectedDate(date) }}
-                            />
+                            >
+                                <Text
+                                    style={{
+                                        fontWeight: '700',
+                                        color: 'black',
+                                        fontSize: scaleText(16).fontSize,
+                                    }}>
+                                    {'Modify Search'}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity
-                            onPress={() => showFilterMenu(true)}
-                            style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottomColor: 'white', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderWidth: 1, marginBottom: 2 }}>
-                            <Text style={{ color: 'white', fontSize: scaledLargeFont.fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
-                            <Image source={SEARCH_ICON} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ backgroundColor: '#fff93e', alignItems: 'center', borderRadius: 5, padding: scaleText(10).fontSize, marginTop: scaleText(20).fontSize }}
-                            activeOpacity={0.7}
-                            onPress={() => {
-                                if (!(!!pickupLocation)) {
-                                    Alert.alert(
-                                        'Error',
-                                        'Please select a pick-up location before proceeding.',
-                                        [{
-                                            text: 'Okay',
-                                            onPress: () => { }
-                                        }]
-                                    )
-                                    return;
-                                }
-                                else if (!pickupDate) {
-                                    Alert.alert(
-                                        'Error',
-                                        'Please select a pick-up date before proceeding.',
-                                        [{
-                                            text: 'Okay',
-                                            onPress: () => { }
-                                        }]
-                                    )
-                                    return;
-                                }
-                                else {
-                                    showSearchBarAnimation()
-                                }
-                            }}
-                        >
-                            <Text style={{ fontWeight: '700', fontSize: scaleText(16).fontSize }}>Search Now</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             }
             {!modifySearch && <View
                 style={styles.childContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', marginHorizontal: 5 }} onPress={() => navigation.navigate('HOME_SCREEN')}>
-                        <Image source={NAV_ARROW_ICON} height={20} width={20} />
-                    </TouchableOpacity>
+                <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', }} onPress={() => navigation.navigate('HOME_SCREEN')}>
+                    <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginLeft: -1 * (scaledSmallerFont.fontSize) }}>
                     <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
                         <Text
                             style={{
                                 ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledLargeFont.fontSize,
-                                lineHeight: scaledLargeFont.lineHeight
+                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledMediumFont.fontSize,
+                                lineHeight: scaledMediumFont.lineHeight
                             }}>
                             {'Pick-up Location:'}
                         </Text>
@@ -250,29 +355,29 @@ export const Screen = ({
                             style={{
                                 ...styles.subHeaderText,
                                 maxWidth: 150,
-                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledLargeFont.fontSize,
-                                lineHeight: scaledLargeFont.lineHeight
+                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledMediumFont.fontSize,
+                                lineHeight: scaledMediumFont.lineHeight
                             }}>
                             {pickupLocation}
                         </Text>
                     </View>
-                    <View style={{ paddingLeft: 10 }}>
+                    <View style={{}}>
                         <Text
                             style={{
                                 ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledLargeFont.fontSize,
-                                lineHeight: scaledLargeFont.lineHeight
+                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledMediumFont.fontSize,
+                                lineHeight: scaledMediumFont.lineHeight
                             }}>
                             {'Pick-up Date:'}
                         </Text>
                         <Text
                             style={{
                                 ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledLargeFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledLargeFont.fontSize,
-                                lineHeight: scaledLargeFont.lineHeight
+                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                fontSize: scaledMediumFont.fontSize,
+                                lineHeight: scaledMediumFont.lineHeight
                             }}>
                             {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
                         </Text>
