@@ -26,7 +26,8 @@ const AdvanceSearchFilter = ({
     setVehicleType = () => { },
     setFreeDays = () => { },
     setChildSeats = () => { },
-    setAdultSeats = () => { }
+    setAdultSeats = () => { },
+    onSubmit = () => { }
 }) => {
     const [filterValue, setFilterValue] = useState(0);
     const [fuelValue, setFuel] = useState(fuelType);
@@ -144,7 +145,7 @@ const AdvanceSearchFilter = ({
                             title={'Reset'} />
                         <CustomButton
                             buttonStyle={{ paddingHorizontal: 30 }}
-                            title={'Apply'}
+                            title={'Submit'}
                             onPress={() => {
                                 setFuelType(fuelValue);
                                 setFreeDays(freeDaysValue);
@@ -152,6 +153,7 @@ const AdvanceSearchFilter = ({
                                 setVehicleType(vehicleValue);
                                 setChildSeats(childSeats);
                                 setAdultSeats(adultSeats);
+                                onSubmit();
                             }} />
                     </View>
                 </View>

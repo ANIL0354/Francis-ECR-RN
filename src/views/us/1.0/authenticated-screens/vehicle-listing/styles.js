@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     rowFlex: {
@@ -17,6 +18,13 @@ const styles = StyleSheet.create({
         minHeight: 60,
         alignItems: 'center',
         justifyContent: 'space-between'
+    },
+    searchChildContainer: {
+        flex: 1,
+        backgroundColor: '#0091ff',
+        paddingVertical: scaleText(60).fontSize,
+        paddingHorizontal: scaleText(10).fontSize,
+        justifyContent: 'center',
     },
     subHeaderText: {
         color: 'white',
@@ -53,6 +61,17 @@ const styles = StyleSheet.create({
         padding: 10
     },
     pickupLocationInput: {
+        borderColor: 'black',
+        borderRadius: 5,
+        borderWidth: 0.8,
+        // backgroundColor: 'white',
+        // marginBottom: 10,
+        // paddingHorizontal: 10,
+        // paddingVertical: 2,
+        paddingBottom: 0,
+        marginBottom: 0,
+    },
+    normalLocationInput: {
         borderColor: 'black',
         borderRadius: 5,
         borderWidth: 0.8,

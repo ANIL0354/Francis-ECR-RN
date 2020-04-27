@@ -40,7 +40,6 @@ function* fetchVehicleList({ data, success, failure }) {
     try {
         let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
         const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=${fuelType}&limit=${limit}6&index=${index}` });
-        console.log('response', response);
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             Toast.show(response.data.msg, Toast.LONG);

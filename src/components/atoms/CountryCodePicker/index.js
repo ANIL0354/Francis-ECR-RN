@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, PixelRatio, Switch, } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,6 +14,8 @@ const CountryCodePicker = ({
     fontSize = 14,
     style,
     input,
+    countryValue,
+    codeValue,
     placeholder,
     countryDrop = false,
     meta: { touched, error, visited },
@@ -21,8 +23,9 @@ const CountryCodePicker = ({
     setSelectedCountry = () => { }
 }) => {
     const scaledFont = scaleText(fontSize)
-    const [countryCode, setCountryCode] = useState('')
-    const [country, setCountry] = useState(null)
+    const [countryCode, setCountryCode] = useState(codeValue);
+    const [savedValue, saveValue] = useState({})
+    const [country, setCountry] = useState(countryValue)
     const [showCountries, setShowCountries] = useState(false);
     const [withCountryNameButton, setWithCountryNameButton] = useState(false)
     const [withFlag, setWithFlag] = useState(true)
@@ -34,6 +37,12 @@ const CountryCodePicker = ({
         setCountryCode(country.cca2)
         setCountry(country)
     }
+
+    useEffect(() => {
+        setCountryCode(savedValue.cca2);
+        onSelect(savedValue)
+    }, [countryValue, codeValue]);
+
     const validationMessage =
         touched && error ? error : '';
     return (
@@ -80,9 +89,10 @@ const CountryCodePicker = ({
                         margin: 0,
                         padding: 0,
                         alignContent: 'center',
-                        display: countryCode ? 'none' : 'flex',
+                        display: codeValue && countryValue ? 'none' : 'flex',
                     }}
                     onSelect={(value) => {
+                        saveValue(value)
                         setShowCountries(false);
                         setCountryCode(value.cca2);
                         setCountry(value.country);
@@ -102,10 +112,10 @@ const CountryCodePicker = ({
                     placeholder={placeholder}
                     visible
                 />
-                {country !== null && (
+                {countryValue !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
-                            value={countryDrop ? `${input.value}` : `+${input.value}`}
+                            value={countryDrop ? `${input.value}` : codeValue ? `+${input.value}` : ''}
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',

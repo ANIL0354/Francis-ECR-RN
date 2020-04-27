@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements';
 import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, ScrollView } from "react-native";
@@ -23,7 +23,10 @@ const Form = ({
     setSubscribed
 }) => {
     const today = new Date();
-    const maxDate = today.setFullYear(today.getFullYear() - 16)
+    const maxDate = today.setFullYear(today.getFullYear() - 16);
+    const [selectedCountry, setSelectedCountry] = useState(null)
+    const [selectedCountryCode, setSelectedCountryCode] = useState('')
+
     return (
         <React.Fragment>
             <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
@@ -71,8 +74,15 @@ const Form = ({
                 <Field
                     name={STRINGS.COUNTRY_INPUT}
                     component={CountryCodePicker}
+                    countryValue={selectedCountry}
+                    codeValue={selectedCountryCode}
                     setSelectedCountry={(value) => {
                         changeField('signup', STRINGS.COUNTRY_INPUT, value);
+                        setSelectedCountry(value)
+                    }}
+                    setCallingCode={(value) => {
+                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value);
+                        setSelectedCountryCode(value);
                     }}
                     returnKeyType={'go'}
                     countryDrop={true}
@@ -92,8 +102,15 @@ const Form = ({
                 <Field
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
+                    countryValue={selectedCountry}
+                    codeValue={selectedCountryCode}
                     setCallingCode={(value) => {
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
+                        setSelectedCountryCode(value);
+                    }}
+                    setSelectedCountry={(value) => {
+                        changeField('signup', STRINGS.COUNTRY_INPUT, value);
+                        setSelectedCountry(value);
                     }}
                     returnKeyType={'go'}
                     placeholder={'Country Code'}
