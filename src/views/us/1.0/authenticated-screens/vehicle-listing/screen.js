@@ -149,22 +149,22 @@ export const Screen = ({
                     }}
                 />
             )}
-            <ScrollView keyboardShouldPersistTaps="always">
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="always">
                 <View style={{ backgroundColor: '#0091ff' }}>
                     <View style={styles.childContainer}>
-                        {!modifySearch && <View
-                            style={styles.childContainer}>
-                            <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', }} onPress={() => navigation.navigate('HOME_SCREEN')}>
+                        {!modifySearch && <View style={styles.childContainer}>
+                            <TouchableOpacity onPress={() => navigation.navigate('HOME_SCREEN')}                            >
                                 <Image source={NAV_ARROW_ICON} height={20} width={20} />
                             </TouchableOpacity>
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginLeft: -1 * (scaledSmallerFont.fontSize) }}>
-                                <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                <View style={{ flex: 1, paddingHorizontal: scaleText(15).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
                                     <Text
                                         style={{
                                             ...styles.subHeaderText,
                                             height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
                                             fontSize: scaledMediumFont.fontSize,
-                                            lineHeight: scaledMediumFont.lineHeight
                                         }}>
                                         {'Pick-up Location:'}
                                     </Text>
@@ -178,10 +178,10 @@ export const Screen = ({
                                             fontSize: scaledMediumFont.fontSize,
                                             lineHeight: scaledMediumFont.lineHeight
                                         }}>
-                                        {pickupLocation}
+                                        {pickupLocation ? pickupLocation : ''}
                                     </Text>
                                 </View>
-                                <View style={{}}>
+                                <View style={{ flex: 1, marginHorizontal: scaleText(15).fontSize }}>
                                     <Text
                                         style={{
                                             ...styles.subHeaderText,
@@ -198,7 +198,7 @@ export const Screen = ({
                                             fontSize: scaledMediumFont.fontSize,
                                             lineHeight: scaledMediumFont.lineHeight
                                         }}>
-                                        {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
+                                        {pickupDate ? `${moment(pickupDate).format('DD-MMM-YYYY')}` : ''}
                                     </Text>
                                 </View>
                             </View>
@@ -209,27 +209,21 @@ export const Screen = ({
                         {modifySearch && <View
                             style={{
                                 backgroundColor: '#1e5e9e',
-                                minWidth: '90%',
-                                minHeight: 100,
+                                width: '100%',
                                 padding: 20,
                                 marginVertical: 20
                             }}>
-                            <View
-                                style={{
-                                    flexDirection: 'column',
-                                    minWidth: '100%',
-                                    justifyContent: 'space-between',
-                                }}>
-                                <LocationSearch
-                                    pickupLocation={pickupLocation}
-                                    setPickupLocation={(value) => setPickupLocation(value)}
-                                    inputStyle={{
-                                        height: 2.5 * scaledFont.lineHeight,
-                                        fontSize: scaledFont.fontSize,
-                                        lineHeight: scaledFont.lineHeight,
-                                        ...styles.pickupLocationInput
-                                    }} />
-                                {/* <TextInput
+
+                            <LocationSearch
+                                pickupLocation={pickupLocation}
+                                setPickupLocation={(value) => setPickupLocation(value)}
+                                inputStyle={{
+                                    height: 2.5 * scaledFont.lineHeight,
+                                    fontSize: scaledFont.fontSize,
+                                    lineHeight: scaledFont.lineHeight,
+                                    ...styles.pickupLocationInput
+                                }} />
+                            {/* <TextInput
                                         placeholder={'Pick-up location'}
                                         placeholderTextColor={'black'}
                                         underlineColorAndroid={"transparent"}
@@ -244,78 +238,77 @@ export const Screen = ({
                                         returnKeyType={'next'}
                                     /> */}
 
-                                <DatePicker
-                                    mode="date"
-                                    placeholder={
-                                        pickupDate
-                                            ? `${moment(pickupDate).format('DD-MM-YYYY')}`
-                                            : 'Pick-up date'
-                                    }
-                                    format={'DD-MM-YYYY'}
-                                    minDate={new Date()}
-                                    confirmBtnText="Confirm"
-                                    cancelBtnText="Cancel"
-                                    style={{
-                                        padding: 0,
+                            <DatePicker
+                                mode="date"
+                                placeholder={
+                                    pickupDate
+                                        ? `${moment(pickupDate).format('DD-MM-YYYY')}`
+                                        : 'Pick-up date'
+                                }
+                                format={'DD-MM-YYYY'}
+                                minDate={new Date()}
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                style={{
+                                    padding: 0,
+                                    margin: 0,
+                                    width: '100%',
+                                }}
+                                getDateStr={(date) => {
+                                    onDateChange(date);
+                                    setPickupDate(date);
+                                }}
+                                customStyles={{
+                                    dateTouchBody: {
+                                        marginVertical: scaleText(20).fontSize,
+                                        zIndex: 10,
+                                    },
+                                    dateIcon: {
+                                        display: 'none',
+                                    },
+                                    dateInput: {
+                                        textAlign: 'left',
+                                        minWidth: '40%',
                                         margin: 0,
-                                        width: '100%',
-                                    }}
-                                    getDateStr={(date) => {
-                                        onDateChange(date);
-                                        setPickupDate(date);
-                                    }}
-                                    customStyles={{
-                                        dateTouchBody: {
-                                            marginVertical: scaleText(20).fontSize,
-                                            zIndex: 10,
-                                        },
-                                        dateIcon: {
-                                            display: 'none',
-                                        },
-                                        dateInput: {
-                                            textAlign: 'left',
-                                            minWidth: '40%',
-                                            margin: 0,
-                                            backgroundColor: 'white',
-                                            padding: 0,
-                                            height: 2.5 * scaledFont.lineHeight,
-                                            borderColor: 'black',
-                                            borderRadius: 5,
-                                            borderWidth: 0.8,
-                                            fontSize: scaledFont.fontSize,
-                                            lineHeight: scaledFont.lineHeight,
-                                            paddingHorizontal: 10,
-                                            alignSelf: 'center',
-                                            paddingVertical: 2,
-                                            paddingBottom: 0,
-                                            marginBottom: 0,
-                                            textAlign: 'left',
-                                        },
-                                        datePickerCon: {
-                                            backfaceVisibility: false,
-                                        },
-                                        dateText: {
-                                            textAlign: 'left',
-                                            margin: 0,
-                                            fontSize: scaledFont.fontSize,
-                                            lineHeight: scaledFont.lineHeight,
-                                            padding: 0,
-                                        },
-                                        placeholderText: {
-                                            textAlign: 'left',
-                                            margin: 0,
-                                            alignSelf: 'flex-start',
-                                            color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
-                                            fontSize: scaledFont.fontSize,
-                                            lineHeight: scaledFont.lineHeight,
-                                            padding: 0,
-                                        },
-                                    }}
-                                    onDateChange={(date) => {
-                                        setSelectedDate(date);
-                                    }}
-                                />
-                            </View>
+                                        backgroundColor: 'white',
+                                        padding: 0,
+                                        height: 2.5 * scaledFont.lineHeight,
+                                        borderColor: 'black',
+                                        borderRadius: 5,
+                                        borderWidth: 0.8,
+                                        fontSize: scaledFont.fontSize,
+                                        lineHeight: scaledFont.lineHeight,
+                                        paddingHorizontal: 10,
+                                        alignSelf: 'center',
+                                        paddingVertical: 2,
+                                        paddingBottom: 0,
+                                        marginBottom: 0,
+                                        textAlign: 'left',
+                                    },
+                                    datePickerCon: {
+                                        backfaceVisibility: false,
+                                    },
+                                    dateText: {
+                                        textAlign: 'left',
+                                        margin: 0,
+                                        fontSize: scaledFont.fontSize,
+                                        lineHeight: scaledFont.lineHeight,
+                                        padding: 0,
+                                    },
+                                    placeholderText: {
+                                        textAlign: 'left',
+                                        margin: 0,
+                                        alignSelf: 'flex-start',
+                                        color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
+                                        fontSize: scaledFont.fontSize,
+                                        lineHeight: scaledFont.lineHeight,
+                                        padding: 0,
+                                    },
+                                }}
+                                onDateChange={(date) => {
+                                    setSelectedDate(date);
+                                }}
+                            />
                             <TouchableOpacity
                                 onPress={() => showFilterMenu(true)}
                                 style={{
@@ -422,6 +415,7 @@ export const Screen = ({
                             style={styles.vehicleTypeList}
                             contentContainerStyle={{}}
                             data={VEHICLE_TYPE_LISTING}
+                            showsHorizontalScrollIndicator={false}
                             horizontal={true}
                             keyExtractor={(item) => item.id}
                             renderItem={({ item }) => {
@@ -528,6 +522,6 @@ export const Screen = ({
                     </View>
                 </View>
             </ScrollView>
-        </AppHoc>
+        </AppHoc >
     );
 };

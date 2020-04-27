@@ -1,14 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, PixelRatio, Switch, } from 'react-native'
+import { View, Text, StyleSheet, PixelRatio, Switch, TouchableOpacity } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput, } from 'react-native-gesture-handler';
 import { scaleText } from '../../../helpers';
-import { Input } from 'react-native-elements';
+import Emoji from 'react-native-emoji';
 
 const styles = StyleSheet.create({
     // ...
 })
 
+const AUSTRALIA_VALUES = {
+    callingCode: ["61"],
+    cca2: "AU",
+    currency: ["AUD"],
+    flag: "flag-au",
+    name: "Australia",
+    region: "Oceania",
+    subregion: "Australia and New Zealand"
+}
+
+const NEW_ZEALAND_VALUES = {
+    callingCode: ["64"],
+    cca2: "NZ",
+    currency: ["NZD"],
+    flag: "flag-nz",
+    name: "New Zealand",
+    region: "Oceania",
+    subregion: "Australia and New Zealand"
+}
 
 const CountryCodePicker = ({
     fontSize = 14,
@@ -22,17 +41,17 @@ const CountryCodePicker = ({
     setCallingCode = () => { },
     setSelectedCountry = () => { }
 }) => {
+    let withFlag = true;
+    let withEmoji = true;
+    let withFilter = true;
+    let withAlphaFilter = false;
+    let withCallingCode = countryDrop ? false : true;
     const scaledFont = scaleText(fontSize)
     const [countryCode, setCountryCode] = useState(codeValue);
     const [savedValue, saveValue] = useState({})
     const [country, setCountry] = useState(countryValue)
     const [showCountries, setShowCountries] = useState(false);
     const [withCountryNameButton, setWithCountryNameButton] = useState(false)
-    const [withFlag, setWithFlag] = useState(true)
-    const [withEmoji, setWithEmoji] = useState(true)
-    const [withFilter, setWithFilter] = useState(true)
-    const [withAlphaFilter, setWithAlphaFilter] = useState(false)
-    const [withCallingCode, setWithCallingCode] = useState(countryDrop ? false : true)
     const onSelect = (country) => {
         setCountryCode(country.cca2)
         setCountry(country)
@@ -76,6 +95,52 @@ const CountryCodePicker = ({
                         withEmoji,
                         onSelect
                     }}
+                    flatListProps={{
+                        ListHeaderComponent: () => (
+                            <React.Fragment>
+                                <TouchableOpacity onPress={() => {
+                                    setShowCountries(false);
+                                    setCountryCode(AUSTRALIA_VALUES.cca2);
+                                    setCountry(AUSTRALIA_VALUES.country);
+                                    setSelectedCountry(AUSTRALIA_VALUES.name);
+                                    setCallingCode(AUSTRALIA_VALUES.callingCode[0]);
+                                }}
+                                    style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        paddingVertical: 10,
+                                        zIndex: 10,
+                                        borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 8
+                                    }}>
+                                    <Emoji name="flag-au" style={{ fontSize: 20, margin: 0, padding: 0 }} />
+                                    <Text style={{ flex: 1, color: 'black', fontSize: 13, paddingLeft: 10 }}
+                                    >{countryDrop ? 'Australia' : 'Australia (+61)'}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        saveValue(NEW_ZEALAND_VALUES)
+                                        setShowCountries(false);
+                                        setCountryCode(NEW_ZEALAND_VALUES.cca2);
+                                        setCountry(NEW_ZEALAND_VALUES.country);
+                                        setSelectedCountry(NEW_ZEALAND_VALUES.name);
+                                        setCallingCode(NEW_ZEALAND_VALUES.callingCode[0]);
+                                    }}
+                                    style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        paddingVertical: 10,
+                                        borderColor: 'transparent',
+                                        borderBottomColor: 'rgba(0,0,0,0.3)',
+                                        borderWidth: 0.8,
+                                        paddingHorizontal: 8
+                                    }}>
+                                    <Emoji name="flag-nz" style={{ fontSize: 20, margin: 0, padding: 0 }} />
+                                    <Text
+                                        style={{ flex: 1, color: 'black', fontSize: 13, paddingLeft: 10 }}>{countryDrop ? 'New Zealand' : 'New Zealand (+64)'}</Text>
+                                </TouchableOpacity>
+                            </React.Fragment>
+                        )
+                    }}
                     theme={{
                         margin: 0,
                         fontSize: scaledFont.fontSize,
@@ -92,6 +157,7 @@ const CountryCodePicker = ({
                         display: codeValue && countryValue ? 'none' : 'flex',
                     }}
                     onSelect={(value) => {
+                        console.log('country value', value)
                         saveValue(value)
                         setShowCountries(false);
                         setCountryCode(value.cca2);
