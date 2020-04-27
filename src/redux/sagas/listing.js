@@ -41,7 +41,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
 function* fetchVehicleList({ data, success, failure }) {
     try {
         let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
-        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=0&limit=${limit}6&index=${index}` });
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=1&limit=${limit}6&index=${index}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();
