@@ -101,7 +101,7 @@ export const Screen = ({
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
       if (
-        this.state.appState.match(/inactive|background/) &&
+        appState.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
         checkLocationPermissions();
