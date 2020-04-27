@@ -264,26 +264,18 @@ export const Screen = ({
               <View
                 style={{
                   backgroundColor: '#1e5e9e',
-                  minWidth: '100%',
-                  minHeight: 100,
                   padding: 20,
                 }}>
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    minWidth: '100%',
-                    justifyContent: 'space-between',
-                  }}>
-                  <LocationSearch
-                    pickupLocation={pickupLocation}
-                    setPickupLocation={(value) => setPickupLocation(value)}
-                    inputStyle={{
-                      height: 2.5 * scaledFont.lineHeight,
-                      fontSize: scaledFont.fontSize,
-                      lineHeight: scaledFont.lineHeight,
-                      ...styles.pickupLocationInput
-                    }} />
-                  {/* <TextInput
+                <LocationSearch
+                  pickupLocation={pickupLocation}
+                  setPickupLocation={(value) => setPickupLocation(value)}
+                  inputStyle={{
+                    height: 2.5 * scaledFont.lineHeight,
+                    fontSize: scaledFont.fontSize,
+                    lineHeight: scaledFont.lineHeight,
+                    ...styles.pickupLocationInput
+                  }} />
+                {/* <TextInput
                                         placeholder={'Pick-up location'}
                                         placeholderTextColor={'black'}
                                         underlineColorAndroid={"transparent"}
@@ -298,78 +290,77 @@ export const Screen = ({
                                         returnKeyType={'next'}
                                     /> */}
 
-                  <DatePicker
-                    mode="date"
-                    placeholder={
-                      pickupDate
-                        ? `${moment(pickupDate).format('DD-MM-YYYY')}`
-                        : 'Pick-up date'
-                    }
-                    format={'DD-MM-YYYY'}
-                    minDate={new Date()}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    style={{
-                      padding: 0,
+                <DatePicker
+                  mode="date"
+                  placeholder={
+                    pickupDate
+                      ? `${moment(pickupDate).format('DD-MM-YYYY')}`
+                      : 'Pick-up date'
+                  }
+                  format={'DD-MM-YYYY'}
+                  minDate={new Date()}
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  style={{
+                    padding: 0,
+                    margin: 0,
+                    width: '100%',
+                  }}
+                  getDateStr={(date) => {
+                    onDateChange(date);
+                    setPickupDate(date);
+                  }}
+                  customStyles={{
+                    dateTouchBody: {
+                      marginVertical: scaleText(20).fontSize,
+                      zIndex: 10,
+                    },
+                    dateIcon: {
+                      display: 'none',
+                    },
+                    dateInput: {
+                      textAlign: 'left',
+                      minWidth: '40%',
                       margin: 0,
-                      width: '100%',
-                    }}
-                    getDateStr={(date) => {
-                      onDateChange(date);
-                      setPickupDate(date);
-                    }}
-                    customStyles={{
-                      dateTouchBody: {
-                        marginVertical: scaleText(20).fontSize,
-                        zIndex: 10,
-                      },
-                      dateIcon: {
-                        display: 'none',
-                      },
-                      dateInput: {
-                        textAlign: 'left',
-                        minWidth: '40%',
-                        margin: 0,
-                        backgroundColor: 'white',
-                        padding: 0,
-                        height: 2.5 * scaledFont.lineHeight,
-                        borderColor: 'black',
-                        borderRadius: 5,
-                        borderWidth: 0.8,
-                        fontSize: scaledFont.fontSize,
-                        lineHeight: scaledFont.lineHeight,
-                        paddingHorizontal: 10,
-                        alignSelf: 'center',
-                        paddingVertical: 2,
-                        paddingBottom: 0,
-                        marginBottom: 0,
-                        textAlign: 'left',
-                      },
-                      datePickerCon: {
-                        backfaceVisibility: false,
-                      },
-                      dateText: {
-                        textAlign: 'left',
-                        margin: 0,
-                        fontSize: scaledFont.fontSize,
-                        lineHeight: scaledFont.lineHeight,
-                        padding: 0,
-                      },
-                      placeholderText: {
-                        textAlign: 'left',
-                        margin: 0,
-                        alignSelf: 'flex-start',
-                        color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
-                        fontSize: scaledFont.fontSize,
-                        lineHeight: scaledFont.lineHeight,
-                        padding: 0,
-                      },
-                    }}
-                    onDateChange={(date) => {
-                      setSelectedDate(date);
-                    }}
-                  />
-                </View>
+                      backgroundColor: 'white',
+                      padding: 0,
+                      height: 2.5 * scaledFont.lineHeight,
+                      borderColor: 'black',
+                      borderRadius: 5,
+                      borderWidth: 0.8,
+                      fontSize: scaledFont.fontSize,
+                      lineHeight: scaledFont.lineHeight,
+                      paddingHorizontal: 10,
+                      alignSelf: 'center',
+                      paddingVertical: 2,
+                      paddingBottom: 0,
+                      marginBottom: 0,
+                      textAlign: 'left',
+                    },
+                    datePickerCon: {
+                      backfaceVisibility: false,
+                    },
+                    dateText: {
+                      textAlign: 'left',
+                      margin: 0,
+                      fontSize: scaledFont.fontSize,
+                      lineHeight: scaledFont.lineHeight,
+                      padding: 0,
+                    },
+                    placeholderText: {
+                      textAlign: 'left',
+                      margin: 0,
+                      alignSelf: 'flex-start',
+                      color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
+                      fontSize: scaledFont.fontSize,
+                      lineHeight: scaledFont.lineHeight,
+                      padding: 0,
+                    },
+                  }}
+                  onDateChange={(date) => {
+                    setSelectedDate(date);
+                  }}
+                />
                 <TouchableOpacity
                   onPress={() => showFilterMenu(true)}
                   style={{
