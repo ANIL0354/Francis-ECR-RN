@@ -5,6 +5,7 @@ import Slider from '../../atoms/CustomSlider';
 import CustomButton from '../../atoms/CustomButton';
 import styles from './style';
 import CheckboxGroup from '../../molecules/CheckboxGroup';
+import MultiCheckGroup from '../../molecules/MultiCheckGroup';
 import {
     FILTER_OPTIONS,
     FUEL_OPTIONS,
@@ -84,7 +85,7 @@ const AdvanceSearchFilter = ({
 
                         </View>
                         <View style={{ flex: 1, padding: 20 }}>
-                            {filterValue === 0 && <CheckboxGroup
+                            {filterValue === 0 && <MultiCheckGroup
                                 checkboxOptions={FUEL_OPTIONS}
                                 selectedValue={fuelValue}
                                 setSelectedValue={(value) => setFuel(value)}

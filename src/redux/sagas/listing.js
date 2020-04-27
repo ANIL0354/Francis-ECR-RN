@@ -24,6 +24,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
+            stopLoader();
             Toast.show(response.data.msg, Toast.LONG);
         }
         else {
@@ -31,7 +32,8 @@ function* fetchPopularPlaces({ data, success, failure }) {
         }
     }
     catch (error) {
-        console.log('catch', error)
+        console.log('catch', error);
+        stopLoader();
         return;
     }
 }
@@ -39,15 +41,17 @@ function* fetchPopularPlaces({ data, success, failure }) {
 function* fetchVehicleList({ data, success, failure }) {
     try {
         let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
-        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=${fuelType}&limit=${limit}6&index=${index}` });
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=0&limit=${limit}6&index=${index}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            stopLoader();
             Toast.show(response.data.msg, Toast.LONG);
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
             failure();
             Toast.show(response.data.msg, Toast.LONG);
+            stopLoader();
         }
         else {
             success();
@@ -55,6 +59,7 @@ function* fetchVehicleList({ data, success, failure }) {
     }
     catch (error) {
         console.log('catch', error)
+        stopLoader();
         return;
     }
 }

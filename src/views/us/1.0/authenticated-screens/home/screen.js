@@ -162,10 +162,14 @@ export const Screen = ({
             setPickupLocation(addressComponent.long_name);
             stopLoader();
           })
-          .catch((error) => console.warn(error));
+          .catch((error) => {
+            console.warn(error);
+            stopLoader();
+          });
       },
       (error) => {
         console.log('error', error);
+        stopLoader();
       },
       {
         timeout: 30000,

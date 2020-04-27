@@ -36,9 +36,9 @@ const initialCommonState = {
     childSeatsValue: 0,
     adultSeatsValue: 0,
     freeDays: 0,
-    vehicleType: 0,
-    transmissionType: 0,
-    fuelType: 0,
+    vehicleType: new Set(),
+    transmissionType: new Set(),
+    fuelType: new Set(),
     pickupLocation: '',
     pickupDate: null
 };
