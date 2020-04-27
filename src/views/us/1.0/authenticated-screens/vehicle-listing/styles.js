@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         backgroundColor: '#0091ff',
-        padding: 20,
         paddingHorizontal: 10,
         minHeight: 60,
         alignItems: 'center',

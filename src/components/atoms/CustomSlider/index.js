@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 
 const CustomSlider = ({
     minValue = 0,
-    maxValue = 10,
+    maxValue = 15,
     step = 1,
     sliderValue,
     setSliderValue = () => { }

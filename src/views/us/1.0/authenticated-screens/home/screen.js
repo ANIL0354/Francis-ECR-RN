@@ -359,7 +359,7 @@ export const Screen = ({
                         textAlign: 'left',
                         margin: 0,
                         alignSelf: 'flex-start',
-                        color: 'black',
+                        color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         padding: 0,

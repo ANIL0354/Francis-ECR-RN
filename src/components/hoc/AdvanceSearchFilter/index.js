@@ -92,17 +92,17 @@ const AdvanceSearchFilter = ({
                             />}
                             {filterValue === 1 && <View style={{ justifyContent: 'space-between' }}>
                                 <View style={{ marginBottom: 30, minWidth: '100%' }}>
-                                    <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
-                                    <Slider
-                                        sliderValue={childSeats}
-                                        setSliderValue={(value) => setChildsSeatValue(value)}
-                                    />
-                                </View>
-                                <View>
                                     <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Adult Seat'}</Text>
                                     <Slider
                                         sliderValue={adultSeats}
                                         setSliderValue={(value) => setAdultsSeatValue(value)}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
+                                    <Slider
+                                        sliderValue={childSeats}
+                                        setSliderValue={(value) => setChildsSeatValue(value)}
                                     />
                                 </View>
                             </View>}
@@ -130,15 +130,15 @@ const AdvanceSearchFilter = ({
                             buttonStyle={{ paddingHorizontal: 30, backgroundColor: 'white' }}
                             titleStyle={{ color: '#0091ff' }}
                             onPress={() => {
-                                setFuelType(0);
+                                setFuelType(new Set());
                                 setFreeDays(0);
-                                setTransmissionType(0);
-                                setVehicleType(0);
+                                setTransmissionType(new Set());
+                                setVehicleType(new Set());
                                 setChildsSeatValue(0);
                                 setAdultsSeatValue(0);
-                                setFuel(0);
-                                setVehicle(0);
-                                setTransmission(0);
+                                setFuel(new Set());
+                                setVehicle(new Set());
+                                setTransmission(new Set());
                                 setChildSeats(0);
                                 setAdultSeats(0);
                                 setFreeDaysValue(0);
