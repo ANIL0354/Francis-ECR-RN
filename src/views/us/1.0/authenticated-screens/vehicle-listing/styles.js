@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     },
     carFeaturesWrapper: {
         flexDirection: 'row',
+        alignItems: 'center',
         flexWrap: 'wrap',
         maxWidth: '90%',
     },
