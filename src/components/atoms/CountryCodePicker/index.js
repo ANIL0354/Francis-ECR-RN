@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, PixelRatio, Switch, } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { scaleText } from '../../../helpers';
+import Flag from 'react-native-flags';
 import { Input } from 'react-native-elements';
 
 const styles = StyleSheet.create({
@@ -75,6 +76,22 @@ const CountryCodePicker = ({
                         withCallingCode,
                         withEmoji,
                         onSelect
+                    }}
+                    flatListProps={{
+                        ListHeaderComponent: () => {
+                            return (
+                                <React.Fragment>
+                                    <TouchableOpacity style={{ flex: 1, paddingVertical: 13, borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 10 }}>
+                                        {/* <Flag code={'NZ'} /> */}
+                                        <Text style={{ color: 'black', fontSize: 13, }}>{'Australia'}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ flex: 1, paddingVertical: 13, borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 10 }}>
+                                        {/* <Flag code={'NZ'} size={10} /> */}
+                                        <Text style={{ color: 'black', fontSize: 13, }}>{'New Zealand'}</Text>
+                                    </TouchableOpacity>
+                                </React.Fragment>
+                            )
+                        }
                     }}
                     theme={{
                         margin: 0,
