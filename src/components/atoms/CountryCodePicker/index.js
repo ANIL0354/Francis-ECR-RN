@@ -81,13 +81,27 @@ const CountryCodePicker = ({
                         ListHeaderComponent: () => {
                             return (
                                 <React.Fragment>
-                                    <TouchableOpacity style={{ flex: 1, paddingVertical: 13, borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 10 }}>
-                                        {/* <Flag code={'NZ'} /> */}
-                                        <Text style={{ color: 'black', fontSize: 13, }}>{'Australia'}</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            // saveValue(value)
+                                            // setShowCountries(false);
+                                            // setCountryCode(value.cca2);
+                                            // setCountry(value.country);
+                                            // setSelectedCountry(value.name);
+                                            // setCallingCode(value.callingCode[0]);
+                                        }}
+                                        style={{
+                                            flex: 1,
+                                            flexDirection: 'row',
+                                            paddingVertical: 13,
+                                            borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 8
+                                        }}>
+                                        <Flag code={"AU"} type={'flat'} size={24} />
+                                        <Text style={{ color: 'black', fontSize: 13, paddingLeft: 10 }}>{'Australia'}</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ flex: 1, paddingVertical: 13, borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 10 }}>
-                                        {/* <Flag code={'NZ'} size={10} /> */}
-                                        <Text style={{ color: 'black', fontSize: 13, }}>{'New Zealand'}</Text>
+                                    <TouchableOpacity style={{ flex: 1, flexDirection: 'row', paddingVertical: 13, borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 8 }}>
+                                        <Flag code={'NZ'} type={'flat'} size={24} />
+                                        <Text style={{ color: 'black', fontSize: 13, paddingLeft: 10 }}>{'New Zealand'}</Text>
                                     </TouchableOpacity>
                                 </React.Fragment>
                             )
@@ -109,6 +123,7 @@ const CountryCodePicker = ({
                         display: codeValue && countryValue ? 'none' : 'flex',
                     }}
                     onSelect={(value) => {
+                        console.log('country value', value)
                         saveValue(value)
                         setShowCountries(false);
                         setCountryCode(value.cca2);

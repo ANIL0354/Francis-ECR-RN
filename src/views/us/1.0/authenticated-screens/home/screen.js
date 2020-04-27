@@ -8,7 +8,7 @@ import {
   AppState,
   PermissionsAndroid,
 } from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import NetInfo from '@react-native-community/netinfo';
 import Geocoder from 'react-native-geocoding';
