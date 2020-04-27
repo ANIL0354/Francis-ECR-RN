@@ -152,13 +152,12 @@ export const Screen = ({
             <ScrollView keyboardShouldPersistTaps="always">
                 <View style={{ backgroundColor: '#0091ff' }}>
                     <View style={styles.childContainer}>
-                        {!modifySearch && <View
-                            style={styles.childContainer}>
+                        {!modifySearch && <View style={styles.childContainer}>
                             <TouchableOpacity onPress={() => navigation.navigate('HOME_SCREEN')}                            >
                                 <Image source={NAV_ARROW_ICON} height={20} width={20} />
                             </TouchableOpacity>
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                <View style={{ flex: 1, paddingHorizontal: scaleText(20).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
+                                <View style={{ flex: 1, paddingHorizontal: scaleText(15).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
                                     <Text
                                         style={{
                                             ...styles.subHeaderText,
@@ -180,7 +179,7 @@ export const Screen = ({
                                         {pickupLocation}
                                     </Text>
                                 </View>
-                                <View style={{ flex: 1, marginHorizontal: scaleText(20).fontSize }}>
+                                <View style={{ flex: 1, marginHorizontal: scaleText(15).fontSize }}>
                                     <Text
                                         style={{
                                             ...styles.subHeaderText,
@@ -520,6 +519,6 @@ export const Screen = ({
                     </View>
                 </View>
             </ScrollView>
-        </AppHoc>
+        </AppHoc >
     );
 };
