@@ -10,13 +10,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     childContainer: {
+        alignItems: 'center',
+        backgroundColor: '#0091ff',
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: '#0091ff',
-        paddingHorizontal: 10,
         minHeight: 60,
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        paddingHorizontal: 10,
     },
     searchChildContainer: {
         flex: 1,
