@@ -92,17 +92,17 @@ const AdvanceSearchFilter = ({
                             />}
                             {filterValue === 1 && <View style={{ justifyContent: 'space-between' }}>
                                 <View style={{ marginBottom: 30, minWidth: '100%' }}>
-                                    <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
-                                    <Slider
-                                        sliderValue={childSeats}
-                                        setSliderValue={(value) => setChildsSeatValue(value)}
-                                    />
-                                </View>
-                                <View>
                                     <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Adult Seat'}</Text>
                                     <Slider
                                         sliderValue={adultSeats}
                                         setSliderValue={(value) => setAdultsSeatValue(value)}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
+                                    <Slider
+                                        sliderValue={childSeats}
+                                        setSliderValue={(value) => setChildsSeatValue(value)}
                                     />
                                 </View>
                             </View>}

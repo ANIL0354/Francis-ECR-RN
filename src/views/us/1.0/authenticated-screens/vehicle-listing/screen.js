@@ -82,120 +82,175 @@ export const Screen = ({
     }
 
     return (
-        <AppHoc
-            rightIcon={MENU_LOGO}
-            leftIcon={APP_LOGO}
-            centerIcon={USER_ICON}
-        >
-            {filterMenu && <AdvanceSearchFilter
-                fuelType={fuelType}
-                vehicleType={vehicleType}
-                transmissionType={transmissionType}
-                childSeatsValue={childSeatsValue}
-                adultSeatsValue={adultSeatsValue}
-                freeDays={freeDays}
-                setFuelType={setFuelType}
-                setTransmissionType={setTransmissionType}
-                setVehicleType={setVehicleType}
-                setFreeDays={setFreeDays}
-                setChildSeats={setChildSeats}
-                setAdultSeats={setAdultSeats}
-                onClose={() => showFilterMenu(false)}
-                onSubmit={() => {
-                    if (!!!pickupLocation) {
-                        Alert.alert(
-                            'Select Pick-up Location',
-                            'Please select a pick-up location before proceeding.',
-                            [
+        <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+            {filterMenu && (
+                <AdvanceSearchFilter
+                    fuelType={fuelType}
+                    vehicleType={vehicleType}
+                    transmissionType={transmissionType}
+                    childSeatsValue={childSeatsValue}
+                    adultSeatsValue={adultSeatsValue}
+                    freeDays={freeDays}
+                    setFuelType={setFuelType}
+                    setTransmissionType={setTransmissionType}
+                    setVehicleType={setVehicleType}
+                    setFreeDays={setFreeDays}
+                    setChildSeats={setChildSeats}
+                    setAdultSeats={setAdultSeats}
+                    onClose={() => showFilterMenu(false)}
+                    onSubmit={() => {
+                        if (!!!pickupLocation) {
+                            Alert.alert(
+                                'Select Pick-up Location',
+                                'Please select a pick-up location before proceeding.',
+                                [
+                                    {
+                                        text: 'Okay',
+                                        onPress: () => { },
+                                    },
+                                ],
+                            );
+                            return;
+                        } else if (!pickupDate) {
+                            Alert.alert(
+                                'Select Pick-up Date',
+                                'Please select a pick-up date before proceeding.',
+                                [
+                                    {
+                                        text: 'Okay',
+                                        onPress: () => { },
+                                    },
+                                ],
+                            );
+                            return;
+                        } else {
+                            showFilterMenu(false)
+                            let formattedDate = moment(pickupDate).format(
+                                'YYYY-MM-DD',
+                            );
+                            startLoader();
+                            fetchVehicleListing(
                                 {
-                                    text: 'Okay',
-                                    onPress: () => { },
+                                    fromCity: pickupLocation,
+                                    pickupDate: formattedDate,
+                                    adultSeats: adultSeatsValue,
+                                    childSeats: childSeatsValue,
+                                    fuelType: fuelType + 1,
+                                    limit: LIMITS.vehicleList,
+                                    index: 0,
                                 },
-                            ],
-                        );
-                        return;
-                    } else if (!pickupDate) {
-                        Alert.alert(
-                            'Select Pick-up Date',
-                            'Please select a pick-up date before proceeding.',
-                            [
-                                {
-                                    text: 'Okay',
-                                    onPress: () => { },
+                                () => {
+                                    stopLoader();
+                                    navigation.navigate('VEHICLE_SCREEN');
                                 },
-                            ],
-                        );
-                        return;
-                    } else {
-                        showFilterMenu(false)
-                        let formattedDate = moment(pickupDate).format(
-                            'YYYY-MM-DD',
-                        );
-                        startLoader();
-                        fetchVehicleListing(
-                            {
-                                fromCity: pickupLocation,
-                                pickupDate: formattedDate,
-                                adultSeats: adultSeatsValue,
-                                childSeats: childSeatsValue,
-                                fuelType: fuelType + 1,
-                                limit: LIMITS.vehicleList,
-                                index: 0,
-                            },
-                            () => {
-                                stopLoader();
-                                // navigation.navigate('VEHICLE_SCREEN');
-                            },
-                            () => { },
-                        );
-                    }
-                }}
-            />}
-            {modifySearch &&
-                <View style={{ flex: 1, padding: scaleText(10).fontSize, minHeight: scaleText(320).fontSize, backgroundColor: '#0091ff', }}>
-                    <View style={styles.searchChildContainer}>
-                        <View style={{
-                            backgroundColor: '#1e5e9e',
-                            minWidth: '100%',
-                            minHeight: 100,
-                            padding: 20,
-                        }}>
-                            <View style={{
-                                flexDirection: 'column',
-                                minWidth: '100%',
-                                justifyContent: 'space-between',
+                                () => { },
+                            );
+                        }
+                    }}
+                />
+            )}
+            <ScrollView keyboardShouldPersistTaps="always">
+                <View style={{ backgroundColor: '#0091ff' }}>
+                    <View style={styles.childContainer}>
+                        {!modifySearch && <View
+                            style={styles.childContainer}>
+                            <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', }} onPress={() => navigation.navigate('HOME_SCREEN')}>
+                                <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                            </TouchableOpacity>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginLeft: -1 * (scaledSmallerFont.fontSize) }}>
+                                <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
+                                    <Text
+                                        style={{
+                                            ...styles.subHeaderText,
+                                            height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                            fontSize: scaledMediumFont.fontSize,
+                                            lineHeight: scaledMediumFont.lineHeight
+                                        }}>
+                                        {'Pick-up Location:'}
+                                    </Text>
+                                    <Text
+                                        ellipsizeMode={'tail'}
+                                        numberOfLines={1}
+                                        style={{
+                                            ...styles.subHeaderText,
+                                            maxWidth: 150,
+                                            height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                            fontSize: scaledMediumFont.fontSize,
+                                            lineHeight: scaledMediumFont.lineHeight
+                                        }}>
+                                        {pickupLocation}
+                                    </Text>
+                                </View>
+                                <View style={{}}>
+                                    <Text
+                                        style={{
+                                            ...styles.subHeaderText,
+                                            height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                            fontSize: scaledMediumFont.fontSize,
+                                            lineHeight: scaledMediumFont.lineHeight
+                                        }}>
+                                        {'Pick-up Date:'}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            ...styles.subHeaderText,
+                                            height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
+                                            fontSize: scaledMediumFont.fontSize,
+                                            lineHeight: scaledMediumFont.lineHeight
+                                        }}>
+                                        {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
+                                    </Text>
+                                </View>
+                            </View>
+                            <TouchableOpacity onPress={() => showSearchBarAnimation()}>
+                                <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
+                            </TouchableOpacity>
+                        </View>}
+                        {modifySearch && <View
+                            style={{
+                                backgroundColor: '#1e5e9e',
+                                minWidth: '90%',
+                                minHeight: 100,
+                                padding: 20,
+                                marginVertical: 20
                             }}>
-                                {/* <LocationSearch
+                            <View
+                                style={{
+                                    flexDirection: 'column',
+                                    minWidth: '100%',
+                                    justifyContent: 'space-between',
+                                }}>
+                                <LocationSearch
                                     pickupLocation={pickupLocation}
-                                    setPickupLocation={(value) => {
-                                        console.log('value', value);
-                                        setPickupLocation(value)
-                                    }}
+                                    setPickupLocation={(value) => setPickupLocation(value)}
                                     inputStyle={{
                                         height: 2.5 * scaledFont.lineHeight,
                                         fontSize: scaledFont.fontSize,
                                         lineHeight: scaledFont.lineHeight,
                                         ...styles.pickupLocationInput
-                                    }} /> */}
-                                <TextInput
-                                    placeholder={'Pick-up location'}
-                                    placeholderTextColor={'black'}
-                                    underlineColorAndroid={"transparent"}
-                                    style={{
-
-                                        height: 2.5 * scaledSmallFont.lineHeight,
-                                        fontSize: scaledSmallFont.fontSize,
-                                        lineHeight: scaledSmallFont.lineHeight,
-                                        ...styles.normalLocationInput
-                                    }}
-                                    value={pickupLocation}
-                                    onChangeText={value => setPickupLocation(value)}
-                                    returnKeyType={'next'}
-                                />
+                                    }} />
+                                {/* <TextInput
+                                        placeholder={'Pick-up location'}
+                                        placeholderTextColor={'black'}
+                                        underlineColorAndroid={"transparent"}
+                                        style={{
+                                            height: 2.5 * scaledFont.lineHeight,
+                                            fontSize: scaledFont.fontSize,
+                                            lineHeight: scaledFont.lineHeight,
+                                            ...styles.pickupLocationInput
+                                        }}
+                                        value={pickupLocation}
+                                        onChangeText={value => setPickupLocation(value)}
+                                        returnKeyType={'next'}
+                                    /> */}
 
                                 <DatePicker
                                     mode="date"
-                                    placeholder={pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : 'Pick-up date'}
+                                    placeholder={
+                                        pickupDate
+                                            ? `${moment(pickupDate).format('DD-MM-YYYY')}`
+                                            : 'Pick-up date'
+                                    }
                                     format={'DD-MM-YYYY'}
                                     minDate={new Date()}
                                     confirmBtnText="Confirm"
@@ -204,9 +259,11 @@ export const Screen = ({
                                         padding: 0,
                                         margin: 0,
                                         width: '100%',
-                                        // marginTop: 40,
                                     }}
-                                    getDateStr={(date) => { onDateChange(date); setPickupDate(date) }}
+                                    getDateStr={(date) => {
+                                        onDateChange(date);
+                                        setPickupDate(date);
+                                    }}
                                     customStyles={{
                                         dateTouchBody: {
                                             marginVertical: scaleText(20).fontSize,
@@ -248,19 +305,39 @@ export const Screen = ({
                                             textAlign: 'left',
                                             margin: 0,
                                             alignSelf: 'flex-start',
-                                            color: 'black',
+                                            color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
                                             fontSize: scaledFont.fontSize,
                                             lineHeight: scaledFont.lineHeight,
                                             padding: 0,
                                         },
                                     }}
-                                    onDateChange={(date) => { setSelectedDate(date) }}
+                                    onDateChange={(date) => {
+                                        setSelectedDate(date);
+                                    }}
                                 />
                             </View>
                             <TouchableOpacity
                                 onPress={() => showFilterMenu(true)}
-                                style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 5, borderBottomColor: 'white', borderTopColor: 'transparent', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderWidth: 1, marginBottom: 2 }}>
-                                <Text style={{ color: 'white', fontSize: scaledLargeFont.fontSize, textAlign: 'left', textAlignVertical: 'center' }}>{'Advance Search'}</Text>
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    paddingVertical: 5,
+                                    borderBottomColor: 'white',
+                                    borderTopColor: 'transparent',
+                                    borderLeftColor: 'transparent',
+                                    borderRightColor: 'transparent',
+                                    borderWidth: 1,
+                                    marginBottom: 2,
+                                }}>
+                                <Text
+                                    style={{
+                                        color: 'white',
+                                        fontSize: scaleText(18).fontSize,
+                                        textAlign: 'left',
+                                        textAlignVertical: 'center',
+                                    }}>
+                                    {'Advance Search'}
+                                </Text>
                                 <Image source={SEARCH_ICON} />
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -273,29 +350,31 @@ export const Screen = ({
                                 }}
                                 activeOpacity={0.7}
                                 onPress={() => {
-                                    if (!(!!pickupLocation)) {
+                                    if (!!!pickupLocation) {
                                         Alert.alert(
-                                            'Error',
+                                            'Select Pick-up Location',
                                             'Please select a pick-up location before proceeding.',
-                                            [{
-                                                text: 'Okay',
-                                                onPress: () => { }
-                                            }]
-                                        )
+                                            [
+                                                {
+                                                    text: 'Okay',
+                                                    onPress: () => { },
+                                                },
+                                            ],
+                                        );
                                         return;
-                                    }
-                                    else if (!pickupDate) {
+                                    } else if (!pickupDate) {
                                         Alert.alert(
-                                            'Error',
+                                            'Select Pick-up Date',
                                             'Please select a pick-up date before proceeding.',
-                                            [{
-                                                text: 'Okay',
-                                                onPress: () => { }
-                                            }]
-                                        )
+                                            [
+                                                {
+                                                    text: 'Okay',
+                                                    onPress: () => { },
+                                                },
+                                            ],
+                                        );
                                         return;
-                                    }
-                                    else {
+                                    } else {
                                         showSearchBarAnimation();
                                         let formattedDate = moment(pickupDate).format(
                                             'YYYY-MM-DD',
@@ -318,195 +397,137 @@ export const Screen = ({
                                             () => { },
                                         );
                                     }
-                                }}
-                            >
+                                }}>
                                 <Text
                                     style={{
                                         fontWeight: '700',
                                         color: 'black',
                                         fontSize: scaleText(16).fontSize,
                                     }}>
-                                    {'Modify Search'}
-                                </Text>
+                                    Search Now
+                                    </Text>
                             </TouchableOpacity>
-                        </View>
+                        </View>}
                     </View>
-                </View>
-            }
-            {!modifySearch && <View
-                style={styles.childContainer}>
-                <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center', alignSelf: 'center', }} onPress={() => navigation.navigate('HOME_SCREEN')}>
-                    <Image source={NAV_ARROW_ICON} height={20} width={20} />
-                </TouchableOpacity>
-                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginLeft: -1 * (scaledSmallerFont.fontSize) }}>
-                    <View style={{ paddingRight: 10, borderRightColor: 'white', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent', borderWidth: 1 }}>
+                    <View style={{ backgroundColor: 'white' }}>
                         <Text
                             style={{
-                                ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledMediumFont.fontSize,
-                                lineHeight: scaledMediumFont.lineHeight
+                                fontSize: scaledLargeFont.fontSize,
+                                lineHeight: scaledLargeFont.lineHeight,
+                                ...styles.pageHeading
                             }}>
-                            {'Pick-up Location:'}
+                            {'We have found 20 vehicles available from Wellington.'}
                         </Text>
-                        <Text
-                            ellipsizeMode={'tail'}
-                            numberOfLines={1}
-                            style={{
-                                ...styles.subHeaderText,
-                                maxWidth: 150,
-                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledMediumFont.fontSize,
-                                lineHeight: scaledMediumFont.lineHeight
-                            }}>
-                            {pickupLocation}
-                        </Text>
-                    </View>
-                    <View style={{}}>
-                        <Text
-                            style={{
-                                ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledMediumFont.fontSize,
-                                lineHeight: scaledMediumFont.lineHeight
-                            }}>
-                            {'Pick-up Date:'}
-                        </Text>
-                        <Text
-                            style={{
-                                ...styles.subHeaderText,
-                                height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                fontSize: scaledMediumFont.fontSize,
-                                lineHeight: scaledMediumFont.lineHeight
-                            }}>
-                            {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
-                        </Text>
-                    </View>
-                </View>
-                <TouchableOpacity onPress={() => showSearchBarAnimation()}>
-                    <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
-                </TouchableOpacity>
-            </View>}
-
-            <ScrollView>
-                <View style={{ backgroundColor: 'white' }}>
-                    <Text
-                        style={{
-                            fontSize: scaledLargeFont.fontSize,
-                            lineHeight: scaledLargeFont.lineHeight,
-                            ...styles.pageHeading
-                        }}>
-                        {'We have found 20 vehicles available from Wellington.'}
-                    </Text>
-                    <FlatList
-                        style={styles.vehicleTypeList}
-                        contentContainerStyle={{}}
-                        data={VEHICLE_TYPE_LISTING}
-                        horizontal={true}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.vehicleTypeWrapper}>
-                                    <View style={styles.vehicleTypeContainer}>
-                                        <Text style={{
-                                            fontSize: scaledSmallerFont.fontSize,
-                                            ...styles.vehicleTypeTitle
-                                        }}>{item.title}</Text>
-                                        <Image style={styles.alignSelfCenter} source={item.icon} />
-                                    </View>
-                                </View>
-                            )
-                        }}
-                    />
-                    <Text
-                        onPress={() => showFilterMenu(true)}
-                        style={{
-                            fontSize: scaledSmallFont.fontSize,
-                            lineHeight: scaledSmallFont.lineHeight,
-                            ...styles.advanceFilterText
-                        }}>
-                        {'Advanced Filters'}
-                    </Text>
-                    <FlatList
-                        style={styles.detailsList}
-                        contentContainerStyle={{}}
-                        data={VEHICLE_DETAILS_LISTING}
-                        scrollEnabled={true}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.detailsWrapper}>
-                                    <View style={styles.rowFlex}>
-                                        <View style={styles.detailsLeftContainer}>
-                                            <Image style={styles.alignSelfCenter} source={item.carImage} />
-                                            <Text style={styles.freeDaysText}>{`Free Days: ${item.freeDays}`}</Text>
+                        <FlatList
+                            style={styles.vehicleTypeList}
+                            contentContainerStyle={{}}
+                            data={VEHICLE_TYPE_LISTING}
+                            horizontal={true}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.vehicleTypeWrapper}>
+                                        <View style={styles.vehicleTypeContainer}>
+                                            <Text style={{
+                                                fontSize: scaledSmallerFont.fontSize,
+                                                ...styles.vehicleTypeTitle
+                                            }}>{item.title}</Text>
+                                            <Image style={styles.alignSelfCenter} source={item.icon} />
                                         </View>
-                                        <View style={styles.detailsRightContainer}>
-                                            <Text
-                                                onPress={() => showFilterMenu(true)}
-                                                style={styles.carTitle}>{item.title}</Text>
-                                            <View style={styles.carFeaturesWrapper}>
-                                                <IconText
-                                                    icon={CAR_SEATS_ICON}
-                                                    title={`${item.seats} seats`}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
-                                                <IconText
-                                                    icon={LUGGAGE_ICON}
-                                                    title={`${item.luggageCapacity} bags`}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
-                                                <IconText
-                                                    icon={DOORS_ICON}
-                                                    title={`${item.doors} doors`}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
-                                                <IconText
-                                                    icon={AC_ICON}
-                                                    title={item.conditioning}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
-                                                <IconText
-                                                    icon={GEAR_ICON}
-                                                    title={item.transmission}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
+                                    </View>
+                                )
+                            }}
+                        />
+                        <Text
+                            onPress={() => showFilterMenu(true)}
+                            style={{
+                                fontSize: scaledSmallFont.fontSize,
+                                lineHeight: scaledSmallFont.lineHeight,
+                                ...styles.advanceFilterText
+                            }}>
+                            {'Advanced Filters'}
+                        </Text>
+                        <FlatList
+                            style={styles.detailsList}
+                            contentContainerStyle={{}}
+                            data={VEHICLE_DETAILS_LISTING}
+                            scrollEnabled={true}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) => {
+                                return (
+                                    <View style={styles.detailsWrapper}>
+                                        <View style={styles.rowFlex}>
+                                            <View style={styles.detailsLeftContainer}>
+                                                <Image style={styles.alignSelfCenter} source={item.carImage} />
+                                                <Text style={styles.freeDaysText}>{`Free Days: ${item.freeDays}`}</Text>
                                             </View>
-                                            <View style={styles.listLocationWrapper}>
-                                                <Text style={styles.listPickupText}>{item.pickupLocation}</Text>
-                                                <View style={styles.listDropoffWrapper}>
-                                                    <Image source={TURN_RIGHT} />
-                                                    <Text style={styles.listDropoffText}>{item.dropoffLocation}</Text>
+                                            <View style={styles.detailsRightContainer}>
+                                                <Text
+                                                    onPress={() => showFilterMenu(true)}
+                                                    style={styles.carTitle}>{item.title}</Text>
+                                                <View style={styles.carFeaturesWrapper}>
+                                                    <IconText
+                                                        icon={CAR_SEATS_ICON}
+                                                        title={`${item.seats} seats`}
+                                                        titleFontSize={14}
+                                                        titleStyle={styles.iconText}
+                                                        containerStyle={styles.iconTextContainer}
+                                                    />
+                                                    <IconText
+                                                        icon={LUGGAGE_ICON}
+                                                        title={`${item.luggageCapacity} bags`}
+                                                        titleFontSize={14}
+                                                        titleStyle={styles.iconText}
+                                                        containerStyle={styles.iconTextContainer}
+                                                    />
+                                                    <IconText
+                                                        icon={DOORS_ICON}
+                                                        title={`${item.doors} doors`}
+                                                        titleFontSize={14}
+                                                        titleStyle={styles.iconText}
+                                                        containerStyle={styles.iconTextContainer}
+                                                    />
+                                                    <IconText
+                                                        icon={AC_ICON}
+                                                        title={item.conditioning}
+                                                        titleFontSize={14}
+                                                        titleStyle={styles.iconText}
+                                                        containerStyle={styles.iconTextContainer}
+                                                    />
+                                                    <IconText
+                                                        icon={GEAR_ICON}
+                                                        title={item.transmission}
+                                                        titleFontSize={14}
+                                                        titleStyle={styles.iconText}
+                                                        containerStyle={styles.iconTextContainer}
+                                                    />
+                                                </View>
+                                                <View style={styles.listLocationWrapper}>
+                                                    <Text style={styles.listPickupText}>{item.pickupLocation}</Text>
+                                                    <View style={styles.listDropoffWrapper}>
+                                                        <Image source={TURN_RIGHT} />
+                                                        <Text style={styles.listDropoffText}>{item.dropoffLocation}</Text>
+                                                    </View>
                                                 </View>
                                             </View>
-                                        </View>
 
-                                    </View>
-                                    <View>
-                                        <View style={styles.offerTextWrapper}>
-                                            <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
-                                            <Text style={styles.carOfferText}>{item.includes}</Text>
                                         </View>
-                                        <CustomButton title={'View'}
-                                            buttonStyle={styles.vehicleListButton}
-                                        />
+                                        <View>
+                                            <View style={styles.offerTextWrapper}>
+                                                <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
+                                                <Text style={styles.carOfferText}>{item.includes}</Text>
+                                            </View>
+                                            <CustomButton title={'View'}
+                                                buttonStyle={styles.vehicleListButton}
+                                            />
+                                        </View>
                                     </View>
-                                </View>
-                            )
-                        }}
-                    />
+                                )
+                            }}
+                        />
+                    </View>
                 </View>
             </ScrollView>
-        </AppHoc >
+        </AppHoc>
     );
-}
+};
