@@ -106,12 +106,12 @@ const AdvanceSearchFilter = ({
                                     />
                                 </View>
                             </View>}
-                            {filterValue === 2 && <CheckboxGroup
+                            {filterValue === 2 && <MultiCheckGroup
                                 checkboxOptions={VEHICLE_TYPE_OPTIONS}
                                 selectedValue={vehicleValue}
                                 setSelectedValue={(value) => setVehicle(value)}
                             />}
-                            {filterValue === 3 && <CheckboxGroup
+                            {filterValue === 3 && <MultiCheckGroup
                                 checkboxOptions={TRANSMISSION_OPTIONS}
                                 selectedValue={transmissionValue}
                                 setSelectedValue={(value) => setTransmission(value)}
