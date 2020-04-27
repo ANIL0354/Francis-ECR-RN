@@ -149,7 +149,9 @@ export const Screen = ({
                     }}
                 />
             )}
-            <ScrollView keyboardShouldPersistTaps="always">
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="always">
                 <View style={{ backgroundColor: '#0091ff' }}>
                     <View style={styles.childContainer}>
                         {!modifySearch && <View style={styles.childContainer}>
@@ -176,7 +178,7 @@ export const Screen = ({
                                             fontSize: scaledMediumFont.fontSize,
                                             lineHeight: scaledMediumFont.lineHeight
                                         }}>
-                                        {pickupLocation}
+                                        {pickupLocation ? pickupLocation : ''}
                                     </Text>
                                 </View>
                                 <View style={{ flex: 1, marginHorizontal: scaleText(15).fontSize }}>
@@ -196,7 +198,7 @@ export const Screen = ({
                                             fontSize: scaledMediumFont.fontSize,
                                             lineHeight: scaledMediumFont.lineHeight
                                         }}>
-                                        {`${moment(pickupDate).format('DD-MMM-YYYY')}`}
+                                        {pickupDate ? `${moment(pickupDate).format('DD-MMM-YYYY')}` : ''}
                                     </Text>
                                 </View>
                             </View>
@@ -413,6 +415,7 @@ export const Screen = ({
                             style={styles.vehicleTypeList}
                             contentContainerStyle={{}}
                             data={VEHICLE_TYPE_LISTING}
+                            showsHorizontalScrollIndicator={false}
                             horizontal={true}
                             keyExtractor={(item) => item.id}
                             renderItem={({ item }) => {

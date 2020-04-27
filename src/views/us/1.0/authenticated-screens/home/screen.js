@@ -8,7 +8,7 @@ import {
   AppState,
   PermissionsAndroid,
 } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import NetInfo from '@react-native-community/netinfo';
 import Geocoder from 'react-native-geocoding';
@@ -246,7 +246,8 @@ export const Screen = ({
           }}
         />
       )}
-      <ScrollView keyboardShouldPersistTaps="always">
+      <ScrollView keyboardShouldPersistTaps="always"
+        showsVerticalScrollIndicator={false}>
         <View style={{ backgroundColor: '#0091ff' }}>
           <View style={styles.childContainer}>
             <View style={styles.childContainer}>
@@ -457,6 +458,7 @@ export const Screen = ({
           <FlatList
             style={{ paddingHorizontal: 40, backgroundColor: 'white' }}
             contentContainerStyle={{}}
+            showsVerticalScrollIndicator={false}
             data={popularPlaces}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {

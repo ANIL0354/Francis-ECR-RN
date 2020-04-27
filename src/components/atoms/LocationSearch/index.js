@@ -90,6 +90,7 @@ class LocationSearch extends Component {
             backgroundColor: 'white',
             position: Platform.OS === 'ios' ? 'absolute' : 'relative',
             top: Platform.OS === 'ios' ? 44 : 0,
+            borderRadius: 5
           },
         }}
       />
