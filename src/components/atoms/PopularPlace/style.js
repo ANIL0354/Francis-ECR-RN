@@ -4,13 +4,13 @@ const styles = StyleSheet.create({
     container: {
         borderWidth: 1,
         borderColor: 'transparent',
-        borderBottomColor: 'grey',
+        borderBottomColor: 'rgba(0,0,0,0.2)',
         padding: 10,
         paddingBottom: 30
     },
     iconStyle: {
-        height: 60,
-        width: 40,
+        height: 50,
+        width: 30,
         marginTop: 10,
         marginBottom: -35,
         alignSelf: 'center'
