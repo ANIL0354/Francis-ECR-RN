@@ -326,7 +326,7 @@ export const Screen = ({
                                         marginLeft: scaleText(5).fontSize,
                                         textAlignVertical: 'center',
                                     }}>
-                                    {'Advance Search'}
+                                    {'Advanced Search'}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity
