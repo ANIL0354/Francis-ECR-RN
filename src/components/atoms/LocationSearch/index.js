@@ -1,31 +1,33 @@
-import React, { useState, useEffect, Component } from 'react';
-import { Image, Text, Platform } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import React, {useState, useEffect, Component} from 'react';
+import {Image, Text, Platform} from 'react-native';
+// import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {GooglePlacesAutocomplete} from './GooglePlacesAutocomplete';
 
 class LocationSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: ''
-    }
+      address: '',
+    };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.pickupLocation !== this.props.pickupLocation) {
       this.placesRef.setAddressText(nextProps.pickupLocation);
       this.setState({
-        address: nextProps.pickupLocation
-      })
+        address: nextProps.pickupLocation,
+      });
     }
   }
 
-
   render() {
-    let { pickupLocation, inputStyle, setPickupLocation } = this.props;
+    let {pickupLocation, inputStyle, setPickupLocation} = this.props;
     return (
       <GooglePlacesAutocomplete
-        ref={ref => { this.placesRef = ref }}
-        placeholder={"Pick-up location"}
+        ref={(ref) => {
+          this.placesRef = ref;
+        }}
+        placeholder={'Pick-up location'}
         minLength={2}
         autoFocus={false}
         defaultValue={pickupLocation}
@@ -34,23 +36,28 @@ class LocationSearch extends Component {
         fetchDetails={true}
         renderDescription={(row) => row.description}
         onPress={(data, details = null) => {
-          setPickupLocation(details.formatted_address)
+          setPickupLocation(details.formatted_address);
           this.setState({
-            address: details.formatted_address
+            address: details.formatted_address,
           });
         }}
+        customProp={true}
         // textInputProps={{
         //   onChangeText: (text) => {
         //     setPickupLocation(text);
         //     this.setState({
-        //       address: text
-        //     })
-        //   }
+        //       address: text,
+        //     });
+        //   },
         // }}
+        setValue={(text) => {
+          setPickupLocation(text);
+          console.log(text);
+        }}
         setAddressText={this.state.address}
         getAddressText={(text) => {
           this.setState({
-            address: text
+            address: text,
           });
         }}
         getDefaultValue={() => {
@@ -61,18 +68,20 @@ class LocationSearch extends Component {
           language: 'en',
           types: '(cities)',
         }}
-        onChangeText={() => { console.log('hii') }}
+        onChangeText={() => {
+          console.log('hii');
+        }}
         styles={{
           container: {
             zIndex: 10,
-            borderColor: 'transparent'
+            borderColor: 'transparent',
           },
           textInputContainer: {
             backgroundColor: 'transparent',
             padding: 0,
             justifyContent: 'center',
             alignItems: 'center',
-            ...inputStyle
+            ...inputStyle,
           },
           textInput: {
             flex: 1,
@@ -85,7 +94,7 @@ class LocationSearch extends Component {
             marginBottom: 0,
           },
           placeholder: {
-            color: 'black'
+            color: 'black',
           },
           description: {
             fontWeight: 'bold',
@@ -100,13 +109,12 @@ class LocationSearch extends Component {
             backgroundColor: 'white',
             position: Platform.OS === 'ios' ? 'absolute' : 'relative',
             top: Platform.OS === 'ios' ? 44 : 0,
-            borderRadius: 5
+            borderRadius: 5,
           },
         }}
       />
     );
   }
 }
-
 
 export default LocationSearch;

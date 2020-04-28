@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -31,11 +31,11 @@ import {
   DOWN_ARROW,
   GOOGLE_API_KEY,
 } from '../../../../../shared/constants';
-import { scaleText } from '../../../../../helpers';
+import {scaleText} from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
 import PopularPlace from '../../../../../components/atoms/PopularPlace';
-import { STRINGS } from '../../../../../shared/constants/us/strings';
-import { CheckPermission } from '../../../../../helpers';
+import {STRINGS} from '../../../../../shared/constants/us/strings';
+import {CheckPermission} from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from './style.js';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
@@ -85,11 +85,11 @@ export const Screen = ({
     AppState.addEventListener('change', handleAppStateChange);
     getPopularPlaces(
       {},
-      () => { },
-      () => { },
+      () => {},
+      () => {},
     );
   }, []);
-
+  console.log('pickupLocation', pickupLocation);
   const checkInternetConnection = () => {
     NetInfo.addEventListener((state) => {
       updateInternetStatus(
@@ -100,10 +100,7 @@ export const Screen = ({
 
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
-      if (
-        appState.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
+      if (appState.match(/inactive|background/) && nextAppState === 'active') {
         // checkLocationPermissions();
       }
       setAppState(nextAppState);
@@ -202,7 +199,7 @@ export const Screen = ({
                 [
                   {
                     text: 'Okay',
-                    onPress: () => { },
+                    onPress: () => {},
                   },
                 ],
               );
@@ -214,16 +211,14 @@ export const Screen = ({
                 [
                   {
                     text: 'Okay',
-                    onPress: () => { },
+                    onPress: () => {},
                   },
                 ],
               );
               return;
             } else {
-              showFilterMenu(false)
-              let formattedDate = moment(pickupDate).format(
-                'YYYY-MM-DD',
-              );
+              showFilterMenu(false);
+              let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
               startLoader();
               fetchVehicleListing(
                 {
@@ -239,22 +234,21 @@ export const Screen = ({
                   stopLoader();
                   navigation.navigate('VEHICLE_SCREEN');
                 },
-                () => { },
+                () => {},
               );
             }
           }}
         />
       )}
-      <ScrollView keyboardShouldPersistTaps="always"
+      <ScrollView
+        keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}>
         <View style={styles.childContainer}>
           <Text
             style={{
               ...styles.subHeaderText,
               height:
-                Platform.OS == 'ios'
-                  ? scaleText(18).lineHeight + 2
-                  : 'auto',
+                Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
               fontSize: scaleText(20).fontSize,
             }}>
             {'Great deals on vehicle relocation'}
@@ -271,8 +265,9 @@ export const Screen = ({
                 height: 2.5 * scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-                ...styles.pickupLocationInput
-              }} />
+                ...styles.pickupLocationInput,
+              }}
+            />
 
             <DatePicker
               mode="date"
@@ -383,7 +378,7 @@ export const Screen = ({
                     [
                       {
                         text: 'Okay',
-                        onPress: () => { },
+                        onPress: () => {},
                       },
                     ],
                   );
@@ -395,15 +390,13 @@ export const Screen = ({
                     [
                       {
                         text: 'Okay',
-                        onPress: () => { },
+                        onPress: () => {},
                       },
                     ],
                   );
                   return;
                 } else {
-                  let formattedDate = moment(pickupDate).format(
-                    'YYYY-MM-DD',
-                  );
+                  let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
                   fetchVehicleListing(
                     {
@@ -419,7 +412,7 @@ export const Screen = ({
                       stopLoader();
                       navigation.navigate('VEHICLE_SCREEN');
                     },
-                    () => { },
+                    () => {},
                   );
                 }
               }}>
@@ -430,23 +423,33 @@ export const Screen = ({
                   fontSize: scaleText(16).fontSize,
                 }}>
                 Search Now
-                  </Text>
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View style={{ backgroundColor: 'white', justifyContent: 'center', marginBottom: 0, flexDirection: 'row' }}>
-          <Image source={DOWN_ARROW} height={20} width={20} style={{ margin: 0, marginTop: -1 * (scaleText(10).fontSize) }} />
+        <View
+          style={{
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            marginBottom: 0,
+            flexDirection: 'row',
+          }}>
+          <Image
+            source={DOWN_ARROW}
+            height={20}
+            width={20}
+            style={{margin: 0, marginTop: -1 * scaleText(10).fontSize}}
+          />
         </View>
 
-
         <FlatList
-          style={{ paddingHorizontal: 40, backgroundColor: 'white' }}
+          style={{paddingHorizontal: 40, backgroundColor: 'white'}}
           contentContainerStyle={{}}
           showsVerticalScrollIndicator={false}
           data={popularPlaces}
-          keyExtractor={(item, index) => item.id ? item.id : `${index}`}
-          renderItem={({ item }) => {
+          keyExtractor={(item, index) => (item.id ? item.id : `${index}`)}
+          renderItem={({item}) => {
             return (
               <PopularPlace
                 icon={CAR}
@@ -458,7 +461,7 @@ export const Screen = ({
             );
           }}
         />
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{backgroundColor: 'white'}}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -471,7 +474,7 @@ export const Screen = ({
             {'Helpful Information'}
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{backgroundColor: 'white'}}>
           <Image
             style={{
               alignSelf: 'center',
@@ -505,7 +508,7 @@ export const Screen = ({
             }
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{backgroundColor: 'white'}}>
           <Image
             style={{
               alignSelf: 'center',
@@ -539,7 +542,7 @@ export const Screen = ({
             }
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{backgroundColor: 'white'}}>
           <Text
             style={{
               fontWeight: 'bold',
