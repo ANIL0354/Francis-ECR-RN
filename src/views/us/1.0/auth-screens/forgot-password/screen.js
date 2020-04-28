@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { Button } from 'react-native-elements';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON, MAIL_ICON } from '../../../../../shared/constants';
@@ -101,6 +101,7 @@ export const Screen = ({
                     <View style={styles.formContainer}>
                         <ForgotForm
                             onSubmit={(formData) => {
+                                Keyboard.dismiss();
                                 setEmail(formData.email)
                                 sendRecoveryEmail({
                                     email: formData.email,

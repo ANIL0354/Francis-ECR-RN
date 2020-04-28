@@ -5,6 +5,10 @@ import {
   TextInput,
   Image,
   Alert,
+  Keyboard,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
   AppState,
   PermissionsAndroid,
 } from 'react-native';
@@ -34,11 +38,6 @@ import { STRINGS } from '../../../../../shared/constants/us/strings';
 import { CheckPermission } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from './style.js';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
 export const Screen = ({
@@ -178,7 +177,6 @@ export const Screen = ({
       },
     );
   };
-
   return (
     <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
       {filterMenu && (
@@ -277,20 +275,6 @@ export const Screen = ({
                     lineHeight: scaledFont.lineHeight,
                     ...styles.pickupLocationInput
                   }} />
-                {/* <TextInput
-                                        placeholder={'Pick-up location'}
-                                        placeholderTextColor={'black'}
-                                        underlineColorAndroid={"transparent"}
-                                        style={{
-                                            height: 2.5 * scaledFont.lineHeight,
-                                            fontSize: scaledFont.fontSize,
-                                            lineHeight: scaledFont.lineHeight,
-                                            ...styles.pickupLocationInput
-                                        }}
-                                        value={pickupLocation}
-                                        onChangeText={value => setPickupLocation(value)}
-                                        returnKeyType={'next'}
-                                    /> */}
 
                 <DatePicker
                   mode="date"
@@ -393,6 +377,7 @@ export const Screen = ({
                   }}
                   activeOpacity={0.7}
                   onPress={() => {
+                    Keyboard.dismiss();
                     if (!!!pickupLocation) {
                       Alert.alert(
                         'Select Pick-up Location',
@@ -463,7 +448,7 @@ export const Screen = ({
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}
             data={popularPlaces}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item, index) => item.id ? item.id : `${index}`}
             renderItem={({ item }) => {
               return (
                 <PopularPlace

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Text } from 'react-native';
 
 const AppHeader = ({
     leftIcon,
@@ -8,6 +8,9 @@ const AppHeader = ({
 }) => {
     return (
         <View style={{ backgroundColor: 'white', padding: 10, minHeight: 50, flexDirection: 'row', alignItems: 'center' }}>
+            {/* {false && <View style={{ backgroundColor: 'white', position: 'absolute', right: 10, zIndex: 100, padding: 10, borderRadius: 5, borderColor: 'gray', borderWidth: 1 }}>
+                <Text>{'Logout'}</Text>
+            </View>} */}
             <View style={{
                 flex: centerIcon && rightIcon ? 3 : 7
             }}>
