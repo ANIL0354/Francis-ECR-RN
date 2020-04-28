@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
 import {
     LoginManager,
     AccessToken,
@@ -46,6 +46,7 @@ export const Screen = ({
                             const accessToken = data.accessToken;
                             const responseInfoCallback = (error, result) => {
                                 if (error) {
+                                    console.log('error', error)
                                 } else {
                                     socialLogin({
                                         loginType: 2,
@@ -77,6 +78,7 @@ export const Screen = ({
                             new GraphRequestManager().addRequest(infoRequest).start();
                             return;
                         }, (error) => {
+                            console.log('err', error)
                         }
                     )
                 }
@@ -191,6 +193,7 @@ export const Screen = ({
                                 setSubscribed={setSubscribed}
                                 subscribed={subscribed}
                                 onSubmit={(formData) => {
+                                    Keyboard.dismiss();
                                     var dobStamp = new Date(formData.dob);
                                     dobStamp = new Date(formData.dob).getTime();
                                     registerUser({
@@ -220,6 +223,7 @@ export const Screen = ({
                             googleAuth={() => googleAuth()}
                             facebookAuth={() => facebookAuth()}
                             onSubmit={(formData) => {
+                                Keyboard.dismiss();
                                 checkLogin({
                                     deviceToken: "string",
                                     email: formData.email,

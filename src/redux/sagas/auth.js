@@ -99,13 +99,6 @@ function* checkLogin({ data, success, failure }) {
 
 function* checkSocialLogin({ data, success, failure }) {
     try {
-        NetInfo.addEventListener((state) => {
-            if (!state.isConnected) {
-                stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
-                return;
-            }
-        })
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {

@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     childContainer: {
         flex: 1,
         backgroundColor: '#0091ff',
-        padding: scaleText(10).fontSize,
+        padding: scaleText(20).fontSize,
+        zIndex: 1,
         justifyContent: 'center',
     },
     subHeaderText: {

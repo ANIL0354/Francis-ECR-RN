@@ -18,6 +18,8 @@ class LocationSearch extends Component {
       })
     }
   }
+
+
   render() {
     let { pickupLocation, inputStyle, setPickupLocation } = this.props;
     return (
@@ -37,13 +39,15 @@ class LocationSearch extends Component {
             address: details.formatted_address
           });
         }}
+        textInputProps={{
+          onChangeText: (text) => setPickupLocation(text)
+        }}
         setAddressText={this.state.address}
         getAddressText={(text) => {
           this.setState({
             address: text
           });
         }}
-
         getDefaultValue={() => {
           return pickupLocation;
         }}
@@ -52,6 +56,7 @@ class LocationSearch extends Component {
           language: 'en',
           types: '(cities)',
         }}
+        onChangeText={() => { console.log('hii') }}
         styles={{
           container: {
             zIndex: 10,

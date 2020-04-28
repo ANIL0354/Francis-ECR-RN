@@ -8,6 +8,7 @@ import {
     FlatList,
     Animated,
     Alert,
+    Keyboard,
     LayoutAnimation,
     UIManager,
     TouchableOpacity
@@ -339,6 +340,7 @@ export const Screen = ({
                                 }}
                                 activeOpacity={0.7}
                                 onPress={() => {
+                                    Keyboard.dismiss();
                                     if (!!!pickupLocation) {
                                         Alert.alert(
                                             'Select Pick-up Location',

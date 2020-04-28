@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {View, StatusBar, SafeAreaView} from 'react-native';
+import { connect } from 'react-redux';
+import { View, StatusBar, SafeAreaView } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
-import {stopLoader} from '../../../redux/actions';
+import { stopLoader, logout } from '../../../redux/actions';
 import CustomLoader from '../../atoms/Loader';
 
 const AppHoc = ({
@@ -10,16 +10,23 @@ const AppHoc = ({
   leftIcon,
   centerIcon,
   loader,
+  logout,
+  userToken,
   stopLoader,
   children,
 }) => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <AppHeader
         rightIcon={rightIcon}
         centerIcon={centerIcon}
         leftIcon={leftIcon}
+        onLogout={() => logout(
+          userToken,
+          () => { },
+          () => { },
+        )}
       />
       {children}
       {loader && (
@@ -46,11 +53,13 @@ const AppHoc = ({
 const mapStateToProps = (state) => {
   return {
     loader: state.CommonReducer.loader,
+    userToken: state.CommonReducer.userToken,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     stopLoader: () => dispatch(stopLoader()),
+    logout: (token, success, failure) => dispatch(logout(token, success, failure)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AppHoc);
