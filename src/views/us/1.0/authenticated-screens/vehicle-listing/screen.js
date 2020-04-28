@@ -199,7 +199,7 @@ export const Screen = ({
                                             fontSize: scaledMediumFont.fontSize,
                                             lineHeight: scaledMediumFont.lineHeight
                                         }}>
-                                        {pickupDate ? `${moment(pickupDate).format('DD-MMM-YYYY')}` : ''}
+                                        {pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : ''}
                                     </Text>
                                 </View>
                             </View>
