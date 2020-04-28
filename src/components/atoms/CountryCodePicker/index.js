@@ -4,10 +4,7 @@ import CountryPicker from 'react-native-country-picker-modal';
 import { TextInput, } from 'react-native-gesture-handler';
 import { scaleText } from '../../../helpers';
 import Emoji from 'react-native-emoji';
-
-const styles = StyleSheet.create({
-    // ...
-})
+import styles from './style';
 
 const AUSTRALIA_VALUES = {
     callingCode: ["61"],
@@ -65,24 +62,15 @@ const CountryCodePicker = ({
     const validationMessage =
         touched && error ? error : '';
     return (
-        <View style={{ justifyContent: 'center', padding: 0, margin: 0, justifyContent: 'center' }}>
+        <View style={styles.wrapperContainer}>
             <TouchableOpacity
                 onPress={() => setShowCountries(true)}
                 style={{
-                    borderColor: 'black',
-                    borderRadius: 5,
-                    borderWidth: 0.8,
-                    height: 2.5 * scaledFont.lineHeight,
-                    marginTop: 0,
-                    justifyContent: 'center',
-                    alignContent: 'center',
+                    ...style,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
-                    paddingHorizontal: 10,
-                    paddingVertical: 2,
-                    paddingBottom: 0,
-                    marginBottom: 0,
-                    ...style
+                    height: 2.5 * scaledFont.lineHeight,
+                    ...styles.countryDropWrapper
                 }}>
                 <CountryPicker
                     {...{
@@ -105,15 +93,9 @@ const CountryCodePicker = ({
                                     setSelectedCountry(AUSTRALIA_VALUES.name);
                                     setCallingCode(AUSTRALIA_VALUES.callingCode[0]);
                                 }}
-                                    style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        paddingVertical: 10,
-                                        zIndex: 10,
-                                        borderColor: 'transparent', borderBottomColor: 'rgba(0,0,0,0.3)', borderWidth: 0.8, paddingHorizontal: 8
-                                    }}>
-                                    <Emoji name="flag-au" style={{ fontSize: 20, margin: 0, padding: 0 }} />
-                                    <Text style={{ flex: 1, color: 'black', fontSize: 13, paddingLeft: 10 }}
+                                    style={styles.topCountriesContainer}>
+                                    <Emoji name="flag-au" style={styles.emojiStyle} />
+                                    <Text style={styles.styles.topCountriesText}
                                     >{countryDrop ? 'Australia' : 'Australia (+61)'}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -125,18 +107,10 @@ const CountryCodePicker = ({
                                         setSelectedCountry(NEW_ZEALAND_VALUES.name);
                                         setCallingCode(NEW_ZEALAND_VALUES.callingCode[0]);
                                     }}
-                                    style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        paddingVertical: 10,
-                                        borderColor: 'transparent',
-                                        borderBottomColor: 'rgba(0,0,0,0.3)',
-                                        borderWidth: 0.8,
-                                        paddingHorizontal: 8
-                                    }}>
-                                    <Emoji name="flag-nz" style={{ fontSize: 20, margin: 0, padding: 0 }} />
+                                    style={styles.topCountriesContainer}>
+                                    <Emoji name="flag-nz" style={styles.emojiStyle} />
                                     <Text
-                                        style={{ flex: 1, color: 'black', fontSize: 13, paddingLeft: 10 }}>{countryDrop ? 'New Zealand' : 'New Zealand (+64)'}</Text>
+                                        style={styles.styles.topCountriesText}>{countryDrop ? 'New Zealand' : 'New Zealand (+64)'}</Text>
                                 </TouchableOpacity>
                             </React.Fragment>
                         )

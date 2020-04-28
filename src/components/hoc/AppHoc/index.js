@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, StatusBar, SafeAreaView } from 'react-native';
+import { View, StatusBar, SafeAreaView, Alert } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader, logout } from '../../../redux/actions';
 import CustomLoader from '../../atoms/Loader';
+import { STRINGS } from '../../../shared/constants/us/strings';
+import styles from './style';
 
 const AppHoc = ({
   rightIcon,
@@ -16,33 +18,36 @@ const AppHoc = ({
   children,
 }) => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={styles.hocWrapper}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <AppHeader
         rightIcon={rightIcon}
         centerIcon={centerIcon}
         leftIcon={leftIcon}
-        onLogout={() => logout(
-          userToken,
-          () => { },
-          () => { },
-        )}
+        rightMenuItems={[
+          {
+            label: STRINGS.LOGOUT,
+            onPress: () => Alert.alert(STRINGS.LOGOUT, STRINGS.LOGOUT_DESCRIPTION, [
+              {
+                text: STRINGS.CANCEL,
+                onPress: () => { },
+              },
+              {
+                text: STRINGS.CONFIRM,
+                onPress: () => logout(
+                  userToken,
+                  () => { },
+                  () => { },
+                )
+              },
+            ])
+          }
+        ]}
       />
       {children}
       {loader && (
         <View
-          style={{
-            flex: 1,
-            position: 'absolute',
-            alignItems: 'center',
-            zIndex: 10000000000,
-            justifyContent: 'center',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(255,255,255,0.8)',
-          }}>
+          style={styles.loaderWrapper}>
           <CustomLoader stopLoader={stopLoader} loader={loader} />
         </View>
       )}

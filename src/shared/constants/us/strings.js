@@ -50,5 +50,8 @@ export const STRINGS = {
   PHONE_NUMBER: 'phone',
   SAVE: 'Save',
   SUBMIT: 'Submit',
-  LOGOUT: 'Logout'
+  LOGOUT: 'Logout',
+  LOGOUT_DESCRIPTION: 'Are you sure you want to logout?',
+  CANCEL: 'Cancel',
+  CONFIRM: 'Confirm'
 }
