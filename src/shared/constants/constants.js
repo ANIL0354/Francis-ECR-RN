@@ -181,7 +181,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 5,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance'
   },
   {
     id: '2',
@@ -195,7 +195,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 10,
     conditioning: 'Non-Air Conditioning',
     transmission: 'Manual',
-    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance'
   },
   {
     id: '3',
@@ -209,7 +209,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 5,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance'
   },
   {
     id: '4',
@@ -223,7 +223,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 2,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insuarance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance'
   }
 ];
 

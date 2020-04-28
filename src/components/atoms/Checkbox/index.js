@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckBox, Icon } from 'react-native-elements';
 import { Image } from 'react-native';
+import styles from './style';
 
 const Checkbox = ({
     title = '',
@@ -12,9 +13,19 @@ const Checkbox = ({
     return (
         <CheckBox
             title={title}
-            containerStyle={{ backgroundColor: 'transparent', maxWidth: '80%', marginLeft: 0, marginTop: -10, borderColor: 'transparent', paddingHorizontal: 0, }}
-            checkedIcon={<Image source={checkedIcon} style={{ height: 15, width: 15, resizeMode: 'center' }} height={15} width={15} />}
-            uncheckedIcon={<Image source={uncheckedIcon} style={{ height: 15, width: 15, resizeMode: 'center' }} height={15} width={15} />}
+            containerStyle={styles.containerStyle}
+            checkedIcon={<Image
+                source={checkedIcon}
+                style={styles.checkedIconStyle}
+                height={15}
+                width={15}
+            />}
+            uncheckedIcon={<Image
+                source={uncheckedIcon}
+                style={styles.unCheckedIconStyle}
+                height={15}
+                width={15}
+            />}
             onPress={(event) => toggleCheck(event)}
             checked={checked}
         />

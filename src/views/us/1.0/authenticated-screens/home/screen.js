@@ -104,7 +104,7 @@ export const Screen = ({
         appState.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
-        checkLocationPermissions();
+        // checkLocationPermissions();
       }
       setAppState(nextAppState);
     }
@@ -158,7 +158,7 @@ export const Screen = ({
         Geocoder.from(info.coords.latitude, info.coords.longitude)
           .then((json) => {
             var addressComponent =
-              json.results[json.results.length - 2].address_components[0];
+              json.results[json.results.length - 4].address_components[0];
             setPickupLocation(addressComponent.long_name);
             stopLoader();
           })

@@ -68,18 +68,20 @@ const AdvanceSearchFilter = ({
                         <View style={styles.filterTabContainer}>
                             {
                                 FILTER_OPTIONS.map((item, index) => (
-                                    <View style={{
-                                        backgroundColor: filterValue === index ? 'rgba(0,0,0,0.08)' : 'white',
-                                        ...styles.filterTab,
-                                    }}>
+                                    <TouchableOpacity
+                                        onPress={() => setFilterValue(index)}
+                                        style={{
+                                            backgroundColor: filterValue === index ? 'rgba(0,0,0,0.08)' : 'white',
+                                            ...styles.filterTab,
+                                        }}>
                                         <Image style={{ marginRight: 10 }} source={filterValue === index ? item.activeIcon : item.inactiveIcon} />
                                         <Text
                                             style={{
                                                 color: index === filterValue ? '#0091ff' : 'black',
                                                 ...styles.filterTabText
                                             }}
-                                            onPress={() => setFilterValue(index)}>{item.title}</Text>
-                                    </View>
+                                        >{item.title}</Text>
+                                    </TouchableOpacity>
                                 ))
                             }
 

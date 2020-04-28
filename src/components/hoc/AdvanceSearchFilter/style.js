@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
         minHeight: 360,
         maxHeight: 500,
         minWidth: '100%',
-        marginTop: '75%',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20
     },

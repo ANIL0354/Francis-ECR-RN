@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     },
     detailsList: {
         paddingVertical: 10,
-        marginBottom: 100
     },
     advanceFilterText: {
         color: 'gray',
@@ -125,6 +124,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         width: '100%',
         alignSelf: 'center',
+        fontWeight: 'bold'
     },
     detailsWrapper: {
         paddingVertical: 10,
