@@ -313,25 +313,21 @@ export const Screen = ({
                                 onPress={() => showFilterMenu(true)}
                                 style={{
                                     flexDirection: 'row',
-                                    justifyContent: 'space-between',
                                     paddingVertical: 5,
-                                    borderBottomColor: 'white',
-                                    borderTopColor: 'transparent',
-                                    borderLeftColor: 'transparent',
-                                    borderRightColor: 'transparent',
-                                    borderWidth: 1,
+                                    alignItems: 'center',
                                     marginBottom: 2,
                                 }}>
+                                <Image source={SEARCH_ICON} />
                                 <Text
                                     style={{
                                         color: 'white',
                                         fontSize: scaleText(18).fontSize,
                                         textAlign: 'left',
+                                        marginLeft: scaleText(5).fontSize,
                                         textAlignVertical: 'center',
                                     }}>
                                     {'Advance Search'}
                                 </Text>
-                                <Image source={SEARCH_ICON} />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{
@@ -397,7 +393,7 @@ export const Screen = ({
                                         color: 'black',
                                         fontSize: scaleText(16).fontSize,
                                     }}>
-                                    Search Now
+                                    Modify Search
                                     </Text>
                             </TouchableOpacity>
                         </View>}

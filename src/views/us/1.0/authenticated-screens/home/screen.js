@@ -24,6 +24,7 @@ import {
   CAR_CHECKLIST,
   SEARCH_ICON,
   LIMITS,
+  DOWN_ARROW,
   GOOGLE_API_KEY,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
@@ -366,25 +367,21 @@ export const Screen = ({
                   onPress={() => showFilterMenu(true)}
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     paddingVertical: 5,
-                    borderBottomColor: 'white',
-                    borderTopColor: 'transparent',
-                    borderLeftColor: 'transparent',
-                    borderRightColor: 'transparent',
-                    borderWidth: 1,
                     marginBottom: 2,
                   }}>
+                  <Image source={SEARCH_ICON} />
                   <Text
                     style={{
                       color: 'white',
                       fontSize: scaleText(18).fontSize,
                       textAlign: 'left',
+                      marginLeft: scaleText(5).fontSize,
                       textAlignVertical: 'center',
                     }}>
                     {'Advance Search'}
                   </Text>
-                  <Image source={SEARCH_ICON} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{
@@ -455,6 +452,12 @@ export const Screen = ({
               </View>
             </View>
           </View>
+
+          <View style={{ backgroundColor: 'white', justifyContent: 'center', marginBottom: 0, flexDirection: 'row' }}>
+            <Image source={DOWN_ARROW} height={20} width={20} style={{ margin: 0, marginTop: -1 * (scaleText(10).fontSize) }} />
+          </View>
+
+
           <FlatList
             style={{ paddingHorizontal: 40, backgroundColor: 'white' }}
             contentContainerStyle={{}}
@@ -467,7 +470,7 @@ export const Screen = ({
                   icon={CAR}
                   availableCount={item.count}
                   placeRange={`${item._id.fromCity} to ${item._id.toCity}`}
-                  buttonText={item.buttonText}
+                  buttonText={'See All'}
                   onPress={() => navigation.navigate('VEHICLE_SCREEN')}
                 />
               );
@@ -492,8 +495,8 @@ export const Screen = ({
                 alignSelf: 'center',
                 marginTop: 15,
                 marginBottom: 15,
-                height: 70,
-                width: 70,
+                height: 50,
+                width: 50,
               }}
               source={CAR_CHECKLIST}
             />
@@ -526,8 +529,8 @@ export const Screen = ({
                 alignSelf: 'center',
                 marginTop: 40,
                 marginBottom: 15,
-                height: 70,
-                width: 70,
+                height: 50,
+                width: 50,
               }}
               source={CAR_WASHER}
             />
@@ -552,6 +555,19 @@ export const Screen = ({
               {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
               }
+            </Text>
+          </View>
+          <View style={{ backgroundColor: 'white' }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'black',
+                fontSize: scaleText(16).fontSize,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                marginVertical: scaleText(10).fontSize,
+              }}>
+              {'Click here for more helpful information.'}
             </Text>
           </View>
           <CustomButton
