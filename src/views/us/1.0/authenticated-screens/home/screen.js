@@ -380,7 +380,7 @@ export const Screen = ({
                       marginLeft: scaleText(5).fontSize,
                       textAlignVertical: 'center',
                     }}>
-                    {'Advance Search'}
+                    {'Advanced Search'}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -565,7 +565,7 @@ export const Screen = ({
                 fontSize: scaleText(16).fontSize,
                 textAlign: 'center',
                 textAlignVertical: 'center',
-                marginVertical: scaleText(10).fontSize,
+                marginVertical: scaleText(50).fontSize,
               }}>
               {'Click here for more helpful information.'}
             </Text>
