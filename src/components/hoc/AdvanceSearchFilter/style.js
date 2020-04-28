@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     filterModal: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.4)'
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'flex-end'
     },
     filterWrapper: {
-        alignSelf: 'flex-end',
         backgroundColor: 'white',
         minHeight: 360,
         maxHeight: 500,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderBottomWidth: 1,
-        padding: 15
+        padding: 15,
     },
     filterHeaderText: {
         color: 'black',
