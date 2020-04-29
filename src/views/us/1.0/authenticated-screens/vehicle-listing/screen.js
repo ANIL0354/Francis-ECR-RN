@@ -66,6 +66,8 @@ export const Screen = ({
     fetchVehicleListing,
     setTransmissionType,
 }) => {
+    const today = new Date();
+    const maxDate = today.setMonth(today.getMonth() + 6);
     const [filterMenu, showFilterMenu] = useState(false);
     const [modifySearch, setModifySearch] = useState(false);
     const [dateValue, onDateChange] = useState(pickupDate);
@@ -250,6 +252,7 @@ export const Screen = ({
                                 }
                                 format={'DD-MM-YYYY'}
                                 minDate={new Date()}
+                                maxDate={new Date(maxDate)}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 iconSource={DATE_ICON}

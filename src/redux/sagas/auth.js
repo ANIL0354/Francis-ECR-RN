@@ -33,7 +33,7 @@ function* registerNewUser({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
+                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -67,7 +67,7 @@ function* checkLogin({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
+                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -131,7 +131,7 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
+                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -165,7 +165,7 @@ function* completeUserProfile({ data, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
+                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })
@@ -202,7 +202,7 @@ function* logoutUser({ token, success, failure }) {
         NetInfo.addEventListener((state) => {
             if (!state.isConnected) {
                 stopLoader();
-                Toast.show('You appear to be offline. Please check your internet connectivity.', Toast.LONG);
+                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
                 return;
             }
         })

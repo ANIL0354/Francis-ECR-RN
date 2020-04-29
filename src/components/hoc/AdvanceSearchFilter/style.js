@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../helpers';
 
 const styles = StyleSheet.create({
     filterModal: {
@@ -31,11 +32,10 @@ const styles = StyleSheet.create({
     filterTab: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 5,
+        padding: scaleText(5).fontSize,
         minHeight: 60,
         maxHeight: 60,
-        minWidth: 130,
-        maxWidth: 130,
+        width: scaleText(130).fontSize,
         borderBottomColor: 'darkgrey',
         borderWidth: 1,
         borderTopColor: 'transparent',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         borderRightColor: 'transparent',
     },
     filterTabText: {
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         textAlign: 'left',
         fontSize: 14,
         textAlignVertical: 'center',

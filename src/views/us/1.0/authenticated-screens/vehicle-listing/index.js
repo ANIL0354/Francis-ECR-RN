@@ -52,6 +52,7 @@ const mapDispatchToProps = (dispatch) => {
         setSeatsValue: value => dispatch(setSeatsValue(value)),
         logout: (token, success, failure) => dispatch(logout(token, success, failure)),
         setGpsEnabled: status => dispatch(setGpsEnabled(status)),
+        setVehicleType: value => dispatch(setVehicleType(value)),
         updateInternetStatus: status => dispatch(updateInternetStatus(status)),
         setLocationEnabled: status => dispatch(setLocationEnabled(status)),
         setNeverAskPermission: status => dispatch(setNeverAskPermission(status)),

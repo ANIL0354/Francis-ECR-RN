@@ -72,8 +72,8 @@ export const Screen = ({
   updateInternetStatus,
   fetchVehicleListing,
 }) => {
-  const [emailSent, setEmailSent] = useState(false);
-  const [email, setEmail] = useState('');
+  const today = new Date();
+  const maxDate = today.setMonth(today.getMonth() + 6);
   const [appState, setAppState] = useState('active');
   const [dateValue, onDateChange] = useState(pickupDate);
   const [filterMenu, showFilterMenu] = useState(false);
@@ -94,7 +94,7 @@ export const Screen = ({
   const checkInternetConnection = () => {
     NetInfo.addEventListener((state) => {
       updateInternetStatus(
-        (state.isConnected && state.isInternetReachable) || state.isWifiEnabled,
+        (state.isConnected && state.isInternetReachable) || state.isWifiEnabled
       );
     });
   };
@@ -156,8 +156,8 @@ export const Screen = ({
         Geocoder.from(info.coords.latitude, info.coords.longitude)
           .then((json) => {
             var addressComponent =
-              json.results[json.results.length - 4].address_components[0];
-            setPickupLocation(addressComponent.long_name);
+              json.results[2].formatted_address;
+            setPickupLocation(addressComponent);
             stopLoader();
           })
           .catch((error) => {
@@ -279,6 +279,7 @@ export const Screen = ({
               }
               format={'DD-MM-YYYY'}
               minDate={new Date()}
+              maxDate={new Date(maxDate)}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               style={{

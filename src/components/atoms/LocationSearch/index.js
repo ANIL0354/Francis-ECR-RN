@@ -98,6 +98,8 @@ class LocationSearch extends Component {
             position: Platform.OS === 'ios' ? 'absolute' : 'relative',
             top: Platform.OS === 'ios' ? 44 : 0,
             borderRadius: 5,
+            borderColor: 'black',
+            borderWidth: 1
           },
         }}
       />

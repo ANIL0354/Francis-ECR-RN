@@ -77,13 +77,17 @@ const AdvanceSearchFilter = ({
                                                 backgroundColor: filterValue === index ? 'rgba(0,0,0,0.08)' : 'white',
                                                 ...styles.filterTab,
                                             }}>
-                                            <Image style={{ marginRight: 10 }} source={filterValue === index ? item.activeIcon : item.inactiveIcon} />
-                                            <Text
-                                                style={{
-                                                    color: index === filterValue ? '#0091ff' : 'black',
-                                                    ...styles.filterTabText
-                                                }}
-                                            >{item.title}</Text>
+                                            <View style={{ flex: 1, marginRight: scaleText(5).fontSize }}>
+                                                <Image source={filterValue === index ? item.activeIcon : item.inactiveIcon} />
+                                            </View>
+                                            <View style={{ flex: 5, flexWrap: 'wrap' }}>
+                                                <Text
+                                                    style={{
+                                                        color: index === filterValue ? '#0091ff' : 'black',
+                                                        ...styles.filterTabText
+                                                    }}
+                                                >{item.title}</Text>
+                                            </View>
                                         </TouchableOpacity>
                                     ))
                                 }
@@ -125,11 +129,10 @@ const AdvanceSearchFilter = ({
                                     sliderValue={freeDaysValue}
                                     setSliderValue={(value) => setFreeDaysValue(value)}
                                 />}
-
                             </View>
 
                         </View>
-                        <View style={{ flexDirection: 'row', zIndex: 1000, borderTopColor: 'gray', borderWidth: 1, borderBottomColor: 'transparent', borderRightColor: 'transparent', borderLeftColor: 'transparent', backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingVertical: 10 }}>
+                        <View style={{ flexDirection: 'row', zIndex: 1000, borderTopColor: 'gray', borderWidth: 1, borderBottomColor: 'transparent', borderRightColor: 'transparent', borderLeftColor: 'transparent', backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingTop: 10, alignItems: 'center' }}>
                             <CustomButton
                                 buttonStyle={{ paddingHorizontal: 30, backgroundColor: 'white' }}
                                 titleStyle={{ color: '#0091ff' }}
@@ -137,11 +140,11 @@ const AdvanceSearchFilter = ({
                                     setFuelType(new Set());
                                     setFreeDays(0);
                                     setTransmissionType(new Set());
+                                    setVehicle(new Set());
                                     setVehicleType(new Set());
                                     setChildsSeatValue(0);
                                     setAdultsSeatValue(0);
                                     setFuel(new Set());
-                                    setVehicle(new Set());
                                     setTransmission(new Set());
                                     setChildSeats(0);
                                     setAdultSeats(0);

@@ -40,7 +40,10 @@ const Form = ({
             <View style={{ flexDirection: 'row', padding: scaleText(10).fontSize }}>
                 <TouchableOpacity onPress={googleAuth} style={{ backgroundColor: '#4c8bf5', marginRight: scaleText(20).fontSize, flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
                     <Image source={GOOGLE_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
-                    <Text style={{ flex: 1, maxWidth: scaleText(120).fontSize, paddingHorizontal: scaleText(20).fontSize, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with Google</Text>
+                    <View style={{ flex: 1, alignItems: 'center', }}>
+                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with</Text>
+                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}> Google</Text>
+                    </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={facebookAuth} style={{ backgroundColor: '#3b5998', flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>

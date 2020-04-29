@@ -30,7 +30,7 @@ const CustomSlider = ({
                 minimumTrackTintColor={'#0091ff'}
                 maximumTrackTintColor={'lightgray'}
             />
-            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', maxHeight: 35, fontSize: 16 }}>{sliderValue}</Text>
+            <Text style={{ flex: 1, textAlign: 'center', color: '#0091ff', textAlignVertical: 'center', fontSize: 16 }}>{sliderValue}</Text>
         </View>
     )
 }

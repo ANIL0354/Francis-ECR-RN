@@ -117,7 +117,7 @@ export default InternetCheckWrapper = ({
                         </Text>
                         <Text style={{ textAlign: 'center', color: 'black' }}>
                             {!isNetConnected ?
-                                'You appear to be offline. Kindly check your internet connection.'
+                                'You appears to be offline. Kindly check your internet connection.'
                                 :
                                 showPermissionInfo() ?
                                     `Allow Easy Car Relo to automatically detect your current location and show nearby users.`
