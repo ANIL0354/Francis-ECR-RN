@@ -37,8 +37,8 @@ const AppHeader = ({
                         </TouchableOpacity>}
                     >
                         {rightMenuItems.map((item, index) => (<MenuItem onPress={() => {
-                            menuRef.current.hide();
                             item.onPress();
+                            menuRef.current.hide();
                         }}>{item.label}</MenuItem>
                         ))}
                     </Menu>
