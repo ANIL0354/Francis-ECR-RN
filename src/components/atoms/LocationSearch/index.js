@@ -41,17 +41,10 @@ class LocationSearch extends Component {
           });
         }}
         customProp={true}
-        // textInputProps={{
-        //   onChangeText: (text) => {
-        //     setPickupLocation(text);
-        //     this.setState({
-        //       address: text,
-        //     });
-        //   },
-        // }}
         setValue={(text) => {
           setPickupLocation(text);
         }}
+        text={pickupLocation}
         setAddressText={this.state.address}
         getAddressText={(text) => {
           this.setState({

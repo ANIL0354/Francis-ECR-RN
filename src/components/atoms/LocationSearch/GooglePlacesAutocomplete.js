@@ -140,7 +140,6 @@ export default class GooglePlacesAutocomplete extends Component {
     if (nextProps.listViewDisplayed !== 'auto' && !nextProps.customProp) {
       listViewDisplayed = nextProps.listViewDisplayed;
     }
-
     if (
       typeof nextProps.text !== 'undefined' &&
       this.state.text !== nextProps.text
@@ -153,7 +152,7 @@ export default class GooglePlacesAutocomplete extends Component {
       );
     } else {
       this.setState({
-        listViewDisplayed: listViewDisplayed,
+        listViewDisplayed: false,
       });
     }
   }
@@ -359,6 +358,9 @@ export default class GooglePlacesAutocomplete extends Component {
         break;
       }
     }
+    this.setState({
+      listViewDisplayed: false
+    })
   };
 
   _disableRowLoaders = () => {
@@ -572,10 +574,9 @@ export default class GooglePlacesAutocomplete extends Component {
 
   _onChangeText = (text) => {
     this._request(text);
-
     this.setState({
       text: text,
-      listViewDisplayed: this._isMounted || this.props.autoFocus,
+      // listViewDisplayed: this._isMounted || this.props.autoFocus,
     });
   };
 
