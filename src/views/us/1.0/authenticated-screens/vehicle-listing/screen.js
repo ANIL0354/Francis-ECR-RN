@@ -52,6 +52,7 @@ export const Screen = ({
     setChildSeats,
     setAdultSeats,
     setPickupLocation,
+    isNetConnected,
     pickupLocation,
     childSeatsValue,
     adultSeatsValue,
