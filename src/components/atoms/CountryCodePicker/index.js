@@ -124,6 +124,7 @@ const CountryCodePicker = ({
                         withEmoji,
                         onSelect
                     }}
+
                     flatListProps={{
                         ListHeaderComponent: () => (
                             <React.Fragment>
@@ -168,8 +169,10 @@ const CountryCodePicker = ({
                         flexDirection: 'row',
                         margin: 0,
                         padding: 0,
+                        zIndex: 0,
                         alignContent: 'center',
                         display: codeValue && countryValue ? 'none' : 'flex',
+                        display: 'none'
                     }}
                     onSelect={(value) => {
                         saveValue(value)
@@ -187,11 +190,12 @@ const CountryCodePicker = ({
                         onRequestClose: () => setShowCountries(false)
                     }}
                     style={{
-                        color: 'darkgrey'
+                        color: 'darkgrey',
                     }}
                     placeholder={placeholder}
                     visible
                 />
+                {!countryValue && <Text style={{ color: 'black' }}>{placeholder}</Text>}
                 {countryValue !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
