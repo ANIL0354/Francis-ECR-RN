@@ -195,7 +195,11 @@ const CountryCodePicker = ({
                     placeholder={placeholder}
                     visible
                 />
-                {!countryValue && <Text style={{ color: 'black' }}>{placeholder}</Text>}
+                {!countryValue && <Text style={{
+                    color: 'black',
+                    fontSize: scaledFont.fontSize,
+                    lineHeight: scaledFont.lineHeight,
+                }}>{placeholder}</Text>}
                 {countryValue !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
