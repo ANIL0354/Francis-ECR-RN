@@ -37,14 +37,14 @@ const AppHeader = ({
                         </TouchableOpacity>}
                     >
                         {rightMenuItems.map((item, index) => (<MenuItem onPress={() => {
-                            item.onPress();
+                            setTimeout(() => item.onPress(), 400)
                             menuRef.current.hide();
                         }}>{item.label}</MenuItem>
                         ))}
                     </Menu>
                 }
             </View>
-        </View>
+        </View >
     )
 };
 
