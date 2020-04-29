@@ -26,10 +26,12 @@ import {
     AC_ICON,
     TURN_RIGHT,
     DOORS_ICON,
+    VERTICAL_LINE,
     VEHICLE_DETAILS_LISTING,
     GEAR_ICON,
     SEARCH_ICON,
     LUGGAGE_ICON,
+    DATE_ICON,
     LIMITS
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
@@ -250,6 +252,7 @@ export const Screen = ({
                                 minDate={new Date()}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
+                                iconSource={DATE_ICON}
                                 style={{
                                     padding: 0,
                                     margin: 0,
@@ -265,7 +268,10 @@ export const Screen = ({
                                         zIndex: 10,
                                     },
                                     dateIcon: {
-                                        display: 'none',
+                                        // display: 'none',
+                                        marginLeft: -1 * (scaleText(35).fontSize),
+                                        height: scaleText(30).fontSize,
+                                        width: scaleText(30).fontSize
                                     },
                                     dateInput: {
                                         textAlign: 'left',
@@ -426,6 +432,7 @@ export const Screen = ({
                                             }}>{item.title}</Text>
                                             <Image style={styles.alignSelfCenter} source={item.icon} />
                                         </View>
+                                        <Image style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
                                     </View>
                                 )
                             }}

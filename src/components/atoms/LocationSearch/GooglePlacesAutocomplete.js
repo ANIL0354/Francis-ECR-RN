@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   TextInput,
@@ -93,7 +93,7 @@ export default class GooglePlacesAutocomplete extends Component {
         : this.props.listViewDisplayed,
   });
 
-  setAddressText = (address) => this.setState({text: address});
+  setAddressText = (address) => this.setState({ text: address });
 
   getAddressText = () => this.state.text;
 
@@ -137,7 +137,6 @@ export default class GooglePlacesAutocomplete extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let listViewDisplayed = true;
-    console.log('nextProps', nextProps.setValue, '====', this.props.setValue);
     if (nextProps.listViewDisplayed !== 'auto' && !nextProps.customProp) {
       listViewDisplayed = nextProps.listViewDisplayed;
     }
@@ -307,12 +306,12 @@ export default class GooglePlacesAutocomplete extends Component {
       request.open(
         'GET',
         'https://maps.googleapis.com/maps/api/place/details/json?' +
-          Qs.stringify({
-            key: this.props.query.key,
-            placeid: rowData.place_id,
-            language: this.props.query.language,
-            ...this.props.GooglePlacesDetailsQuery,
-          }),
+        Qs.stringify({
+          key: this.props.query.key,
+          placeid: rowData.place_id,
+          language: this.props.query.language,
+          ...this.props.GooglePlacesDetailsQuery,
+        }),
       );
 
       if (this.props.query.origin !== null) {
@@ -518,9 +517,9 @@ export default class GooglePlacesAutocomplete extends Component {
               const results =
                 this.props.nearbyPlacesAPI === 'GoogleReverseGeocoding'
                   ? this._filterResultsByTypes(
-                      responseJSON.predictions,
-                      this.props.filterReverseGeocodingByTypes,
-                    )
+                    responseJSON.predictions,
+                    this.props.filterReverseGeocodingByTypes,
+                  )
                   : responseJSON.predictions;
 
               this._results = results;
@@ -548,9 +547,9 @@ export default class GooglePlacesAutocomplete extends Component {
       request.open(
         'GET',
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=' +
-          encodeURIComponent(text) +
-          '&' +
-          Qs.stringify(this.props.query),
+        encodeURIComponent(text) +
+        '&' +
+        Qs.stringify(this.props.query),
       );
       if (this.props.query.origin !== null) {
         request.setRequestHeader('Referer', this.props.query.origin);
@@ -594,7 +593,6 @@ export default class GooglePlacesAutocomplete extends Component {
     const setValue = this.props && this.props.setValue;
 
     if (setValue) {
-      console.log('setValue');
       setValue(text);
     }
   };
@@ -650,14 +648,14 @@ export default class GooglePlacesAutocomplete extends Component {
   _renderRow = (rowData = {}, sectionID, rowID) => {
     return (
       <ScrollView
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         scrollEnabled={this.props.isRowScrollable}
         keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <TouchableHighlight
-          style={{width: WINDOW.width}}
+          style={{ width: WINDOW.width }}
           onPress={() => this._onPress(rowData)}
           underlayColor={this.props.listUnderlayColor || '#c8c7cc'}>
           <View
@@ -692,13 +690,12 @@ export default class GooglePlacesAutocomplete extends Component {
 
   _onBlur = () => {
     this.triggerBlur();
-    console.log('onBlur');
     this.setState({
       listViewDisplayed: false,
     });
   };
 
-  _onFocus = () => this.setState({listViewDisplayed: true});
+  _onFocus = () => this.setState({ listViewDisplayed: true });
 
   _renderPoweredLogo = () => {
     if (!this._shouldShowPoweredLogo()) {
@@ -778,7 +775,7 @@ export default class GooglePlacesAutocomplete extends Component {
           keyExtractor={keyGenerator}
           extraData={[this.state.dataSource, this.props]}
           ItemSeparatorComponent={this._renderSeparator}
-          renderItem={({item}) => this._renderRow(item)}
+          renderItem={({ item }) => this._renderRow(item)}
           ListHeaderComponent={
             this.props.renderHeaderComponent &&
             this.props.renderHeaderComponent(this.state.text)
@@ -832,9 +829,9 @@ export default class GooglePlacesAutocomplete extends Component {
               onFocus={
                 onFocus
                   ? () => {
-                      this._onFocus();
-                      onFocus();
-                    }
+                    this._onFocus();
+                    onFocus();
+                  }
                   : this._onFocus
               }
               onBlur={this._onBlur}
@@ -907,9 +904,9 @@ GooglePlacesAutocomplete.defaultProps = {
   underlineColorAndroid: 'transparent',
   returnKeyType: 'default',
   keyboardAppearance: 'default',
-  onPress: () => {},
-  onNotFound: () => {},
-  onFail: () => {},
+  onPress: () => { },
+  onNotFound: () => { },
+  onFail: () => { },
   minLength: 0,
   fetchDetails: false,
   autoFocus: false,
@@ -945,7 +942,7 @@ GooglePlacesAutocomplete.defaultProps = {
   textInputHide: false,
   suppressDefaultStyles: false,
   numberOfLines: 1,
-  onSubmitEditing: () => {},
+  onSubmitEditing: () => { },
   editable: true,
 };
 

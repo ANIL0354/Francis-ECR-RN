@@ -4,7 +4,6 @@ import { CANCEL_ICON } from '../../../shared/constants';
 import Slider from '../../atoms/CustomSlider';
 import CustomButton from '../../atoms/CustomButton';
 import styles from './style';
-import CheckboxGroup from '../../molecules/CheckboxGroup';
 import MultiCheckGroup from '../../molecules/MultiCheckGroup';
 import {
     FILTER_OPTIONS,

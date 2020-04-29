@@ -1,7 +1,6 @@
-import React, {useState, useEffect, Component} from 'react';
-import {Image, Text, Platform} from 'react-native';
-// import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {GooglePlacesAutocomplete} from './GooglePlacesAutocomplete';
+import React, { useState, useEffect, Component } from 'react';
+import { Image, Text, Platform } from 'react-native';
+import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
 
 class LocationSearch extends Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class LocationSearch extends Component {
   }
 
   render() {
-    let {pickupLocation, inputStyle, setPickupLocation} = this.props;
+    let { pickupLocation, inputStyle, setPickupLocation } = this.props;
     return (
       <GooglePlacesAutocomplete
         ref={(ref) => {
@@ -52,7 +51,6 @@ class LocationSearch extends Component {
         // }}
         setValue={(text) => {
           setPickupLocation(text);
-          console.log(text);
         }}
         setAddressText={this.state.address}
         getAddressText={(text) => {
@@ -67,9 +65,6 @@ class LocationSearch extends Component {
           key: 'AIzaSyCwe-4k_nGXdLcNt9YcIy0WeJzlL1Ot77k',
           language: 'en',
           types: '(cities)',
-        }}
-        onChangeText={() => {
-          console.log('hii');
         }}
         styles={{
           container: {
