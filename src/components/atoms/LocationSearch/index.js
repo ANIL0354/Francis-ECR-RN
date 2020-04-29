@@ -90,8 +90,8 @@ class LocationSearch extends Component {
           },
           listView: {
             backgroundColor: 'white',
-            position: 'absolute',
-            top: 44,
+            position: Platform.OS === 'ios' ? 'absolute' : 'relative',
+            top: Platform.OS === 'ios' ? 44 : 0,
             borderRadius: 5,
             borderColor: 'black',
             borderWidth: 1
