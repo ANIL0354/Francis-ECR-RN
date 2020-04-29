@@ -10,7 +10,7 @@ const CustomSlider = ({
     setSliderValue = () => { }
 }) => {
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Slider
                 value={sliderValue}
                 step={step}

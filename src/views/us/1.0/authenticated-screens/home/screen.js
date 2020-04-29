@@ -49,6 +49,7 @@ export const Screen = ({
   vehicleType,
   transmissionType,
   childSeatsValue,
+  isNetConnected,
   adultSeatsValue,
   freeDays,
   neverAskPermission,
@@ -82,7 +83,6 @@ export const Screen = ({
   const scaledFont = scaleText(14);
   useEffect(() => {
     checkLocationPermissions();
-    checkInternetConnection();
     AppState.addEventListener('change', handleAppStateChange);
     getPopularPlaces(
       {},
@@ -91,13 +91,7 @@ export const Screen = ({
     );
   }, []);
 
-  const checkInternetConnection = () => {
-    NetInfo.addEventListener((state) => {
-      updateInternetStatus(
-        (state.isConnected && state.isInternetReachable) || state.isWifiEnabled
-      );
-    });
-  };
+
 
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
@@ -177,7 +171,7 @@ export const Screen = ({
   };
   return (
     <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
-      {filterMenu && (
+      {(filterMenu && isNetConnected) && (
         <AdvanceSearchFilter
           fuelType={fuelType}
           vehicleType={vehicleType}

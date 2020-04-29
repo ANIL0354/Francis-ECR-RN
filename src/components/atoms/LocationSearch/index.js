@@ -41,6 +41,7 @@ class LocationSearch extends Component {
           });
         }}
         customProp={true}
+        isRowScrollable={false}
         setValue={(text) => {
           setPickupLocation(text);
         }}
@@ -65,16 +66,10 @@ class LocationSearch extends Component {
             borderColor: 'transparent',
           },
           textInputContainer: {
-            backgroundColor: 'transparent',
-            padding: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
             ...inputStyle,
           },
           textInput: {
-            flex: 1,
             fontSize: inputStyle.fontSize,
-            lineHeight: inputStyle.lineHeight,
             height: inputStyle.height,
             marginLeft: 0,
             marginTop: 0,
@@ -95,8 +90,8 @@ class LocationSearch extends Component {
           },
           listView: {
             backgroundColor: 'white',
-            position: Platform.OS === 'ios' ? 'absolute' : 'relative',
-            top: Platform.OS === 'ios' ? 44 : 0,
+            position: 'absolute',
+            top: 44,
             borderRadius: 5,
             borderColor: 'black',
             borderWidth: 1

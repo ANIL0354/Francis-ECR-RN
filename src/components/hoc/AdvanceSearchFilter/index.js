@@ -72,22 +72,23 @@ const AdvanceSearchFilter = ({
                                 {
                                     FILTER_OPTIONS.map((item, index) => (
                                         <TouchableOpacity
+                                            key={index}
                                             onPress={() => setFilterValue(index)}
+                                            activeOpacity={0.7}
                                             style={{
                                                 backgroundColor: filterValue === index ? 'rgba(0,0,0,0.08)' : 'white',
                                                 ...styles.filterTab,
                                             }}>
-                                            <View style={{ flex: 1, marginRight: scaleText(5).fontSize }}>
-                                                <Image source={filterValue === index ? item.activeIcon : item.inactiveIcon} />
-                                            </View>
-                                            <View style={{ flex: 5, flexWrap: 'wrap' }}>
-                                                <Text
-                                                    style={{
-                                                        color: index === filterValue ? '#0091ff' : 'black',
-                                                        ...styles.filterTabText
-                                                    }}
-                                                >{item.title}</Text>
-                                            </View>
+                                            <Image
+                                                source={filterValue === index ? item.activeIcon : item.inactiveIcon}
+                                                style={{ marginRight: scaleText(10).fontSize }}
+                                            />
+                                            <Text
+                                                style={{
+                                                    color: index === filterValue ? '#0091ff' : 'black',
+                                                    ...styles.filterTabText
+                                                }}
+                                            >{item.title}</Text>
                                         </TouchableOpacity>
                                     ))
                                 }

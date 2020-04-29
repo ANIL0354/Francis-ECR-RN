@@ -13,10 +13,13 @@ const RootNavigator = ({
     updateInternetStatus
 }) => {
     NetInfo.addEventListener((state) => {
-        if (!((state.isConnected && state.isInternetReachable) || state.isWifiEnabled)) {
+        if (!(state.isConnected && state.isInternetReachable)) {
             stopLoader();
             updateInternetStatus(false);
-            Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
+            // Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
+        } else {
+            stopLoader();
+            updateInternetStatus(state.isConnected);
         }
     })
     const [userAuthenticated, setUserAuthenticated] = useState(null)

@@ -88,7 +88,7 @@ export const Screen = ({
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
-            {filterMenu && (
+            {(filterMenu && isNetConnected) && (
                 <AdvanceSearchFilter
                     fuelType={fuelType}
                     vehicleType={vehicleType}
@@ -160,7 +160,10 @@ export const Screen = ({
                 <View style={{ backgroundColor: '#0091ff' }}>
                     <View style={styles.childContainer}>
                         {!modifySearch && <View style={styles.childContainer}>
-                            <TouchableOpacity onPress={() => navigation.navigate('HOME_SCREEN')}                            >
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('HOME_SCREEN')}
+                                hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
+                            >
                                 <Image source={NAV_ARROW_ICON} height={20} width={20} />
                             </TouchableOpacity>
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
