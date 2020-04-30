@@ -96,7 +96,7 @@ export const Screen = ({
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
       if (appState.match(/inactive|background/) && nextAppState === 'active') {
-        // checkLocationPermissions();
+        checkLocationPermissions();
       }
       setAppState(nextAppState);
     }
@@ -115,7 +115,7 @@ export const Screen = ({
               fastInterval: 50000,
             })
               .then((data) => {
-                // getUserLocation();
+                getUserLocation();
                 setGpsEnabled(true);
               })
               .catch((err) => {
@@ -137,7 +137,7 @@ export const Screen = ({
           setLocationEnabled(false);
         });
     } else {
-      // getUserLocation();
+      getUserLocation();
     }
     stopLoader();
   };
