@@ -7,7 +7,10 @@ const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
 
 const initialCommonState = {
     popularPlaces: null,
-    vehicleListing: null
+    vehicleListing: null,
+    fuelTypesList: null,
+    vehicleTypesList: null,
+    transmissionTypesList: null
 };
 
 const ListsReducer = (state = { ...initialCommonState }, action) => {
