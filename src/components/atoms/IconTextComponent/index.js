@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { scaleText } from '../../../helpers';
+import styles from './style';
 
 const IconText = ({
     icon,
@@ -13,11 +14,14 @@ const IconText = ({
 }) => {
     const scaledFont = scaleText(titleFontSize)
     return (
-        <View style={{ flexDirection: iconLeftAlign ? 'row' : 'row-reverse', ...containerStyle }}>
+        <View style={{
+            ...containerStyle,
+            flexDirection: iconLeftAlign ? 'row' : 'row-reverse',
+        }}>
             <Image style={{
                 ...iconStyle,
+                ...styles.customIconStyle,
                 marginRight: iconLeftAlign ? 5 : 0,
-                alignSelf: 'center'
             }} source={icon} />
             <Text style={{
                 ...titleStyle,

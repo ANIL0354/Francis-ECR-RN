@@ -36,12 +36,15 @@ const styles = StyleSheet.create({
         opacity: 1,
         textTransform: 'uppercase'
     },
+    formWrapper: {
+        padding: 5,
+        flex: 1,
+    },
     formContainer: {
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 10,
         flex: 1,
-        // marginVertical: 20,
         padding: 10
     },
     iconContainerStyle: {
@@ -71,12 +74,10 @@ const styles = StyleSheet.create({
     },
     facebookButton: {
         backgroundColor: '#3b5998',
-        justifyContent: 'space-evenly',
-        height: 30,
-        maxWidth: 150,
-        minWidth: 150,
-        minHeight: 50,
-        marginVertical: 5
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center',
+        borderRadius: 5
     },
     facebookButtonTitle: {
         textAlign: 'center',
@@ -84,23 +85,51 @@ const styles = StyleSheet.create({
     },
     googleButton: {
         backgroundColor: '#4c8bf5',
-        justifyContent: 'space-evenly',
-        height: 30,
-        maxWidth: 150,
-        minWidth: 150,
-        minHeight: 50,
-        marginVertical: 5
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center',
+        borderRadius: 5
     },
-    googleButtonTitle: {
+    socialButtonTitle: {
+        flex: 1,
+        alignSelf: 'center',
         textAlign: 'center',
-        flexWrap: 'wrap',
-        margin: 0,
-        padding: 10,
+        color: 'white',
+        fontWeight: '700',
     },
     socialButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 15
+    },
+    forgotPasswordLabel: {
+        marginLeft: 5,
+        marginTop: 30,
+        color: '#0091ff',
+        textAlign: 'center'
+    },
+    connectWithText: {
+        textAlign: 'center',
+        marginBottom: 20,
+        marginTop: 5,
+        color: 'black'
+    },
+    dividingLine: {
+        width: '100%',
+        height: 1.5,
+        marginVertical: 20
+    },
+    registerButtonStyle: {
+        backgroundColor: '#009000',
+        maxWidth: 200,
+        minWidth: 200,
+        marginBottom: 30,
+        alignSelf: 'flex-end'
+    },
+    fieldsRow: {
+        flexDirection: 'row',
+        minWidth: '100%',
+        justifyContent: 'space-between',
     }
 });
 

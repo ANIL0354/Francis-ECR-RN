@@ -133,7 +133,7 @@ const AdvanceSearchFilter = ({
                             </View>
 
                         </View>
-                        <View style={{ flexDirection: 'row', zIndex: 1000, borderTopColor: 'gray', borderWidth: 1, borderBottomColor: 'transparent', borderRightColor: 'transparent', borderLeftColor: 'transparent', backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingTop: 10, alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', zIndex: 1000, borderColor: 'transparent', borderTopColor: 'gray', borderWidth: 1, backgroundColor: 'white', justifyContent: 'space-between', paddingHorizontal: 30, marginTop: 2, paddingTop: 10, alignItems: 'center' }}>
                             <CustomButton
                                 buttonStyle={{ paddingHorizontal: 30, backgroundColor: 'white' }}
                                 titleStyle={{ color: '#0091ff' }}

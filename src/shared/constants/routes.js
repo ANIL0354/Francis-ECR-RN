@@ -1,8 +1,4 @@
-export const ROUTES = {
-    ROOT: '/',
-    DASHBOARD: '/dashboard',
-    LOGIN: '/login',
-    REDIRECT: '/redirect',
-    LOGOUT: '/logout',
-    FORGOT_PASSWORD: '/forgot-password',
+export const SCREENS = {
+    FORGOT_PASSWORD_SCREEN: 'FORGOT_PASSWORD_SCREEN',
+    LOGIN_SCREEN: 'LOGIN_SCREEN'
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
-import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON, MAIL_ICON } from '../../../../../shared/constants';
+import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON, MAIL_ICON, SCREENS, LABELS } from '../../../../../shared/constants';
 import { ForgotForm } from './form';
 import { scaleText } from '../../../../../helpers'
 import styles from "./style.js";
@@ -22,60 +22,63 @@ export const Screen = ({
             leftIcon={APP_LOGO}
         >
             <View style={styles.childContainer}>
-                <TouchableOpacity style={{ height: 20, width: 20, justifyContent: 'center' }} onPress={() => navigation.navigate('LOGIN_SCREEN')}>
-                    <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                <TouchableOpacity
+                    style={styles.navArrowContainer}
+                    onPress={() => navigation.navigate(SCREENS.LOGIN_SCREEN)}>
+                    <Image
+                        source={NAV_ARROW_ICON}
+                        height={20}
+                        width={20}
+                    />
                 </TouchableOpacity>
                 <Text
                     style={{
                         ...styles.subHeaderText,
                         fontSize: largeScaledFont.fontSize,
                     }}>
-                    {'Forgot Password'}
+                    {LABELS.forgotPasswordHeader}
                 </Text>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
                 {emailSent
-                    ? <View style={{ padding: 5, justifyContent: 'space-evenly' }}>
-                        <Image source={MAIL_ICON} height={100} width={100} style={{ alignSelf: 'center', marginVertical: 30 }} />
+                    ? <View style={styles.emailSentViewWrapper}>
+                        <Image
+                            source={MAIL_ICON}
+                            height={100}
+                            width={100}
+                            style={styles.emailSentIcon}
+                        />
                         <Text
                             style={{
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                color: 'black',
-                                marginVertical: 5,
+                                ...styles.checkMailText,
                                 fontSize: largeScaledFont.fontSize,
                                 lineHeight: largeScaledFont.lineHeight
                             }}>
-                            {'Check your email!'}
+                            {LABELS.checkYourMail}
                         </Text>
                         <Text
                             style={{
-                                textAlign: 'center',
-                                marginTop: 10,
-                                marginBottom: 50,
-                                color: 'black',
+                                ...styles.resetPasswordLinkText,
                                 fontSize: mediumScaledFont.fontSize,
                                 lineHeight: mediumScaledFont.lineHeight
                             }}>
-                            {'Reset password link has been sent to your email address.'}
+                            {LABELS.resetPasswordLinkSent}
                         </Text>
 
-                        <Button title={'LOGIN'}
-                            titleStyle={{ textTransform: 'uppercase' }}
-                            buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, alignSelf: 'center', }}
-                            onPress={() => navigation.navigate('LOGIN_SCREEN')} />
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 40 }}>
+                        <Button title={LABELS.login}
+                            titleStyle={styles.loginTitleStyle}
+                            buttonStyle={styles.loginButtonStyle}
+                            onPress={() => navigation.navigate(SCREENS.LOGIN_SCREEN)} />
+                        <View style={styles.resendWrapper}>
                             <Text
                                 style={{
-                                    textAlign: 'center',
-                                    color: 'black',
-                                    marginVertical: 5,
+                                    ...styles.didnotReceiveText,
                                     fontSize: mediumScaledFont.fontSize,
                                     lineHeight: mediumScaledFont.lineHeight
                                 }}>
-                                {"Didn't receive the link?"}
+                                {LABELS.didNotReceiveLink}
                             </Text>
-                            <Text style={{ marginLeft: 5, color: '#0091ff' }} onPress={() =>
+                            <Text style={styles.resendText} onPress={() =>
                                 sendRecoveryEmail({
                                     email: email,
                                 }, (response) => {
@@ -84,20 +87,18 @@ export const Screen = ({
                                 }, (response) => {
                                     stopLoader();
                                 })
-                            }>{'Resend'}</Text>
+                            }>{LABELS.resend}</Text>
                         </View>
 
                     </View>
-                    : <View style={{ padding: 5, justifyContent: 'center' }}>
+                    : <View style={styles.formWrapper}>
                         <Text
                             style={{
-                                textAlign: 'center',
-                                marginTop: 10,
-                                color: 'black',
+                                ...styles.formDescription,
                                 fontSize: largeScaledFont.fontSize,
                                 lineHeight: largeScaledFont.lineHeight
                             }}>
-                            {'We will email you a link to reset your password.'}
+                            {LABELS.weWillSendEmail}
                         </Text>
                         <View style={styles.formContainer}>
                             <ForgotForm
@@ -114,7 +115,6 @@ export const Screen = ({
                                     })
                                 }}
                             />
-
                         </View>
                     </View>}
             </ScrollView>

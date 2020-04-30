@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Platform } from 'react-native';
 import { scaleText } from '../../../helpers';
+import styles from './style';
 
 const CustomFormInput = ({
     label,
@@ -24,18 +25,11 @@ const CustomFormInput = ({
                 placeholderTextColor={'black'}
                 underlineColorAndroid={"transparent"}
                 style={{
-                    borderColor: 'black',
-                    borderRadius: 5,
-                    borderWidth: 0.8,
-                    height: 2.5 * scaledFont.lineHeight,
-                    marginBottom: 10,
+                    ...style,
+                    ...styles.inputStyle,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
-                    paddingHorizontal: 10,
-                    paddingVertical: 2,
-                    paddingBottom: 0,
-                    marginBottom: 0,
-                    ...style
+                    height: 2.5 * scaledFont.lineHeight,
                 }}
                 returnKeyType={returnKeyType}
                 secureTextEntry={secureTextEntry}
@@ -43,12 +37,11 @@ const CustomFormInput = ({
                 {...props}
             />
             <Text style={{
-                color: 'red',
-                paddingVertical: 0,
+                ...style,
+                ...styles.errorTextStyle,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
                 height: 2 * scaledFont.lineHeight,
-                ...style
             }}>{validationMessage}</Text>
         </View>
     )

@@ -4,6 +4,7 @@ import { View, StatusBar, SafeAreaView, KeyboardAvoidingView } from 'react-nativ
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader } from '../../../redux/actions'
 import CustomLoader from '../../atoms/Loader';
+import styles from './style';
 
 const AuthHoc = ({
     rightIcon,
@@ -14,7 +15,7 @@ const AuthHoc = ({
     children
 }) => {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', }}>
+        <SafeAreaView style={styles.authHocWrapper}>
             <StatusBar backgroundColor='white' barStyle="dark-content" />
             <AppHeader
                 rightIcon={rightIcon ? rightIcon : null}
@@ -22,7 +23,7 @@ const AuthHoc = ({
                 leftIcon={leftIcon ? leftIcon : null}
             />
             {children}
-            {loader && <View style={{ flex: 1, position: 'absolute', alignItems: 'center', zIndex: 10000000000, justifyContent: 'center', top: 0, bottom: 0, left: 0, right: 0, backgroundColor: 'rgba(255,255,255,0.8)' }}>
+            {loader && <View style={styles.loaderContainer}>
                 <CustomLoader stopLoader={stopLoader} loader={loader} />
             </View>}
         </SafeAreaView>

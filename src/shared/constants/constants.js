@@ -27,6 +27,8 @@ export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))
 export const NAME_REGX = /^[A-Z.a-z ]+$/;
 export const PHONE_REGX = /^[0-9]+$/;
 
+export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com';
+
 export const KEY_CODES = {
   enterKey: 13,
   nine: 57,
@@ -50,6 +52,37 @@ export const VALIDATION_MESSAGES = {
   PHONE_NUMBER_REQUIRED: STRINGS.PHONE_NUMBER_REQUIRED,
   PHONE_INVALID: STRINGS.PHONE_INVALID,
   VALUE_CANNOT_BE_EMPTY_SPACES: STRINGS.VALUE_CANNOT_BE_ONLY_SPACES
+};
+
+export const APP_MESSAGES = {
+  INTERNET_IS_TURNED_OFF: STRINGS.INTERNET_IS_TURNED_OFF,
+  LOCATION_PERMISSION_REQUIRED: STRINGS.LOCATION_PERMISSION_REQUIRED,
+  DEVICE_GPS_TURNED_OFF: STRINGS.DEVICE_GPS_TURNED_OFF,
+  YOU_APPEARS_TO_BE_OFFLINE: STRINGS.YOU_APPEARS_TO_BE_OFFLINE,
+  REQUEST_LOCATION_DETECTION_PERMISSION: `${STRINGS.ALLOW} ${STRINGS.APP_NAME} ${STRINGS.TO_DETECT_CURRENT_LOCATION}`,
+  REQUEST_TO_TURN_GPS_ON: `${STRINGS.ALLOW} ${STRINGS.APP_NAME} ${STRINGS.TO_TURN_ON_GPS}`,
+  TO_ENABLE_GO_TO_SETTINGS: STRINGS.TO_ENABLE_GO_TO_SETTINGS,
+  OPEN_SETTINGS: STRINGS.OPEN_SETTINGS,
+  ALLOW_PERMISSION: STRINGS.ALLOW_PERMISSION,
+  TURN_ON_GPS: STRINGS.TURN_ON_GPS
+};
+
+export const LABELS = {
+  loginOrRegister: STRINGS.LOGIN_OR_REGISTER,
+  iAmNew: STRINGS.I_AM_NEW,
+  login: STRINGS.LOGIN,
+  forgotPassword: STRINGS.FORGOT_PASSWORD,
+  orConnectWith: STRINGS.OR_CONNECT_WITH,
+  loginWith: STRINGS.LOGIN_WITH,
+  google: STRINGS.GOOGLE,
+  loginWithFacebook: `${STRINGS.LOGIN_WITH} ${STRINGS.FACEBOOK}`,
+  subscriptionText: STRINGS.SUBSCRIPTION_TEXT,
+  forgotPasswordHeader: STRINGS.FORGOT_PASSWORD_LABEL,
+  checkYourMail: STRINGS.CHECK_YOUR_MAIL,
+  resetPasswordLinkSent: STRINGS.RESET_PASSWORD_LINK_SENT,
+  didNotReceiveLink: STRINGS.DID_NOT_RECEIVE_LINK,
+  resend: STRINGS.RESEND,
+  weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL
 };
 
 export const STATUS_CODE = {
@@ -91,16 +124,16 @@ export const FUEL_OPTIONS = [
   { title: 'Electric' },
 ];
 
+export const TRANSMISSION_OPTIONS = [
+  { title: 'Automatic' },
+  { title: 'Manual' },
+];
+
 export const VEHICLE_TYPE_OPTIONS = [
   { title: 'Cars' },
   { title: 'Passenger Vans' },
   { title: 'Recreational Vehicles' },
   { title: 'Trucks & Vans' }
-];
-
-export const TRANSMISSION_OPTIONS = [
-  { title: 'Automatic' },
-  { title: 'Manual' },
 ];
 
 export const POPULAR_PLACES_DATA = [

@@ -20,9 +20,9 @@ const PopularPlace = ({
             </View>
             <CustomButton
                 title={buttonText}
-                titleStyle={{ color: 'white' }}
+                titleStyle={styles.buttonTitleStyle}
                 onPress={onPress}
-                buttonStyle={{ backgroundColor: '#0091ff', width: 150, alignSelf: 'center' }} />
+                buttonStyle={styles.buttonStyle} />
         </View>
     )
 }

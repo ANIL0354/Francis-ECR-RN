@@ -1,14 +1,14 @@
 import React from "react";
 import { reduxForm, Field } from "redux-form";
 import { connect } from 'react-redux';
-import validator from "./validator";
 import { Button } from 'react-native-elements';
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
-import { DIVIDING_LINE, GOOGLE_ICON, FACEBOOK_ICON } from '../../../../../shared/constants'
+import { DIVIDING_LINE, GOOGLE_ICON, FACEBOOK_ICON, LABELS } from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
-import styles from './style';
 import { scaleText } from "../../../../../helpers";
+import validator from "./validator";
+import styles from './style';
 
 
 const Form = ({
@@ -34,25 +34,57 @@ const Form = ({
                 returnKeyType={'go'}
                 placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
             />
-            {/* <Captcha /> */}
-            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 5, color: 'black' }}>{'Or Connect with'}</Text>
+            <Text style={styles.connectWithText}>{LABELS.orConnectWith}</Text>
 
-            <View style={{ flexDirection: 'row', padding: scaleText(10).fontSize }}>
-                <TouchableOpacity onPress={googleAuth} style={{ backgroundColor: '#4c8bf5', marginRight: scaleText(20).fontSize, flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
-                    <Image source={GOOGLE_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
+            <View style={{
+                flexDirection: 'row',
+                padding: scaleText(10).fontSize
+            }}>
+                <TouchableOpacity
+                    onPress={googleAuth}
+                    style={{
+                        ...styles.googleButton,
+                        padding: scaleText(10).fontSize,
+                        marginRight: scaleText(20).fontSize,
+                    }}>
+                    <Image
+                        source={GOOGLE_ICON}
+                        style={{ marginRight: scaleText(5).fontSize }}
+                        height={scaleText(30).fontSize}
+                        width={scaleText(30).fontSize}
+                    />
                     <View style={{ flex: 1, alignItems: 'center', }}>
-                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with</Text>
-                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}> Google</Text>
+                        <Text style={{
+                            ...styles.socialButtonTitle,
+                            fontSize: scaleText(13).fontSize
+                        }}>{LABELS.loginWith}</Text>
+                        <Text style={{
+                            ...styles.socialButtonTitle,
+                            fontSize: scaleText(13).fontSize
+                        }}>{LABELS.google}</Text>
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={facebookAuth} style={{ backgroundColor: '#3b5998', flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
-                    <Image source={FACEBOOK_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
-                    <Text style={{ flex: 1, textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with Facebook</Text>
+                <TouchableOpacity
+                    onPress={facebookAuth}
+                    style={{
+                        ...styles.facebookButton,
+                        padding: scaleText(10).fontSize,
+                    }}>
+                    <Image
+                        source={FACEBOOK_ICON}
+                        style={{ marginRight: scaleText(5).fontSize }}
+                        height={scaleText(30).fontSize}
+                        width={scaleText(30).fontSize}
+                    />
+                    <Text style={{
+                        ...styles.socialButtonTitle,
+                        fontSize: scaleText(13).fontSize
+                    }}>{LABELS.loginWithFacebook}</Text>
                 </TouchableOpacity>
             </View>
 
-            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 1.5, marginVertical: 20 }} />
+            <Image source={DIVIDING_LINE} style={styles.dividingLine} />
             <Button
                 titleStyle={styles.loginSubmitTitle}
                 buttonStyle={styles.loginSubmit}

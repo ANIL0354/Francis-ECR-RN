@@ -11,7 +11,7 @@ import {
     statusCodes,
 } from '@react-native-community/google-signin';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
-import { APP_LOGO, MENU_LOGO } from '../../../../../shared/constants'
+import { APP_LOGO, GOOGLE_SIGNIN_WEB_CLIENT_ID, LABELS, SCREENS } from '../../../../../shared/constants'
 import { LoginForm } from './login-form';
 import { SignupForm } from './signup-form';
 import { scaleText } from '../../../../../helpers'
@@ -30,7 +30,7 @@ export const Screen = ({
 
     GoogleSignin.configure({
         scopes: [],
-        webClientId: '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com',
+        webClientId: GOOGLE_SIGNIN_WEB_CLIENT_ID,
         offlineAccess: true,
         loginHint: '',
         forceCodeForRefreshToken: false,
@@ -140,10 +140,10 @@ export const Screen = ({
                         fontSize: scaleText(18).fontSize,
                         lineHeight: scaleText(18).lineHeight
                     }}>
-                    {'Login Or Register'}
+                    {LABELS.loginOrRegister}
                 </Text>
             </View>
-            <View style={{ padding: 5, flex: 1, }}>
+            <View style={styles.formWrapper}>
                 <View style={styles.authTabContainer}>
                     <TouchableOpacity
                         activeOpacity={0.8}
@@ -159,7 +159,7 @@ export const Screen = ({
                             height: Platform.OS == 'ios' ? scaleText(16).lineHeight + 2 : 'auto',
                             fontSize: scaleText(16).fontSize,
                             lineHeight: scaleText(16).lineHeight
-                        }}>{"I'm New"}</Text>
+                        }}>{LABELS.iAmNew}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={0.8}
@@ -175,7 +175,7 @@ export const Screen = ({
                             height: Platform.OS == 'ios' ? scaleText(16).lineHeight + 2 : 'auto',
                             fontSize: scaleText(16).fontSize,
                             lineHeight: scaleText(16).lineHeight
-                        }}>{"Login"}</Text>
+                        }}>{LABELS.login}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -238,14 +238,9 @@ export const Screen = ({
                             }}
                         />}
 
-                        {!signUpTab && <Text style={{
-                            marginLeft: 5,
-                            marginTop: 30,
-                            color: '#0091ff',
-                            textAlign: 'center'
-                        }} onPress={() =>
-                            navigation.navigate('FORGOT_PASSWORD_SCREEN')
-                        }>{'Forgot Password?'}</Text>}
+                        {!signUpTab && <Text style={styles.forgotPasswordLabel} onPress={() =>
+                            navigation.navigate(SCREENS.FORGOT_PASSWORD_SCREEN)
+                        }>{LABELS.forgotPassword}</Text>}
                     </View>
                 </ScrollView>
             </View>

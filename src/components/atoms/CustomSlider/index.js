@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Slider } from 'react-native-elements';
 import { View, Text } from 'react-native';
+import styles from './style';
 
 const CustomSlider = ({
     minValue = 0,
@@ -10,7 +11,7 @@ const CustomSlider = ({
     setSliderValue = () => { }
 }) => {
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <View style={styles.sliderWrapper}>
             <Slider
                 value={sliderValue}
                 step={step}
@@ -18,19 +19,13 @@ const CustomSlider = ({
                 maximumValue={maxValue}
                 style={{ flex: 7 }}
                 onValueChange={value => setSliderValue(value)}
-                trackStyle={{
-                    height: 10,
-                    borderRadius: 5
-                }}
-                thumbStyle={{
-                    borderColor: '#0057b3',
-                    borderWidth: 2
-                }}
+                trackStyle={styles.trackStyle}
+                thumbStyle={styles.thumbStyle}
                 thumbTintColor={'#0091ff'}
                 minimumTrackTintColor={'#0091ff'}
                 maximumTrackTintColor={'lightgray'}
             />
-            <Text style={{ flex: 1, textAlign: 'center', color: '#0091ff', textAlignVertical: 'center', fontSize: 16 }}>{sliderValue}</Text>
+            <Text style={styles.valueIndicator}>{sliderValue}</Text>
         </View>
     )
 }

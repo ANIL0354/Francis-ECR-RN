@@ -35,11 +35,9 @@ const styles = StyleSheet.create({
         padding: scaleText(5).fontSize,
         height: 60,
         width: scaleText(130).fontSize,
-        borderBottomColor: 'darkgrey',
         borderWidth: 1,
-        borderTopColor: 'transparent',
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
+        borderColor: 'transparent',
+        borderBottomColor: 'darkgrey',
     },
     filterTabText: {
         fontSize: scaleText(14).fontSize,

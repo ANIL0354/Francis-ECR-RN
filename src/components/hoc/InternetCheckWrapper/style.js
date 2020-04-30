@@ -30,4 +30,13 @@ export default StyleSheet.create({
         color: 'black',
         marginBottom: 10
     },
+    initialMessageStyle: {
+        textAlign: 'center',
+        color: 'black'
+    },
+    goToSettingsMessage: {
+        marginTop: 20,
+        textAlign: 'center',
+        color: 'black'
+    }
 })

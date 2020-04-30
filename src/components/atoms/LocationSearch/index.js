@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
-import { Image, Text, Platform } from 'react-native';
 import { GooglePlacesAutocomplete } from './GooglePlacesAutocomplete';
+import styles from './style';
 
 class LocationSearch extends Component {
   constructor(props) {
@@ -61,41 +61,20 @@ class LocationSearch extends Component {
           types: '(cities)',
         }}
         styles={{
-          container: {
-            zIndex: 10,
-            borderColor: 'transparent',
-          },
+          container: styles.containerStyle,
           textInputContainer: {
             ...inputStyle,
           },
           textInput: {
+            ...styles.textInputStyle,
             fontSize: inputStyle.fontSize,
             height: inputStyle.height,
-            marginLeft: 0,
-            marginTop: 0,
-            marginRight: 0,
-            marginBottom: 0,
           },
-          placeholder: {
-            color: 'black',
-          },
-          description: {
-            fontWeight: 'bold',
-          },
-          predefinedPlacesDescription: {
-            color: 'black',
-          },
-          poweredContainer: {
-            display: 'none',
-          },
-          listView: {
-            backgroundColor: 'white',
-            position: Platform.OS === 'ios' ? 'absolute' : 'relative',
-            top: Platform.OS === 'ios' ? 44 : 0,
-            borderRadius: 5,
-            borderColor: 'black',
-            borderWidth: 1
-          },
+          placeholder: styles.placeholderStyle,
+          description: styles.descriptionStyle,
+          predefinedPlacesDescription: styles.predefinedDescriptionStyle,
+          poweredContainer: styles.poweredByStyle,
+          listView: styles.listViewStyle,
         }}
       />
     );

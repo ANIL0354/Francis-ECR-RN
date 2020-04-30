@@ -37,7 +37,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         color: '#4568c9'
-    }
+    },
+    buttonStyle: {
+        backgroundColor: '#0091ff',
+        width: 150,
+        alignSelf: 'center'
+    },
+    buttonTitleStyle: {
+        color: 'white'
+    },
 });
 
 export default styles;

@@ -90,10 +90,9 @@ const styles = StyleSheet.create({
     },
     vehicleTypeList: {
         paddingVertical: 10,
+        borderColor: 'transparent',
         borderTopColor: 'lightgray',
         borderBottomColor: 'lightgray',
-        borderRightColor: 'transparent',
-        borderLeftColor: 'transparent',
         borderWidth: 1
     },
     vehicleTypeWrapper: {
@@ -104,11 +103,6 @@ const styles = StyleSheet.create({
     vehicleTypeContainer: {
         flexDirection: 'column',
         paddingHorizontal: 5,
-        // borderRightColor: 'lightgray',
-        // borderTopColor: 'transparent',
-        // borderLeftColor: 'transparent',
-        // borderBottomColor: 'transparent',
-        // borderWidth: 1,
     },
     vehicleTypeTitle: {
         textAlign: 'center',

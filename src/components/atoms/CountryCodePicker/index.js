@@ -126,6 +126,9 @@ const CountryCodePicker = ({
                     }}
 
                     flatListProps={{
+                        // contentContainerStyle: {
+                        //     paddingHorizontal: 10
+                        // },
                         ListHeaderComponent: () => (
                             <React.Fragment>
                                 <TouchableOpacity onPress={() => {
@@ -157,6 +160,7 @@ const CountryCodePicker = ({
                             </React.Fragment>
                         )
                     }}
+
                     theme={{
                         margin: 0,
                         primaryColor: 'darkgrey',

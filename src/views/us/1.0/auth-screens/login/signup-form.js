@@ -8,9 +8,17 @@ import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import CountryCodePicker from '../../../../../components/atoms/CountryCodePicker';
 import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
 import Checkbox from '../../../../../components/atoms/Checkbox';
-import { CHECKBOX_ICON, CHECKBOX_ACTIVE, GOOGLE_ICON, FACEBOOK_ICON, DIVIDING_LINE } from '../../../../../shared/constants'
+import {
+    CHECKBOX_ICON,
+    CHECKBOX_ACTIVE,
+    GOOGLE_ICON,
+    FACEBOOK_ICON,
+    DIVIDING_LINE,
+    LABELS
+} from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
 import { scaleText } from "../../../../../helpers";
+import styles from './style';
 
 const Form = ({
     handleSubmit,
@@ -29,7 +37,7 @@ const Form = ({
 
     return (
         <React.Fragment>
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.NAME_INPUT}
                     component={CustomFormInput}
@@ -46,7 +54,7 @@ const Form = ({
                 />
             </View>
 
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.DOB_INPUT}
                     component={CustomDatePicker}
@@ -70,7 +78,7 @@ const Form = ({
                 />
             </View>
 
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.COUNTRY_INPUT}
                     component={CountryCodePicker}
@@ -98,7 +106,7 @@ const Form = ({
                     style={{ width: scaleText(160).fontSize }}
                 />
             </View>
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
@@ -126,7 +134,7 @@ const Form = ({
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.PASSWORD_INPUT_NAME}
                     component={CustomFormInput}
@@ -148,36 +156,66 @@ const Form = ({
             </View>
 
             <Checkbox
-                title={'Subscribe for news and promotions.'}
+                title={LABELS.subscriptionText}
                 toggleCheck={() => setSubscribed(!subscribed)}
                 checked={subscribed}
                 checkedIcon={CHECKBOX_ACTIVE}
                 uncheckedIcon={CHECKBOX_ICON}
             />
-            <Text style={{ textAlign: 'center', marginBottom: 20, marginTop: 15, color: 'black' }}>{'Or Connect with'}</Text>
-            <View style={{ flexDirection: 'row', padding: scaleText(10).fontSize }}>
-                <TouchableOpacity onPress={googleAuth} style={{ backgroundColor: '#4c8bf5', marginRight: scaleText(20).fontSize, flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
-                    <Image source={GOOGLE_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
+            <Text style={styles.connectWithText}>{LABELS.orConnectWith}</Text>
+
+            <View style={{
+                flexDirection: 'row',
+                padding: scaleText(10).fontSize
+            }}>
+                <TouchableOpacity
+                    onPress={googleAuth}
+                    style={{
+                        ...styles.googleButton,
+                        padding: scaleText(10).fontSize,
+                        marginRight: scaleText(20).fontSize,
+                    }}>
+                    <Image
+                        source={GOOGLE_ICON}
+                        style={{ marginRight: scaleText(5).fontSize }}
+                        height={scaleText(30).fontSize}
+                        width={scaleText(30).fontSize}
+                    />
                     <View style={{ flex: 1, alignItems: 'center', }}>
-                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with</Text>
-                        <Text style={{ flex: 1, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}> Google</Text>
+                        <Text style={{
+                            ...styles.socialButtonTitle,
+                            fontSize: scaleText(13).fontSize
+                        }}>{LABELS.loginWith}</Text>
+                        <Text style={{
+                            ...styles.socialButtonTitle,
+                            fontSize: scaleText(13).fontSize
+                        }}>{LABELS.google}</Text>
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={facebookAuth} style={{ backgroundColor: '#3b5998', flexDirection: 'row', flex: 1, alignItems: 'center', padding: scaleText(10).fontSize, borderRadius: 5 }}>
-                    <Image source={FACEBOOK_ICON} style={{ marginRight: scaleText(5).fontSize }} height={scaleText(30).fontSize} width={scaleText(30).fontSize} />
-                    <Text style={{ flex: 1, textAlign: 'center', alignSelf: 'center', color: 'white', fontWeight: '700', fontSize: scaleText(13).fontSize }}>Log In with Facebook</Text>
+                <TouchableOpacity
+                    onPress={facebookAuth}
+                    style={{
+                        ...styles.facebookButton,
+                        padding: scaleText(10).fontSize,
+                    }}>
+                    <Image
+                        source={FACEBOOK_ICON}
+                        style={{ marginRight: scaleText(5).fontSize }}
+                        height={scaleText(30).fontSize}
+                        width={scaleText(30).fontSize}
+                    />
+                    <Text style={{
+                        ...styles.socialButtonTitle,
+                        fontSize: scaleText(13).fontSize
+                    }}>{LABELS.loginWithFacebook}</Text>
                 </TouchableOpacity>
             </View>
 
-            <Image source={DIVIDING_LINE} style={{ width: '100%', height: 1.5, marginVertical: 20 }} />
+            <Image source={DIVIDING_LINE} style={styles.dividingLine} />
             <Button
-                titleStyle={{
-                    textAlign: 'center',
-                    flexWrap: 'wrap',
-                    textTransform: 'uppercase'
-                }}
-                buttonStyle={{ backgroundColor: '#009000', maxWidth: 200, minWidth: 200, marginBottom: 30, alignSelf: 'flex-end' }}
+                titleStyle={styles.loginSubmitTitle}
+                buttonStyle={styles.registerButtonStyle}
                 title={STRINGS.SIGNUP} onPress={handleSubmit(onSubmit)} />
 
         </React.Fragment >

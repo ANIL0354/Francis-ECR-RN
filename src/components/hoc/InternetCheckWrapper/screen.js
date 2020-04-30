@@ -9,12 +9,11 @@ import {
     PermissionsAndroid
 } from 'react-native';
 import styles from './style';
-import { Images } from '../../../shared/constants';
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import AndroidOpenSettings from 'react-native-android-open-settings';
 import CustomButton from '../../atoms/CustomButton';
-import { GPS_LOGO, NO_INTERNET, LOCATION_LOGO } from '../../../shared/constants';
+import { GPS_LOGO, NO_INTERNET, LOCATION_LOGO, APP_MESSAGES } from '../../../shared/constants';
 
 export default InternetCheckWrapper = ({
     children,
@@ -107,38 +106,38 @@ export default InternetCheckWrapper = ({
 
                         <Text style={styles.heading}>
                             {!isNetConnected ?
-                                'Internet connection is turned off'
+                                APP_MESSAGES.INTERNET_IS_TURNED_OFF
                                 :
                                 showPermissionInfo() ?
-                                    'Location permission required'
+                                    APP_MESSAGES.LOCATION_PERMISSION_REQUIRED
                                     :
-                                    'Phone GPS turned off'
+                                    APP_MESSAGES.DEVICE_GPS_TURNED_OFF
                             }
                         </Text>
-                        <Text style={{ textAlign: 'center', color: 'black' }}>
+                        <Text style={styles.initialMessageStyle}>
                             {!isNetConnected ?
-                                'You appears to be offline. Kindly check your internet connection.'
+                                APP_MESSAGES.YOU_APPEARS_TO_BE_OFFLINE
                                 :
                                 showPermissionInfo() ?
-                                    `Allow Easy Car Relo to automatically detect your current location and show nearby users.`
+                                    APP_MESSAGES.REQUEST_LOCATION_DETECTION_PERMISSION
                                     :
-                                    `Allow Easy Car Relo to turn on your phone GPS for accurate location.`
+                                    APP_MESSAGES.REQUEST_TO_TURN_GPS_ON
                             }
                         </Text>
                         {isNetConnected && neverAskPermission &&
-                            <Text style={{ marginTop: 20, textAlign: 'center', color: 'black' }}>
-                                {`To enable, go to Settings and turn on location permission.`}
+                            <Text style={styles.goToSettingsMessage}>
+                                {APP_MESSAGES.TO_ENABLE_GO_TO_SETTINGS}
                             </Text>
                         }
                     </View>
                     {isNetConnected && <CustomButton
                         title={neverAskPermission ?
-                            'Open Settings'
+                            APP_MESSAGES.OPEN_SETTINGS
                             :
                             showPermissionInfo() ?
-                                'Allow Permission'
+                                APP_MESSAGES.ALLOW_PERMISSION
                                 :
-                                'Turn on GPS'
+                                APP_MESSAGES.TURN_ON_GPS
                         }
                         onPress={onGetPermission}
                     />}

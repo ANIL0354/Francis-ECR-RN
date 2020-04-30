@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'absolute',
         alignItems: 'center',
-        zIndex: 10000000000,
+        zIndex: 100,
         justifyContent: 'center',
         top: 0,
         bottom: 0,
