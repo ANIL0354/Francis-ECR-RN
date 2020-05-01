@@ -4,10 +4,12 @@ import Toast from 'react-native-simple-toast';
 import {
     GET_POPULAR_PLACES,
     FETCH_VEHICLE_LISTING,
+    GET_FUEL_TYPES,
     setAuthorization,
     startLoader,
     stopLoader,
-    savePopularPlaces
+    savePopularPlaces,
+    saveFuelTypes
 } from '../actions';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const api = require(`../../shared/api`);
@@ -41,7 +43,8 @@ function* fetchPopularPlaces({ data, success, failure }) {
 function* fetchVehicleList({ data, success, failure }) {
     try {
         let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
-        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&pickupDate=${pickupDate}&fuelType=[1]&limit=${limit}6&index=${index}` });
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&limit=${limit}&index=${index}` });
+        // console.log('response', JSON.stringify(response))
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();
@@ -64,10 +67,39 @@ function* fetchVehicleList({ data, success, failure }) {
     }
 }
 
+function* fetchFuelTypes({ data, success = () => { }, failure }) {
+    try {
+        // console.log('called')
+        const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
+        // console.log('response', JSON.stringify(response.data.data))
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            stopLoader();
+            Toast.show(response.data.msg, Toast.LONG);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure();
+            Toast.show(response.data.msg, Toast.LONG);
+            stopLoader();
+        }
+        else {
+            yield put(saveFuelTypes(response.data.data))
+            success();
+        }
+    }
+    catch (error) {
+        console.log('catch', error)
+        stopLoader();
+        return;
+    }
+}
+
 function* ListsSaga() {
     yield all([
         takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
-        takeLatest(FETCH_VEHICLE_LISTING, fetchVehicleList)
+        takeLatest(FETCH_VEHICLE_LISTING, fetchVehicleList),
+        takeLatest(GET_FUEL_TYPES, fetchFuelTypes)
     ]);
 }
 

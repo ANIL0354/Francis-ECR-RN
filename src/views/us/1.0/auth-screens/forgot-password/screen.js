@@ -24,7 +24,7 @@ export const Screen = ({
             <View style={styles.childContainer}>
                 <TouchableOpacity
                     style={styles.navArrowContainer}
-                    onPress={() => navigation.navigate(SCREENS.LOGIN_SCREEN)}>
+                    onPress={() => navigation.navigate(SCREENS.LOGIN)}>
                     <Image
                         source={NAV_ARROW_ICON}
                         height={20}
@@ -68,7 +68,7 @@ export const Screen = ({
                         <Button title={LABELS.login}
                             titleStyle={styles.loginTitleStyle}
                             buttonStyle={styles.loginButtonStyle}
-                            onPress={() => navigation.navigate(SCREENS.LOGIN_SCREEN)} />
+                            onPress={() => navigation.navigate(SCREENS.LOGIN)} />
                         <View style={styles.resendWrapper}>
                             <Text
                                 style={{

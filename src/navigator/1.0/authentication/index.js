@@ -15,10 +15,10 @@ const Stack = createStackNavigator();
 const AuthNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator headerMode={'none'} initialRouteName={SCREENS.LOGIN_SCREEN} >
-                <Stack.Screen name={SCREENS.LOGIN_SCREEN} component={LoginScreen} />
-                <Stack.Screen name={SCREENS.FORGOT_PASSWORD_SCREEN} component={ForgotScreen} />
-                <Stack.Screen name={'COMPLETE_DETAILS_SCREEN'} component={CompleteDetailsScreen} />
+            <Stack.Navigator headerMode={'none'} initialRouteName={SCREENS.LOGIN} >
+                <Stack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
+                <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotScreen} />
+                <Stack.Screen name={SCREENS.COMPLETE_DETAILS} component={CompleteDetailsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

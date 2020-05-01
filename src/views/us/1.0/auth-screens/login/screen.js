@@ -239,7 +239,7 @@ export const Screen = ({
                         />}
 
                         {!signUpTab && <Text style={styles.forgotPasswordLabel} onPress={() =>
-                            navigation.navigate(SCREENS.FORGOT_PASSWORD_SCREEN)
+                            navigation.navigate(SCREENS.FORGOT_PASSWORD)
                         }>{LABELS.forgotPassword}</Text>}
                     </View>
                 </ScrollView>

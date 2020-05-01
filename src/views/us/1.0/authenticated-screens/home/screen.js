@@ -31,6 +31,7 @@ import {
   DOWN_ARROW,
   DATE_ICON,
   GOOGLE_API_KEY,
+  SCREENS,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import CustomButton from '../../../../../components/atoms/CustomButton';
@@ -67,7 +68,9 @@ export const Screen = ({
   startLoader,
   pickupDate,
   stopLoader,
+  getFuelTypes,
   setVehicleType,
+  fuelTypesList,
   setTransmissionType,
   setNeverAskPermission,
   updateInternetStatus,
@@ -89,8 +92,12 @@ export const Screen = ({
       () => { },
       () => { },
     );
+    getFuelTypes(
+      {},
+      () => { },
+      () => { },
+    );
   }, []);
-
 
 
   const handleAppStateChange = (nextAppState) => {
@@ -185,6 +192,7 @@ export const Screen = ({
           setFreeDays={setFreeDays}
           setChildSeats={setChildSeats}
           setAdultSeats={setAdultSeats}
+          fuelTypesList={fuelTypesList}
           onClose={() => showFilterMenu(false)}
           onSubmit={() => {
             if (!!!pickupLocation) {
@@ -227,7 +235,7 @@ export const Screen = ({
                 },
                 () => {
                   stopLoader();
-                  navigation.navigate('VEHICLE_SCREEN');
+                  navigation.navigate(SCREENS.VEHICLE_LISTING);
                 },
                 () => { },
               );
@@ -410,7 +418,7 @@ export const Screen = ({
                     },
                     () => {
                       stopLoader();
-                      navigation.navigate('VEHICLE_SCREEN');
+                      navigation.navigate(SCREENS.VEHICLE_LISTING);
                     },
                     () => { },
                   );
@@ -456,7 +464,7 @@ export const Screen = ({
                 availableCount={item.count}
                 placeRange={`${item._id.fromCity} to ${item._id.toCity}`}
                 buttonText={'See All'}
-                onPress={() => navigation.navigate('VEHICLE_SCREEN')}
+                onPress={() => navigation.navigate(SCREENS.VEHICLE_LISTING)}
               />
             );
           }}

@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://13.238.207.250:5001'; //Live URL
+const SERVER_URL = 'http://13.238.207.250:5000'; //Live URL
 const API_VERSION = '/v1'
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
     SOCIAL_LOGIN: SERVER_URL + API_VERSION + '/user/social-login',
     FORGOT_PASSWORD: SERVER_URL + API_VERSION + '/user/forgot-password',
     POPULAR_PLACES: SERVER_URL + API_VERSION + '/listing/popular_places',
-    VEHICLE_LISTING: SERVER_URL + API_VERSION + '/listing'
+    VEHICLE_LISTING: SERVER_URL + API_VERSION + '/listing',
+    FUEL_LISTING: SERVER_URL + API_VERSION + '/fuel'
   }
 };

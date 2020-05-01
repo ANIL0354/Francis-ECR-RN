@@ -32,7 +32,8 @@ import {
     SEARCH_ICON,
     LUGGAGE_ICON,
     DATE_ICON,
-    LIMITS
+    LIMITS,
+    SCREENS
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
@@ -45,6 +46,7 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 export const Screen = ({
     navigation,
     fuelType,
+    vehicleListing,
     vehicleType,
     transmissionType,
     seatsValue,
@@ -147,7 +149,7 @@ export const Screen = ({
                                 },
                                 () => {
                                     stopLoader();
-                                    navigation.navigate('VEHICLE_SCREEN');
+                                    navigation.navigate(SCREENS.VEHICLE_LISTING);
                                 },
                                 () => { },
                             );
@@ -162,7 +164,7 @@ export const Screen = ({
                     <View style={styles.childContainer}>
                         {!modifySearch && <View style={styles.childContainer}>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('HOME_SCREEN')}
+                                onPress={() => navigation.navigate(SCREENS.HOME)}
                                 hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                             >
                                 <Image source={NAV_ARROW_ICON} height={20} width={20} />
@@ -396,7 +398,7 @@ export const Screen = ({
                                             },
                                             () => {
                                                 stopLoader();
-                                                navigation.navigate('VEHICLE_SCREEN');
+                                                navigation.navigate(SCREENS.VEHICLE_LISTING);
                                             },
                                             () => { },
                                         );

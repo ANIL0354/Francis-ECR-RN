@@ -21,6 +21,7 @@ const AdvanceSearchFilter = ({
     childSeatsValue,
     adultSeatsValue,
     freeDays,
+    fuelTypesList,
     onClose = () => { },
     setFuelType = () => { },
     setTransmissionType = () => { },
@@ -96,7 +97,7 @@ const AdvanceSearchFilter = ({
                             </View>
                             <View style={{ flex: 1, padding: 20 }}>
                                 {filterValue === 0 && <MultiCheckGroup
-                                    checkboxOptions={FUEL_OPTIONS}
+                                    checkboxOptions={fuelTypesList}
                                     selectedValue={fuelValue}
                                     setSelectedValue={(value) => setFuel(value)}
                                 />}

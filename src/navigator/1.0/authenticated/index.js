@@ -5,6 +5,7 @@ import { HomeScreen } from '../../../views/us/1.0/authenticated-screens/home';
 import { VehicleListing } from '../../../views/us/1.0/authenticated-screens/vehicle-listing'
 // import { navigationRef, isMountedRef } from '../../../shared/services';
 import { connect } from 'react-redux';
+import { SCREENS } from '../../../shared/constants';
 
 const Stack = createStackNavigator();
 
@@ -14,10 +15,10 @@ const AuthenticatedNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         headerMode={'none'}
-        initialRouteName={'HOME_SCREEN'}
+        initialRouteName={SCREENS.HOME}
       >
-        <Stack.Screen name={'HOME_SCREEN'} component={HomeScreen} />
-        <Stack.Screen name={'VEHICLE_SCREEN'} component={VehicleListing} />
+        <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+        <Stack.Screen name={SCREENS.VEHICLE_LISTING} component={VehicleListing} />
       </Stack.Navigator>
     </NavigationContainer>
   )

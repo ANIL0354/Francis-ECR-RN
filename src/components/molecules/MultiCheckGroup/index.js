@@ -24,7 +24,7 @@ class MultiCheckGroup extends Component {
         return (
             <View>
                 {this.state.checkboxOptions.map((item, index) => (
-                    <Checkbox title={item.title}
+                    <Checkbox title={item.title ? item.title : item.fuelType}
                         key={index}
                         checked={this.props.selectedValue.has(index)}
                         checkedIcon={CHECKBOX_ACTIVE}

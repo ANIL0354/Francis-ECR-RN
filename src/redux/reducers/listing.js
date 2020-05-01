@@ -1,6 +1,7 @@
 import {
     SAVE_POPULAR_PLACES,
-    SAVE_VEHICLE_LISTING
+    SAVE_VEHICLE_LISTING,
+    SAVE_FUEL_TYPES
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -24,6 +25,11 @@ const ListsReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 vehicleListing: action.data
+            }
+        case SAVE_FUEL_TYPES:
+            return {
+                ...state,
+                fuelTypesList: action.data
             }
         default:
             return state;

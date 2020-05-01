@@ -3,6 +3,9 @@ export const SAVE_POPULAR_PLACES = 'SAVE_POPULAR_PLACES';
 export const FETCH_VEHICLE_LISTING = 'FETCH_VEHICLE_LISTING';
 export const SAVE_VEHICLE_LISTING = 'SAVE_VEHICLE_LISTING';
 export const GET_FUEL_TYPES = 'GET_FUEL_TYPES';
+export const GET_VEHICLE_TYPES = 'GET_VEHICLE_TYPES';
+export const GET_TRANSMISSION_TYPES = 'GET_TRANSMISSION_TYPES';
+export const SAVE_FUEL_TYPES = 'SAVE_FUEL_TYPES';
 
 export const getFuelTypes = ({ data, success, failure }) => {
     return {
@@ -12,6 +15,13 @@ export const getFuelTypes = ({ data, success, failure }) => {
         failure
     }
 };
+
+export const saveFuelTypes = data => {
+    return {
+        type: SAVE_FUEL_TYPES,
+        data
+    }
+}
 
 export const getVehicleTypes = ({ data, success, failure }) => {
     return {
