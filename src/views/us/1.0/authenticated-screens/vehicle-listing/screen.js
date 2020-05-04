@@ -66,6 +66,7 @@ export const Screen = ({
     setPickupDate,
     pickupDate,
     setVehicleType,
+    fuelTypesList,
     fetchVehicleListing,
     setTransmissionType,
 }) => {
@@ -89,6 +90,8 @@ export const Screen = ({
         setModifySearch(!modifySearch);
     }
 
+    console.log('vehicleListing', vehicleListing)
+
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
             {(filterMenu && isNetConnected) && (
@@ -105,6 +108,7 @@ export const Screen = ({
                     setFreeDays={setFreeDays}
                     setChildSeats={setChildSeats}
                     setAdultSeats={setAdultSeats}
+                    fuelTypesList={fuelTypesList}
                     onClose={() => showFilterMenu(false)}
                     onSubmit={() => {
                         if (!!!pickupLocation) {

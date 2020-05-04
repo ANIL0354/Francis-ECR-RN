@@ -8,7 +8,7 @@ class MultiCheckGroup extends Component {
         super(props);
         this.state = {
             selectedValue: props.selectedValue,
-            checkboxOptions: props.checkboxOptions
+            checkboxOptions: props.checkboxOptions || []
         }
     }
 

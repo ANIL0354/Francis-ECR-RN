@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NetInfo from '@react-native-community/netinfo';
-import Toast from 'react-native-simple-toast';
+import SplashScreen from 'react-native-splash-screen';
 import AuthNavigator from '../authentication';
 import AuthenticatedNavigator from '../authenticated';
 import { stopLoader, updateInternetStatus } from '../../../redux/actions';
@@ -12,25 +12,33 @@ const RootNavigator = ({
     stopLoader,
     updateInternetStatus
 }) => {
+    useEffect(() => {
+        NetInfo.addEventListener((state) => {
+            if (!(state.isConnected && state.isInternetReachable)) {
+                stopLoader();
+                updateInternetStatus(false);
+                SplashScreen.hide();
+            } else {
+                stopLoader();
+                updateInternetStatus(state.isConnected);
+                SplashScreen.hide();
+            }
+        })
+    }, []);
+
     NetInfo.addEventListener((state) => {
         if (!(state.isConnected && state.isInternetReachable)) {
             stopLoader();
             updateInternetStatus(false);
-            // Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
         } else {
             stopLoader();
             updateInternetStatus(state.isConnected);
         }
     })
-    const [userAuthenticated, setUserAuthenticated] = useState(null)
-    useEffect(() => {
-        setUserAuthenticated(userToken)
-    }, [userToken]);
-
     return (
         <>
             {
-                userAuthenticated
+                userToken
                     ? (<AuthenticatedNavigator />)
                     : (<AuthNavigator />)
             }

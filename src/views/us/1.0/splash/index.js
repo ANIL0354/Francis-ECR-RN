@@ -3,6 +3,7 @@ import { Screen } from "./screen";
 
 const mapStateToProps = (state) => {
     return ({
+        userToken: state.CommonReducer.userToken
     });
 }
 const mapDispatchToProps = (dispatch) => {

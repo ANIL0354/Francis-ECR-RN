@@ -36,6 +36,7 @@ const mapStateToProps = (state) => {
         isNetConnected: state.CommonReducer.isNetConnected,
         pickupLocation: state.CommonReducer.pickupLocation,
         pickupDate: state.CommonReducer.pickupDate,
+        fuelTypesList: state.ListsReducer.fuelTypesList
     });
 }
 const mapDispatchToProps = (dispatch) => {
