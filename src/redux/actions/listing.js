@@ -6,6 +6,8 @@ export const GET_FUEL_TYPES = 'GET_FUEL_TYPES';
 export const GET_VEHICLE_TYPES = 'GET_VEHICLE_TYPES';
 export const GET_TRANSMISSION_TYPES = 'GET_TRANSMISSION_TYPES';
 export const SAVE_FUEL_TYPES = 'SAVE_FUEL_TYPES';
+export const SAVE_TRANSMISSION_TYPES = 'SAVE_TRANSMISSION_TYPES';
+export const SAVE_VEHICLE_TYPES = 'SAVE_VEHICLE_TYPES';
 
 export const getFuelTypes = ({ data, success, failure }) => {
     return {
@@ -32,12 +34,26 @@ export const getVehicleTypes = ({ data, success, failure }) => {
     }
 };
 
+export const saveVehicleTypes = data => {
+    return {
+        type: SAVE_VEHICLE_TYPES,
+        data
+    }
+}
+
 export const getTransmissionTypes = ({ data, success, failure }) => {
     return {
         type: GET_TRANSMISSION_TYPES,
         data,
         success,
         failure
+    }
+}
+
+export const saveTransmissionTypes = data => {
+    return {
+        type: SAVE_TRANSMISSION_TYPES,
+        data
     }
 }
 

@@ -18,7 +18,9 @@ import {
     setPickupLocation,
     setPickupDate,
     fetchVehicleListing,
-    getFuelTypes
+    getFuelTypes,
+    getTransmissionTypes,
+    getVehicleTypes
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -37,7 +39,9 @@ const mapStateToProps = (state) => {
         neverAskPermission: state.CommonReducer.neverAskPermission,
         isNetConnected: state.CommonReducer.isNetConnected,
         popularPlaces: state.ListsReducer.popularPlaces,
-        fuelTypesList: state.ListsReducer.fuelTypesList
+        fuelTypesList: state.ListsReducer.fuelTypesList,
+        vehicleTypesList: state.ListsReducer.vehicleTypesList,
+        transmissionTypesList: state.ListsReducer.transmissionTypesList,
     });
 }
 const mapDispatchToProps = (dispatch) => {
@@ -45,6 +49,8 @@ const mapDispatchToProps = (dispatch) => {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
         getFuelTypes: (data, success, failure) => dispatch(getFuelTypes(data, success, failure)),
+        getVehicleTypes: (data, success, failure) => dispatch(getVehicleTypes(data, success, failure)),
+        getTransmissionTypes: (data, success, failure) => dispatch(getTransmissionTypes(data, success, failure)),
         setChildSeats: value => dispatch(setChildSeats(value)),
         setAdultSeats: value => dispatch(setAdultSeats(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),

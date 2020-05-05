@@ -11,6 +11,8 @@ module.exports = {
     FORGOT_PASSWORD: SERVER_URL + API_VERSION + '/user/forgot-password',
     POPULAR_PLACES: SERVER_URL + API_VERSION + '/listing/popular_places',
     VEHICLE_LISTING: SERVER_URL + API_VERSION + '/listing',
-    FUEL_LISTING: SERVER_URL + API_VERSION + '/fuel'
+    FUEL_LISTING: SERVER_URL + API_VERSION + '/fuel',
+    TRANSMISSION_LISTING: SERVER_URL + API_VERSION + '/vehicle/transmissions',
+    VEHICLE_TYPE_LISTING: SERVER_URL + API_VERSION + '/vehicleType'
   }
 };

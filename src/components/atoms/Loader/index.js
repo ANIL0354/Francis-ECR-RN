@@ -4,7 +4,7 @@ import Spinner from 'react-native-spinkit';
 import styles from './styles';
 
 const CustomLoader = ({
-    loader
+    size = 60
 }) => {
     return (
         <View>
@@ -12,7 +12,7 @@ const CustomLoader = ({
                 <Spinner
                     isVisible={true}
                     type={'Circle'}
-                    size={60}
+                    size={size}
                     color={'#0091ff'}
                 />
             </View>}

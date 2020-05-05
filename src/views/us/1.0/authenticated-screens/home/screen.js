@@ -71,9 +71,13 @@ export const Screen = ({
   getFuelTypes,
   setVehicleType,
   fuelTypesList,
+  vehicleTypesList,
   setTransmissionType,
   setNeverAskPermission,
   updateInternetStatus,
+  getVehicleTypes,
+  transmissionTypesList,
+  getTransmissionTypes,
   fetchVehicleListing,
 }) => {
   const today = new Date();
@@ -97,8 +101,17 @@ export const Screen = ({
       () => { },
       () => { },
     );
+    getTransmissionTypes(
+      {},
+      () => { },
+      () => { }
+    );
+    getVehicleTypes(
+      {},
+      () => { },
+      () => { }
+    )
   }, []);
-
 
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
@@ -193,6 +206,8 @@ export const Screen = ({
           setChildSeats={setChildSeats}
           setAdultSeats={setAdultSeats}
           fuelTypesList={fuelTypesList}
+          vehicleTypesList={vehicleTypesList}
+          transmissionTypesList={transmissionTypesList}
           onClose={() => showFilterMenu(false)}
           onSubmit={() => {
             if (!!!pickupLocation) {

@@ -18,11 +18,14 @@ import {
     setPickupLocation,
     updateInternetStatus,
     fetchVehicleListing,
+    getTransmissionTypes,
+    getVehicleTypes
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
     return ({
         vehicleListing: state.ListsReducer.vehicleListing,
+        vehicleListItems: state.ListsReducer.vehicleListItems,
         childSeatsValue: state.CommonReducer.childSeatsValue,
         adultSeatsValue: state.CommonReducer.adultSeatsValue,
         freeDays: state.CommonReducer.freeDays,
@@ -36,7 +39,9 @@ const mapStateToProps = (state) => {
         isNetConnected: state.CommonReducer.isNetConnected,
         pickupLocation: state.CommonReducer.pickupLocation,
         pickupDate: state.CommonReducer.pickupDate,
-        fuelTypesList: state.ListsReducer.fuelTypesList
+        fuelTypesList: state.ListsReducer.fuelTypesList,
+        vehicleTypesList: state.ListsReducer.vehicleTypesList,
+        transmissionTypesList: state.ListsReducer.transmissionTypesList,
     });
 }
 const mapDispatchToProps = (dispatch) => {
@@ -46,6 +51,8 @@ const mapDispatchToProps = (dispatch) => {
         setChildSeats: value => dispatch(setChildSeats(value)),
         setAdultSeats: value => dispatch(setAdultSeats(value)),
         setFuelType: value => dispatch(setFuelType(value)),
+        getVehicleTypes: (data, success, failure) => dispatch(getVehicleTypes(data, success, failure)),
+        getTransmissionTypes: (data, success, failure) => dispatch(getTransmissionTypes(data, success, failure)),
         setFreeDays: value => dispatch(setFreeDays(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),
         setPickupDate: value => dispatch(setPickupDate(value)),

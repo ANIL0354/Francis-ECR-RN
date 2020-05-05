@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
         width: 15,
         resizeMode: 'center'
     },
+    textStyle: {
+        color: 'black',
+        textTransform: 'capitalize'
+    }
 });
 
 export default styles;

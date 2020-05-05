@@ -5,11 +5,16 @@ import {
     GET_POPULAR_PLACES,
     FETCH_VEHICLE_LISTING,
     GET_FUEL_TYPES,
+    GET_TRANSMISSION_TYPES,
+    GET_VEHICLE_TYPES,
     setAuthorization,
+    saveVehicleTypes,
     startLoader,
     stopLoader,
     savePopularPlaces,
-    saveFuelTypes
+    saveFuelTypes,
+    saveVehicleListing,
+    saveTransmissionTypes
 } from '../actions';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const api = require(`../../shared/api`);
@@ -57,6 +62,7 @@ function* fetchVehicleList({ data, success, failure }) {
             stopLoader();
         }
         else {
+            yield put(saveVehicleListing(response.data.data))
             success();
         }
     }
@@ -69,9 +75,7 @@ function* fetchVehicleList({ data, success, failure }) {
 
 function* fetchFuelTypes({ data, success = () => { }, failure }) {
     try {
-        // console.log('called')
         const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
-        // console.log('response', JSON.stringify(response.data.data))
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();
@@ -95,11 +99,65 @@ function* fetchFuelTypes({ data, success = () => { }, failure }) {
     }
 }
 
+function* fetchTranmissionTypes({ data, success = () => { }, failure }) {
+    try {
+        const response = yield getRequest({ API: `${api.URL.TRANSMISSION_LISTING}` });
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            stopLoader();
+            Toast.show(response.data.msg, Toast.LONG);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure();
+            Toast.show(response.data.msg, Toast.LONG);
+            stopLoader();
+        }
+        else {
+            yield put(saveTransmissionTypes(response.data.data))
+            success();
+        }
+    }
+    catch (error) {
+        console.log('catch', error)
+        stopLoader();
+        return;
+    }
+};
+
+function* fetchVehicleTypes({ data, success = () => { }, failure }) {
+    try {
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_TYPE_LISTING}` });
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            stopLoader();
+            Toast.show(response.data.msg, Toast.LONG);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure();
+            Toast.show(response.data.msg, Toast.LONG);
+            stopLoader();
+        }
+        else {
+            yield put(saveVehicleTypes(response.data.data))
+            success();
+        }
+    }
+    catch (error) {
+        console.log('catch', error)
+        stopLoader();
+        return;
+    }
+}
+
 function* ListsSaga() {
     yield all([
         takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
         takeLatest(FETCH_VEHICLE_LISTING, fetchVehicleList),
-        takeLatest(GET_FUEL_TYPES, fetchFuelTypes)
+        takeLatest(GET_FUEL_TYPES, fetchFuelTypes),
+        takeLatest(GET_TRANSMISSION_TYPES, fetchTranmissionTypes),
+        takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes)
     ]);
 }
 

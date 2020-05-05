@@ -26,6 +26,7 @@ const Checkbox = ({
                 height={15}
                 width={15}
             />}
+            textStyle={styles.textStyle}
             onPress={(event) => toggleCheck(event)}
             checked={checked}
         />

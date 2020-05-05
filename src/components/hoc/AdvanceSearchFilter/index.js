@@ -22,6 +22,8 @@ const AdvanceSearchFilter = ({
     adultSeatsValue,
     freeDays,
     fuelTypesList,
+    vehicleTypesList,
+    transmissionTypesList,
     onClose = () => { },
     setFuelType = () => { },
     setTransmissionType = () => { },
@@ -118,12 +120,12 @@ const AdvanceSearchFilter = ({
                                     </View>
                                 </View>}
                                 {filterValue === 2 && <MultiCheckGroup
-                                    checkboxOptions={VEHICLE_TYPE_OPTIONS}
+                                    checkboxOptions={vehicleTypesList}
                                     selectedValue={vehicleValue}
                                     setSelectedValue={(value) => setVehicle(value)}
                                 />}
                                 {filterValue === 3 && <MultiCheckGroup
-                                    checkboxOptions={TRANSMISSION_OPTIONS}
+                                    checkboxOptions={transmissionTypesList}
                                     selectedValue={transmissionValue}
                                     setSelectedValue={(value) => setTransmission(value)}
                                 />}

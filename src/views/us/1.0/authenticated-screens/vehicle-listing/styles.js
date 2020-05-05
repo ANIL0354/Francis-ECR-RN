@@ -110,12 +110,12 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
     },
     detailsList: {
-        paddingVertical: 10,
+        // paddingVertical: 10,
     },
     advanceFilterText: {
         color: 'gray',
         textAlign: 'center',
-        paddingTop: 20,
+        paddingVertical: 20,
         width: '100%',
         alignSelf: 'center',
         fontWeight: 'bold'
@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray',
         borderWidth: 1,
         borderRadius: 10,
-        margin: 10
+        marginBottom: 20,
+        marginHorizontal: 10
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
