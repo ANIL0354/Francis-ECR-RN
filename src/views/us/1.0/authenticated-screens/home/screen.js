@@ -479,7 +479,27 @@ export const Screen = ({
                 availableCount={item.count}
                 placeRange={`${item._id.fromCity} to ${item._id.toCity}`}
                 buttonText={'See All'}
-                onPress={() => navigation.navigate(SCREENS.VEHICLE_LISTING)}
+                onPress={() => {
+                  let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                  startLoader();
+                  fetchVehicleListing(
+                    {
+                      fromCity: item._id.fromCity,
+                      pickupDate: formattedDate,
+                      adultSeats: adultSeatsValue,
+                      childSeats: childSeatsValue,
+                      fuelType: fuelType + 1,
+                      limit: LIMITS.vehicleList,
+                      index: 0,
+                    },
+                    () => {
+                      navigation.navigate(SCREENS.VEHICLE_LISTING);
+                      setPickupLocation(item._id.fromCity);
+                      stopLoader();
+                    },
+                    () => { },
+                  );
+                }}
               />
             );
           }}

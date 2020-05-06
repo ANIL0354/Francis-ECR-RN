@@ -19,7 +19,8 @@ import {
     updateInternetStatus,
     fetchVehicleListing,
     getTransmissionTypes,
-    getVehicleTypes
+    getVehicleTypes,
+    refreshVehicleList
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -51,6 +52,7 @@ const mapDispatchToProps = (dispatch) => {
         setChildSeats: value => dispatch(setChildSeats(value)),
         setAdultSeats: value => dispatch(setAdultSeats(value)),
         setFuelType: value => dispatch(setFuelType(value)),
+        refreshVehicleList: () => dispatch(refreshVehicleList()),
         getVehicleTypes: (data, success, failure) => dispatch(getVehicleTypes(data, success, failure)),
         getTransmissionTypes: (data, success, failure) => dispatch(getTransmissionTypes(data, success, failure)),
         setFreeDays: value => dispatch(setFreeDays(value)),

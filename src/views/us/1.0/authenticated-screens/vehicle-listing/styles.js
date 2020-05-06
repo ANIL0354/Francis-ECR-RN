@@ -4,6 +4,7 @@ import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     rowFlex: {
+        flex: 1,
         flexDirection: 'row'
     },
     alignSelfCenter: {
@@ -134,13 +135,12 @@ const styles = StyleSheet.create({
     },
     detailsLeftContainer: {
         flexDirection: 'column',
-        maxWidth: '40%',
-        padding: 10
+        flex: 1,
+        paddingHorizontal: 10
     },
     detailsRightContainer: {
         flexDirection: 'column',
-        flexWrap: 'wrap',
-        minWidth: '60%',
+        flex: 2
     },
     carTitle: {
         color: 'black',
@@ -159,24 +159,24 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     carFeaturesWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        maxWidth: '90%',
+        // flexDirection: 'row',
+        // alignItems: 'center',
+        // flexWrap: 'wrap',
+        // maxWidth: '90%',
     },
     iconTextContainer: {
         paddingVertical: 5,
-        marginRight: 10,
-        maxWidth: '40%',
+        marginRight: scaleText(10).fontSize
     },
     iconText: {
         color: 'gray',
         textAlign: 'left',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        textTransform: 'capitalize'
     },
     listLocationWrapper: {
-        marginTop: 20,
-        marginLeft: 10
+        paddingVertical: scaleText(10).fontSize,
+        paddingHorizontal: scaleText(20).fontSize
     },
     listPickupText: {
         textTransform: 'uppercase',

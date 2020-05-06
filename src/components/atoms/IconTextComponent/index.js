@@ -21,7 +21,7 @@ const IconText = ({
             <Image style={{
                 ...iconStyle,
                 ...styles.customIconStyle,
-                marginRight: iconLeftAlign ? 5 : 0,
+                marginRight: iconLeftAlign ? 3 : 0,
             }} source={icon} />
             <Text style={{
                 ...titleStyle,

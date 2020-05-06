@@ -4,14 +4,15 @@ import {
     Text,
     TextInput,
     Image,
-    ScrollView,
+    RefreshControl,
     FlatList,
     Animated,
     Alert,
     Keyboard,
     LayoutAnimation,
     UIManager,
-    TouchableOpacity
+    TouchableOpacity,
+    BackHandler
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -33,7 +34,8 @@ import {
     LUGGAGE_ICON,
     DATE_ICON,
     LIMITS,
-    SCREENS
+    SCREENS,
+    BIG_NORMAL_CAR
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
@@ -71,6 +73,7 @@ export const Screen = ({
     fetchVehicleListing,
     transmissionTypesList,
     vehicleTypesList,
+    refreshVehicleList,
     vehicleListItems,
     setTransmissionType,
 }) => {
@@ -83,6 +86,7 @@ export const Screen = ({
     const [detailsList, setDetailsList] = useState(null);
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -98,10 +102,15 @@ export const Screen = ({
     }
 
     useEffect(() => {
-        setDetailsList(vehicleListing)
-    }, [vehicleListing]);
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            refreshVehicleList();
+            setPageIndex(0);
+        });
+    }, []);
 
-    // console.log('vehicleListItems', vehicleListItems)
+    useEffect(() => {
+        setDetailsList(vehicleListItems)
+    }, [vehicleListItems]);
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -110,8 +119,29 @@ export const Screen = ({
                 detailsList && <FlatList
                     style={{ flex: 1, ...styles.detailsList }}
                     contentContainerStyle={{}}
+                    refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
+                        refreshVehicleList();
+                        setPageIndex(0);
+                        setIsRefreshing(true);
+                        let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                        fetchVehicleListing(
+                            {
+                                fromCity: pickupLocation,
+                                pickupDate: formattedDate,
+                                adultSeats: adultSeatsValue,
+                                childSeats: childSeatsValue,
+                                fuelType: fuelType + 1,
+                                limit: LIMITS.vehicleList,
+                                index: 0,
+                            },
+                            () => {
+                                navigation.navigate(SCREENS.VEHICLE_LISTING);
+                                setIsRefreshing(false)
+                            },
+                            () => { },
+                        );
+                    }} />}
                     showsVerticalScrollIndicator={false}
-                    // onEndReached={() => console.log('hey reached end.')}
                     ListHeaderComponent={() => {
                         return (
                             <View>
@@ -189,7 +219,10 @@ export const Screen = ({
                                     <View style={styles.childContainer}>
                                         {!modifySearch && <View style={styles.childContainer}>
                                             <TouchableOpacity
-                                                onPress={() => navigation.navigate(SCREENS.HOME)}
+                                                onPress={() => {
+                                                    refreshVehicleList();
+                                                    navigation.navigate(SCREENS.HOME)
+                                                }}
                                                 hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                                             >
                                                 <Image source={NAV_ARROW_ICON} height={20} width={20} />
@@ -433,7 +466,7 @@ export const Screen = ({
                                                 lineHeight: scaledLargeFont.lineHeight,
                                                 ...styles.pageHeading
                                             }}>
-                                            {`We have found ${vehicleListing[0].totalCount} vehicles available from ${pickupLocation}.`}
+                                            {`We have found ${vehicleListing.length ? vehicleListing[0].totalCount : 0} vehicles available from ${pickupLocation}.`}
                                         </Text>
                                         <FlatList
                                             style={styles.vehicleTypeList}
@@ -443,7 +476,6 @@ export const Screen = ({
                                             horizontal={true}
                                             keyExtractor={(item) => item.id}
                                             renderItem={({ item }) => {
-                                                console.log('url', item.URL)
                                                 return (
                                                     <View style={styles.vehicleTypeWrapper}>
                                                         <View style={styles.vehicleTypeContainer}>
@@ -453,12 +485,12 @@ export const Screen = ({
                                                             }}>{item.name}</Text>
                                                             <Image
                                                                 source={{ uri: item.URL }}
+                                                                resizeMode={'contain'}
                                                                 style={{
                                                                     ...styles.alignSelfCenter,
-                                                                    height: scaleText(80).fontSize,
-                                                                    width: scaleText(100).fontSize
+                                                                    height: scaleText(60).fontSize,
+                                                                    width: scaleText(80).fontSize
                                                                 }}
-                                                                onError={(e) => console.log('error', e.nativeEvent.error)}
                                                             />
                                                         </View>
                                                         <Image style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
@@ -481,7 +513,9 @@ export const Screen = ({
                             </View>
                         )
                     }}
-
+                    ListEmptyComponent={<View>
+                        <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles available.'}</Text>
+                    </View>}
                     ListFooterComponent={
                         <View style={{
                             width: '100%',
@@ -493,32 +527,34 @@ export const Screen = ({
                         </View>}
                     data={detailsList}
                     scrollEnabled={true}
-                    onEndReachedThreshold={0.1}
+                    onEndReachedThreshold={0.8}
                     onEndReached={() => {
-                        console.log('heyy end reached');
+                        if (vehicleListing[0].totalCount === vehicleListItems.length) {
+                            return;
+                        }
                         let formattedDate = moment(pickupDate).format(
                             'YYYY-MM-DD',
                         );
                         // startLoader();
                         setFetchingData(true)
-                        // fetchVehicleListing(
-                        //     {
-                        //         fromCity: pickupLocation,
-                        //         pickupDate: formattedDate,
-                        //         adultSeats: adultSeatsValue,
-                        //         childSeats: childSeatsValue,
-                        //         fuelType: fuelType + 1,
-                        //         limit: LIMITS.vehicleList,
-                        //         index: pageIndex + 1,
-                        //     },
-                        //     () => {
-                        setFetchingData(false)
-                        //         setPageIndex(pageIndex + 1)
-                        //         // stopLoader();
-                        //         // navigation.navigate(SCREENS.VEHICLE_LISTING);
-                        //     },
-                        //     () => { },
-                        // );
+                        fetchVehicleListing(
+                            {
+                                fromCity: pickupLocation,
+                                pickupDate: formattedDate,
+                                adultSeats: adultSeatsValue,
+                                childSeats: childSeatsValue,
+                                fuelType: fuelType + 1,
+                                limit: LIMITS.vehicleList,
+                                index: pageIndex + 1,
+                            },
+                            () => {
+                                setFetchingData(false)
+                                setPageIndex(pageIndex + 1)
+                                // stopLoader();
+                                // navigation.navigate(SCREENS.VEHICLE_LISTING);
+                            },
+                            () => { },
+                        );
                     }}
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
@@ -526,64 +562,87 @@ export const Screen = ({
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
                                     <View style={styles.detailsLeftContainer}>
-                                        <Image style={styles.alignSelfCenter} source={item.carImage} />
-                                        <Text style={styles.freeDaysText}>{`Free Days: ${item.freeDays ? item.freeDays : 0}`}</Text>
+                                        <Image
+                                            source={{ uri: item.vehicleData.url }}
+                                            resizeMode={'contain'}
+                                            style={{
+                                                ...styles.alignSelfCenter,
+                                                height: scaleText(110).fontSize,
+                                                width: scaleText(110).fontSize
+                                            }}
+                                        />
                                     </View>
                                     <View style={styles.detailsRightContainer}>
                                         <Text
-                                            // onPress={() => showFilterMenu(true)}
                                             style={styles.carTitle}>{item.vehicleData ? item.vehicleData.name : ''}</Text>
                                         <View style={styles.carFeaturesWrapper}>
-                                            <IconText
-                                                icon={CAR_SEATS_ICON}
-                                                title={`${item.vehicleData ? item.vehicleData.adultSeats + item.vehicleData.childSeats : 0} seats`}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            />
-                                            <IconText
-                                                icon={LUGGAGE_ICON}
-                                                title={`${item.vehicleData ? item.vehicleData.largeLuggageSpace + item.vehicleData.smallLuggageSpace : 0} bags`}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            />
-                                            <IconText
-                                                icon={DOORS_ICON}
-                                                title={`${item.doors || 0} doors`}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            />
-                                            <IconText
-                                                icon={AC_ICON}
-                                                title={item.conditioning || 'Non-AC'}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            />
-                                            <IconText
-                                                icon={GEAR_ICON}
-                                                title={item.transmission || 'Automatic'}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            />
-                                        </View>
-                                        <View style={styles.listLocationWrapper}>
-                                            <Text style={styles.listPickupText}>{item.fromCity}</Text>
-                                            <View style={styles.listDropoffWrapper}>
-                                                <Image source={TURN_RIGHT} />
-                                                <Text style={styles.listDropoffText}>{item.toCity}</Text>
+                                            <View style={{ ...styles.rowFlex, justifyContent: 'space-between' }}>
+                                                <IconText
+                                                    icon={CAR_SEATS_ICON}
+                                                    title={`${item.vehicleData ? item.vehicleData.adultSeats + item.vehicleData.childSeats : 0} seats`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={LUGGAGE_ICON}
+                                                    title={`${item.vehicleData ? item.vehicleData.largeLuggageSpace + item.vehicleData.smallLuggageSpace : 0} bags`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={DOORS_ICON}
+                                                    title={`${item.vehicleData.numberOfDoor || 0} doors`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                            </View>
+                                            <View style={styles.rowFlex}>
+                                                <IconText
+                                                    icon={AC_ICON}
+                                                    title={item.airConditionType ? 'Air Conditioning' : 'Non-AC'}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={GEAR_ICON}
+                                                    title={item.transmissionData.name}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
                                             </View>
                                         </View>
                                     </View>
-
                                 </View>
+                                <View style={styles.rowFlex}>
+                                    <View style={styles.detailsLeftContainer}>
+                                        <Text style={styles.freeDaysText}>{`Free Days: ${item.freeDays ? item.freeDays : 0}`}</Text>
+                                    </View>
+                                    <View style={styles.detailsRightContainer}>
+                                        <View style={styles.listLocationWrapper}>
+                                            <Text
+                                                ellipsizeMode={'tail'}
+                                                numberOfLines={1}
+                                                style={styles.listPickupText}>{item.fromCity}</Text>
+                                            <View style={styles.listDropoffWrapper}>
+                                                <Image source={TURN_RIGHT} />
+                                                <Text
+                                                    ellipsizeMode={'tail'}
+                                                    numberOfLines={1}
+                                                    style={styles.listDropoffText}>{item.toCity}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+
                                 <View>
                                     <View style={styles.offerTextWrapper}>
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
-                                        <Text style={styles.carOfferText}>{'item.includes'}</Text>
+                                        <Text style={styles.carOfferText}>{'Unlimited kms, free tank of fuel and standard insurance'}</Text>
                                     </View>
                                     <CustomButton title={'View'}
                                         buttonStyle={styles.vehicleListButton}
