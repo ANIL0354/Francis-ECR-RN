@@ -26,19 +26,10 @@ const ListsReducer = (state = { ...initialCommonState }, action) => {
                 popularPlaces: action.data
             }
         case SAVE_VEHICLE_LISTING:
-            if (action.data.length && action.data.items) {
-                return {
-                    ...state,
-                    vehicleListing: action.data,
-                    vehicleListItems: [...state.vehicleListItems, ...action.data[0].items]
-                }
-            }
-            else {
-                return {
-                    ...state,
-                    vehicleListing: action.data,
-                    vehicleListItems: [...state.vehicleListItems]
-                }
+            return {
+                ...state,
+                vehicleListing: action.data,
+                vehicleListItems: [...state.vehicleListItems, ...action.data.data]
             }
         case REFRESH_VEHICLE_LIST:
             return {

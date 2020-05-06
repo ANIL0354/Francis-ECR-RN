@@ -26,19 +26,19 @@ class MultiCheckGroup extends Component {
                 {this.state.checkboxOptions.map((item, index) => (
                     <Checkbox title={item.title ? item.title : item.name ? item.name : item.fuelType}
                         key={index}
-                        checked={this.props.selectedValue.has(index)}
+                        checked={this.props.selectedValue.has(item._id)}
                         checkedIcon={CHECKBOX_ACTIVE}
                         uncheckedIcon={CHECKBOX_ICON}
                         toggleCheck={(value) => {
                             let temp = this.state.selectedValue;
-                            if (this.state.selectedValue.has(index)) {
-                                temp.delete(index);
+                            if (this.state.selectedValue.has(item._id)) {
+                                temp.delete(item._id);
                                 this.setState({
                                     selectedValue: temp
                                 })
                             }
                             else {
-                                temp.add(index);
+                                temp.add(item._id);
                                 this.setState({
                                     selectedValue: temp
                                 })

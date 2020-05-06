@@ -110,8 +110,15 @@ export const Screen = ({
       {},
       () => { },
       () => { }
-    )
+    );
   }, []);
+
+  useEffect(() => {
+    startLoader();
+    if (fuelTypesList && vehicleTypesList && transmissionTypesList) {
+      stopLoader();
+    }
+  }, [fuelTypesList, transmissionTypesList, vehicleTypesList]);
 
   const handleAppStateChange = (nextAppState) => {
     if (neverAskPermission || Platform.OS === 'ios') {
@@ -124,7 +131,6 @@ export const Screen = ({
 
   const checkLocationPermissions = async () => {
     startLoader();
-
     if (Platform.OS === 'android') {
       CheckPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
         .then((hasPermission) => {
@@ -189,6 +195,7 @@ export const Screen = ({
       },
     );
   };
+
   return (
     <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
       {(filterMenu && isNetConnected) && (
@@ -244,7 +251,9 @@ export const Screen = ({
                   pickupDate: formattedDate,
                   adultSeats: adultSeatsValue,
                   childSeats: childSeatsValue,
-                  fuelType: fuelType + 1,
+                  fuelType: Array.from(fuelType),
+                  vehicleType: Array.from(vehicleType),
+                  transmissionType: Array.from(transmissionType),
                   limit: LIMITS.vehicleList,
                   index: 0,
                 },
@@ -278,7 +287,15 @@ export const Screen = ({
             }}>
             <LocationSearch
               pickupLocation={pickupLocation}
-              setPickupLocation={(value) => setPickupLocation(value)}
+              setPickupLocation={(value) => {
+                setPickupLocation(value);
+                // Geocoder.from(value)
+                //   .then(json => {
+                //     var location = json.results;
+                //     console.log('location', JSON.stringify(location));
+                //   })
+                //   .catch(error => console.warn(error));
+              }}
               inputStyle={{
                 height: 2.5 * scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
@@ -315,7 +332,6 @@ export const Screen = ({
                   zIndex: 10,
                 },
                 dateIcon: {
-                  // display: 'none',
                   marginLeft: -1 * (scaleText(35).fontSize),
                   height: scaleText(30).fontSize,
                   width: scaleText(30).fontSize
@@ -427,7 +443,9 @@ export const Screen = ({
                       pickupDate: formattedDate,
                       adultSeats: adultSeatsValue,
                       childSeats: childSeatsValue,
-                      fuelType: fuelType + 1,
+                      fuelType: Array.from(fuelType),
+                      vehicleType: Array.from(vehicleType),
+                      transmissionType: Array.from(transmissionType),
                       limit: LIMITS.vehicleList,
                       index: 0,
                     },
@@ -480,15 +498,18 @@ export const Screen = ({
                 placeRange={`${item._id.fromCity} to ${item._id.toCity}`}
                 buttonText={'See All'}
                 onPress={() => {
-                  let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
+                  setVehicleType(new Set());
+                  setFuelType(new Set());
+                  setTransmissionType(new Set());
+                  setAdultSeats(0);
+                  setChildSeats(0);
+                  setFreeDays(0);
+                  setPickupDate(null);
                   fetchVehicleListing(
                     {
                       fromCity: item._id.fromCity,
-                      pickupDate: formattedDate,
-                      adultSeats: adultSeatsValue,
-                      childSeats: childSeatsValue,
-                      fuelType: fuelType + 1,
+                      toCity: item._id.toCity,
                       limit: LIMITS.vehicleList,
                       index: 0,
                     },

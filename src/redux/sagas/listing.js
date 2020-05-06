@@ -47,8 +47,38 @@ function* fetchPopularPlaces({ data, success, failure }) {
 
 function* fetchVehicleList({ data, success, failure }) {
     try {
-        let { fromCity, pickupDate, fuelType, adultSeats, childSeats, limit, index } = data;
-        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?fromCity=${fromCity}&limit=${limit}&index=${index}` });
+        if (!data.fromCity) {
+            delete data.fromCity;
+        }
+        if (!data.toCity) {
+            delete data.toCity;
+        }
+        if (!data.pickupDate) {
+            delete data.pickupDate;
+        }
+        if (!(data.fuelType && data.fuelType.length)) {
+            delete data.fuelType;
+        }
+        if (!(data.vehicleType && data.vehicleType.length)) {
+            delete data.vehicleType;
+        }
+        if (!(data.transmissionType && data.transmissionType.length)) {
+            delete data.transmissionType;
+        }
+        if (!data.adultSeats) {
+            delete data.adultSeats;
+        }
+        if (!data.childSeats) {
+            delete data.childSeats;
+        }
+        let keys = Object.keys(data);
+        let values = Object.values(data);
+
+        let formattedParams = '';
+        keys.map((item, index) => {
+            formattedParams = `${formattedParams}${index ? '&' : ''}${keys[index]}=${Array.isArray(values[index]) ? JSON.stringify(values[index]) : values[index]}`
+        })
+        const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?${formattedParams}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();
@@ -61,7 +91,7 @@ function* fetchVehicleList({ data, success, failure }) {
             stopLoader();
         }
         else {
-            yield put(saveVehicleListing(response.data.data))
+            yield put(saveVehicleListing(response.data))
             success();
         }
     }
@@ -74,6 +104,7 @@ function* fetchVehicleList({ data, success, failure }) {
 
 function* fetchFuelTypes({ data, success = () => { }, failure }) {
     try {
+        yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
@@ -100,6 +131,7 @@ function* fetchFuelTypes({ data, success = () => { }, failure }) {
 
 function* fetchTranmissionTypes({ data, success = () => { }, failure }) {
     try {
+        yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.TRANSMISSION_LISTING}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
@@ -126,6 +158,7 @@ function* fetchTranmissionTypes({ data, success = () => { }, failure }) {
 
 function* fetchVehicleTypes({ data, success = () => { }, failure }) {
     try {
+        yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.VEHICLE_TYPE_LISTING}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));

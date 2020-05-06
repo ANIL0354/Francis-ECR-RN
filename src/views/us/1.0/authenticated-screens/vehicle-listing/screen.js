@@ -104,7 +104,8 @@ export const Screen = ({
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
             refreshVehicleList();
-            setPageIndex(0);
+            // setPageIndex(0);
+            stopLoader();
         });
     }, []);
 
@@ -130,7 +131,9 @@ export const Screen = ({
                                 pickupDate: formattedDate,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
-                                fuelType: fuelType + 1,
+                                fuelType: Array.from(fuelType),
+                                vehicleType: Array.from(vehicleType),
+                                transmissionType: Array.from(transmissionType),
                                 limit: LIMITS.vehicleList,
                                 index: 0,
                             },
@@ -194,13 +197,16 @@ export const Screen = ({
                                                     'YYYY-MM-DD',
                                                 );
                                                 startLoader();
+                                                refreshVehicleList();
                                                 fetchVehicleListing(
                                                     {
                                                         fromCity: pickupLocation,
                                                         pickupDate: formattedDate,
                                                         adultSeats: adultSeatsValue,
                                                         childSeats: childSeatsValue,
-                                                        fuelType: fuelType + 1,
+                                                        fuelType: Array.from(fuelType),
+                                                        vehicleType: Array.from(vehicleType),
+                                                        transmissionType: Array.from(transmissionType),
                                                         limit: LIMITS.vehicleList,
                                                         index: 0,
                                                     },
@@ -285,7 +291,11 @@ export const Screen = ({
 
                                             <LocationSearch
                                                 pickupLocation={pickupLocation}
-                                                setPickupLocation={(value) => setPickupLocation(value)}
+                                                setPickupLocation={(value) => {
+                                                    refreshVehicleList();
+                                                    setPageIndex(0);
+                                                    setPickupLocation(value);
+                                                }}
                                                 inputStyle={{
                                                     height: 2.5 * scaledFont.lineHeight,
                                                     fontSize: scaledFont.fontSize,
@@ -430,13 +440,16 @@ export const Screen = ({
                                                             'YYYY-MM-DD',
                                                         );
                                                         startLoader();
+                                                        refreshVehicleList();
                                                         fetchVehicleListing(
                                                             {
                                                                 fromCity: pickupLocation,
                                                                 pickupDate: formattedDate,
                                                                 adultSeats: adultSeatsValue,
                                                                 childSeats: childSeatsValue,
-                                                                fuelType: fuelType + 1,
+                                                                fuelType: Array.from(fuelType),
+                                                                vehicleType: Array.from(vehicleType),
+                                                                transmissionType: Array.from(transmissionType),
                                                                 limit: LIMITS.vehicleList,
                                                                 index: 0,
                                                             },
@@ -466,7 +479,7 @@ export const Screen = ({
                                                 lineHeight: scaledLargeFont.lineHeight,
                                                 ...styles.pageHeading
                                             }}>
-                                            {`We have found ${vehicleListing.length ? vehicleListing[0].totalCount : 0} vehicles available from ${pickupLocation}.`}
+                                            {`We have found ${vehicleListing.totalCount} vehicles available from ${pickupLocation}.`}
                                         </Text>
                                         <FlatList
                                             style={styles.vehicleTypeList}
@@ -478,7 +491,31 @@ export const Screen = ({
                                             renderItem={({ item }) => {
                                                 return (
                                                     <View style={styles.vehicleTypeWrapper}>
-                                                        <View style={styles.vehicleTypeContainer}>
+                                                        <TouchableOpacity onPress={() => {
+                                                            startLoader();
+                                                            refreshVehicleList();
+                                                            let formattedDate = moment(pickupDate).format(
+                                                                'YYYY-MM-DD',
+                                                            );
+                                                            let selectedVehicleType = new Set();
+                                                            selectedVehicleType.add(item._id)
+                                                            setVehicleType(selectedVehicleType);
+                                                            fetchVehicleListing(
+                                                                {
+                                                                    fromCity: pickupLocation,
+                                                                    pickupDate: formattedDate,
+                                                                    adultSeats: adultSeatsValue,
+                                                                    childSeats: childSeatsValue,
+                                                                    fuelType: Array.from(fuelType),
+                                                                    vehicleType: Array.from(selectedVehicleType),
+                                                                    transmissionType: Array.from(transmissionType),
+                                                                    limit: LIMITS.vehicleList,
+                                                                    index: pageIndex + 1,
+                                                                },
+                                                                () => { stopLoader() },
+                                                                () => { },
+                                                            );
+                                                        }} style={styles.vehicleTypeContainer}>
                                                             <Text style={{
                                                                 fontSize: scaledSmallerFont.fontSize,
                                                                 ...styles.vehicleTypeTitle
@@ -492,7 +529,7 @@ export const Screen = ({
                                                                     width: scaleText(80).fontSize
                                                                 }}
                                                             />
-                                                        </View>
+                                                        </TouchableOpacity>
                                                         <Image style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
                                                     </View>
                                                 )
@@ -529,13 +566,12 @@ export const Screen = ({
                     scrollEnabled={true}
                     onEndReachedThreshold={0.8}
                     onEndReached={() => {
-                        if (vehicleListing[0].totalCount === vehicleListItems.length) {
+                        if (vehicleListing.totalCount === vehicleListItems.length) {
                             return;
                         }
                         let formattedDate = moment(pickupDate).format(
                             'YYYY-MM-DD',
                         );
-                        // startLoader();
                         setFetchingData(true)
                         fetchVehicleListing(
                             {
@@ -543,15 +579,15 @@ export const Screen = ({
                                 pickupDate: formattedDate,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
-                                fuelType: fuelType + 1,
+                                fuelType: Array.from(fuelType),
+                                vehicleType: Array.from(vehicleType),
+                                transmissionType: Array.from(transmissionType),
                                 limit: LIMITS.vehicleList,
                                 index: pageIndex + 1,
                             },
                             () => {
                                 setFetchingData(false)
-                                setPageIndex(pageIndex + 1)
-                                // stopLoader();
-                                // navigation.navigate(SCREENS.VEHICLE_LISTING);
+                                setPageIndex(pageIndex + 1);
                             },
                             () => { },
                         );
