@@ -612,10 +612,6 @@ export default class GooglePlacesAutocomplete extends Component {
     }
     return (
       <Text
-        onPress={() => {
-          console.log('text pressed');
-          this._onPress(rowData)
-        }}
         ellipsizeMode={'tail'}
         numberOfLines={1}
         style={[
@@ -660,7 +656,6 @@ export default class GooglePlacesAutocomplete extends Component {
       <TouchableHighlight
         style={{ flex: 1 }}
         onPress={() => {
-          console.log('presssed');
           this._onPress(rowData)
         }}
         underlayColor={this.props.listUnderlayColor || '#c8c7cc'}>
@@ -770,10 +765,12 @@ export default class GooglePlacesAutocomplete extends Component {
       this.state.listViewDisplayed === true
     ) {
       return (
-        <View style={[
-          this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
-          this.props.styles.listView,
-        ]}>
+        <View
+
+          style={[
+            this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
+            this.props.styles.listView,
+          ]}>
           {this.state.dataSource.map((item) => this._renderRow(item))}
         </View>
       );
@@ -827,7 +824,7 @@ export default class GooglePlacesAutocomplete extends Component {
                   }
                   : this._onFocus
               }
-              onBlur={this._onBlur}
+              // onBlur={this._onBlur}
               underlineColorAndroid={this.props.underlineColorAndroid}
               clearButtonMode={
                 clearButtonMode ? clearButtonMode : 'while-editing'

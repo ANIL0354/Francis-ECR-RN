@@ -232,7 +232,7 @@ export const Screen = ({
                         <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
                     </TouchableOpacity>
                 </View>}
-                {modifySearch && <ScrollView>
+                {modifySearch && <ScrollView showsVerticalScrollIndicator={false}>
                     <View
                         style={{
                             backgroundColor: '#1e5e9e',
