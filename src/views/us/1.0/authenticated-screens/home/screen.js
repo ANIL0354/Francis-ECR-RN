@@ -325,7 +325,7 @@ export const Screen = ({
                   zIndex: 10,
                 },
                 dateIcon: {
-                  marginLeft: -1 * (scaleText(35).fontSize),
+                  marginLeft: -1 * (scaleText(30).fontSize),
                   height: scaleText(25).fontSize,
                   width: scaleText(25).fontSize
                 },
