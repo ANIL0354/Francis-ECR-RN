@@ -89,6 +89,7 @@ export const Screen = ({
 
   const scaledFont = scaleText(14);
   useEffect(() => {
+    Geocoder.init(GOOGLE_API_KEY);
     checkLocationPermissions();
     AppState.addEventListener('change', handleAppStateChange);
     getPopularPlaces(
@@ -170,7 +171,6 @@ export const Screen = ({
 
   const getUserLocation = () => {
     startLoader();
-    Geocoder.init(GOOGLE_API_KEY);
     Geolocation.getCurrentPosition(
       (info) => {
         Geocoder.from(info.coords.latitude, info.coords.longitude)
@@ -216,7 +216,7 @@ export const Screen = ({
           vehicleTypesList={vehicleTypesList}
           transmissionTypesList={transmissionTypesList}
           onClose={() => showFilterMenu(false)}
-          onSubmit={() => {
+          onSubmit={async () => {
             if (!!!pickupLocation) {
               Alert.alert(
                 'Select Pick-up Location',
@@ -245,12 +245,26 @@ export const Screen = ({
               showFilterMenu(false);
               let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
               startLoader();
+              let city = '';
+              await Geocoder.from(pickupLocation)
+                .then(json => {
+                  var location = json.results[0].address_components;
+                  location.map((item) => {
+                    if (item.types.includes('locality')) {
+                      console.log('location', JSON.stringify(item.long_name));
+                      city = item.long_name;
+                    }
+                    return;
+                  })
+                })
+                .catch(error => console.warn(error));
               fetchVehicleListing(
                 {
-                  fromCity: pickupLocation,
+                  fromCity: city,
                   pickupDate: formattedDate,
                   adultSeats: adultSeatsValue,
                   childSeats: childSeatsValue,
+                  freeDays: freeDays,
                   fuelType: Array.from(fuelType),
                   vehicleType: Array.from(vehicleType),
                   transmissionType: Array.from(transmissionType),
@@ -289,12 +303,6 @@ export const Screen = ({
               pickupLocation={pickupLocation}
               setPickupLocation={(value) => {
                 setPickupLocation(value);
-                // Geocoder.from(value)
-                //   .then(json => {
-                //     var location = json.results;
-                //     console.log('location', JSON.stringify(location));
-                //   })
-                //   .catch(error => console.warn(error));
               }}
               inputStyle={{
                 height: 2.5 * scaledFont.lineHeight,
@@ -333,8 +341,8 @@ export const Screen = ({
                 },
                 dateIcon: {
                   marginLeft: -1 * (scaleText(35).fontSize),
-                  height: scaleText(30).fontSize,
-                  width: scaleText(30).fontSize
+                  height: scaleText(25).fontSize,
+                  width: scaleText(25).fontSize
                 },
                 dateInput: {
                   textAlign: 'left',
@@ -408,7 +416,7 @@ export const Screen = ({
                 marginTop: scaleText(20).fontSize,
               }}
               activeOpacity={0.7}
-              onPress={() => {
+              onPress={async () => {
                 Keyboard.dismiss();
                 if (!!!pickupLocation) {
                   Alert.alert(
@@ -437,12 +445,27 @@ export const Screen = ({
                 } else {
                   let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
+                  let city = '';
+                  await Geocoder.from(pickupLocation)
+                    .then(json => {
+                      var location = json.results[0].address_components;
+                      location.map((item) => {
+                        if (item.types.includes('locality')) {
+                          console.log('location', JSON.stringify(item.long_name));
+                          city = item.long_name;
+                        }
+                        return;
+                      })
+                    })
+                    .catch(error => console.warn(error));
+                  console.log('city', city)
                   fetchVehicleListing(
                     {
-                      fromCity: pickupLocation,
+                      fromCity: city,
                       pickupDate: formattedDate,
                       adultSeats: adultSeatsValue,
                       childSeats: childSeatsValue,
+                      freeDays: freeDays,
                       fuelType: Array.from(fuelType),
                       vehicleType: Array.from(vehicleType),
                       transmissionType: Array.from(transmissionType),

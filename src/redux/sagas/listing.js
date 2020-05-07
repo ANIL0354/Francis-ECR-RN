@@ -47,6 +47,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
 
 function* fetchVehicleList({ data, success, failure }) {
     try {
+        // console.log('data', JSON.stringify(data))
         if (!data.fromCity) {
             delete data.fromCity;
         }
@@ -71,6 +72,9 @@ function* fetchVehicleList({ data, success, failure }) {
         if (!data.childSeats) {
             delete data.childSeats;
         }
+        if (!data.freeDays) {
+            delete data.freeDays;
+        }
         let keys = Object.keys(data);
         let values = Object.values(data);
 
@@ -78,6 +82,7 @@ function* fetchVehicleList({ data, success, failure }) {
         keys.map((item, index) => {
             formattedParams = `${formattedParams}${index ? '&' : ''}${keys[index]}=${Array.isArray(values[index]) ? JSON.stringify(values[index]) : values[index]}`
         })
+        // console.log(`${api.URL.VEHICLE_LISTING}?${formattedParams}`)
         const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?${formattedParams}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
