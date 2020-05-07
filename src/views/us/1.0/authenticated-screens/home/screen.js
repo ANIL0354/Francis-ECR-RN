@@ -221,7 +221,7 @@ export const Screen = ({
           vehicleTypesList={vehicleTypesList}
           transmissionTypesList={transmissionTypesList}
           onClose={() => showFilterMenu(false)}
-          onSubmit={() => {
+          onSubmit={(data) => {
             let {
               freeDaysValue,
               childSeats,

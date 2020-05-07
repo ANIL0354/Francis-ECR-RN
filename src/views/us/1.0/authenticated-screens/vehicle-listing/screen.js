@@ -152,7 +152,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
-                                pickupDate: formattedDate,
+                                pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeats,
                                 childSeats: childSeats,
                                 freeDays: freeDaysValue,
