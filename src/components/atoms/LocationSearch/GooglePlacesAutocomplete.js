@@ -608,6 +608,11 @@ export default class GooglePlacesAutocomplete extends Component {
 
     return (
       <Text
+        onPress={() => {
+          this._onPress(rowData)
+        }}
+        ellipsizeMode={'tail'}
+        numberOfLines={1}
         style={[
           this.props.suppressDefaultStyles ? {} : defaultStyles.description,
           this.props.styles.description,
@@ -647,28 +652,30 @@ export default class GooglePlacesAutocomplete extends Component {
 
   _renderRow = (rowData = {}, sectionID, rowID) => {
     return (
-      <ScrollView
-        style={{ flex: 1 }}
-        scrollEnabled={this.props.isRowScrollable}
-        keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
-        <TouchableHighlight
-          style={{ width: WINDOW.width }}
-          onPress={() => this._onPress(rowData)}
-          underlayColor={this.props.listUnderlayColor || '#c8c7cc'}>
-          <View
-            style={[
-              this.props.suppressDefaultStyles ? {} : defaultStyles.row,
-              this.props.styles.row,
-              rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {},
-            ]}>
-            {this._renderLoader(rowData)}
-            {this._renderRowData(rowData)}
-          </View>
-        </TouchableHighlight>
-      </ScrollView>
+      // <View
+      //   style={{ flex: 1, flexDirection: 'row' }}
+      //   scrollEnabled={this.props.isRowScrollable}
+      //   keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
+      //   horizontal={true}
+      //   showsHorizontalScrollIndicator={false}
+      //   showsVerticalScrollIndicator={false}>
+      <TouchableHighlight
+        style={{ width: WINDOW.width }}
+        onPress={() => {
+          this._onPress(rowData)
+        }}
+        underlayColor={this.props.listUnderlayColor || '#c8c7cc'}>
+        <View
+          style={[
+            this.props.suppressDefaultStyles ? {} : defaultStyles.row,
+            this.props.styles.row,
+            rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {},
+          ]}>
+          {this._renderLoader(rowData)}
+          {this._renderRowData(rowData)}
+        </View>
+      </TouchableHighlight>
+      // </View>
     );
   };
 
@@ -765,24 +772,32 @@ export default class GooglePlacesAutocomplete extends Component {
       this.state.listViewDisplayed === true
     ) {
       return (
-        <FlatList
-          scrollEnabled={!this.props.disableScroll}
-          style={[
-            this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
-            this.props.styles.listView,
-          ]}
-          data={this.state.dataSource}
-          keyExtractor={keyGenerator}
-          extraData={[this.state.dataSource, this.props]}
-          ItemSeparatorComponent={this._renderSeparator}
-          renderItem={({ item }) => this._renderRow(item)}
-          ListHeaderComponent={
-            this.props.renderHeaderComponent &&
-            this.props.renderHeaderComponent(this.state.text)
-          }
-          ListFooterComponent={this._renderPoweredLogo}
-          {...this.props}
-        />
+        <View style={[
+          this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
+          this.props.styles.listView,
+        ]}>
+          {this.state.dataSource.map((item) => this._renderRow(item))}
+        </View>
+        // <FlatList
+        //   scrollEnabled={!this.props.disableScroll}
+        //   style={[
+        //     this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
+        //     this.props.styles.listView,
+        //     { backgroundColor: 'red' }
+        //   ]}
+        //   data={this.state.dataSource}
+        //   keyExtractor={keyGenerator}
+        //   keyboardShouldPersistTaps={true}
+        //   extraData={[this.state.dataSource, this.props]}
+        //   ItemSeparatorComponent={this._renderSeparator}
+        //   renderItem={({ item }) => this._renderRow(item)}
+        //   ListHeaderComponent={
+        //     this.props.renderHeaderComponent &&
+        //     this.props.renderHeaderComponent(this.state.text)
+        //   }
+        //   ListFooterComponent={this._renderPoweredLogo}
+        //   {...this.props}
+        // />
       );
     }
 
