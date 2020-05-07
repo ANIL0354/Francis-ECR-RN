@@ -196,6 +196,8 @@ export const Screen = ({
     );
   };
 
+  console.log('free home', freeDays)
+
   return (
     <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
       {(filterMenu && isNetConnected) && (
@@ -242,9 +244,11 @@ export const Screen = ({
               );
               return;
             } else {
-              showFilterMenu(false);
               let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
               startLoader();
+              showFilterMenu(false);
+              // setTimeout(() => {
+              console.log('inside', freeDays)
               fetchVehicleListing(
                 {
                   fromCity: pickupLocation,
@@ -264,6 +268,8 @@ export const Screen = ({
                 },
                 () => { },
               );
+              // }, 500)
+
             }
           }}
         />
@@ -430,6 +436,8 @@ export const Screen = ({
                 } else {
                   let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
+                  // setTimeout(() => {
+                  console.log('inside', freeDays)
                   fetchVehicleListing(
                     {
                       fromCity: pickupLocation,
@@ -449,6 +457,8 @@ export const Screen = ({
                     },
                     () => { },
                   );
+                  // }, 500)
+
                 }
               }}>
               <Text
