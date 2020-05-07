@@ -116,9 +116,9 @@ function* fetchFuelTypes({ data, success = () => { }, failure }) {
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-            failure();
-            Toast.show(response.data.msg, Toast.LONG);
             stopLoader();
+            Toast.show(response.data.msg, Toast.LONG);
+            failure();
         }
         else {
             yield put(saveFuelTypes(response.data.data))
