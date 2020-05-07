@@ -300,9 +300,6 @@ export default class GooglePlacesAutocomplete extends Component {
             );
           }
         }
-        this.setState({
-          listViewDisplayed: false
-        })
       };
 
       request.open(
@@ -579,7 +576,6 @@ export default class GooglePlacesAutocomplete extends Component {
     this._request(text);
     this.setState({
       text: text,
-      listViewDisplayed: true,
     });
   };
 
@@ -821,8 +817,7 @@ export default class GooglePlacesAutocomplete extends Component {
               editable={this.props.editable}
               returnKeyType={this.props.returnKeyType}
               keyboardAppearance={this.props.keyboardAppearance}
-              keyboardShouldPersistTaps={true}
-              autoFocus={this.state.listViewDisplayed || this.props.autoFocus}
+              autoFocus={this.props.autoFocus}
               style={[
                 this.props.suppressDefaultStyles ? {} : defaultStyles.textInput,
                 this.props.styles.textInput,

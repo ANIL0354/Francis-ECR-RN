@@ -14,8 +14,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#0091ff',
         flex: 1,
-        minHeight: 60,
-        paddingHorizontal: 10,
+        // minHeight: 60,
+        paddingVertical: scaleText(10).fontSize,
+        paddingHorizontal: scaleText(10).fontSize,
     },
     searchChildContainer: {
         flex: 1,
