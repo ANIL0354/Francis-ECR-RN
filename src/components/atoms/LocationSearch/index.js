@@ -35,7 +35,12 @@ class LocationSearch extends Component {
         fetchDetails={true}
         renderDescription={(row) => row.description}
         onPress={(data, details = null) => {
-          setPickupLocation(details.formatted_address);
+          details.address_components.map((item) => {
+            if (item.types.includes('locality')) {
+              setPickupLocation(item.long_name);
+            }
+            return;
+          })
           this.setState({
             address: details.formatted_address,
           });

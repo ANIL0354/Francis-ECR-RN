@@ -15,7 +15,6 @@ import {
     BackHandler
 } from 'react-native';
 import moment from 'moment';
-import Geocoder from 'react-native-geocoding';
 import DatePicker from 'react-native-datepicker';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import {
@@ -104,7 +103,6 @@ export const Screen = ({
     }
 
     useEffect(() => {
-        Geocoder.init(GOOGLE_API_KEY);
         BackHandler.addEventListener('hardwareBackPress', () => {
             refreshVehicleList();
             setPageIndex(0);
@@ -125,27 +123,14 @@ export const Screen = ({
                 detailsList && <FlatList
                     style={{ flex: 1, ...styles.detailsList }}
                     contentContainerStyle={{}}
-                    refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={async () => {
+                    refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
                         refreshVehicleList();
                         setPageIndex(0);
                         setIsRefreshing(true);
                         let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
-                        let city = '';
-                        await Geocoder.from(pickupLocation)
-                            .then(json => {
-                                var location = json.results[0].address_components;
-                                location.map((item) => {
-                                    if (item.types.includes('locality')) {
-                                        console.log('location', JSON.stringify(item.long_name));
-                                        city = item.long_name;
-                                    }
-                                    return;
-                                })
-                            })
-                            .catch(error => console.warn(error));
                         fetchVehicleListing(
                             {
-                                fromCity: city,
+                                fromCity: pickupLocation,
                                 pickupDate: formattedDate,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
@@ -185,7 +170,7 @@ export const Screen = ({
                                         vehicleTypesList={vehicleTypesList}
                                         transmissionTypesList={transmissionTypesList}
                                         onClose={() => showFilterMenu(false)}
-                                        onSubmit={async () => {
+                                        onSubmit={() => {
                                             if (!!!pickupLocation) {
                                                 Alert.alert(
                                                     'Select Pick-up Location',
@@ -216,23 +201,10 @@ export const Screen = ({
                                                     'YYYY-MM-DD',
                                                 );
                                                 startLoader();
-                                                let city = '';
-                                                await Geocoder.from(pickupLocation)
-                                                    .then(json => {
-                                                        var location = json.results[0].address_components;
-                                                        location.map((item) => {
-                                                            if (item.types.includes('locality')) {
-                                                                console.log('location', JSON.stringify(item.long_name));
-                                                                city = item.long_name;
-                                                            }
-                                                            return;
-                                                        })
-                                                    })
-                                                    .catch(error => console.warn(error));
                                                 refreshVehicleList();
                                                 fetchVehicleListing(
                                                     {
-                                                        fromCity: city,
+                                                        fromCity: pickupLocation,
                                                         pickupDate: formattedDate,
                                                         adultSeats: adultSeatsValue,
                                                         childSeats: childSeatsValue,
@@ -437,7 +409,7 @@ export const Screen = ({
                                                     marginTop: scaleText(20).fontSize,
                                                 }}
                                                 activeOpacity={0.7}
-                                                onPress={async () => {
+                                                onPress={() => {
                                                     Keyboard.dismiss();
                                                     if (!!!pickupLocation) {
                                                         Alert.alert(
@@ -469,24 +441,11 @@ export const Screen = ({
                                                             'YYYY-MM-DD',
                                                         );
                                                         startLoader();
-                                                        let city = '';
-                                                        await Geocoder.from(pickupLocation)
-                                                            .then(json => {
-                                                                var location = json.results[0].address_components;
-                                                                location.map((item) => {
-                                                                    if (item.types.includes('locality')) {
-                                                                        console.log('location', JSON.stringify(item.long_name));
-                                                                        city = item.long_name;
-                                                                    }
-                                                                    return;
-                                                                })
-                                                            })
-                                                            .catch(error => console.warn(error));
                                                         refreshVehicleList();
                                                         setPageIndex(0);
                                                         fetchVehicleListing(
                                                             {
-                                                                fromCity: city,
+                                                                fromCity: pickupLocation,
                                                                 pickupDate: formattedDate,
                                                                 adultSeats: adultSeatsValue,
                                                                 childSeats: childSeatsValue,
@@ -535,31 +494,18 @@ export const Screen = ({
                                             renderItem={({ item }) => {
                                                 return (
                                                     <View style={styles.vehicleTypeWrapper}>
-                                                        <TouchableOpacity onPress={async () => {
+                                                        <TouchableOpacity onPress={() => {
                                                             startLoader();
                                                             refreshVehicleList();
                                                             let formattedDate = moment(pickupDate).format(
                                                                 'YYYY-MM-DD',
                                                             );
-                                                            let city = '';
-                                                            await Geocoder.from(pickupLocation)
-                                                                .then(json => {
-                                                                    var location = json.results[0].address_components;
-                                                                    location.map((item) => {
-                                                                        if (item.types.includes('locality')) {
-                                                                            console.log('location', JSON.stringify(item.long_name));
-                                                                            city = item.long_name;
-                                                                        }
-                                                                        return;
-                                                                    })
-                                                                })
-                                                                .catch(error => console.warn(error));
                                                             let selectedVehicleType = new Set();
                                                             selectedVehicleType.add(item._id)
                                                             setVehicleType(selectedVehicleType);
                                                             fetchVehicleListing(
                                                                 {
-                                                                    fromCity: city,
+                                                                    fromCity: pickupLocation,
                                                                     pickupDate: formattedDate,
                                                                     adultSeats: adultSeatsValue,
                                                                     childSeats: childSeatsValue,
@@ -623,30 +569,17 @@ export const Screen = ({
                     data={detailsList}
                     scrollEnabled={true}
                     onEndReachedThreshold={0.8}
-                    onEndReached={async () => {
+                    onEndReached={() => {
                         if (vehicleListing.totalCount === vehicleListItems.length) {
                             return;
                         }
                         let formattedDate = moment(pickupDate).format(
                             'YYYY-MM-DD',
                         );
-                        let city = '';
-                        await Geocoder.from(pickupLocation)
-                            .then(json => {
-                                var location = json.results[0].address_components;
-                                location.map((item) => {
-                                    if (item.types.includes('locality')) {
-                                        console.log('location', JSON.stringify(item.long_name));
-                                        city = item.long_name;
-                                    }
-                                    return;
-                                })
-                            })
-                            .catch(error => console.warn(error));
                         setFetchingData(true)
                         fetchVehicleListing(
                             {
-                                fromCity: city,
+                                fromCity: pickupLocation,
                                 pickupDate: formattedDate,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,

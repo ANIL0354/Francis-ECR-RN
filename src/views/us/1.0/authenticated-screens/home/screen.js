@@ -216,7 +216,7 @@ export const Screen = ({
           vehicleTypesList={vehicleTypesList}
           transmissionTypesList={transmissionTypesList}
           onClose={() => showFilterMenu(false)}
-          onSubmit={async () => {
+          onSubmit={() => {
             if (!!!pickupLocation) {
               Alert.alert(
                 'Select Pick-up Location',
@@ -245,22 +245,9 @@ export const Screen = ({
               showFilterMenu(false);
               let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
               startLoader();
-              let city = '';
-              await Geocoder.from(pickupLocation)
-                .then(json => {
-                  var location = json.results[0].address_components;
-                  location.map((item) => {
-                    if (item.types.includes('locality')) {
-                      console.log('location', JSON.stringify(item.long_name));
-                      city = item.long_name;
-                    }
-                    return;
-                  })
-                })
-                .catch(error => console.warn(error));
               fetchVehicleListing(
                 {
-                  fromCity: city,
+                  fromCity: pickupLocation,
                   pickupDate: formattedDate,
                   adultSeats: adultSeatsValue,
                   childSeats: childSeatsValue,
@@ -301,9 +288,7 @@ export const Screen = ({
             }}>
             <LocationSearch
               pickupLocation={pickupLocation}
-              setPickupLocation={(value) => {
-                setPickupLocation(value);
-              }}
+              setPickupLocation={(value) => setPickupLocation(value)}
               inputStyle={{
                 height: 2.5 * scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
@@ -416,7 +401,7 @@ export const Screen = ({
                 marginTop: scaleText(20).fontSize,
               }}
               activeOpacity={0.7}
-              onPress={async () => {
+              onPress={() => {
                 Keyboard.dismiss();
                 if (!!!pickupLocation) {
                   Alert.alert(
@@ -445,23 +430,9 @@ export const Screen = ({
                 } else {
                   let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
-                  let city = '';
-                  await Geocoder.from(pickupLocation)
-                    .then(json => {
-                      var location = json.results[0].address_components;
-                      location.map((item) => {
-                        if (item.types.includes('locality')) {
-                          console.log('location', JSON.stringify(item.long_name));
-                          city = item.long_name;
-                        }
-                        return;
-                      })
-                    })
-                    .catch(error => console.warn(error));
-                  console.log('city', city)
                   fetchVehicleListing(
                     {
-                      fromCity: city,
+                      fromCity: pickupLocation,
                       pickupDate: formattedDate,
                       adultSeats: adultSeatsValue,
                       childSeats: childSeatsValue,
