@@ -49,7 +49,7 @@ const AdvanceSearchFilter = ({
         setAdultsSeatValue(adultSeatsValue);
         setFreeDaysValue(freeDays);
     }, [fuelType, vehicleType, transmissionType, childSeatsValue, adultSeatsValue, freeDays])
-    console.log('free', freeDaysValue, 'actual', freeDays)
+
     return (
         <Modal
             transparent
@@ -165,7 +165,14 @@ const AdvanceSearchFilter = ({
                                     setVehicleType(vehicleValue);
                                     setChildSeats(childSeats);
                                     setAdultSeats(adultSeats);
-                                    onSubmit();
+                                    onSubmit({
+                                        freeDaysValue,
+                                        childSeats,
+                                        adultSeats,
+                                        transmissionValue,
+                                        vehicleValue,
+                                        fuelValue
+                                    });
                                 }} />
                         </View>
                     </ScrollView>

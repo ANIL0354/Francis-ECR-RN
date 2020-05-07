@@ -196,7 +196,6 @@ export const Screen = ({
     );
   };
 
-  console.log('free home', freeDays)
 
   return (
     <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -219,6 +218,14 @@ export const Screen = ({
           transmissionTypesList={transmissionTypesList}
           onClose={() => showFilterMenu(false)}
           onSubmit={() => {
+            let {
+              freeDaysValue,
+              childSeats,
+              adultSeats,
+              transmissionValue,
+              vehicleValue,
+              fuelValue
+            } = data;
             if (!!!pickupLocation) {
               Alert.alert(
                 'Select Pick-up Location',
@@ -247,18 +254,16 @@ export const Screen = ({
               let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
               startLoader();
               showFilterMenu(false);
-              // setTimeout(() => {
-              console.log('inside', freeDays)
               fetchVehicleListing(
                 {
                   fromCity: pickupLocation,
                   pickupDate: formattedDate,
-                  adultSeats: adultSeatsValue,
-                  childSeats: childSeatsValue,
-                  freeDays: freeDays,
-                  fuelType: Array.from(fuelType),
-                  vehicleType: Array.from(vehicleType),
-                  transmissionType: Array.from(transmissionType),
+                  adultSeats: adultSeats,
+                  childSeats: childSeats,
+                  freeDays: freeDaysValue,
+                  fuelType: Array.from(fuelValue),
+                  vehicleType: Array.from(vehicleValue),
+                  transmissionType: Array.from(transmissionValue),
                   limit: LIMITS.vehicleList,
                   index: 0,
                 },
@@ -268,7 +273,6 @@ export const Screen = ({
                 },
                 () => { },
               );
-              // }, 500)
 
             }
           }}
@@ -436,8 +440,6 @@ export const Screen = ({
                 } else {
                   let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
                   startLoader();
-                  // setTimeout(() => {
-                  console.log('inside', freeDays)
                   fetchVehicleListing(
                     {
                       fromCity: pickupLocation,
@@ -457,7 +459,6 @@ export const Screen = ({
                     },
                     () => { },
                   );
-                  // }, 500)
 
                 }
               }}>

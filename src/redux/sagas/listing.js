@@ -81,7 +81,6 @@ function* fetchVehicleList({ data, success, failure }) {
         keys.map((item, index) => {
             formattedParams = `${formattedParams}${index ? '&' : ''}${keys[index]}=${Array.isArray(values[index]) ? JSON.stringify(values[index]) : values[index]}`
         })
-        console.log(`${api.URL.VEHICLE_LISTING}?${formattedParams}`);
         const response = yield getRequest({ API: `${api.URL.VEHICLE_LISTING}?${formattedParams}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));

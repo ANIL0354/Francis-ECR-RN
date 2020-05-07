@@ -116,9 +116,60 @@ export const Screen = ({
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
-            <View>
+            {(filterMenu && isNetConnected) && (
+                <AdvanceSearchFilter
+                    fuelType={fuelType}
+                    vehicleType={vehicleType}
+                    transmissionType={transmissionType}
+                    childSeatsValue={childSeatsValue}
+                    adultSeatsValue={adultSeatsValue}
+                    freeDays={freeDays}
+                    setFuelType={setFuelType}
+                    setTransmissionType={setTransmissionType}
+                    setVehicleType={setVehicleType}
+                    setFreeDays={setFreeDays}
+                    setChildSeats={setChildSeats}
+                    setAdultSeats={setAdultSeats}
+                    fuelTypesList={fuelTypesList}
+                    vehicleTypesList={vehicleTypesList}
+                    transmissionTypesList={transmissionTypesList}
+                    onClose={() => showFilterMenu(false)}
+                    onSubmit={(data) => {
+                        let { freeDaysValue,
+                            childSeats,
+                            adultSeats,
+                            transmissionValue,
+                            vehicleValue,
+                            fuelValue } = data;
+                        showFilterMenu(false)
+                        let formattedDate = moment(pickupDate).format(
+                            'YYYY-MM-DD',
+                        );
+                        startLoader();
+                        refreshVehicleList();
+                        fetchVehicleListing(
+                            {
+                                fromCity: pickupLocation,
+                                pickupDate: formattedDate,
+                                adultSeats: adultSeats,
+                                childSeats: childSeats,
+                                freeDays: freeDaysValue,
+                                fuelType: Array.from(fuelValue),
+                                vehicleType: Array.from(vehicleValue),
+                                transmissionType: Array.from(transmissionValue),
+                                limit: LIMITS.vehicleList,
+                                index: 0,
+                            },
+                            () => {
+                                stopLoader();
+                                navigation.navigate(SCREENS.VEHICLE_LISTING);
+                            },
+                            () => { },
+                        );
+                    }}
+                />
+            )}
 
-            </View>
             {
                 detailsList && <FlatList
                     style={{ flex: 1, ...styles.detailsList }}
@@ -152,83 +203,11 @@ export const Screen = ({
                     ListHeaderComponent={() => {
                         return (
                             <View>
-                                {(filterMenu && isNetConnected) && (
-                                    <AdvanceSearchFilter
-                                        fuelType={fuelType}
-                                        vehicleType={vehicleType}
-                                        transmissionType={transmissionType}
-                                        childSeatsValue={childSeatsValue}
-                                        adultSeatsValue={adultSeatsValue}
-                                        freeDays={freeDays}
-                                        setFuelType={setFuelType}
-                                        setTransmissionType={setTransmissionType}
-                                        setVehicleType={setVehicleType}
-                                        setFreeDays={setFreeDays}
-                                        setChildSeats={setChildSeats}
-                                        setAdultSeats={setAdultSeats}
-                                        fuelTypesList={fuelTypesList}
-                                        vehicleTypesList={vehicleTypesList}
-                                        transmissionTypesList={transmissionTypesList}
-                                        onClose={() => showFilterMenu(false)}
-                                        onSubmit={() => {
-                                            if (!!!pickupLocation) {
-                                                Alert.alert(
-                                                    'Select Pick-up Location',
-                                                    'Please select a pick-up location before proceeding.',
-                                                    [
-                                                        {
-                                                            text: 'Okay',
-                                                            onPress: () => { },
-                                                        },
-                                                    ],
-                                                );
-                                                return;
-                                            } else if (!pickupDate) {
-                                                Alert.alert(
-                                                    'Select Pick-up Date',
-                                                    'Please select a pick-up date before proceeding.',
-                                                    [
-                                                        {
-                                                            text: 'Okay',
-                                                            onPress: () => { },
-                                                        },
-                                                    ],
-                                                );
-                                                return;
-                                            } else {
-                                                showFilterMenu(false)
-                                                let formattedDate = moment(pickupDate).format(
-                                                    'YYYY-MM-DD',
-                                                );
-                                                startLoader();
-                                                refreshVehicleList();
-                                                fetchVehicleListing(
-                                                    {
-                                                        fromCity: pickupLocation,
-                                                        pickupDate: formattedDate,
-                                                        adultSeats: adultSeatsValue,
-                                                        childSeats: childSeatsValue,
-                                                        freeDays: freeDays,
-                                                        fuelType: Array.from(fuelType),
-                                                        vehicleType: Array.from(vehicleType),
-                                                        transmissionType: Array.from(transmissionType),
-                                                        limit: LIMITS.vehicleList,
-                                                        index: 0,
-                                                    },
-                                                    () => {
-                                                        stopLoader();
-                                                        navigation.navigate(SCREENS.VEHICLE_LISTING);
-                                                    },
-                                                    () => { },
-                                                );
-                                            }
-                                        }}
-                                    />
-                                )}
+
 
                                 <View style={{ backgroundColor: '#0091ff' }}>
                                     <View style={styles.childContainer}>
-                                        {!modifySearch && <View style={styles.childContainer}>
+                                        {!modifySearch && <View style={{ ...styles.childContainer, flexDirection: 'row' }} >
                                             <TouchableOpacity
                                                 onPress={() => {
                                                     refreshVehicleList();
@@ -296,7 +275,9 @@ export const Screen = ({
 
                                             <LocationSearch
                                                 pickupLocation={pickupLocation}
-                                                setPickupLocation={(value) => setPickupLocation(value)}
+                                                setPickupLocation={(value) => {
+                                                    setPickupLocation(value);
+                                                }}
                                                 inputStyle={{
                                                     height: 2.5 * scaledFont.lineHeight,
                                                     fontSize: scaledFont.fontSize,
