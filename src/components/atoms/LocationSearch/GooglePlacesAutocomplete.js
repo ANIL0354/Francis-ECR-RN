@@ -264,6 +264,7 @@ export default class GooglePlacesAutocomplete extends Component {
 
               this.setState({
                 text: this._renderDescription(rowData),
+                listViewDisplayed: false
               });
 
               delete rowData.isLoading;
@@ -275,6 +276,7 @@ export default class GooglePlacesAutocomplete extends Component {
             if (this.props.autoFillOnNotFound) {
               this.setState({
                 text: this._renderDescription(rowData),
+                listViewDisplayed: false
               });
               delete rowData.isLoading;
             }
@@ -300,6 +302,9 @@ export default class GooglePlacesAutocomplete extends Component {
             );
           }
         }
+        this.setState({
+          listViewDisplayed: false
+        })
       };
 
       request.open(
@@ -605,10 +610,10 @@ export default class GooglePlacesAutocomplete extends Component {
     if (this.props.renderRow) {
       return this.props.renderRow(rowData);
     }
-
     return (
       <Text
         onPress={() => {
+          console.log('text pressed');
           this._onPress(rowData)
         }}
         ellipsizeMode={'tail'}
@@ -652,16 +657,10 @@ export default class GooglePlacesAutocomplete extends Component {
 
   _renderRow = (rowData = {}, sectionID, rowID) => {
     return (
-      // <View
-      //   style={{ flex: 1, flexDirection: 'row' }}
-      //   scrollEnabled={this.props.isRowScrollable}
-      //   keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
-      //   horizontal={true}
-      //   showsHorizontalScrollIndicator={false}
-      //   showsVerticalScrollIndicator={false}>
       <TouchableHighlight
-        style={{ width: WINDOW.width }}
+        style={{ flex: 1 }}
         onPress={() => {
+          console.log('presssed');
           this._onPress(rowData)
         }}
         underlayColor={this.props.listUnderlayColor || '#c8c7cc'}>
@@ -675,7 +674,6 @@ export default class GooglePlacesAutocomplete extends Component {
           {this._renderRowData(rowData)}
         </View>
       </TouchableHighlight>
-      // </View>
     );
   };
 
@@ -778,26 +776,6 @@ export default class GooglePlacesAutocomplete extends Component {
         ]}>
           {this.state.dataSource.map((item) => this._renderRow(item))}
         </View>
-        // <FlatList
-        //   scrollEnabled={!this.props.disableScroll}
-        //   style={[
-        //     this.props.suppressDefaultStyles ? {} : defaultStyles.listView,
-        //     this.props.styles.listView,
-        //     { backgroundColor: 'red' }
-        //   ]}
-        //   data={this.state.dataSource}
-        //   keyExtractor={keyGenerator}
-        //   keyboardShouldPersistTaps={true}
-        //   extraData={[this.state.dataSource, this.props]}
-        //   ItemSeparatorComponent={this._renderSeparator}
-        //   renderItem={({ item }) => this._renderRow(item)}
-        //   ListHeaderComponent={
-        //     this.props.renderHeaderComponent &&
-        //     this.props.renderHeaderComponent(this.state.text)
-        //   }
-        //   ListFooterComponent={this._renderPoweredLogo}
-        //   {...this.props}
-        // />
       );
     }
 

@@ -175,9 +175,13 @@ export const Screen = ({
       (info) => {
         Geocoder.from(info.coords.latitude, info.coords.longitude)
           .then((json) => {
-            var addressComponent =
-              json.results[2].formatted_address;
-            setPickupLocation(addressComponent);
+            let address = json.results[0].address_components;
+            address.map((item) => {
+              if (item.types.includes('locality')) {
+                setPickupLocation(item.long_name);
+              }
+              return;
+            })
             stopLoader();
           })
           .catch((error) => {

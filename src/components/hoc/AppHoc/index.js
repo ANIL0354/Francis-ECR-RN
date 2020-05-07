@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, StatusBar, SafeAreaView, Alert } from 'react-native';
+import { View, StatusBar, SafeAreaView, Alert, Keyboard } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader, logout } from '../../../redux/actions';
 import CustomLoader from '../../atoms/Loader';
@@ -17,6 +17,11 @@ const AppHoc = ({
   stopLoader,
   children,
 }) => {
+  useEffect(() => {
+    if (loader) {
+      Keyboard.dismiss();
+    }
+  }, [loader])
   return (
     <SafeAreaView style={styles.hocWrapper}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
