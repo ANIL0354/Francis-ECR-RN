@@ -104,8 +104,8 @@ export const Screen = ({
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [upButton, showUpButton] = useState(false);
-    const [modifiedLocation, setModifiedLocation] = useState('');
-    const [modifiedDate, setModifiedDate] = useState(new Date(pickupDate))
+    const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
+    const [modifiedDate, setModifiedDate] = useState(null)
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -269,7 +269,7 @@ export const Screen = ({
                             marginHorizontal: scaleText(20).fontSize
                         }}>
                         <LocationSearch
-                            pickupLocation={modifiedLocation ? modifiedLocation : pickupLocation}
+                            pickupLocation={modifiedLocation || modifiedLocation === '' ? modifiedLocation : pickupLocation}
                             setPickupLocation={(value) => setModifiedLocation(value)}
                             inputStyle={{
                                 height: 2.5 * scaledFont.lineHeight,
@@ -281,14 +281,16 @@ export const Screen = ({
 
                         <DatePicker
                             mode="date"
-                            placeholder={
+                            placeholder={modifiedDate
+                                ? `${moment(modifiedDate).format('DD-MM-YYYY')}` :
                                 pickupDate
-                                    ? modifiedDate ? `${moment(modifiedDate).format('DD-MM-YYYY')}` : `${moment(pickupDate).format('DD-MM-YYYY')}`
+                                    ? `${moment(pickupDate).format('DD-MM-YYYY')}`
                                     : 'Pick-up date'
                             }
                             format={'DD-MM-YYYY'}
                             minDate={new Date()}
                             maxDate={new Date(maxDate)}
+                            // date={modifiedDate ? modifiedDate : pickupDate}
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             style={{
@@ -344,7 +346,7 @@ export const Screen = ({
                                     textAlign: 'left',
                                     margin: 0,
                                     alignSelf: 'flex-start',
-                                    color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
+                                    color: pickupDate || modifiedDate ? 'black' : 'rgba(0,0,0,0.4)',
                                     fontSize: scaledFont.fontSize,
                                     lineHeight: scaledFont.lineHeight,
                                     padding: 0,
@@ -397,7 +399,7 @@ export const Screen = ({
                                         ],
                                     );
                                     return;
-                                } else if (!pickupDate) {
+                                } else if (!pickupDate && !modifiedDate) {
                                     Alert.alert(
                                         'Select Pick-up Date',
                                         'Please select a pick-up date before proceeding.',
@@ -410,12 +412,12 @@ export const Screen = ({
                                     );
                                     return;
                                 } else {
-                                    let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                                    let formattedDate = moment(modifiedDate ? modifiedDate : pickupDate).format('YYYY-MM-DD');
                                     showSearchBarAnimation();
                                     refreshVehicleList();
                                     setPageIndex(0);
                                     setPickupLocation(modifiedLocation);
-                                    setPickupDate(modifiedDate);
+                                    setPickupDate(modifiedDate ? modifiedDate : pickupDate);
                                     setDropoffLocation('');
                                     setModifiedLocation('');
                                     startLoader();

@@ -16,13 +16,15 @@ class LocationSearch extends Component {
       this.setState({
         address: nextProps.pickupLocation,
       }, () => {
-        this.placesRef._onBlur()
+        if (this.props.initial) {
+          this.placesRef._onBlur()
+        }
       });
     }
   }
 
   render() {
-    let { pickupLocation, inputStyle, setPickupLocation } = this.props;
+    let { pickupLocation, inputStyle, setPickupLocation, initial = false } = this.props;
     return (
       <GooglePlacesAutocomplete
         ref={(ref) => {
