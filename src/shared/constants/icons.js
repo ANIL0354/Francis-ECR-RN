@@ -32,3 +32,4 @@ export const FREE_INACTIVE = require(`../../assets/free_inactive.png`);
 export const DOWN_ARROW = require(`../../assets/down_small.png`);
 export const VERTICAL_LINE = require(`../../assets/vertical.png`);
 export const DATE_ICON = require(`../../assets/date_icon.png`);
+export const SCROLL_UP = require(`../../assets/top-arrow.png`);
