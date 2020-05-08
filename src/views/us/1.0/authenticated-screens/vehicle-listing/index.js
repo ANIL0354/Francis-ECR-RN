@@ -34,9 +34,6 @@ const mapStateToProps = (state) => {
         transmissionType: state.CommonReducer.transmissionType,
         fuelType: state.CommonReducer.fuelType,
         userToken: state.CommonReducer.userToken,
-        gpsEnabled: state.CommonReducer.gpsEnabled,
-        locationEnabled: state.CommonReducer.locationEnabled,
-        neverAskPermission: state.CommonReducer.neverAskPermission,
         isNetConnected: state.CommonReducer.isNetConnected,
         pickupLocation: state.CommonReducer.pickupLocation,
         pickupDate: state.CommonReducer.pickupDate,
@@ -60,12 +57,7 @@ const mapDispatchToProps = (dispatch) => {
         setPickupDate: value => dispatch(setPickupDate(value)),
         setTransmissionType: value => dispatch(setTransmissionType(value)),
         setSeatsValue: value => dispatch(setSeatsValue(value)),
-        logout: (token, success, failure) => dispatch(logout(token, success, failure)),
-        setGpsEnabled: status => dispatch(setGpsEnabled(status)),
         setVehicleType: value => dispatch(setVehicleType(value)),
-        updateInternetStatus: status => dispatch(updateInternetStatus(status)),
-        setLocationEnabled: status => dispatch(setLocationEnabled(status)),
-        setNeverAskPermission: status => dispatch(setNeverAskPermission(status)),
         fetchVehicleListing: (data, success, failure) => dispatch(fetchVehicleListing(data, success, failure))
     }
 }

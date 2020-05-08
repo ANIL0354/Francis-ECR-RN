@@ -691,7 +691,10 @@ export const Screen = ({
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
                                         <Text style={styles.carOfferText}>{'Unlimited kms, free tank of fuel and standard insurance'}</Text>
                                     </View>
-                                    <CustomButton title={'View'}
+                                    <CustomButton
+                                        title={'View'}
+
+                                        onPress={() => navigation.navigate(SCREENS.BOOKING_DETAILS)}
                                         buttonStyle={styles.vehicleListButton}
                                     />
                                 </View>
