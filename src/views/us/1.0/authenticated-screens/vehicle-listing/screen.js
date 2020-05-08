@@ -74,8 +74,10 @@ export const Screen = ({
     pickupDate,
     setVehicleType,
     fuelTypesList,
+    setDropoffLocation,
     fetchVehicleListing,
     transmissionTypesList,
+    dropOffLocation,
     vehicleTypesList,
     refreshVehicleList,
     vehicleListItems,
@@ -102,6 +104,8 @@ export const Screen = ({
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [upButton, showUpButton] = useState(false);
+    const [modifiedLocation, setModifiedLocation] = useState('');
+    const [modifiedDate, setModifiedDate] = useState(new Date(pickupDate))
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -171,6 +175,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeats,
                                 childSeats: childSeats,
@@ -252,17 +257,20 @@ export const Screen = ({
                     </TouchableOpacity>
                 </View>}
                 {modifySearch && <ScrollView
+                    style={{
+                        paddingVertical: scaleText(20).fontSize,
+                    }}
                     keyboardShouldPersistTaps="always"
                     showsVerticalScrollIndicator={false}>
                     <View
                         style={{
                             backgroundColor: '#1e5e9e',
                             padding: scaleText(20).fontSize,
-                            margin: scaleText(20).fontSize
+                            marginHorizontal: scaleText(20).fontSize
                         }}>
                         <LocationSearch
-                            pickupLocation={pickupLocation}
-                            setPickupLocation={(value) => setPickupLocation(value)}
+                            pickupLocation={modifiedLocation ? modifiedLocation : pickupLocation}
+                            setPickupLocation={(value) => setModifiedLocation(value)}
                             inputStyle={{
                                 height: 2.5 * scaledFont.lineHeight,
                                 fontSize: scaledFont.fontSize,
@@ -275,7 +283,7 @@ export const Screen = ({
                             mode="date"
                             placeholder={
                                 pickupDate
-                                    ? `${moment(pickupDate).format('DD-MM-YYYY')}`
+                                    ? modifiedDate ? `${moment(modifiedDate).format('DD-MM-YYYY')}` : `${moment(pickupDate).format('DD-MM-YYYY')}`
                                     : 'Pick-up date'
                             }
                             format={'DD-MM-YYYY'}
@@ -290,7 +298,7 @@ export const Screen = ({
                             }}
                             getDateStr={(date) => {
                                 onDateChange(date);
-                                setPickupDate(date);
+                                setModifiedDate(date);
                             }}
                             iconSource={DATE_ICON}
                             customStyles={{
@@ -406,10 +414,15 @@ export const Screen = ({
                                     showSearchBarAnimation();
                                     refreshVehicleList();
                                     setPageIndex(0);
+                                    setPickupLocation(modifiedLocation);
+                                    setPickupDate(modifiedDate);
+                                    setDropoffLocation('');
+                                    setModifiedLocation('');
                                     startLoader();
                                     fetchVehicleListing(
                                         {
-                                            fromCity: pickupLocation,
+                                            fromCity: modifiedLocation,
+                                            toCity: pickupDate ? null : dropOffLocation,
                                             pickupDate: pickupDate ? formattedDate : null,
                                             adultSeats: adultSeatsValue,
                                             childSeats: childSeatsValue,
@@ -439,6 +452,22 @@ export const Screen = ({
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <Text
+                        onPress={() => {
+                            setModifiedLocation('');
+                            setModifiedLocation(null);
+                            showSearchBarAnimation();
+                        }}
+                        style={{
+                            color: 'white',
+                            fontSize: scaleText(16).fontSize,
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            textAlignVertical: 'center',
+                            marginRight: scaleText(20).fontSize,
+                            marginTop: scaleText(20).fontSize
+                        }}
+                    >{'CANCEL'}</Text>
                 </ScrollView>}
             </View>
 
@@ -455,6 +484,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
@@ -510,6 +540,7 @@ export const Screen = ({
                                                             fetchVehicleListing(
                                                                 {
                                                                     fromCity: pickupLocation,
+                                                                    toCity: pickupDate ? null : dropOffLocation,
                                                                     pickupDate: pickupDate ? formattedDate : null,
                                                                     adultSeats: adultSeatsValue,
                                                                     childSeats: childSeatsValue,
@@ -586,6 +617,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
@@ -715,7 +747,7 @@ export const Screen = ({
                     })
                 }}
                 source={SCROLL_UP}
-                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: 10, right: 10, }}
+                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
                 imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
                 onPress={() => scrollToTop()} />}
         </AppHoc >

@@ -15,6 +15,8 @@ class LocationSearch extends Component {
       this.placesRef.setAddressText(nextProps.pickupLocation);
       this.setState({
         address: nextProps.pickupLocation,
+      }, () => {
+        this.placesRef._onBlur()
       });
     }
   }

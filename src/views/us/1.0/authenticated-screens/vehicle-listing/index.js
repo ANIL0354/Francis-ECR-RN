@@ -20,6 +20,7 @@ import {
     fetchVehicleListing,
     getTransmissionTypes,
     getVehicleTypes,
+    setDropoffLocation,
     refreshVehicleList
 } from '../../../../../redux/actions';
 
@@ -31,6 +32,7 @@ const mapStateToProps = (state) => {
         adultSeatsValue: state.CommonReducer.adultSeatsValue,
         freeDays: state.CommonReducer.freeDays,
         vehicleType: state.CommonReducer.vehicleType,
+        dropOffLocation: state.CommonReducer.dropOffLocation,
         transmissionType: state.CommonReducer.transmissionType,
         fuelType: state.CommonReducer.fuelType,
         userToken: state.CommonReducer.userToken,
@@ -57,6 +59,7 @@ const mapDispatchToProps = (dispatch) => {
         getTransmissionTypes: (data, success, failure) => dispatch(getTransmissionTypes(data, success, failure)),
         setFreeDays: value => dispatch(setFreeDays(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),
+        setDropoffLocation: value => dispatch(setDropoffLocation(value)),
         setPickupDate: value => dispatch(setPickupDate(value)),
         setTransmissionType: value => dispatch(setTransmissionType(value)),
         setSeatsValue: value => dispatch(setSeatsValue(value)),

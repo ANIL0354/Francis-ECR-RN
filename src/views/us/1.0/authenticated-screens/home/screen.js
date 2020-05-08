@@ -79,6 +79,7 @@ export const Screen = ({
   transmissionTypesList,
   getTransmissionTypes,
   fetchVehicleListing,
+  setDropoffLocation,
 }) => {
   const today = new Date();
   const maxDate = today.setMonth(today.getMonth() + 6);
@@ -515,6 +516,7 @@ export const Screen = ({
                   setChildSeats(0);
                   setFreeDays(0);
                   setPickupDate(null);
+                  setDropoffLocation(item._id.toCity);
                   fetchVehicleListing(
                     {
                       fromCity: item._id.fromCity,
