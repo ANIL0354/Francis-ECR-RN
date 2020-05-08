@@ -74,8 +74,10 @@ export const Screen = ({
     pickupDate,
     setVehicleType,
     fuelTypesList,
+    setDropoffLocation,
     fetchVehicleListing,
     transmissionTypesList,
+    dropOffLocation,
     vehicleTypesList,
     refreshVehicleList,
     vehicleListItems,
@@ -102,6 +104,8 @@ export const Screen = ({
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [upButton, showUpButton] = useState(false);
+    const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
+    const [modifiedDate, setModifiedDate] = useState(null)
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -171,6 +175,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeats,
                                 childSeats: childSeats,
@@ -252,17 +257,20 @@ export const Screen = ({
                     </TouchableOpacity>
                 </View>}
                 {modifySearch && <ScrollView
+                    style={{
+                        paddingVertical: scaleText(20).fontSize,
+                    }}
                     keyboardShouldPersistTaps="always"
                     showsVerticalScrollIndicator={false}>
                     <View
                         style={{
                             backgroundColor: '#1e5e9e',
                             padding: scaleText(20).fontSize,
-                            margin: scaleText(20).fontSize
+                            marginHorizontal: scaleText(20).fontSize
                         }}>
                         <LocationSearch
-                            pickupLocation={pickupLocation}
-                            setPickupLocation={(value) => setPickupLocation(value)}
+                            pickupLocation={modifiedLocation || modifiedLocation === '' ? modifiedLocation : pickupLocation}
+                            setPickupLocation={(value) => setModifiedLocation(value)}
                             inputStyle={{
                                 height: 2.5 * scaledFont.lineHeight,
                                 fontSize: scaledFont.fontSize,
@@ -273,7 +281,8 @@ export const Screen = ({
 
                         <DatePicker
                             mode="date"
-                            placeholder={
+                            placeholder={modifiedDate
+                                ? `${moment(modifiedDate).format('DD-MM-YYYY')}` :
                                 pickupDate
                                     ? `${moment(pickupDate).format('DD-MM-YYYY')}`
                                     : 'Pick-up date'
@@ -281,6 +290,7 @@ export const Screen = ({
                             format={'DD-MM-YYYY'}
                             minDate={new Date()}
                             maxDate={new Date(maxDate)}
+                            // date={modifiedDate ? modifiedDate : pickupDate}
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             style={{
@@ -290,7 +300,7 @@ export const Screen = ({
                             }}
                             getDateStr={(date) => {
                                 onDateChange(date);
-                                setPickupDate(date);
+                                setModifiedDate(date);
                             }}
                             iconSource={DATE_ICON}
                             customStyles={{
@@ -336,7 +346,7 @@ export const Screen = ({
                                     textAlign: 'left',
                                     margin: 0,
                                     alignSelf: 'flex-start',
-                                    color: pickupDate ? 'black' : 'rgba(0,0,0,0.4)',
+                                    color: pickupDate || modifiedDate ? 'black' : 'rgba(0,0,0,0.4)',
                                     fontSize: scaledFont.fontSize,
                                     lineHeight: scaledFont.lineHeight,
                                     padding: 0,
@@ -389,7 +399,7 @@ export const Screen = ({
                                         ],
                                     );
                                     return;
-                                } else if (!pickupDate) {
+                                } else if (!pickupDate && !modifiedDate) {
                                     Alert.alert(
                                         'Select Pick-up Date',
                                         'Please select a pick-up date before proceeding.',
@@ -402,14 +412,19 @@ export const Screen = ({
                                     );
                                     return;
                                 } else {
-                                    let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                                    let formattedDate = moment(modifiedDate ? modifiedDate : pickupDate).format('YYYY-MM-DD');
                                     showSearchBarAnimation();
                                     refreshVehicleList();
                                     setPageIndex(0);
+                                    setPickupLocation(modifiedLocation);
+                                    setPickupDate(modifiedDate ? modifiedDate : pickupDate);
+                                    setDropoffLocation('');
+                                    setModifiedLocation('');
                                     startLoader();
                                     fetchVehicleListing(
                                         {
-                                            fromCity: pickupLocation,
+                                            fromCity: modifiedLocation,
+                                            toCity: pickupDate ? null : dropOffLocation,
                                             pickupDate: pickupDate ? formattedDate : null,
                                             adultSeats: adultSeatsValue,
                                             childSeats: childSeatsValue,
@@ -439,6 +454,22 @@ export const Screen = ({
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <Text
+                        onPress={() => {
+                            setModifiedLocation('');
+                            setModifiedLocation(null);
+                            showSearchBarAnimation();
+                        }}
+                        style={{
+                            color: 'white',
+                            fontSize: scaleText(16).fontSize,
+                            fontWeight: 'bold',
+                            textAlign: 'right',
+                            textAlignVertical: 'center',
+                            marginRight: scaleText(20).fontSize,
+                            marginTop: scaleText(20).fontSize
+                        }}
+                    >{'CANCEL'}</Text>
                 </ScrollView>}
             </View>
 
@@ -455,6 +486,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
@@ -486,7 +518,7 @@ export const Screen = ({
                                                 lineHeight: scaledLargeFont.lineHeight,
                                                 ...styles.pageHeading
                                             }}>
-                                            {`We have found ${vehicleListing.totalCount} vehicles available from ${pickupLocation}.`}
+                                            {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicles available from ${pickupLocation}.`}
                                         </Text>
                                         <FlatList
                                             style={styles.vehicleTypeList}
@@ -510,6 +542,7 @@ export const Screen = ({
                                                             fetchVehicleListing(
                                                                 {
                                                                     fromCity: pickupLocation,
+                                                                    toCity: pickupDate ? null : dropOffLocation,
                                                                     pickupDate: pickupDate ? formattedDate : null,
                                                                     adultSeats: adultSeatsValue,
                                                                     childSeats: childSeatsValue,
@@ -559,7 +592,7 @@ export const Screen = ({
                         )
                     }}
                     ListEmptyComponent={<View>
-                        <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles available.'}</Text>
+                        <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles found.'}</Text>
                     </View>}
                     ListFooterComponent={
                         <View style={{
@@ -586,6 +619,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
+                                toCity: pickupDate ? null : dropOffLocation,
                                 pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
@@ -715,7 +749,7 @@ export const Screen = ({
                     })
                 }}
                 source={SCROLL_UP}
-                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: 10, right: 10, }}
+                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
                 imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
                 onPress={() => scrollToTop()} />}
         </AppHoc >

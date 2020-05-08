@@ -36,7 +36,7 @@ const AppHeader = ({
                             />
                         </TouchableOpacity>}
                     >
-                        {rightMenuItems.map((item, index) => (<MenuItem onPress={() => {
+                        {rightMenuItems.map((item, index) => (<MenuItem textStyle={{ color: '#0091ff' }} onPress={() => {
                             setTimeout(() => item.onPress(), 400)
                             menuRef.current.hide();
                         }}>{item.label}</MenuItem>

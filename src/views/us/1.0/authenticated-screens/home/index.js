@@ -20,6 +20,7 @@ import {
     fetchVehicleListing,
     getFuelTypes,
     getTransmissionTypes,
+    setDropoffLocation,
     getVehicleTypes
 } from '../../../../../redux/actions';
 
@@ -54,6 +55,7 @@ const mapDispatchToProps = (dispatch) => {
         setChildSeats: value => dispatch(setChildSeats(value)),
         setAdultSeats: value => dispatch(setAdultSeats(value)),
         setPickupLocation: value => dispatch(setPickupLocation(value)),
+        setDropoffLocation: value => dispatch(setDropoffLocation(value)),
         setPickupDate: value => dispatch(setPickupDate(value)),
         setFuelType: value => dispatch(setFuelType(value)),
         setFreeDays: value => dispatch(setFreeDays(value)),

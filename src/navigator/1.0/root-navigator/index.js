@@ -14,6 +14,9 @@ const RootNavigator = ({
 }) => {
     useEffect(() => {
         NetInfo.addEventListener((state) => {
+            if (state === undefined || state.isConnected === undefined || state.isInternetReachable === undefined) {
+                return;
+            }
             if (!(state.isConnected && state.isInternetReachable)) {
                 stopLoader();
                 updateInternetStatus(false);
@@ -27,6 +30,9 @@ const RootNavigator = ({
     }, []);
 
     NetInfo.addEventListener((state) => {
+        if (state === undefined || state.isConnected === undefined || state.isInternetReachable === undefined) {
+            return;
+        }
         if (!(state.isConnected && state.isInternetReachable)) {
             stopLoader();
             updateInternetStatus(false);

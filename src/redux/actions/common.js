@@ -13,6 +13,7 @@ export const SET_TRANSMISSION_TYPE = 'SET_TRANSMISSION_TYPE';
 export const SET_FUEL_TYPE = 'SET_FUEL_TYPE';
 export const SET_PICKUP_LOCATION = 'SET_PICKUP_LOCATION';
 export const SET_PICKUP_DATE = 'SET_PICKUP_DATE';
+export const SET_DROPOFF_LOCATION = 'SET_DROPOFF_LOCATION';
 
 export const setUserLocation = userLocation => ({
     type: SET_USER_LOCATION,
@@ -101,6 +102,13 @@ export const setPickupLocation = value => {
         value
     }
 };
+
+export const setDropoffLocation = value => {
+    return {
+        type: SET_DROPOFF_LOCATION,
+        value
+    }
+}
 
 export const setPickupDate = value => {
     return {
