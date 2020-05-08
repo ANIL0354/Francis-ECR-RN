@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     View,
     Text,
@@ -36,6 +36,7 @@ import {
     DATE_ICON,
     LIMITS,
     SCREENS,
+    SCROLL_UP,
     BIG_NORMAL_CAR,
     GOOGLE_API_KEY
 } from '../../../../../shared/constants';
@@ -46,6 +47,7 @@ import IconText from "../../../../../components/atoms/IconTextComponent";
 import CustomButton from "../../../../../components/atoms/CustomButton";
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 import CustomLoader from "../../../../../components/atoms/Loader";
+import ImageButton from '../../../../../components/atoms/ImageButton';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
@@ -79,6 +81,16 @@ export const Screen = ({
     vehicleListItems,
     setTransmissionType,
 }) => {
+    const onViewRef = React.useRef((viewableItems) => {
+        if (viewableItems.changed[0].index <= 1) {
+            showUpButton(false);
+        }
+        if (viewableItems.changed[0].index >= 2) {
+            showUpButton(true);
+        }
+    })
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
+    const vehicleListRef = useRef();
     const today = new Date();
     const maxDate = today.setMonth(today.getMonth() + 6);
     const [filterMenu, showFilterMenu] = useState(false);
@@ -89,6 +101,7 @@ export const Screen = ({
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [upButton, showUpButton] = useState(false);
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -114,6 +127,12 @@ export const Screen = ({
     useEffect(() => {
         setDetailsList(vehicleListItems)
     }, [vehicleListItems]);
+
+    const scrollToTop = () => {
+        vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
+        showUpButton(false)
+    }
+
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -185,7 +204,7 @@ export const Screen = ({
                         <Image source={NAV_ARROW_ICON} height={20} width={20} />
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        <View style={{ flex: 1, paddingHorizontal: scaleText(15).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
+                        <TouchableOpacity onPress={() => showSearchBarAnimation()} style={{ flex: 1, paddingHorizontal: scaleText(15).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
@@ -206,8 +225,8 @@ export const Screen = ({
                                 }}>
                                 {pickupLocation ? pickupLocation : ''}
                             </Text>
-                        </View>
-                        <View style={{ flex: 1, marginHorizontal: scaleText(15).fontSize }}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => showSearchBarAnimation()} style={{ flex: 1, marginHorizontal: scaleText(15).fontSize }}>
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
@@ -226,7 +245,7 @@ export const Screen = ({
                                 }}>
                                 {pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : ''}
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => showSearchBarAnimation()}>
                         <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
@@ -391,7 +410,7 @@ export const Screen = ({
                                     fetchVehicleListing(
                                         {
                                             fromCity: pickupLocation,
-                                            pickupDate: formattedDate,
+                                            pickupDate: pickupDate ? formattedDate : null,
                                             adultSeats: adultSeatsValue,
                                             childSeats: childSeatsValue,
                                             freeDays: freeDays,
@@ -425,6 +444,7 @@ export const Screen = ({
 
             {
                 detailsList && <FlatList
+                    ref={vehicleListRef}
                     style={{ flex: 5, ...styles.detailsList }}
                     contentContainerStyle={{}}
                     refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
@@ -435,7 +455,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
-                                pickupDate: formattedDate,
+                                pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
                                 freeDays: freeDays,
@@ -490,7 +510,7 @@ export const Screen = ({
                                                             fetchVehicleListing(
                                                                 {
                                                                     fromCity: pickupLocation,
-                                                                    pickupDate: formattedDate,
+                                                                    pickupDate: pickupDate ? formattedDate : null,
                                                                     adultSeats: adultSeatsValue,
                                                                     childSeats: childSeatsValue,
                                                                     freeDays: freeDays,
@@ -552,6 +572,8 @@ export const Screen = ({
                         </View>}
                     data={detailsList}
                     scrollEnabled={true}
+                    onViewableItemsChanged={onViewRef.current}
+                    viewabilityConfig={viewConfigRef.current}
                     onEndReachedThreshold={0.8}
                     onEndReached={() => {
                         if (vehicleListing.totalCount === vehicleListItems.length) {
@@ -564,7 +586,7 @@ export const Screen = ({
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
-                                pickupDate: formattedDate,
+                                pickupDate: pickupDate ? formattedDate : null,
                                 adultSeats: adultSeatsValue,
                                 childSeats: childSeatsValue,
                                 freeDays: freeDays,
@@ -678,6 +700,24 @@ export const Screen = ({
                     }}
                 />
             }
+            {upButton && <ImageButton
+                onLayout={() => {
+                    LayoutAnimation.configureNext({
+                        duration: 250,
+                        create: {
+                            property: LayoutAnimation.Properties.opacity,
+                            type: 'fadeIn'
+                        },
+                        delete: {
+                            property: LayoutAnimation.Properties.opacity,
+                            type: 'fadeOut'
+                        }
+                    })
+                }}
+                source={SCROLL_UP}
+                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: 10, right: 10, }}
+                imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
+                onPress={() => scrollToTop()} />}
         </AppHoc >
     );
 };
