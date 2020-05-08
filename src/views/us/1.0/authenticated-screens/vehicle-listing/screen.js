@@ -518,7 +518,7 @@ export const Screen = ({
                                                 lineHeight: scaledLargeFont.lineHeight,
                                                 ...styles.pageHeading
                                             }}>
-                                            {`We have found ${vehicleListing.totalCount} vehicles available from ${pickupLocation}.`}
+                                            {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicles available from ${pickupLocation}.`}
                                         </Text>
                                         <FlatList
                                             style={styles.vehicleTypeList}
@@ -592,7 +592,7 @@ export const Screen = ({
                         )
                     }}
                     ListEmptyComponent={<View>
-                        <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles available.'}</Text>
+                        <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles found.'}</Text>
                     </View>}
                     ListFooterComponent={
                         <View style={{
