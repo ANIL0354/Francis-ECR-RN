@@ -82,7 +82,8 @@ export const LABELS = {
   resetPasswordLinkSent: STRINGS.RESET_PASSWORD_LINK_SENT,
   didNotReceiveLink: STRINGS.DID_NOT_RECEIVE_LINK,
   resend: STRINGS.RESEND,
-  weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL
+  weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL,
+  yourRequest:STRINGS.YOUR_REQUEST
 };
 
 export const STATUS_CODE = {

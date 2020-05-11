@@ -31,6 +31,7 @@ import {
     SEARCH_ICON,
     LUGGAGE_ICON,
     LIMITS,
+    LABELS,
     SCREENS,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
@@ -82,57 +83,15 @@ export const Screen = ({
             showUpButton(true);
         }
     })
-    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
-    const vehicleListRef = useRef();
     const today = new Date();
-    const maxDate = today.setMonth(today.getMonth() + 6);
-    const [filterMenu, showFilterMenu] = useState(false);
-    const [modifySearch, setModifySearch] = useState(false);
-    const [dateValue, onDateChange] = useState(pickupDate);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [detailsList, setDetailsList] = useState(null);
-    const [pageIndex, setPageIndex] = useState(0);
-    const [fetchingData, setFetchingData] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [upButton, showUpButton] = useState(false);
-
-    const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
-    const scaledMediumFont = scaleText(16);
-    const scaledSmallFont = scaleText(14);
-    const scaledSmallerFont = scaleText(12);
-    const scaledFont = scaleText(14)
-    let animatedValue = new Animated.Value(0);
-
-    const showSearchBarAnimation = () => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        setModifySearch(!modifySearch);
-    }
-
-    useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => {
-            refreshVehicleList();
-            setPageIndex(0);
-            stopLoader();
-        });
-    }, []);
-
-    useEffect(() => {
-        setDetailsList(vehicleListItems)
-    }, [vehicleListItems]);
-
-    const scrollToTop = () => {
-        vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
-        showUpButton(false)
-    }
-
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
             <View style={styles.childContainer}>
                 <TouchableOpacity
                     style={styles.navArrowContainer}
-                    onPress={() => navigation.navigate(SCREENS.LOGIN)}>
+                    onPress={() => navigation.navigate(SCREENS.VEHICLE_LISTING)}>
                     <Image
                         source={NAV_ARROW_ICON}
                         height={20}
@@ -142,9 +101,9 @@ export const Screen = ({
                 <Text
                     style={{
                         ...styles.subHeaderText,
-                        fontSize: largeScaledFont.fontSize,
+                        fontSize: scaledLargeFont.fontSize,
                     }}>
-                    {LABELS.forgotPasswordHeader}
+                    {LABELS.yourRequest}
                 </Text>
             </View>
 
