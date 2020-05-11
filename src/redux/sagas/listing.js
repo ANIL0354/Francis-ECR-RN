@@ -110,7 +110,6 @@ function* fetchFuelTypes({ data, success = () => { }, failure = () => { } }) {
         console.log('here')
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
-        console.log('res', response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();

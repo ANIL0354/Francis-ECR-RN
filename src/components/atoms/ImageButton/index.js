@@ -5,7 +5,7 @@ import styles from './styles';
 const ImageButton = ({
     style,
     source,
-    activeOpacity = 0.5,
+    activeOpacity = 0.9,
     imageStyle,
     onPress = () => { },
 }) => (

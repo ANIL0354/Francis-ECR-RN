@@ -7,6 +7,8 @@ import {
     ForgotScreen,
     CompleteDetailsScreen
 } from '../../../views/us/1.0/auth-screens';
+import { HomeScreen } from '../../../views/us/1.0/authenticated-screens/home';
+import { VehicleListing } from '../../../views/us/1.0/authenticated-screens/vehicle-listing';
 import { SCREENS } from '../../../shared/constants';
 import { connect } from 'react-redux';
 
@@ -15,7 +17,9 @@ const Stack = createStackNavigator();
 const AuthNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator headerMode={'none'} initialRouteName={SCREENS.LOGIN} >
+            <Stack.Navigator headerMode={'none'} initialRouteName={SCREENS.HOME} >
+                <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+                <Stack.Screen name={SCREENS.VEHICLE_LISTING} component={VehicleListing} />
                 <Stack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
                 <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotScreen} />
                 <Stack.Screen name={SCREENS.COMPLETE_DETAILS} component={CompleteDetailsScreen} />

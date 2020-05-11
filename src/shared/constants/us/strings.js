@@ -77,5 +77,6 @@ export const STRINGS = {
   RESET_PASSWORD_LINK_SENT: 'Reset password link has been sent to your email address.',
   DID_NOT_RECEIVE_LINK: "Didn't receive the link? ",
   RESEND: 'Resend',
-  WE_WILL_SEND_EMAIL: 'We will email you a link to reset your password.'
+  WE_WILL_SEND_EMAIL: 'We will email you a link to reset your password.',
+  LOGIN_OR_SIGNUP: 'Login/Signup'
 }

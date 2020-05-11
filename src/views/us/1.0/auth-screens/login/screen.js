@@ -58,6 +58,7 @@ export const Screen = ({
                                         surname: result.last_name
                                     }, (response) => {
                                         // navigation.navigate('HOME_SCREEN');
+                                        navigation.goBack();
                                     }, (response) => {
                                     })
                                     return;
@@ -106,6 +107,7 @@ export const Screen = ({
                 surname: userInfo.user.familyName
             }, (response) => {
                 stopLoader();
+                navigation.goBack();
             }, (response) => {
                 stopLoader();
             })
@@ -125,6 +127,10 @@ export const Screen = ({
     useEffect(() => {
         setSubscribed(false);
     }, [signUpTab])
+
+    useEffect(() => {
+        stopLoader();
+    })
 
     return (
         <AuthHoc
@@ -212,6 +218,7 @@ export const Screen = ({
                                     }, (response) => {
                                         stopLoader();
                                         setSignUpTab(false);
+                                        navigation.goBack();
                                     }, (response) => {
                                         stopLoader();
                                     })
@@ -231,7 +238,7 @@ export const Screen = ({
                                     role: 1
                                 }, (response) => {
                                     stopLoader();
-                                    // navigation.navigate('HOME_SCREEN')
+                                    navigation.goBack();
                                 }, (response) => {
                                     stopLoader();
                                 })

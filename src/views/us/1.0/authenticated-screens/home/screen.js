@@ -205,7 +205,12 @@ export const Screen = ({
 
 
   return (
-    <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+    <AppHoc
+      rightIcon={MENU_LOGO}
+      leftIcon={APP_LOGO}
+      centerIcon={USER_ICON}
+      navigation={navigation}
+    >
       {(filterMenu && isNetConnected) && (
         <AdvanceSearchFilter
           fuelType={fuelType}
@@ -390,6 +395,12 @@ export const Screen = ({
                   lineHeight: scaledFont.lineHeight,
                   padding: 0,
                 },
+                btnCancel:{
+                  paddingHorizontal:scaleText(10).fontSize
+                },
+                btnConfirm:{
+                  paddingHorizontal:scaleText(10).fontSize
+                }
               }}
               onDateChange={(date) => {
                 setSelectedDate(date);
@@ -524,6 +535,7 @@ export const Screen = ({
                   setChildSeats(0);
                   setFreeDays(0);
                   setPickupDate(null);
+                  setInitial(true);
                   setPickupLocation(item._id.fromCity);
                   setDropoffLocation(item._id.toCity);
                   fetchVehicleListing(

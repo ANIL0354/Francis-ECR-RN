@@ -55,6 +55,7 @@ const AdvanceSearchFilter = ({
             transparent
             animated
             onRequestClose={onClose}
+            supportedOrientations={['portrait', 'landscape']}
         >
             <View style={styles.filterModal}>
                 <View style={{ flex: 1 }} />

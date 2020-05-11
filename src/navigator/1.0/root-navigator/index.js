@@ -44,9 +44,10 @@ const RootNavigator = ({
     return (
         <>
             {
-                userToken
-                    ? (<AuthenticatedNavigator />)
-                    : (<AuthNavigator />)
+                // userToken
+                //     ? (<AuthenticatedNavigator />)
+                // :
+                (<AuthNavigator />)
             }
         </>
     )

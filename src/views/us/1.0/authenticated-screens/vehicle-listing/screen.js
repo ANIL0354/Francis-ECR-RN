@@ -3,13 +3,14 @@ import {
     View,
     Text,
     TextInput,
-    Image,
+    Image as SimpleImage,
     RefreshControl,
     FlatList,
     Animated,
     Alert,
     Keyboard,
     ScrollView,
+    Dimensions,
     LayoutAnimation,
     UIManager,
     TouchableOpacity,
@@ -17,6 +18,8 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
+import Image from 'react-native-image-progress';
+import Progress from 'react-native-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import {
     APP_LOGO,
@@ -105,7 +108,8 @@ export const Screen = ({
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [upButton, showUpButton] = useState(false);
     const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
-    const [modifiedDate, setModifiedDate] = useState(null)
+    const [modifiedDate, setModifiedDate] = useState(null);
+    const [portrait, setPortraitOrientation] = useState(true)
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -132,6 +136,13 @@ export const Screen = ({
         setDetailsList(vehicleListItems)
     }, [vehicleListItems]);
 
+    useEffect(() => {
+        Dimensions.addEventListener('change', () => {
+            Dimensions.get('window').width > Dimensions.get('window').height
+                ? setPortraitOrientation(false)
+                : setPortraitOrientation(true)
+        })
+    }, [])
     const scrollToTop = () => {
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
         showUpButton(false)
@@ -139,7 +150,12 @@ export const Screen = ({
 
 
     return (
-        <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+        <AppHoc
+            rightIcon={MENU_LOGO}
+            leftIcon={APP_LOGO}
+            centerIcon={USER_ICON}
+            navigation={navigation}
+        >
             {(filterMenu && isNetConnected) && (
                 <AdvanceSearchFilter
                     fuelType={fuelType}
@@ -206,7 +222,7 @@ export const Screen = ({
                         }}
                         hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                     >
-                        <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                        <SimpleImage source={NAV_ARROW_ICON} height={20} width={20} />
                     </TouchableOpacity>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
                         <TouchableOpacity onPress={() => showSearchBarAnimation()} style={{ flex: 1, paddingHorizontal: scaleText(15).fontSize, borderRightColor: 'white', borderRightWidth: 1 }}>
@@ -253,7 +269,7 @@ export const Screen = ({
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={() => showSearchBarAnimation()}>
-                        <Image source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
+                        <SimpleImage source={SEARCH_ICON} style={{ height: 20, width: 20 }} />
                     </TouchableOpacity>
                 </View>}
                 {modifySearch && <ScrollView
@@ -351,6 +367,12 @@ export const Screen = ({
                                     lineHeight: scaledFont.lineHeight,
                                     padding: 0,
                                 },
+                                btnCancel: {
+                                    paddingHorizontal: scaleText(10).fontSize,
+                                },
+                                btnConfirm: {
+                                    paddingHorizontal: scaleText(10).fontSize
+                                }
                             }}
                             onDateChange={(date) => {
                                 setSelectedDate(date);
@@ -364,7 +386,7 @@ export const Screen = ({
                                 paddingVertical: 5,
                                 marginBottom: 2,
                             }}>
-                            <Image source={SEARCH_ICON} />
+                            <SimpleImage source={SEARCH_ICON} />
                             <Text
                                 style={{
                                     color: 'white',
@@ -518,11 +540,15 @@ export const Screen = ({
                                                 lineHeight: scaledLargeFont.lineHeight,
                                                 ...styles.pageHeading
                                             }}>
-                                            {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicles available from ${pickupLocation}.`}
+                                            {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicle${vehicleListing.totalCount > 1 ? 's' : ''} available from ${pickupLocation}.`}
                                         </Text>
                                         <FlatList
                                             style={styles.vehicleTypeList}
-                                            contentContainerStyle={{}}
+                                            contentContainerStyle={{
+                                                flex: portrait ? 0 : 1,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
                                             data={vehicleTypesList}
                                             showsHorizontalScrollIndicator={false}
                                             horizontal={true}
@@ -563,6 +589,7 @@ export const Screen = ({
                                                             }}>{item.name}</Text>
                                                             <Image
                                                                 source={{ uri: item.URL }}
+                                                                indicator={Progress}
                                                                 resizeMode={'contain'}
                                                                 style={{
                                                                     ...styles.alignSelfCenter,
@@ -571,7 +598,7 @@ export const Screen = ({
                                                                 }}
                                                             />
                                                         </TouchableOpacity>
-                                                        <Image style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
+                                                        <SimpleImage style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
                                                     </View>
                                                 )
                                             }}
@@ -710,7 +737,7 @@ export const Screen = ({
                                                 numberOfLines={1}
                                                 style={styles.listPickupText}>{item.fromCity}</Text>
                                             <View style={styles.listDropoffWrapper}>
-                                                <Image source={TURN_RIGHT} />
+                                                <SimpleImage source={TURN_RIGHT} />
                                                 <Text
                                                     ellipsizeMode={'tail'}
                                                     numberOfLines={1}

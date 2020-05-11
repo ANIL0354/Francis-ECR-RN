@@ -22,6 +22,8 @@ const CustomSlider = ({
                 trackStyle={styles.trackStyle}
                 thumbStyle={styles.thumbStyle}
                 thumbTintColor={'#0091ff'}
+                animateTransitions={false}
+                animationType={'timing'}
                 minimumTrackTintColor={'#0091ff'}
                 maximumTrackTintColor={'lightgray'}
             />
