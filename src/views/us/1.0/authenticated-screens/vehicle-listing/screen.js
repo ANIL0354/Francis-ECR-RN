@@ -368,10 +368,18 @@ export const Screen = ({
                                     padding: 0,
                                 },
                                 btnCancel: {
+                                    flex: 1,
                                     paddingHorizontal: scaleText(10).fontSize,
                                 },
                                 btnConfirm: {
+                                    flex: 1,
                                     paddingHorizontal: scaleText(10).fontSize
+                                },
+                                btnTextCancel: {
+                                    textAlign: 'center'
+                                },
+                                btnTextConfirm: {
+                                    textAlign: 'center'
                                 }
                             }}
                             onDateChange={(date) => {
@@ -463,7 +471,6 @@ export const Screen = ({
                                         },
                                         () => { },
                                     );
-
                                 }
                             }}>
                             <Text
