@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Slider } from 'react-native-elements';
-import { View, Text } from 'react-native';
+import { View, Text, Easing } from 'react-native';
 import styles from './style';
 
 const CustomSlider = ({
@@ -22,8 +22,6 @@ const CustomSlider = ({
                 trackStyle={styles.trackStyle}
                 thumbStyle={styles.thumbStyle}
                 thumbTintColor={'#0091ff'}
-                animateTransitions={false}
-                animationType={'timing'}
                 minimumTrackTintColor={'#0091ff'}
                 maximumTrackTintColor={'lightgray'}
             />
