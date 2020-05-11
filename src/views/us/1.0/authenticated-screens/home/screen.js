@@ -39,6 +39,7 @@ import PopularPlace from '../../../../../components/atoms/PopularPlace';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
 import { CheckPermission } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
+import CustomDatePicker from '../../../../../components/atoms/CustomDatePicker';
 import styles from './style.js';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
@@ -82,11 +83,12 @@ export const Screen = ({
   setDropoffLocation,
 }) => {
   const today = new Date();
-  const maxDate = today.setMonth(today.getMonth() + 6);
+  const maxDate = today.setMonth(today.getMonth() + 12);
   const [appState, setAppState] = useState('active');
   const [dateValue, onDateChange] = useState(pickupDate);
   const [filterMenu, showFilterMenu] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [openPicker, setPickerOpen] = useState(false);
   const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
@@ -205,7 +207,12 @@ export const Screen = ({
 
 
   return (
-    <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+    <AppHoc
+      rightIcon={MENU_LOGO}
+      leftIcon={APP_LOGO}
+      centerIcon={USER_ICON}
+      navigation={navigation}
+    >
       {(filterMenu && isNetConnected) && (
         <AdvanceSearchFilter
           fuelType={fuelType}
@@ -390,6 +397,12 @@ export const Screen = ({
                   lineHeight: scaledFont.lineHeight,
                   padding: 0,
                 },
+                btnCancel: {
+                  paddingHorizontal: scaleText(10).fontSize
+                },
+                btnConfirm: {
+                  paddingHorizontal: scaleText(10).fontSize
+                }
               }}
               onDateChange={(date) => {
                 setSelectedDate(date);
@@ -524,6 +537,7 @@ export const Screen = ({
                   setChildSeats(0);
                   setFreeDays(0);
                   setPickupDate(null);
+                  setInitial(true);
                   setPickupLocation(item._id.fromCity);
                   setDropoffLocation(item._id.toCity);
                   fetchVehicleListing(

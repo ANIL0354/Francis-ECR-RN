@@ -12,41 +12,33 @@ const RootNavigator = ({
     stopLoader,
     updateInternetStatus
 }) => {
-    useEffect(() => {
-        NetInfo.addEventListener((state) => {
-            if (state === undefined || state.isConnected === undefined || state.isInternetReachable === undefined) {
-                return;
-            }
-            if (!(state.isConnected && state.isInternetReachable)) {
-                stopLoader();
-                updateInternetStatus(false);
-                SplashScreen.hide();
-            } else {
-                stopLoader();
-                updateInternetStatus(state.isConnected);
-                SplashScreen.hide();
-            }
-        })
-    }, []);
-
-    NetInfo.addEventListener((state) => {
-        if (state === undefined || state.isConnected === undefined || state.isInternetReachable === undefined) {
-            return;
-        }
-        if (!(state.isConnected && state.isInternetReachable)) {
+    NetInfo.fetch().then(({ isConnected }) => {
+        console.log(isConnected);
+        setTimeout(() => {
             stopLoader();
-            updateInternetStatus(false);
-        } else {
-            stopLoader();
-            updateInternetStatus(state.isConnected);
-        }
-    })
+            updateInternetStatus(isConnected);
+            SplashScreen.hide();
+            NetInfo.addEventListener((state) => {
+                if (state === undefined || state.isConnected === undefined || state.isInternetReachable === undefined) {
+                    return;
+                }
+                if (!(state.isConnected && state.isInternetReachable)) {
+                    stopLoader();
+                    updateInternetStatus(false);
+                } else {
+                    stopLoader();
+                    updateInternetStatus(state.isConnected);
+                }
+            })
+        }, 300)
+    });
     return (
         <>
             {
-                userToken
-                    ? (<AuthenticatedNavigator />)
-                    : (<AuthNavigator />)
+                // userToken
+                //     ? (<AuthenticatedNavigator />)
+                // :
+                (<AuthNavigator />)
             }
         </>
     )

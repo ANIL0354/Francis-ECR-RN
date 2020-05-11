@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     vehicleTypeList: {
+        flex: 1,
         paddingVertical: 10,
         borderColor: 'transparent',
         borderTopColor: 'lightgray',
