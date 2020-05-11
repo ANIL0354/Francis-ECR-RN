@@ -326,39 +326,8 @@ export const Screen = ({
                 ...styles.pickupLocationInput,
               }}
             />
-            <View style={{
-              padding: 0,
-              margin: 0,
-              width: '100%',
-            }}>
-              <Text style={{
-                textAlign: 'left',
-                minWidth: '40%',
-                margin: 0,
-                backgroundColor: 'white',
-                padding: 0,
-                height: 2.5 * scaledFont.lineHeight,
-                borderColor: 'black',
-                borderRadius: 5,
-                borderWidth: 0.8,
-                fontSize: scaledFont.fontSize,
-                lineHeight: scaledFont.lineHeight,
-                paddingHorizontal: 10,
-                alignSelf: 'center',
-                paddingVertical: 2,
-                paddingBottom: 0,
-                marginBottom: 0,
-                textAlign: 'left',
-              }} onPress={() => { setPickerOpen(true) }}>{'Show'}</Text>
-            </View>
-            <CustomDatePicker
-              visible={openPicker}
-              date={new Date(pickupDate)}
-              maxDate={new Date(maxDate)}
-              minDate={new Date()}
-              format={'DD-MM-YYYY'}
-            />
-            {/* <DatePicker
+
+            <DatePicker
               mode="date"
               placeholder={
                 pickupDate
@@ -438,7 +407,7 @@ export const Screen = ({
               onDateChange={(date) => {
                 setSelectedDate(date);
               }}
-            /> */}
+            />
             <TouchableOpacity
               onPress={() => showFilterMenu(true)}
               style={{
