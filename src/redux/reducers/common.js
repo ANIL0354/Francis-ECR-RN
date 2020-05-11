@@ -17,7 +17,8 @@ import {
     SET_TRANSMISSION_TYPE,
     SET_FUEL_TYPE,
     SET_PICKUP_LOCATION,
-    SET_PICKUP_DATE
+    SET_PICKUP_DATE,
+    SET_DROPOFF_LOCATION
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -40,6 +41,7 @@ const initialCommonState = {
     transmissionType: new Set(),
     fuelType: new Set(),
     pickupLocation: '',
+    dropOffLocation: '',
     pickupDate: null
 };
 
@@ -129,6 +131,11 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 pickupLocation: action.value
+            }
+        case SET_DROPOFF_LOCATION:
+            return {
+                ...state,
+                dropOffLocation: action.value
             }
         case SET_PICKUP_DATE:
             return {

@@ -79,6 +79,7 @@ export const Screen = ({
   transmissionTypesList,
   getTransmissionTypes,
   fetchVehicleListing,
+  setDropoffLocation,
 }) => {
   const today = new Date();
   const maxDate = today.setMonth(today.getMonth() + 6);
@@ -86,6 +87,7 @@ export const Screen = ({
   const [dateValue, onDateChange] = useState(pickupDate);
   const [filterMenu, showFilterMenu] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
   useEffect(() => {
@@ -178,6 +180,7 @@ export const Screen = ({
             let address = json.results[0].address_components;
             address.map((item) => {
               if (item.types.includes('locality')) {
+                setInitial(true);
                 setPickupLocation(item.long_name);
               }
               return;
@@ -302,7 +305,13 @@ export const Screen = ({
             }}>
             <LocationSearch
               pickupLocation={pickupLocation}
-              setPickupLocation={(value) => setPickupLocation(value)}
+              initial={initial}
+              setPickupLocation={(value) => {
+                if (initial) {
+                  setInitial(false);
+                }
+                setPickupLocation(value)
+              }}
               inputStyle={{
                 height: 2.5 * scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
@@ -515,6 +524,8 @@ export const Screen = ({
                   setChildSeats(0);
                   setFreeDays(0);
                   setPickupDate(null);
+                  setPickupLocation(item._id.fromCity);
+                  setDropoffLocation(item._id.toCity);
                   fetchVehicleListing(
                     {
                       fromCity: item._id.fromCity,

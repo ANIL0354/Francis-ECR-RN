@@ -86,12 +86,12 @@ function* fetchVehicleList({ data, success, failure }) {
             yield put(setAuthorization(null));
             stopLoader();
             Toast.show(response.data.msg, Toast.LONG);
-            return;
+            failure();
         }
         if (response.status !== STATUS_CODE.successful) {
-            failure();
             Toast.show(response.data.msg, Toast.LONG);
             stopLoader();
+            failure();
         }
         else {
             yield put(saveVehicleListing(response.data))
