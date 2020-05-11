@@ -39,6 +39,7 @@ import PopularPlace from '../../../../../components/atoms/PopularPlace';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
 import { CheckPermission } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
+import CustomDatePicker from '../../../../../components/atoms/CustomDatePicker';
 import styles from './style.js';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
@@ -87,6 +88,7 @@ export const Screen = ({
   const [dateValue, onDateChange] = useState(pickupDate);
   const [filterMenu, showFilterMenu] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [openPicker, setPickerOpen] = useState(false);
   const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
@@ -324,8 +326,39 @@ export const Screen = ({
                 ...styles.pickupLocationInput,
               }}
             />
-
-            <DatePicker
+            <View style={{
+              padding: 0,
+              margin: 0,
+              width: '100%',
+            }}>
+              <Text style={{
+                textAlign: 'left',
+                minWidth: '40%',
+                margin: 0,
+                backgroundColor: 'white',
+                padding: 0,
+                height: 2.5 * scaledFont.lineHeight,
+                borderColor: 'black',
+                borderRadius: 5,
+                borderWidth: 0.8,
+                fontSize: scaledFont.fontSize,
+                lineHeight: scaledFont.lineHeight,
+                paddingHorizontal: 10,
+                alignSelf: 'center',
+                paddingVertical: 2,
+                paddingBottom: 0,
+                marginBottom: 0,
+                textAlign: 'left',
+              }} onPress={() => { setPickerOpen(true) }}>{'Show'}</Text>
+            </View>
+            <CustomDatePicker
+              visible={openPicker}
+              date={new Date(pickupDate)}
+              maxDate={new Date(maxDate)}
+              minDate={new Date()}
+              format={'DD-MM-YYYY'}
+            />
+            {/* <DatePicker
               mode="date"
               placeholder={
                 pickupDate
@@ -395,17 +428,17 @@ export const Screen = ({
                   lineHeight: scaledFont.lineHeight,
                   padding: 0,
                 },
-                btnCancel:{
-                  paddingHorizontal:scaleText(10).fontSize
+                btnCancel: {
+                  paddingHorizontal: scaleText(10).fontSize
                 },
-                btnConfirm:{
-                  paddingHorizontal:scaleText(10).fontSize
+                btnConfirm: {
+                  paddingHorizontal: scaleText(10).fontSize
                 }
               }}
               onDateChange={(date) => {
                 setSelectedDate(date);
               }}
-            />
+            /> */}
             <TouchableOpacity
               onPress={() => showFilterMenu(true)}
               style={{
