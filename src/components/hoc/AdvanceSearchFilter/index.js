@@ -61,6 +61,7 @@ const AdvanceSearchFilter = ({
                 <View style={{ flex: 1 }} />
                 <View style={styles.filterWrapper}>
                     <ScrollView
+                        bounces={false}
                         showsVerticalScrollIndicator={false}
                         style={{ marginVertical: scaleText(10).fontSize }}>
                         <View style={styles.filterWrapperHeader}>

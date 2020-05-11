@@ -273,6 +273,7 @@ export const Screen = ({
                     </TouchableOpacity>
                 </View>}
                 {modifySearch && <ScrollView
+                    bounces={false}
                     style={{
                         paddingVertical: scaleText(20).fontSize,
                     }}
