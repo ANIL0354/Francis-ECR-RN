@@ -107,6 +107,7 @@ const AdvanceSearchFilter = ({
                                     <View style={{ marginBottom: 30, minWidth: '100%' }}>
                                         <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Adult Seat'}</Text>
                                         <Slider
+                                            maxValue={25}
                                             sliderValue={adultSeats}
                                             setSliderValue={(value) => setAdultsSeatValue(value)}
                                         />
@@ -114,6 +115,7 @@ const AdvanceSearchFilter = ({
                                     <View>
                                         <Text style={{ color: 'black', fontWeight: 'bold' }}>{'Child Seat'}</Text>
                                         <Slider
+                                            maxValue={25}
                                             sliderValue={childSeats}
                                             setSliderValue={(value) => setChildsSeatValue(value)}
                                         />
@@ -130,6 +132,7 @@ const AdvanceSearchFilter = ({
                                     setSelectedValue={(value) => setTransmission(value)}
                                 />}
                                 {filterValue === 4 && <Slider
+                                    maxValue={45}
                                     sliderValue={freeDaysValue}
                                     setSliderValue={(value) => setFreeDaysValue(value)}
                                 />}

@@ -82,7 +82,7 @@ export const Screen = ({
   setDropoffLocation,
 }) => {
   const today = new Date();
-  const maxDate = today.setMonth(today.getMonth() + 6);
+  const maxDate = today.setMonth(today.getMonth() + 12);
   const [appState, setAppState] = useState('active');
   const [dateValue, onDateChange] = useState(pickupDate);
   const [filterMenu, showFilterMenu] = useState(false);

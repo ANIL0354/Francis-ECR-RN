@@ -105,10 +105,12 @@ function* fetchVehicleList({ data, success, failure }) {
     }
 }
 
-function* fetchFuelTypes({ data, success = () => { }, failure }) {
+function* fetchFuelTypes({ data, success = () => { }, failure = () => { } }) {
     try {
+        console.log('here')
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
+        console.log('res', response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();
@@ -132,7 +134,7 @@ function* fetchFuelTypes({ data, success = () => { }, failure }) {
     }
 }
 
-function* fetchTranmissionTypes({ data, success = () => { }, failure }) {
+function* fetchTranmissionTypes({ data, success = () => { }, failure = () => { } }) {
     try {
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.TRANSMISSION_LISTING}` });
@@ -159,7 +161,7 @@ function* fetchTranmissionTypes({ data, success = () => { }, failure }) {
     }
 };
 
-function* fetchVehicleTypes({ data, success = () => { }, failure }) {
+function* fetchVehicleTypes({ data, success = () => { }, failure = () => { } }) {
     try {
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.VEHICLE_TYPE_LISTING}` });
