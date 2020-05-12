@@ -6,6 +6,7 @@ import { stopLoader, logout } from '../../../redux/actions';
 import CustomLoader from '../../atoms/Loader';
 import { STRINGS } from '../../../shared/constants/us/strings';
 import styles from './style';
+import { SCREENS } from '../../../shared/constants';
 
 const AppHoc = ({
   rightIcon,
@@ -16,6 +17,7 @@ const AppHoc = ({
   userToken,
   stopLoader,
   children,
+  navigation
 }) => {
   useEffect(() => {
     if (loader) {
@@ -29,25 +31,36 @@ const AppHoc = ({
         rightIcon={rightIcon}
         centerIcon={centerIcon}
         leftIcon={leftIcon}
-        rightMenuItems={[
-          {
-            label: STRINGS.LOGOUT,
-            onPress: () => Alert.alert(STRINGS.LOGOUT, STRINGS.LOGOUT_DESCRIPTION, [
-              {
-                text: STRINGS.CANCEL,
-                onPress: () => { },
-              },
-              {
-                text: STRINGS.CONFIRM,
-                onPress: () => logout(
-                  userToken,
-                  () => { },
-                  () => { },
-                )
-              },
-            ])
-          }
-        ]}
+        userToken={userToken}
+        rightMenuItems={userToken
+          ? [
+            {
+              label: STRINGS.LOGOUT,
+              onPress: () => Alert.alert(STRINGS.LOGOUT, STRINGS.LOGOUT_DESCRIPTION, [
+                {
+                  text: STRINGS.CANCEL,
+                  onPress: () => { },
+                },
+                {
+                  text: STRINGS.CONFIRM,
+                  onPress: () => logout(
+                    userToken,
+                    () => { },
+                    () => { },
+                  )
+                },
+              ])
+            }
+          ]
+          : [
+            {
+              label: STRINGS.LOGIN_OR_SIGNUP,
+              onPress: () => {
+                stopLoader();
+                navigation.navigate(SCREENS.LOGIN)
+              }
+            }
+          ]}
       />
       {children}
       {loader && (

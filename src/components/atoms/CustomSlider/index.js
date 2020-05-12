@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Slider } from 'react-native-elements';
-import { View, Text } from 'react-native';
+import { View, Text, Easing } from 'react-native';
 import styles from './style';
 
 const CustomSlider = ({

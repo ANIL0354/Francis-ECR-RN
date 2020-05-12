@@ -262,5 +262,5 @@ export const VEHICLE_DETAILS_LISTING = [
 ];
 
 export const LIMITS = {
-  vehicleList: 6,
+  vehicleList: 10,
 };
