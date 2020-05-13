@@ -493,7 +493,7 @@ export const Screen = ({
                         }}
                         style={{
                             color: 'white',
-                            fontSize: scaleText(16).fontSize,
+                            fontSize: scaleText(14).fontSize,
                             fontWeight: 'bold',
                             textAlign: 'right',
                             textAlignVertical: 'center',
