@@ -786,7 +786,6 @@ export const Screen = ({
                                     </View>
                                     <CustomButton
                                         title={'View'}
-
                                         onPress={() => navigation.navigate(SCREENS.BOOKING_DETAILS, { vehicleDetails: item })}
                                         buttonStyle={styles.vehicleListButton}
                                     />

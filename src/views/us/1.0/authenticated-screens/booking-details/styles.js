@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
@@ -13,9 +12,10 @@ const styles = StyleSheet.create({
     childContainer: {
         flexDirection: 'row',
         backgroundColor: '#0091ff',
-        paddingHorizontal: 30,
+        paddingHorizontal: scaleText(30).fontSize,
         paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
+        justifyContent: 'center'
     },
     navArrowContainer: {
         justifyContent: 'center',
@@ -38,15 +38,14 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'column',
         justifyContent: 'center',
-        maxHeight: scaleText(120).fontSize
+        alignItems: 'center',
     },
     detailsRightContainer: {
         flex: 3,
         flexDirection: 'column',
         justifyContent: 'center',
         marginLeft: scaleText(10).fontSize,
-        paddingHorizontal: scaleText(10).fontSize,
-        maxHeight: scaleText(120).fontSize,
+        padding: scaleText(10).fontSize,
     },
     carTitle: {
         color: 'black',
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // flexWrap: 'wrap',
         // maxWidth: '90%',
+        justifyContent: 'center'
     },
     iconTextContainer: {
         paddingVertical: 5,
@@ -72,6 +72,19 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         textTransform: 'capitalize'
     },
+    listPickupText: {
+        textTransform: 'uppercase',
+        textAlign: 'left',
+        fontSize: scaleText(16).fontSize,
+        textAlignVertical: 'center',
+        borderRadius: 15,
+    },
+    vehicleListButton: {
+        width: '100%',
+        borderRadius: scaleText(10).fontSize,
+        marginTop: scaleText(10).fontSize,
+        backgroundColor: '#009000'
+    }
 });
 
 export default styles;
