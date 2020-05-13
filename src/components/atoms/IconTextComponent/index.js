@@ -22,7 +22,9 @@ const IconText = ({
                 ...iconStyle,
                 ...styles.customIconStyle,
                 marginRight: iconLeftAlign ? 3 : 0,
-            }} source={icon} />
+            }}
+                resizeMode={'contain'}
+                source={icon} />
             <Text style={{
                 ...titleStyle,
                 fontSize: scaledFont.fontSize

@@ -40,8 +40,8 @@ import {
     LIMITS,
     SCREENS,
     SCROLL_UP,
-    BIG_NORMAL_CAR,
-    GOOGLE_API_KEY
+    FUEL_INACTIVE,
+    VEHICLE_YEAR_RANGE
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
@@ -142,7 +142,8 @@ export const Screen = ({
                 ? setPortraitOrientation(false)
                 : setPortraitOrientation(true)
         })
-    }, [])
+    }, []);
+
     const scrollToTop = () => {
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
         showUpButton(false)
@@ -674,12 +675,17 @@ export const Screen = ({
                     }}
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
+                        let extraItemsString = '';
+                        item.extraItemsData.items.map((item, index) => {
+                            extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
+                            return;
+                        });
                         return (
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
                                     <View style={styles.detailsLeftContainer}>
                                         <Image
-                                            source={{ uri: item.vehicleData.url }}
+                                            source={{ uri: item.vehicleData.url[0] }}
                                             resizeMode={'contain'}
                                             style={{
                                                 ...styles.alignSelfCenter,
@@ -695,14 +701,7 @@ export const Screen = ({
                                             <View style={{ ...styles.rowFlex, justifyContent: 'space-between' }}>
                                                 <IconText
                                                     icon={CAR_SEATS_ICON}
-                                                    title={`${item.vehicleData ? item.vehicleData.adultSeats + item.vehicleData.childSeats : 0} seats`}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                />
-                                                <IconText
-                                                    icon={LUGGAGE_ICON}
-                                                    title={`${item.vehicleData ? item.vehicleData.largeLuggageSpace + item.vehicleData.smallLuggageSpace : 0} bags`}
+                                                    title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child${item.vehicleData.childSeats > 1 ? 's' : ''}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
@@ -717,15 +716,40 @@ export const Screen = ({
                                             </View>
                                             <View style={styles.rowFlex}>
                                                 <IconText
+                                                    icon={LUGGAGE_ICON}
+                                                    title={`${item.vehicleData.largeLuggageSpace || 0} large, ${item.vehicleData.smallLuggageSpace || 0} small`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
+                                                    icon={FUEL_INACTIVE}
+                                                    title={item.fuelTypeData.fuelType}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                            </View>
+                                            <View style={styles.rowFlex}>
+                                                <IconText
+                                                    icon={GEAR_ICON}
+                                                    title={item.transmissionData.name}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                />
+                                                <IconText
                                                     icon={AC_ICON}
                                                     title={item.airConditionType ? 'Air Conditioning' : 'Non-AC'}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
+                                            </View>
+                                            <View style={styles.rowFlex}>
                                                 <IconText
-                                                    icon={GEAR_ICON}
-                                                    title={item.transmissionData.name}
+                                                    icon={VEHICLE_YEAR_RANGE}
+                                                    title={`${item.vehicleData.vehicleYearRange.from}-${item.vehicleData.vehicleYearRange.to}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
@@ -743,13 +767,13 @@ export const Screen = ({
                                             <Text
                                                 ellipsizeMode={'tail'}
                                                 numberOfLines={1}
-                                                style={styles.listPickupText}>{item.fromCity}</Text>
+                                                style={styles.listPickupText}>{item.pickupBranchData.city}</Text>
                                             <View style={styles.listDropoffWrapper}>
                                                 <SimpleImage source={TURN_RIGHT} />
                                                 <Text
                                                     ellipsizeMode={'tail'}
                                                     numberOfLines={1}
-                                                    style={styles.listDropoffText}>{item.toCity}</Text>
+                                                    style={styles.listDropoffText}>{item.dropoffBranchData.city}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -758,7 +782,7 @@ export const Screen = ({
                                 <View>
                                     <View style={styles.offerTextWrapper}>
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
-                                        <Text style={styles.carOfferText}>{'Unlimited kms, free tank of fuel and standard insurance'}</Text>
+                                        <Text style={styles.carOfferText}>{extraItemsString}</Text>
                                     </View>
                                     <CustomButton
                                         title={'View'}

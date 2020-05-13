@@ -13,7 +13,6 @@ const RootNavigator = ({
     updateInternetStatus
 }) => {
     NetInfo.fetch().then(({ isConnected }) => {
-        console.log(isConnected);
         setTimeout(() => {
             stopLoader();
             updateInternetStatus(isConnected);
