@@ -86,14 +86,7 @@ export const Screen = ({
     vehicleListItems,
     setTransmissionType,
 }) => {
-    const onViewRef = React.useRef((viewableItems) => {
-        if (viewableItems.changed[0].index <= 1) {
-            showUpButton(false);
-        }
-        if (viewableItems.changed[0].index >= 2) {
-            showUpButton(true);
-        }
-    })
+
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
     const vehicleListRef = useRef();
     const today = new Date();
@@ -109,7 +102,21 @@ export const Screen = ({
     const [upButton, showUpButton] = useState(false);
     const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
     const [modifiedDate, setModifiedDate] = useState(null);
-    const [portrait, setPortraitOrientation] = useState(true)
+    const [portrait, setPortraitOrientation] = useState(true);
+    let scrolledUp = false;
+
+    const onViewRef = React.useRef((viewableItems) => {
+        console.log(viewableItems.changed[0].index, '--', scrolledUp)
+        if (scrolledUp) {
+            return;
+        }
+        if (viewableItems.changed[0].index <= 1) {
+            showUpButton(false);
+        }
+        if (viewableItems.changed[0].index >= 2) {
+            showUpButton(true);
+        }
+    })
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -145,6 +152,7 @@ export const Screen = ({
     }, []);
 
     const scrollToTop = () => {
+        scrolledUp = true;
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
         showUpButton(false)
     }
@@ -810,7 +818,10 @@ export const Screen = ({
                 source={SCROLL_UP}
                 style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
                 imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
-                onPress={() => scrollToTop()} />}
+                onPress={() => {
+                    scrolledUp = true;
+                    scrollToTop();
+                }} />}
         </AppHoc >
     );
 };
