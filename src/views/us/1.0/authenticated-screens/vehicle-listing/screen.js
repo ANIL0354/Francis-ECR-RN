@@ -586,7 +586,7 @@ export const Screen = ({
                                                                     vehicleType: Array.from(selectedVehicleType),
                                                                     transmissionType: Array.from(transmissionType),
                                                                     limit: LIMITS.vehicleList,
-                                                                    index: pageIndex + 1,
+                                                                    index: 0,
                                                                 },
                                                                 () => { stopLoader() },
                                                                 () => { },
@@ -701,7 +701,7 @@ export const Screen = ({
                                             <View style={{ ...styles.rowFlex, justifyContent: 'space-between' }}>
                                                 <IconText
                                                     icon={CAR_SEATS_ICON}
-                                                    title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child${item.vehicleData.childSeats > 1 ? 's' : ''}`}
+                                                    title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
