@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements';
-import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, KeyboardAvoidingView, Dimensions, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { connect } from 'react-redux';
 import validator from "./validator";
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
@@ -32,8 +32,17 @@ const Form = ({
 }) => {
     const today = new Date();
     const maxDate = today.setFullYear(today.getFullYear() - 16);
-    const [selectedCountry, setSelectedCountry] = useState(null)
-    const [selectedCountryCode, setSelectedCountryCode] = useState('')
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountryCode, setSelectedCountryCode] = useState('');
+    const [portrait, setPortraitOrientation] = useState(true)
+
+    useEffect(() => {
+        Dimensions.addEventListener('change', () => {
+            Dimensions.get('window').width > Dimensions.get('window').height
+                ? setPortraitOrientation(false)
+                : setPortraitOrientation(true)
+        })
+    }, [])
 
     return (
         <React.Fragment>
@@ -43,14 +52,14 @@ const Form = ({
                     component={CustomFormInput}
                     placeholder={STRINGS.NAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
                 <Field
                     name={STRINGS.SURNAME_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.SURNAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
             </View>
 
@@ -67,14 +76,14 @@ const Form = ({
                         saveDateString(date)
                     }}
                     maxDate={new Date(maxDate)}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
                 <Field
                     name={STRINGS.CITY_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.CITY_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
             </View>
 
@@ -95,7 +104,7 @@ const Form = ({
                     returnKeyType={'go'}
                     countryDrop={true}
                     placeholder={'Country'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
@@ -103,7 +112,7 @@ const Form = ({
                     keyboardType={'email-address'}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
             </View>
             <View style={styles.fieldsRow}>
@@ -122,7 +131,7 @@ const Form = ({
                     }}
                     returnKeyType={'go'}
                     placeholder={'Country Code'}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                 />
                 <Field
                     name={STRINGS.PHONE_NUMBER}
@@ -130,7 +139,7 @@ const Form = ({
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
                     maxLength={15}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
@@ -141,7 +150,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'next'}
                     maxLength={15}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                 />
                 <Field
@@ -150,7 +159,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'go'}
                     maxLength={15}
-                    style={{ width: scaleText(160).fontSize }}
+                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
                     placeholder={STRINGS.RE_PASSWORD_PLACEHOLDER}
                 />
             </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
 import {
     LoginManager,
     AccessToken,
@@ -11,7 +11,7 @@ import {
     statusCodes,
 } from '@react-native-community/google-signin';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
-import { APP_LOGO, GOOGLE_SIGNIN_WEB_CLIENT_ID, LABELS, SCREENS } from '../../../../../shared/constants'
+import { APP_LOGO, GOOGLE_SIGNIN_WEB_CLIENT_ID, LABELS, SCREENS, NAV_ARROW_ICON } from '../../../../../shared/constants'
 import { LoginForm } from './login-form';
 import { SignupForm } from './signup-form';
 import { scaleText } from '../../../../../helpers'
@@ -139,6 +139,15 @@ export const Screen = ({
             toastMessage={toastMessage}
         >
             <View style={styles.childContainer}>
+                <TouchableOpacity
+                    style={{ alignItems: 'center', justifyContent: 'center', marginLeft: -1 * scaleText(40).fontSize, marginRight: scaleText(40).fontSize }}
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                    hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
+                >
+                    <Image source={NAV_ARROW_ICON} height={20} width={20} />
+                </TouchableOpacity>
                 <Text
                     style={{
                         ...styles.subHeaderText,

@@ -4,8 +4,9 @@ import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     childContainer: {
+        flexDirection: 'row',
         backgroundColor: '#0091ff',
-        paddingHorizontal: 30,
+        paddingHorizontal: scaleText(30).fontSize,
         paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
         justifyContent: 'center'

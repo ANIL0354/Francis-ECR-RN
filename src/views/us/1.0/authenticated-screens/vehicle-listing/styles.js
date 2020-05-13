@@ -166,6 +166,9 @@ const styles = StyleSheet.create({
         // maxWidth: '90%',
     },
     iconTextContainer: {
+        // flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center',
         paddingVertical: 5,
         marginRight: scaleText(10).fontSize
     },

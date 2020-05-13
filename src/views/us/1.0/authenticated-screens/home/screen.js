@@ -326,7 +326,34 @@ export const Screen = ({
                 ...styles.pickupLocationInput,
               }}
             />
-
+            {/* <CustomDatePicker
+              maxDate={new Date(maxDate)}
+              minDate={new Date()}
+              date={pickupDate}
+              visible={openPicker}
+              onDateChange={(date) => { setPickupDate(date); }}
+            />
+            <Text
+              onPress={() => setPickerOpen(true)}
+              style={{
+                textAlign: 'left',
+                minWidth: '40%',
+                margin: 0,
+                backgroundColor: 'white',
+                padding: 0,
+                height: 2.5 * scaledFont.lineHeight,
+                borderColor: 'black',
+                borderRadius: 5,
+                borderWidth: 0.8,
+                fontSize: scaledFont.fontSize,
+                lineHeight: scaledFont.lineHeight,
+                paddingHorizontal: 10,
+                alignSelf: 'center',
+                paddingVertical: 2,
+                paddingBottom: 0,
+                marginBottom: 0,
+                textAlign: 'left',
+              }}>{'Show Pickup'}</Text> */}
             <DatePicker
               mode="date"
               placeholder={

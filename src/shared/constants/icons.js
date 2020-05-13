@@ -13,6 +13,7 @@ export const CANCEL_ICON = require(`../../assets/cancel.png`);
 export const CAR_CHECKLIST = require(`../../assets/images/car_washer_checklist.png`);
 export const CAR_WASHER = require(`../../assets/images/car_washer.png`);
 export const CAR_SEATS_ICON = require(`../../assets/SEATS.png`);
+export const VEHICLE_YEAR_RANGE = require(`../../assets/Vehicle_year.png`);
 export const LUGGAGE_ICON = require(`../../assets/LUGGAGE.png`);
 export const GEAR_ICON = require(`../../assets/GEAR.png`);
 export const DOORS_ICON = require(`../../assets/DOORS.png`);
