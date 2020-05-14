@@ -19,12 +19,15 @@ const CustomDatePicker = ({
     meta: { touched, error, visited },
     ...props
 }) => {
+    const [parentWidth, setParentWidth] = useState(0);
     const validationMessage =
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
     return (
-        <View>
+        <View
+            onLayout={({ nativeEvent }) => { setParentWidth(nativeEvent.layout.width) }}
+            style={{ ...style, }}>
             <DatePicker
                 mode="date"
                 placeholder={input.value ? `${moment(input.value).format(dateFormat)}` : placeholder}
@@ -33,16 +36,17 @@ const CustomDatePicker = ({
                 maxDate={maxDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
-                style={styles.pickerStyle}
+                // style={styles.pickerStyle}
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateTouchBody: {
-                        ...style,
+                        width: scaleText(parentWidth).fontSize + scaleText(10).fontSize,
                     },
                     dateIcon: styles.dateIcon,
                     dateInput: {
                         ...style,
                         ...styles.dateInput,
+                        width: scaleText(parentWidth).fontSize,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
                         height: 2.5 * scaledFont.lineHeight,

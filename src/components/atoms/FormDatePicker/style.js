@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0,
         borderColor: 'transparent',
-        width: '100%', borderColor: 'black',
+        borderColor: 'black',
         borderRadius: 5,
         borderWidth: 0.8,
         paddingHorizontal: 10,
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
         marginBottom: 0,
         textAlign: 'left',
+        flex: 1
     },
     dateText: {
         margin: 0,

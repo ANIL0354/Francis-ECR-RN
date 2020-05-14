@@ -19,7 +19,7 @@ const CustomFormInput = ({
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize)
     return (
-        <View style={{ justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor={'black'}

@@ -103,17 +103,13 @@ export const Screen = ({
     const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
     const [modifiedDate, setModifiedDate] = useState(null);
     const [portrait, setPortraitOrientation] = useState(true);
-    let scrolledUp = false;
 
     const onViewRef = React.useRef((viewableItems) => {
-        console.log(viewableItems.changed[0].index, '--', scrolledUp)
-        if (scrolledUp) {
-            return;
-        }
-        if (viewableItems.changed[0].index <= 1) {
+        console.log(viewableItems.viewableItems[0].index)
+        if (viewableItems.viewableItems[0].index <= 1) {
             showUpButton(false);
         }
-        if (viewableItems.changed[0].index >= 2) {
+        if (viewableItems.viewableItems[0].index >= 2) {
             showUpButton(true);
         }
     })
@@ -152,9 +148,7 @@ export const Screen = ({
     }, []);
 
     const scrollToTop = () => {
-        scrolledUp = true;
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
-        showUpButton(false)
     }
 
 
@@ -818,10 +812,7 @@ export const Screen = ({
                 source={SCROLL_UP}
                 style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
                 imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
-                onPress={() => {
-                    scrolledUp = true;
-                    scrollToTop();
-                }} />}
+                onPress={() => scrollToTop()} />}
         </AppHoc >
     );
 };

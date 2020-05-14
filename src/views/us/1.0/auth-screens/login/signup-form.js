@@ -52,14 +52,14 @@ const Form = ({
                     component={CustomFormInput}
                     placeholder={STRINGS.NAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.SURNAME_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.SURNAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
 
@@ -76,14 +76,14 @@ const Form = ({
                         saveDateString(date)
                     }}
                     maxDate={new Date(maxDate)}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.CITY_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.CITY_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
 
@@ -104,7 +104,7 @@ const Form = ({
                     returnKeyType={'go'}
                     countryDrop={true}
                     placeholder={'Country'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
@@ -112,7 +112,7 @@ const Form = ({
                     keyboardType={'email-address'}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
             <View style={styles.fieldsRow}>
@@ -131,7 +131,7 @@ const Form = ({
                     }}
                     returnKeyType={'go'}
                     placeholder={'Country Code'}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.PHONE_NUMBER}
@@ -139,7 +139,7 @@ const Form = ({
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
                     maxLength={15}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
@@ -150,7 +150,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'next'}
                     maxLength={15}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                     placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                 />
                 <Field
@@ -159,7 +159,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'go'}
                     maxLength={15}
-                    style={{ width: portrait ? scaleText(160).fontSize : scaleText(300).fontSize }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.RE_PASSWORD_PLACEHOLDER}
                 />
             </View>
