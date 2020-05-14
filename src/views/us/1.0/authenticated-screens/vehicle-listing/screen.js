@@ -152,7 +152,6 @@ export const Screen = ({
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
     }
 
-
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -208,7 +207,6 @@ export const Screen = ({
                             },
                             () => {
                                 stopLoader();
-                                navigation.navigate(SCREENS.VEHICLE_LISTING);
                             },
                             () => { },
                         );
@@ -472,7 +470,6 @@ export const Screen = ({
                                         },
                                         () => {
                                             stopLoader();
-                                            navigation.navigate(SCREENS.VEHICLE_LISTING);
                                         },
                                         () => { },
                                     );
@@ -532,7 +529,6 @@ export const Screen = ({
                                 index: 0,
                             },
                             () => {
-                                navigation.navigate(SCREENS.VEHICLE_LISTING);
                                 setIsRefreshing(false)
                             },
                             () => { },
@@ -557,7 +553,7 @@ export const Screen = ({
                                         <FlatList
                                             style={styles.vehicleTypeList}
                                             contentContainerStyle={{
-                                                flex: portrait ? 0 : 1,
+                                                minWidth: '100%',
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
                                             }}
