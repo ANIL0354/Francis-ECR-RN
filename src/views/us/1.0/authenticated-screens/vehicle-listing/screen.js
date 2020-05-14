@@ -105,12 +105,13 @@ export const Screen = ({
     const [portrait, setPortraitOrientation] = useState(true);
 
     const onViewRef = React.useRef((viewableItems) => {
-        console.log(viewableItems.viewableItems[0].index)
-        if (viewableItems.viewableItems[0].index <= 1) {
-            showUpButton(false);
-        }
-        if (viewableItems.viewableItems[0].index >= 2) {
-            showUpButton(true);
+        if (viewableItems && viewableItems.viewableItems && viewableItems.viewableItems[0] && viewableItems.viewableItems[0].index) {
+            if (viewableItems.viewableItems[0].index <= 1) {
+                showUpButton(false);
+            }
+            if (viewableItems.viewableItems[0].index >= 2) {
+                showUpButton(true);
+            }
         }
     })
 
@@ -678,10 +679,12 @@ export const Screen = ({
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
                         let extraItemsString = '';
-                        item.extraItemsData.items.map((item, index) => {
-                            extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
-                            return;
-                        });
+                        if (item.extraItemsData && item.extraItemsData.items) {
+                            item.extraItemsData.items.map((item, index) => {
+                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
+                                return;
+                            });
+                        }
                         return (
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
@@ -791,7 +794,7 @@ export const Screen = ({
                                 <View>
                                     <View style={styles.offerTextWrapper}>
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
-                                        <Text style={styles.carOfferText}>{extraItemsString}</Text>
+                                        <Text style={styles.carOfferText}>{!!extraItemsString ? extraItemsString : 'N/A'}</Text>
                                     </View>
                                     <CustomButton title={'View'}
                                         buttonStyle={styles.vehicleListButton}
