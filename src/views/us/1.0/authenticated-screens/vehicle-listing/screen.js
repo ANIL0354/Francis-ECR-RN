@@ -563,7 +563,7 @@ export const Screen = ({
                                             data={vehicleTypesList}
                                             showsHorizontalScrollIndicator={false}
                                             horizontal={true}
-                                            keyExtractor={(item) => item.id}
+                                            keyExtractor={(item) => item._id}
                                             renderItem={({ item }) => {
                                                 return (
                                                     <View style={styles.vehicleTypeWrapper}>
@@ -749,9 +749,16 @@ export const Screen = ({
                                                 />
                                             </View>
                                             <View style={styles.rowFlex}>
-                                                <IconText
+                                                {/* <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
                                                     title={`${item.vehicleData.vehicleYearRange.from}-${item.vehicleData.vehicleYearRange.to}`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                /> */}
+                                                <IconText
+                                                    icon={VEHICLE_YEAR_RANGE}
+                                                    title={`${item.vehicleData.manufactureYear || 'N/A'}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
