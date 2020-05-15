@@ -86,14 +86,7 @@ export const Screen = ({
     vehicleListItems,
     setTransmissionType,
 }) => {
-    const onViewRef = React.useRef((viewableItems) => {
-        if (viewableItems.changed[0].index <= 1) {
-            showUpButton(false);
-        }
-        if (viewableItems.changed[0].index >= 2) {
-            showUpButton(true);
-        }
-    })
+
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
     const vehicleListRef = useRef();
     const today = new Date();
@@ -109,7 +102,18 @@ export const Screen = ({
     const [upButton, showUpButton] = useState(false);
     const [modifiedLocation, setModifiedLocation] = useState(pickupLocation);
     const [modifiedDate, setModifiedDate] = useState(null);
-    const [portrait, setPortraitOrientation] = useState(true)
+    const [portrait, setPortraitOrientation] = useState(true);
+
+    const onViewRef = React.useRef((viewableItems) => {
+        if (viewableItems && viewableItems.viewableItems && viewableItems.viewableItems[0] && viewableItems.viewableItems[0].index) {
+            if (viewableItems.viewableItems[0].index <= 1) {
+                showUpButton(false);
+            }
+            if (viewableItems.viewableItems[0].index >= 2) {
+                showUpButton(true);
+            }
+        }
+    })
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
@@ -146,9 +150,7 @@ export const Screen = ({
 
     const scrollToTop = () => {
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
-        showUpButton(false)
     }
-
 
     return (
         <AppHoc
@@ -205,7 +207,6 @@ export const Screen = ({
                             },
                             () => {
                                 stopLoader();
-                                navigation.navigate(SCREENS.VEHICLE_LISTING);
                             },
                             () => { },
                         );
@@ -469,7 +470,6 @@ export const Screen = ({
                                         },
                                         () => {
                                             stopLoader();
-                                            navigation.navigate(SCREENS.VEHICLE_LISTING);
                                         },
                                         () => { },
                                     );
@@ -493,7 +493,7 @@ export const Screen = ({
                         }}
                         style={{
                             color: 'white',
-                            fontSize: scaleText(16).fontSize,
+                            fontSize: scaleText(14).fontSize,
                             fontWeight: 'bold',
                             textAlign: 'right',
                             textAlignVertical: 'center',
@@ -529,7 +529,6 @@ export const Screen = ({
                                 index: 0,
                             },
                             () => {
-                                navigation.navigate(SCREENS.VEHICLE_LISTING);
                                 setIsRefreshing(false)
                             },
                             () => { },
@@ -554,14 +553,14 @@ export const Screen = ({
                                         <FlatList
                                             style={styles.vehicleTypeList}
                                             contentContainerStyle={{
-                                                flex: portrait ? 0 : 1,
+                                                minWidth: '100%',
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
                                             }}
                                             data={vehicleTypesList}
                                             showsHorizontalScrollIndicator={false}
                                             horizontal={true}
-                                            keyExtractor={(item) => item.id}
+                                            keyExtractor={(item) => item._id}
                                             renderItem={({ item }) => {
                                                 return (
                                                     <View style={styles.vehicleTypeWrapper}>
@@ -586,7 +585,7 @@ export const Screen = ({
                                                                     vehicleType: Array.from(selectedVehicleType),
                                                                     transmissionType: Array.from(transmissionType),
                                                                     limit: LIMITS.vehicleList,
-                                                                    index: pageIndex + 1,
+                                                                    index: 0,
                                                                 },
                                                                 () => { stopLoader() },
                                                                 () => { },
@@ -676,10 +675,12 @@ export const Screen = ({
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
                         let extraItemsString = '';
-                        item.extraItemsData.items.map((item, index) => {
-                            extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
-                            return;
-                        });
+                        if (item.extraItemsData && item.extraItemsData.items) {
+                            item.extraItemsData.items.map((item, index) => {
+                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
+                                return;
+                            });
+                        }
                         return (
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
@@ -701,7 +702,7 @@ export const Screen = ({
                                             <View style={{ ...styles.rowFlex, justifyContent: 'space-between' }}>
                                                 <IconText
                                                     icon={CAR_SEATS_ICON}
-                                                    title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child${item.vehicleData.childSeats > 1 ? 's' : ''}`}
+                                                    title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
@@ -747,9 +748,16 @@ export const Screen = ({
                                                 />
                                             </View>
                                             <View style={styles.rowFlex}>
-                                                <IconText
+                                                {/* <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
                                                     title={`${item.vehicleData.vehicleYearRange.from}-${item.vehicleData.vehicleYearRange.to}`}
+                                                    titleFontSize={14}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                /> */}
+                                                <IconText
+                                                    icon={VEHICLE_YEAR_RANGE}
+                                                    title={`${item.vehicleData.manufactureYear || 'N/A'}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
@@ -782,7 +790,7 @@ export const Screen = ({
                                 <View>
                                     <View style={styles.offerTextWrapper}>
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
-                                        <Text style={styles.carOfferText}>{extraItemsString}</Text>
+                                        <Text style={styles.carOfferText}>{!!extraItemsString ? extraItemsString : 'N/A'}</Text>
                                     </View>
                                     <CustomButton
                                         title={'View'}

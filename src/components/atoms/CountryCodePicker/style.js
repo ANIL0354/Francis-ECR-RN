@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     wrapperContainer: {
+        flex: 1,
         justifyContent: 'center',
         padding: 0,
         margin: 0,

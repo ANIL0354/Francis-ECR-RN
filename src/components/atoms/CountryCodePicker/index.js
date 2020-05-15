@@ -103,7 +103,7 @@ const CountryCodePicker = ({
     const validationMessage =
         touched && error ? error : '';
     return (
-        <View style={styles.wrapperContainer}>
+        <View style={{ ...styles.wrapperContainer, flex: 1 }}>
             <TouchableOpacity
                 onPress={() => setShowCountries(true)}
                 style={{
@@ -129,6 +129,7 @@ const CountryCodePicker = ({
                         // contentContainerStyle: {
                         //     paddingHorizontal: 10
                         // },
+                        style: { flex: 1 },
                         ListHeaderComponent: () => (
                             <React.Fragment>
                                 <TouchableOpacity onPress={() => {

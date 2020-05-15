@@ -215,8 +215,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     vehicleListButton: {
-        margin: 10,
-        backgroundColor: '#009000'
+        marginTop: scaleText(10).fontSize,
+        marginHorizontal: scaleText(10).fontSize,
+        backgroundColor: '#009000',
     }
 });
 
