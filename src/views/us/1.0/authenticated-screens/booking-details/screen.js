@@ -53,7 +53,7 @@ export const Screen = ({
     route
 }) => {
 
-    // console.log('props', route)
+    console.log('props', route.params)
 
     let { vehicleDetails } = route.params;
     const onViewRef = React.useRef((viewableItems) => {
@@ -158,9 +158,16 @@ export const Screen = ({
                                         />
                                     </View>
                                     <View style={styles.rowFlex}>
-                                        <IconText
+                                        {/* <IconText
                                             icon={VEHICLE_YEAR_RANGE}
                                             title={`${vehicleDetails.vehicleData.vehicleYearRange.from}-${vehicleDetails.vehicleData.vehicleYearRange.to}`}
+                                            titleFontSize={14}
+                                            titleStyle={styles.iconText}
+                                            containerStyle={styles.iconTextContainer}
+                                        /> */}
+                                        <IconText
+                                            icon={VEHICLE_YEAR_RANGE}
+                                            title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
                                             titleFontSize={14}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
@@ -189,7 +196,7 @@ export const Screen = ({
                         </Text>
                     </View>
                     <View>
-                        {/* <CustomDraggableCalendar /> */}
+                        <CustomDraggableCalendar />
                     </View>
                     <View style={{ marginVertical: scaleText(20).fontSize }}>
                         <Text

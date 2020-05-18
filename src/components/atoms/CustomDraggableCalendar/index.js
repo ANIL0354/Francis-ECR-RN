@@ -1,40 +1,49 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import DraggableCalendar from 'react-native-draggable-calendar';
-
-class CustomDraggableCalendar extends Component {
-
-    constructor(props) {
-        super(props);
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { DraggableCalendar } from './wrapper';
+import { scaleText } from '../../../helpers';
+const styles = StyleSheet.create({
+    draggableContainer: {
+        backgroundColor: '#303658',
+        // height: scaleText(370).fontSize,
+        paddingHorizontal: scaleText(30).fontSize,
+        paddingVertical: scaleText(10).fontSize
+    },
+    dayText: {
+        color: 'white'
+    },
+    selectedDayText: {
+        color: 'white',
+        fontSize: scaleText(15).fontSize,
+    },
+    selectedDayContainer: {
+        backgroundColor: 'red',
+        height: scaleText(15).fontSize,
     }
-
-    onGetTime = () => {
-        // you can get the selected time.
-        console.log('onGetTime: ', this._calendar.getSelection());
-    };
-
-    onSelectionChange = (newSelection) => {
-        // when selected time changes, this func will be called.
-        console.log('onSelectionChange', newSelection);
-    };
-
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                {/* <DraggableCalendar
-                    // ref={_ => this._calendar = _}
-                    onSelectionChange={this.onSelectionChange}
-                /> */}
-                <TouchableOpacity onPress={this.onGetTime} style={{
-                    justifyContent: 'center', alignItems: 'center',
-                    left: 0, right: 0, bottom: 0, paddingVertical: 15,
-                    position: 'absolute', backgroundColor: '#4291EF'
-                }}>
-                    <Text style={{ color: '#FFF' }}>{'Get Time'}</Text>
-                </TouchableOpacity>
-            </View>
-        );
+});
+const CustomDraggableCalendar = () => {
+    _genStyles = () => {
+        return {
+            style: styles.draggableContainer,
+            headerTextStyle: styles.dayText,
+            monthHeaderTextStyle: styles.dayText,
+            dayTextStyle: styles.dayText,
+            selectedDayTextStyle: styles.selectedDayText,
+            singleDayContainerStyle: styles.selectedDayContainer,
+            beginDayContainerStyle: styles.selectedDayContainer,
+            middleDayContainerStyle: styles.selectedDayContainer,
+            endDayContainerStyle: styles.selectedDayContainer
+        };
     }
-};
+    return (
+        <DraggableCalendar
+            {..._genStyles()}
+            fullDateRange={[new Date(2020, 4, 1, 0, 0, 0), new Date(2021, 4, 30, 0, 0, 0)]}
+            availableDateRange={[new Date(), new Date(2021, 5, 31)]}
+            onSelectionChange={(value) => console.log(value)}
+        />
+    )
+
+}
 
 export default CustomDraggableCalendar;

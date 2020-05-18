@@ -620,7 +620,6 @@ export const Screen = ({
                                             }}>
                                             {'Advanced Filters'}
                                         </Text>
-
                                     </View>
                                 </View>
                             </View>
