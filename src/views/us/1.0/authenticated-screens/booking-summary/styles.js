@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     vehicleListButton: {
-        flex: 1,
-        maxHeight: scaleText(40).fontSize,
+        width: '100%',
         borderRadius: scaleText(10).fontSize,
         marginTop: scaleText(10).fontSize,
         backgroundColor: '#009000'

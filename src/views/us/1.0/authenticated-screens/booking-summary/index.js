@@ -7,7 +7,6 @@ import {
 
 const mapStateToProps = (state) => {
     return ({
-        userToken: state.CommonReducer.userToken
     });
 }
 const mapDispatchToProps = (dispatch) => {
@@ -16,4 +15,4 @@ const mapDispatchToProps = (dispatch) => {
         stopLoader: () => dispatch(stopLoader()),
     }
 }
-export const BookingDetails = connect(mapStateToProps, mapDispatchToProps)(Screen);
+export const BookingSummary = connect(mapStateToProps, mapDispatchToProps)(Screen);

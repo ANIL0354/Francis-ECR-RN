@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import { scaleText } from '../../../../helpers';
+import moment from 'moment'
 
 import { DAY_STATUS } from "./Helper";
 
@@ -15,6 +16,9 @@ export class Day extends PureComponent {
   constructor(props) {
     super(props);
     this._onPress = this._onPress.bind(this);
+    this.state = {
+      selectedDayIndex: 0
+    }
   }
 
   _genStyle() {
@@ -39,21 +43,77 @@ export class Day extends PureComponent {
   }
 
   _onPress() {
-    console.log('hi')
     const { data = {}, onPress } = this.props;
     onPress && onPress(data.date, data.available);
   }
 
+
   render() {
-    const { data, renderDay, weekDays } = this.props;
+    const { data, renderDay, weekDays, startDate, endDate, freeDays, availableDateRange } = this.props;
     const { usedDayTextStyle, usedDayContainerStyle } = this._genStyle();
     return (
       <TouchableWithoutFeedback style={styles.fullContainer} onPress={this._onPress}>
 
-        <View style={styles.fullContainer}>
+        <View style={{
+          ...styles.fullContainer,
+          backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? '#1dd1a1' : 'transparent',
+          borderTopLeftRadius:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+              ? scaleText(20).fontSize
+              : 0,
+          borderBottomLeftRadius:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+              ? scaleText(20).fontSize
+              : 0,
+          borderTopRightRadius:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+              ? scaleText(20).fontSize
+              : 0,
+          borderBottomRightRadius:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+              ? scaleText(20).fontSize
+              : 0,
+          paddingLeft:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+              ? scaleText(5).fontSize
+              : 0,
+          paddingRight:
+            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+              ? scaleText(5).fontSize :
+              0
+        }}>
           {renderDay ?
             renderDay(data) :
-            <View style={[usedDayContainerStyle, { color: 'white' }]}>
+            <View style={[
+              usedDayContainerStyle,
+              {
+                backgroundColor:
+                  data.date && (startDate && endDate && data.available
+                    ? data.date >= startDate && data.date <= endDate
+                    : data.date === startDate || data.date === endDate)
+                    ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
+                    : 'transparent',
+                borderRadius:
+                  !startDate || !endDate
+                    ? scaleText(20).fontSize
+                    : 0,
+                borderTopLeftRadius:
+                  data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                    ? scaleText(20).fontSize
+                    : 0,
+                borderBottomLeftRadius:
+                  data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                    ? scaleText(20).fontSize
+                    : 0,
+                borderTopRightRadius:
+                  data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                    ? scaleText(20).fontSize
+                    : 0,
+                borderBottomRightRadius:
+                  data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                    ? scaleText(20).fontSize
+                    : 0
+              }]}>
               {data.date && (
                 <Text style={[...usedDayTextStyle, !data.available && { color: 'white', opacity: .6 }]}>
                   {data.date.getDate()}

@@ -53,10 +53,9 @@ function* fetchVehicleList({ data, success, failure }) {
         if (!data.toCity) {
             delete data.toCity;
         }
-        // if (!data.pickupDate) {
-        //     delete data.pickupDate;
-        // }
-        data.pickupDate = '2020-05-15'
+        if (!data.pickupDate) {
+            delete data.pickupDate;
+        }
         if (!(data.fuelType && data.fuelType.length)) {
             delete data.fuelType;
         }

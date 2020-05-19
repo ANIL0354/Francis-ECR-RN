@@ -50,13 +50,10 @@ import CollapsableWrapper from '../../../../../components/hoc/CollapsableWrapper
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
-    userToken,
     navigation,
     route
 }) => {
 
-
-    let { vehicleDetails } = route.params;
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems.changed[0].index <= 1) {
             showUpButton(false);
@@ -89,14 +86,14 @@ export const Screen = ({
                             ...styles.subHeaderText,
                             fontSize: scaledLargeFont.fontSize,
                         }}>
-                        {LABELS.yourRequest}
+                        {'Summary'}
                     </Text>
                 </View>
                 <View style={{ paddingHorizontal: scaleText(20).fontSize }}>
                     <View style={styles.detailsWrapper}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.detailsLeftContainer}>
-                                <Image
+                                {/* <Image
                                     source={{ uri: vehicleDetails.vehicleData.url[0] }}
                                     resizeMode={'contain'}
                                     style={{
@@ -104,13 +101,13 @@ export const Screen = ({
                                         height: scaleText(150).fontSize,
                                         width: scaleText(150).fontSize,
                                     }}
-                                />
+                                /> */}
                             </View>
                             <View style={styles.detailsRightContainer}>
-                                <Text
-                                    style={styles.carTitle}>{vehicleDetails.vehicleData ? vehicleDetails.vehicleData.name : ''}</Text>
+                                {/* <Text
+                                    style={styles.carTitle}>{vehicleDetails.vehicleData ? vehicleDetails.vehicleData.name : ''}</Text> */}
                                 <View style={styles.carFeaturesWrapper}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <IconText
                                             icon={CAR_SEATS_ICON}
                                             title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child${vehicleDetails.vehicleData.childSeats > 1 ? 's' : ''}`}
@@ -157,38 +154,38 @@ export const Screen = ({
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
-                                    </View>
-                                    <View style={styles.rowFlex}>
-                                        {/* <IconText
+                                    </View> */}
+                                    {/* <View style={styles.rowFlex}> */}
+                                    {/* <IconText
                                             icon={VEHICLE_YEAR_RANGE}
                                             title={`${vehicleDetails.vehicleData.vehicleYearRange.from}-${vehicleDetails.vehicleData.vehicleYearRange.to}`}
                                             titleFontSize={14}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         /> */}
-                                        <IconText
+                                    {/* <IconText
                                             icon={VEHICLE_YEAR_RANGE}
                                             title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
                                             titleFontSize={14}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
-                                        />
-                                    </View>
+                                        /> */}
+                                    {/* </View> */}
                                 </View>
                             </View>
                         </View>
                         <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly' }}>
                             {/* <View style={styles.listLocationWrapper}> */}
-                            <Text
+                            {/* <Text
                                 ellipsizeMode={'tail'}
                                 numberOfLines={1}
-                                style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
+                                style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text> */}
                             {/* <View style={styles.listDropoffWrapper}> */}
                             <SimpleImage source={TURN_RIGHT} />
-                            <Text
+                            {/* <Text
                                 ellipsizeMode={'tail'}
                                 numberOfLines={1}
-                                style={styles.listPickupText}>{vehicleDetails.dropoffBranchData.city}</Text>
+                                style={styles.listPickupText}>{vehicleDetails.dropoffBranchData.city}</Text> */}
                         </View>
                     </View>
                     <View style={{ paddingHorizontal: scaleText(5).fontSize, marginVertical: scaleText(10).fontSize }}>
@@ -238,11 +235,7 @@ export const Screen = ({
                                 <CustomButton
                                     title={'Make a request'}
                                     titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
-                                    onPress={() => {
-                                        userToken
-                                            ? navigation.navigate(SCREENS.BOOKING_SUMMARY)
-                                            : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
-                                    }}
+                                    onPress={() => { }}
                                     buttonStyle={styles.vehicleListButton}
                                 />
                             </View>
@@ -316,21 +309,9 @@ export const Screen = ({
                             </View>
                         </CollapsableWrapper>
                     </View>
-                    <View style={{ marginBottom: scaleText(30).fontSize }}>
-                        <CustomButton
-                            title={'Make a request'}
-                            titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
-                            onPress={() => {
-                                userToken
-                                    ? navigation.navigate(SCREENS.BOOKING_SUMMARY)
-                                    : navigation.navigate(SCREENS.LOGIN)
-                            }}
-                            buttonStyle={{ ...styles.vehicleListButton, marginHorizontal: scaleText(10).fontSize }}
-                        />
-                    </View>
                 </View>
-            </ScrollView>
-        </AppHoc>
+            </ScrollView >
+        </AppHoc >
     );
 };
 

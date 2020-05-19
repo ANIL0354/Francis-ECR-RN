@@ -28,6 +28,9 @@ export class DraggableCalendar extends Component {
       startDate: initialSelectedRange[0],
       endDate: initialSelectedRange[1],
       index: 0,
+      firstDate: null,
+      secondDate: null,
+      firstPick: true,
       calendarData: this._genCalendarData({ fullDateRange, availableDateRange, maxDays })
     };
 
@@ -274,9 +277,55 @@ export class DraggableCalendar extends Component {
   }
 
   _onPressDay(date, available) {
-    console.log('date', date, 'available', available)
+    let { availableDateRange } = this.props;
+    if (date > availableDateRange[1] || date < availableDateRange[0]) {
+      return;
+    }
+    if (this.state.firstPick) {
+      this.setState({
+        firstDate: date,
+        firstPick: !this.state.firstPick
+      }, () => {
+        if (this.state.secondDate && this.state.firstDate < this.state.secondDate) {
+          this.setState({
+            startDate: this.state.firstDate
+          })
+        }
+        else if (this.state.secondDate && this.state.firstDate > this.state.secondDate) {
+          this.setState({
+            endDate: this.state.firstDate
+          })
+        }
+        else {
+          this.setState({
+            startDate: this.state.firstDate
+          })
+        }
+      })
+    }
+    else {
+      this.setState({
+        secondDate: date,
+        firstPick: !this.state.firstPick
+      }, () => {
+        if (this.state.firstDate && this.state.firstDate < this.state.secondDate) {
+          this.setState({
+            endDate: this.state.secondDate
+          })
+        }
+        else if (this.state.firstDate && this.state.firstDate > this.state.secondDate) {
+          this.setState({
+            startDate: this.state.secondDate
+          })
+        }
+        else {
+          this.setState({
+            endDate: this.state.secondDate
+          })
+        }
+      })
+    }
     if (date && available) {
-      this.resetSelection([date, date]);
     }
   }
 
@@ -320,7 +369,6 @@ export class DraggableCalendar extends Component {
   _renderBody() {
     const { calendarData, index } = this.state;
     let keys = Object.keys(calendarData);
-    console.log(JSON.stringify(keys))
     let displayMonth = [keys[index]];
     return (
       <View style={styles.bodyContainer}>
@@ -334,7 +382,7 @@ export class DraggableCalendar extends Component {
           {displayMonth.map((key, index) => this._renderMonth({ identifier: key, data: calendarData[key], index }))}
         </View>
         {/* {this._renderMonth({ identifier: keys[index], data: calendarData[key], index })} */}
-        {this._renderDraggableArea()}
+        {/* {this._renderDraggableArea()} */}
       </View>
     );
   }
@@ -356,20 +404,13 @@ export class DraggableCalendar extends Component {
         key={identifier}
         identifier={identifier}
         renderNextMonth={() => {
-          console.log('nxt index', this.state.calendarData)
           if (this.state.index < totalMonths.length - 1) {
-            console.log('jell')
-            this.setState({ index: this.state.index + 1 },
-              () => {
-                console.log('index', this.state.index)
-              })
+            this.setState({ index: this.state.index + 1 })
           }
         }}
         renderPreviousMonth={() => {
-          console.log('index', this.state.index)
           if (this.state.index) {
-            this.setState({ index: this.state.index - 1 },
-              () => { console.log('index', this.state.index) })
+            this.setState({ index: this.state.index - 1 })
           }
         }
         }
@@ -381,6 +422,7 @@ export class DraggableCalendar extends Component {
 
   _renderMonthBody({ identifier, data, index }) {
     const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    let { startDate, endDate } = this.state;
     return (
       <>
         <View style={[{
@@ -406,14 +448,14 @@ export class DraggableCalendar extends Component {
           bounces={false}
           key={`month-body-${identifier}`}
           keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => this._renderDay(item, index)}
+          renderItem={({ item, index }) => this._renderDay(item, index, startDate, endDate)}
         />
       </>
     );
   }
 
-  _renderDay(item, index) {
-    const { renderDay } = this.props;
+  _renderDay(item, index, startDate, endDate) {
+    const { renderDay, freeDays, availableDateRange } = this.props;
     const styles = [
       'dayTextStyle', 'selectedDayTextStyle',
       'dayContainerStyle', 'singleDayContainerStyle',
@@ -423,9 +465,13 @@ export class DraggableCalendar extends Component {
       <Day
         key={`day-${index}`}
         {...styles}
+        startDate={startDate}
+        endDate={endDate}
         dayTextStyle={{ color: 'white' }}
         data={item}
+        freeDays={freeDays}
         status={item.status}
+        availableDateRange={availableDateRange}
         renderDay={renderDay}
         onPress={this._onPressDay}
       />
@@ -434,25 +480,30 @@ export class DraggableCalendar extends Component {
 
   _renderDraggableArea() {
     const { startDate, endDate } = this.state;
-    if (!startDate || !endDate) {
-      return null;
-    } else {
-      const isSingleChosen = startDate.getTime() === endDate.getTime();
-      return [
-        <View
-          key={'drag-start'}
-          {...this._panResponder.panHandlers}
-          onTouchStart={() => this._onTouchStart('start', startDate)}
-          style={[styles.dragContainer, this._genDraggableAreaStyle(startDate)]}
-        />,
-        <View
-          key={'drag-end'}
-          {...this._panResponder.panHandlers}
-          onTouchStart={() => this._onTouchStart('end', endDate)}
-          style={[styles.dragContainer, this._genDraggableAreaStyle(endDate), isSingleChosen && { height: 0 }]}
-        />
-      ];
+    // if (!startDate || !endDate) {
+    //   return null;
+    // } else {
+    let isSingleChosen = false;
+    if (startDate && endDate && startDate.getTime() === endDate.getTime()) {
+      isSingleChosen = true
     }
+
+    return [
+      <View
+        key={'drag-start'}
+        // {...this._panResponder.panHandlers}
+        // onTouchStart={() => this._onTouchStart('start', startDate)}
+        style={[styles.dragContainer, this._genDraggableAreaStyle(startDate), { backgroundColor: 'yellow' }]
+        }
+      />,
+      < View
+        key={'drag-end'}
+        // {...this._panResponder.panHandlers}
+        // onTouchStart={() => this._onTouchStart('end', endDate)}
+        style={[styles.dragContainer, this._genDraggableAreaStyle(endDate), { backgroundColor: 'red' }, isSingleChosen && { height: 0 }]}
+      />
+    ];
+    // }
   }
 
   render() {
@@ -489,7 +540,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   dragContainer: {
-    zIndex: 1,
+    zIndex: 0,
     position: 'absolute'
   }
 });

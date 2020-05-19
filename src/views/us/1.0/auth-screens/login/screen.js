@@ -22,11 +22,13 @@ export const Screen = ({
     checkLogin,
     socialLogin,
     stopLoader,
-    navigation
+    navigation,
+    route
 }) => {
     const [signUpTab, setSignUpTab] = useState(false);
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
+    let { fromDetails = false, vehicleDetails } = route.params;
 
     GoogleSignin.configure({
         scopes: [],
@@ -58,7 +60,15 @@ export const Screen = ({
                                         surname: result.last_name
                                     }, (response) => {
                                         // navigation.navigate('HOME_SCREEN');
-                                        navigation.goBack();
+                                        if (fromDetails) {
+                                            navigation.reset({
+                                                index: 3,
+                                                routes: [{ name: SCREENS.BOOKING_SUMMARY }]
+                                            })
+                                        }
+                                        else {
+                                            navigation.goBack();
+                                        }
                                     }, (response) => {
                                     })
                                     return;
