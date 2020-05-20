@@ -72,6 +72,7 @@ export const getRequest = ({
     data = {}
 }) => {
     return new Promise((resolve, reject) => {
+        console.log('call', apiWithAuth(API))
         instance
             .get(apiWithAuth(API), {
                 ...defaulHeader.headers,

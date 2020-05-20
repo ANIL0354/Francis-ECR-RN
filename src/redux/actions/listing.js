@@ -9,6 +9,8 @@ export const SAVE_FUEL_TYPES = 'SAVE_FUEL_TYPES';
 export const SAVE_TRANSMISSION_TYPES = 'SAVE_TRANSMISSION_TYPES';
 export const SAVE_VEHICLE_TYPES = 'SAVE_VEHICLE_TYPES';
 export const REFRESH_VEHICLE_LIST = 'REFRESH_VEHICLE_LIST';
+export const FETCH_COMPLETE_DETAILS = 'FETCH_COMPLETE_DETAILS';
+export const SAVE_COMPLETE_DETAILS = 'SAVE_COMPLETE_DETAILS';
 
 export const getFuelTypes = ({ data, success, failure }) => {
     return {
@@ -88,10 +90,26 @@ export const saveVehicleListing = data => {
         type: SAVE_VEHICLE_LISTING,
         data
     }
-}
+};
 
 export const refreshVehicleList = () => {
     return {
         type: REFRESH_VEHICLE_LIST,
+    }
+};
+
+export const fetchCompleteDetails = (id, success, failure) => {
+    return {
+        type: FETCH_COMPLETE_DETAILS,
+        id,
+        success,
+        failure
+    }
+};
+
+export const saveCompleteDetails = data => {
+    return {
+        type: SAVE_COMPLETE_DETAILS,
+        data
     }
 }

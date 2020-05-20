@@ -37,7 +37,7 @@ const CustomDraggableCalendar = () => {
     }
     return (
         <View style={{ marginVertical: scaleText(20).fontSize }}>
-            <Text style={{ color: '#737171', marginVertical: scaleText(5).fontSize, fontSize: scaleText(16).fontSize }}>{'Select your travel date:'}</Text>
+            <Text style={{ color: '#737171', marginVertical: scaleText(5).fontSize, fontSize: scaleText(16).fontSize }}>{'Select your travel dates:'}</Text>
             <DraggableCalendar
                 {..._genStyles()}
                 freeDays={3}

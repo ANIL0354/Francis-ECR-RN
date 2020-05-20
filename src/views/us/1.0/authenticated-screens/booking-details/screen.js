@@ -52,11 +52,22 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 export const Screen = ({
     userToken,
     navigation,
-    route
+    route,
+    completeDetails,
+    stopLoader,
+    fetchCompleteDetails
 }) => {
-
-
     let { vehicleDetails } = route.params;
+    console.log('completeDetails', completeDetails)
+    useEffect(() => {
+        fetchCompleteDetails(
+            vehicleDetails._id,
+            () => { stopLoader(); },
+            () => { stopLoader(); }
+        )
+    })
+
+
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems.changed[0].index <= 1) {
             showUpButton(false);

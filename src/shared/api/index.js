@@ -13,6 +13,7 @@ module.exports = {
     VEHICLE_LISTING: SERVER_URL + API_VERSION + '/listing',
     FUEL_LISTING: SERVER_URL + API_VERSION + '/fuel',
     TRANSMISSION_LISTING: SERVER_URL + API_VERSION + '/vehicle/transmissions',
-    VEHICLE_TYPE_LISTING: SERVER_URL + API_VERSION + '/vehicleType'
+    VEHICLE_TYPE_LISTING: SERVER_URL + API_VERSION + '/vehicleType',
+    VEHICLE_DETAILS: SERVER_URL + API_VERSION + '/listingByID​'
   }
 };

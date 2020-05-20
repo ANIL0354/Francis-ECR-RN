@@ -7,18 +7,20 @@ import {
     GET_FUEL_TYPES,
     GET_TRANSMISSION_TYPES,
     GET_VEHICLE_TYPES,
+    FETCH_COMPLETE_DETAILS,
     setAuthorization,
     saveVehicleTypes,
     startLoader,
     stopLoader,
     savePopularPlaces,
     saveFuelTypes,
+    saveCompleteDetails,
     saveVehicleListing,
     saveTransmissionTypes
 } from '../actions';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const api = require(`../../shared/api`);
-const { updateAuthToken, postRequestNoAuth, getRequest } = require(`../../helpers`);
+const { updateAuthToken, getRequestNoAuth, getRequest } = require(`../../helpers`);
 const { STATUS_CODE } = require(`../../shared/constants`);
 
 
@@ -56,6 +58,7 @@ function* fetchVehicleList({ data, success, failure }) {
         if (!data.pickupDate) {
             delete data.pickupDate;
         }
+        // data.pickupDate = '2020-05-19'
         if (!(data.fuelType && data.fuelType.length)) {
             delete data.fuelType;
         }
@@ -186,13 +189,45 @@ function* fetchVehicleTypes({ data, success = () => { }, failure = () => { } }) 
     }
 }
 
+function* fetchVehicleCompleteDetails({ id, success = () => { }, failure = () => { } }) {
+    try {
+        yield put(startLoader());
+        // console.log('id', id, 'type', type)
+        console.log(`${api.URL.VEHICLE_DETAILS}/${id}`)
+        const response = yield getRequest({ API: decodeURI(`${api.URL.VEHICLE_DETAILS}/${id}`) });
+        console.log('res', response)
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            stopLoader();
+            Toast.show(response.data.msg, Toast.LONG);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            failure();
+            Toast.show(response.data.msg, Toast.LONG);
+            stopLoader();
+        }
+        else {
+            yield put(saveCompleteDetails(response.data.data))
+            stopLoader();
+            success();
+        }
+    }
+    catch (error) {
+        console.log('catch', error)
+        stopLoader();
+        return;
+    }
+}
+
 function* ListsSaga() {
     yield all([
         takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
         takeLatest(FETCH_VEHICLE_LISTING, fetchVehicleList),
         takeLatest(GET_FUEL_TYPES, fetchFuelTypes),
         takeLatest(GET_TRANSMISSION_TYPES, fetchTranmissionTypes),
-        takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes)
+        takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes),
+        takeLatest(FETCH_COMPLETE_DETAILS, fetchVehicleCompleteDetails)
     ]);
 }
 

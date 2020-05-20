@@ -4,7 +4,8 @@ import {
     SAVE_FUEL_TYPES,
     SAVE_TRANSMISSION_TYPES,
     SAVE_VEHICLE_TYPES,
-    REFRESH_VEHICLE_LIST
+    REFRESH_VEHICLE_LIST,
+    SAVE_COMPLETE_DETAILS
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -15,7 +16,8 @@ const initialCommonState = {
     vehicleListItems: [],
     fuelTypesList: null,
     vehicleTypesList: null,
-    transmissionTypesList: null
+    transmissionTypesList: null,
+    completeDetails: null
 };
 
 const ListsReducer = (state = { ...initialCommonState }, action) => {
@@ -50,6 +52,11 @@ const ListsReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 vehicleTypesList: action.data
+            }
+        case SAVE_COMPLETE_DETAILS:
+            return {
+                ...state,
+                completeDetails: action.data
             }
         default:
             return state;
