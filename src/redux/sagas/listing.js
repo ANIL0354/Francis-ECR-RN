@@ -192,10 +192,7 @@ function* fetchVehicleTypes({ data, success = () => { }, failure = () => { } }) 
 function* fetchVehicleCompleteDetails({ id, success = () => { }, failure = () => { } }) {
     try {
         yield put(startLoader());
-        // console.log('id', id, 'type', type)
-        console.log(`${api.URL.VEHICLE_DETAILS}/${id}`)
         const response = yield getRequest({ API: decodeURI(`${api.URL.VEHICLE_DETAILS}/${id}`) });
-        console.log('res', response)
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             stopLoader();

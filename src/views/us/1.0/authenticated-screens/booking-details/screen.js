@@ -58,7 +58,6 @@ export const Screen = ({
     fetchCompleteDetails
 }) => {
     let { vehicleDetails } = route.params;
-    console.log('completeDetails', completeDetails)
     useEffect(() => {
         fetchCompleteDetails(
             vehicleDetails._id,
@@ -67,6 +66,7 @@ export const Screen = ({
         )
     })
 
+    console.log('vehicleDetails', vehicleDetails)
 
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems.changed[0].index <= 1) {
@@ -77,7 +77,7 @@ export const Screen = ({
         }
     })
     const today = new Date();
-    const scaledLargeFont = scaleText(18);
+    const largeScaledFont = scaleText(18);
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -88,17 +88,18 @@ export const Screen = ({
                 <View style={styles.childContainer}>
                     <TouchableOpacity
                         style={styles.navArrowContainer}
-                        onPress={() => navigation.navigate(SCREENS.VEHICLE_LISTING)}>
+                        onPress={() => navigation.goBack()}>
                         <Image
                             source={NAV_ARROW_ICON}
                             height={20}
                             width={20}
+                            style={{ alignSelf: 'center', marginVertical: scaleText(5).fontSize }}
                         />
                     </TouchableOpacity>
                     <Text
                         style={{
                             ...styles.subHeaderText,
-                            fontSize: scaledLargeFont.fontSize,
+                            fontSize: largeScaledFont.fontSize,
                         }}>
                         {LABELS.yourRequest}
                     </Text>
@@ -251,7 +252,7 @@ export const Screen = ({
                                     titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                                     onPress={() => {
                                         userToken
-                                            ? navigation.navigate(SCREENS.BOOKING_SUMMARY)
+                                            ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
                                             : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
                                     }}
                                     buttonStyle={styles.vehicleListButton}

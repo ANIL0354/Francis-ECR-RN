@@ -11,7 +11,6 @@ const CollapsableWrapper = ({
     const [collapsed, setCollapsed] = useState(true);
     const toggleCollapsed = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        console.log(collapsed)
         setCollapsed(!collapsed);
     }
     return (

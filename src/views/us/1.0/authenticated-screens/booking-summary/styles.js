@@ -2,30 +2,31 @@ import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
-    rowFlex: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    alignSelfCenter: {
-        alignSelf: 'center'
-    },
     childContainer: {
         flexDirection: 'row',
         backgroundColor: '#0091ff',
-        paddingHorizontal: scaleText(30).fontSize,
+        paddingHorizontal: 30,
         paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
-        justifyContent: 'center'
     },
     navArrowContainer: {
-        justifyContent: 'center',
-        alignSelf: 'center',
+        flex: 1,
+        height: 20,
+        maxWidth: 20,
+        alignItems: 'center',
     },
     subHeaderText: {
         color: 'white',
         flex: 1,
         textAlign: 'center',
         textTransform: 'uppercase'
+    },
+    rowFlex: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    alignSelfCenter: {
+        alignSelf: 'center'
     },
     detailsWrapper: {
         marginHorizontal: scaleText(10).fontSize
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     vehicleListButton: {
-        width: '100%',
+        flex: 1,
+        maxHeight: scaleText(40).fontSize,
         borderRadius: scaleText(10).fontSize,
         marginTop: scaleText(10).fontSize,
         backgroundColor: '#009000'

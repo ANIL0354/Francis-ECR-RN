@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: scaleText(30).fontSize,
         paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
-        justifyContent: 'center'
     },
     navArrowContainer: {
-        justifyContent: 'center',
-        alignSelf: 'center',
+        height: scaleText(20).fontSize,
+        width: scaleText(20).fontSize,
+        alignItems: 'center'
     },
     subHeaderText: {
         color: 'white',
