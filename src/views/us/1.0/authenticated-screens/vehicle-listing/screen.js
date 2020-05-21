@@ -747,20 +747,20 @@ export const Screen = ({
                                                 />
                                             </View>
                                             <View style={styles.rowFlex}>
-                                                {/* <IconText
+                                                <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
-                                                    title={`${item.vehicleData.vehicleYearRange.from}-${item.vehicleData.vehicleYearRange.to}`}
+                                                    title={`${item.vehicleData.yearRange.from}-${item.vehicleData.yearRange.to}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
-                                                /> */}
-                                                <IconText
+                                                />
+                                                {/* <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
                                                     title={`${item.vehicleData.manufactureYear || 'N/A'}`}
                                                     titleFontSize={14}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
-                                                />
+                                                /> */}
                                             </View>
                                         </View>
                                     </View>

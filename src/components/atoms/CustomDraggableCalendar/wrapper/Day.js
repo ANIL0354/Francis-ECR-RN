@@ -56,6 +56,7 @@ export class Day extends PureComponent {
 
         <View style={{
           ...styles.fullContainer,
+          marginVertical: scaleText(3).fontSize,
           backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? '#1dd1a1' : 'transparent',
           borderTopLeftRadius:
             moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')

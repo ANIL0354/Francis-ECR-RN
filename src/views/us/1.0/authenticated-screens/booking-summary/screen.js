@@ -158,20 +158,20 @@ export const Screen = ({
                                             />
                                         </View>
                                         <View style={styles.rowFlex}>
-                                            {/* <IconText
-                                            icon={VEHICLE_YEAR_RANGE}
-                                            title={`${vehicleDetails.vehicleData.vehicleYearRange.from}-${vehicleDetails.vehicleData.vehicleYearRange.to}`}
-                                            titleFontSize={14}
-                                            titleStyle={styles.iconText}
-                                            containerStyle={styles.iconTextContainer}
-                                        /> */}
                                             <IconText
+                                                icon={VEHICLE_YEAR_RANGE}
+                                                title={`${vehicleDetails.vehicleData.yearRange.from}-${vehicleDetails.vehicleData.yearRange.to}`}
+                                                titleFontSize={14}
+                                                titleStyle={styles.iconText}
+                                                containerStyle={styles.iconTextContainer}
+                                            />
+                                            {/* <IconText
                                                 icon={VEHICLE_YEAR_RANGE}
                                                 title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
                                                 titleFontSize={14}
                                                 titleStyle={styles.iconText}
                                                 containerStyle={styles.iconTextContainer}
-                                            />
+                                            /> */}
                                         </View>
                                     </View>
                                 </View>

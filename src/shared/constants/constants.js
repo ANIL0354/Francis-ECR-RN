@@ -83,7 +83,7 @@ export const LABELS = {
   didNotReceiveLink: STRINGS.DID_NOT_RECEIVE_LINK,
   resend: STRINGS.RESEND,
   weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL,
-  yourRequest:STRINGS.YOUR_REQUEST
+  yourRequest: STRINGS.YOUR_REQUEST
 };
 
 export const STATUS_CODE = {
@@ -264,3 +264,8 @@ export const VEHICLE_DETAILS_LISTING = [
 export const LIMITS = {
   vehicleList: 10,
 };
+
+export const FREQUENCY = [
+  { label: 'per day' },
+  { label: 'per hire' }
+];

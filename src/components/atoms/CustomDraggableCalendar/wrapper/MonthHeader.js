@@ -18,7 +18,7 @@ export class MonthHeader extends PureComponent {
         {renderMonthHeader ?
           renderMonthHeader(identifier) :
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => { console.log('prev'); renderPreviousMonth(); }}>
+            <TouchableOpacity onPress={() => { renderPreviousMonth(); }}>
               <Text
                 style={[
                   styles.monthHeaderText,

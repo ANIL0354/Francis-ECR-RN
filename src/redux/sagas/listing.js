@@ -209,7 +209,6 @@ function* fetchVehicleCompleteDetails({
     const response = yield getRequest({
       API: url,
     });
-    console.log('res', response);
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
       stopLoader();
