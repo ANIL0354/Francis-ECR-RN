@@ -42,6 +42,8 @@ import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilt
 import CustomDatePicker from '../../../../../components/atoms/CustomDatePicker';
 import styles from './style.js';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+var PushNotification = require("react-native-push-notification");
 
 export const Screen = ({
   logout,
@@ -465,55 +467,74 @@ export const Screen = ({
               }}
               activeOpacity={0.7}
               onPress={() => {
-                Keyboard.dismiss();
-                if (!!!pickupLocation) {
-                  Alert.alert(
-                    'Select Pick-up Location',
-                    'Please select a pick-up location before proceeding.',
-                    [
-                      {
-                        text: 'Okay',
-                        onPress: () => { },
-                      },
-                    ],
-                  );
-                  return;
-                } else if (!pickupDate) {
-                  Alert.alert(
-                    'Select Pick-up Date',
-                    'Please select a pick-up date before proceeding.',
-                    [
-                      {
-                        text: 'Okay',
-                        onPress: () => { },
-                      },
-                    ],
-                  );
-                  return;
-                } else {
-                  let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
-                  startLoader();
-                  fetchVehicleListing(
-                    {
-                      fromCity: pickupLocation,
-                      pickupDate: formattedDate,
-                      adultSeats: adultSeatsValue,
-                      childSeats: childSeatsValue,
-                      freeDays: freeDays,
-                      fuelType: Array.from(fuelType),
-                      vehicleType: Array.from(vehicleType),
-                      transmissionType: Array.from(transmissionType),
-                      limit: LIMITS.vehicleList,
-                      index: 0,
-                    },
-                    () => {
-                      stopLoader();
-                      navigation.navigate(SCREENS.VEHICLE_LISTING);
-                    },
-                    () => { },
-                  );
+                PushNotification.configure({
+                  onNotification: function (notification) {
+                    console.log('EXERCISE_NOTIFICATION:', notification);
+                  },
+          
+                  permissions: {
+                    alert: true,
+                    badge: true,
+                    sound: true,
+                  },
+                  popInitialNotification: true,
+                  requestPermissions: true,
+                });
+                PushNotification.localNotificationSchedule({
+                  //... You can use all the options from localNotifications
+                  message: "notifiy hiii", // (required)
+                  date: new Date(Date.now() ),
+                });
+             
+                // Keyboard.dismiss();
+                // if (!!!pickupLocation) {
+                //   Alert.alert(
+                //     'Select Pick-up Location',
+                //     'Please select a pick-up location before proceeding.',
+                //     [
+                //       {
+                //         text: 'Okay',
+                //         onPress: () => { },
+                //       },
+                //     ],
+                //   );
+                //   return;
+                // } else if (!pickupDate) {
+                //   Alert.alert(
+                //     'Select Pick-up Date',
+                //     'Please select a pick-up date before proceeding.',
+                //     [
+                //       {
+                //         text: 'Okay',
+                //         onPress: () => { },
+                //       },
+                //     ],
+                //   );
+                //   return;
+                // } else {
+                //   let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
+                //   startLoader();
+                //   fetchVehicleListing(
+                //     {
+                //       fromCity: pickupLocation,
+                //       pickupDate: formattedDate,
+                //       adultSeats: adultSeatsValue,
+                //       childSeats: childSeatsValue,
+                //       freeDays: freeDays,
+                //       fuelType: Array.from(fuelType),
+                //       vehicleType: Array.from(vehicleType),
+                //       transmissionType: Array.from(transmissionType),
+                //       limit: LIMITS.vehicleList,
+                //       index: 0,
+                //     },
+                //     () => {
+                //       stopLoader();
+                //       navigation.navigate(SCREENS.VEHICLE_LISTING);
+                //     },
+                //     () => { },
+                //   );
 
-                }
+                // }
               }}>
               <Text
                 style={{

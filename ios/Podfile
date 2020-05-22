@@ -64,6 +64,8 @@ target 'Francis_ECR_RN' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
   target 'Francis_ECR_RNTests' do
     inherit! :complete
     # Pods for testing
