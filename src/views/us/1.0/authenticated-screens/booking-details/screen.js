@@ -340,15 +340,15 @@ export const Screen = ({
                                         }}>{'Other Insurance Details: '}</Text>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Bond: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insurancrData.bond} year${completeDetails.insurancrData.bond > 1 ? 's' : ''}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insurancrData.bond ? completeDetails.insurancrData.bond : 0} year${completeDetails.insurancrData.bond > 1 ? 's' : ''}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Excess: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.excess}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.excess ? completeDetails.insurancrData.excess : 0}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Daily Fee: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.dailyFee}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.dailyFee ? completeDetails.insurancrData.dailyFee : 0}`}</Text>
                                         </View>
                                     </React.Fragment>
                                     : <Text style={{
