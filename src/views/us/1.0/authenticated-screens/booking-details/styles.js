@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     detailsWrapper: {
-        marginHorizontal: scaleText(10).fontSize
     },
     iconContainerStyle: {
         alignContent: 'flex-start',

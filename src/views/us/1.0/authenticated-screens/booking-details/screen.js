@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from "react";
 import {
     View,
@@ -58,10 +59,16 @@ export const Screen = ({
     route,
     completeDetails,
     stopLoader,
+    getFaqList,
+    faqList,
     fetchCompleteDetails
 }) => {
     let { vehicleDetails } = route.params;
     useEffect(() => {
+        getFaqList(
+            () => { },
+            () => { }
+        );
         fetchCompleteDetails(
             vehicleDetails._id,
             () => { stopLoader(); },
@@ -69,16 +76,10 @@ export const Screen = ({
         )
     }, [])
 
-    const onViewRef = React.useRef((viewableItems) => {
-        if (viewableItems.changed[0].index <= 1) {
-            showUpButton(false);
-        }
-        if (viewableItems.changed[0].index >= 2) {
-            showUpButton(true);
-        }
-    })
     const today = new Date();
     const largeScaledFont = scaleText(18);
+
+    console.log('faqList', faqList)
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -106,7 +107,7 @@ export const Screen = ({
                     </Text>
                 </View>
                 <View style={{ paddingHorizontal: scaleText(20).fontSize }}>
-                    <View style={styles.detailsWrapper}>
+                    <View style={{ ...styles.detailsWrapper, backgroundColor: 'red' }}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.detailsLeftContainer}>
                                 <Image
@@ -254,7 +255,7 @@ export const Screen = ({
                                     onPress={() => {
                                         userToken
                                             ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
-                                            : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
+                                            : navigation.navigate(SCREENS.LOGIN, { fromDetails: true })
                                     }}
                                     buttonStyle={styles.vehicleListButton}
                                 />
@@ -495,9 +496,16 @@ export const Screen = ({
                             </View>
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'FAQs'}>
-                            <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                                <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'FAQs will come here.'}</Text>
-                            </View>
+                            {faqList && <View>
+                                {
+                                    faqList.length && faqList.map((item, index) => (
+                                        <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
+                                            <Text style={{ color: 'black', flex: 1, fontWeight: 'bold', fontSize: scaleText(14).fontSize }}>{`${index + 1}. ${item.question}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{item.question}</Text>
+                                        </View>
+                                    ))
+                                }
+                            </View>}
                         </CollapsableWrapper>
                     </View>}
                     <View style={{ marginBottom: scaleText(30).fontSize }}>
@@ -506,8 +514,8 @@ export const Screen = ({
                             titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                             onPress={() => {
                                 userToken
-                                    ? navigation.navigate(SCREENS.BOOKING_SUMMARY)
-                                    : navigation.navigate(SCREENS.LOGIN)
+                                    ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
+                                    : navigation.navigate(SCREENS.LOGIN, { fromDetails: true })
                             }}
                             buttonStyle={{ ...styles.vehicleListButton, marginHorizontal: scaleText(10).fontSize }}
                         />

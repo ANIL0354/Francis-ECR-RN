@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { REHYDRATE } from "redux-persist";
 import {
     SET_AUTHORIZATION,
@@ -18,7 +19,8 @@ import {
     SET_FUEL_TYPE,
     SET_PICKUP_LOCATION,
     SET_PICKUP_DATE,
-    SET_DROPOFF_LOCATION
+    SET_DROPOFF_LOCATION,
+    SAVE_FAQ_LIST
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -42,7 +44,8 @@ const initialCommonState = {
     fuelType: new Set(),
     pickupLocation: '',
     dropOffLocation: '',
-    pickupDate: null
+    pickupDate: null,
+    faqList: null
 };
 
 const CommonReducer = (state = { ...initialCommonState }, action) => {
@@ -141,6 +144,11 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
             return {
                 ...state,
                 pickupDate: action.value
+            }
+        case SAVE_FAQ_LIST:
+            return {
+                ...state,
+                faqList: action.data
             }
         case REHYDRATE:
             let common = ((action || {}).payload || {}).CommonReducer || initialCommonState

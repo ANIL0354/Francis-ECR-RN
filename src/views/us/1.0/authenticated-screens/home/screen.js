@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -12,6 +13,7 @@ import {
   AppState,
   PermissionsAndroid,
 } from 'react-native';
+import messaging, { AuthorizationStatus } from '@react-native-firebase/messaging';
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import NetInfo from '@react-native-community/netinfo';
@@ -94,6 +96,21 @@ export const Screen = ({
   const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === AuthorizationStatus.AUTHORIZED ||
+      authStatus === AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+  useEffect(() => {
+    requestUserPermission()
+  }, [])
+
   useEffect(() => {
     Geocoder.init(GOOGLE_API_KEY);
     checkLocationPermissions();
@@ -471,7 +488,7 @@ export const Screen = ({
                   onNotification: function (notification) {
                     console.log('EXERCISE_NOTIFICATION:', notification);
                   },
-          
+
                   permissions: {
                     alert: true,
                     badge: true,
@@ -483,9 +500,9 @@ export const Screen = ({
                 PushNotification.localNotificationSchedule({
                   //... You can use all the options from localNotifications
                   message: "notifiy hiii", // (required)
-                  date: new Date(Date.now() ),
+                  date: new Date(Date.now()),
                 });
-             
+
                 // Keyboard.dismiss();
                 // if (!!!pickupLocation) {
                 //   Alert.alert(

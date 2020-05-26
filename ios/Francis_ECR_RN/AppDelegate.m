@@ -50,6 +50,10 @@ static void InitializeFlipper(UIApplication *application) {
     [[FBSDKApplicationDelegate sharedInstance] application:application
     didFinishLaunchingWithOptions:launchOptions];
      [RNSplashScreen showSplash:@"LaunchScreen" inRootView:rootView];
+
+UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+  center.delegate = self;
+
   return YES;
 }
 
@@ -102,15 +106,14 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-  ...
-  // Define UNUserNotificationCenter
-  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-  center.delegate = self;
+// - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+// {
+//     // Define UNUserNotificationCenter
+//   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//   center.delegate = self;
 
-  return YES;
-}
+//   return YES;
+// }
 
 //Called when a notification is delivered to a foreground app.
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler

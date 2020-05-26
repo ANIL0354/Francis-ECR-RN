@@ -59,7 +59,6 @@ export const Screen = ({
                                 subscribe: subscribed
                             }, (response) => {
                                 stopLoader();
-                                // navigation.navigate('HOME_SCREEN');
                             }, (response) => {
                                 stopLoader();
                             })

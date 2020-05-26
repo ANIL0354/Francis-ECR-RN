@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements';
 import { View, KeyboardAvoidingView, Dimensions, Text, Image, TouchableOpacity, ScrollView } from "react-native";

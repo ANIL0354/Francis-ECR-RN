@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { takeLatest, all, put, delay } from 'redux-saga/effects';
 import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-simple-toast';
@@ -8,12 +9,14 @@ import {
   GET_TRANSMISSION_TYPES,
   GET_VEHICLE_TYPES,
   FETCH_COMPLETE_DETAILS,
+  GET_FAQ_LIST,
   setAuthorization,
   saveVehicleTypes,
   startLoader,
   stopLoader,
   savePopularPlaces,
   saveFuelTypes,
+  saveFaqList,
   saveCompleteDetails,
   saveVehicleListing,
   saveTransmissionTypes,
@@ -231,6 +234,31 @@ function* fetchVehicleCompleteDetails({
   }
 }
 
+function* fetchFaqList({ success = () => { }, failure = () => { } }) {
+  try {
+    yield put(startLoader());
+    const response = yield getRequest({ API: `${api.URL.FAQ_LIST}` });
+    if (response.status === STATUS_CODE.unAuthorized) {
+      yield put(setAuthorization(null));
+      stopLoader();
+      Toast.show(response.data.msg, Toast.LONG);
+      return;
+    }
+    if (response.status !== STATUS_CODE.successful) {
+      stopLoader();
+      Toast.show(response.data.msg, Toast.LONG);
+      failure();
+    } else {
+      yield put(saveFaqList(response.data.data));
+      success();
+    }
+  } catch (error) {
+    console.log('catch', error);
+    stopLoader();
+    return;
+  }
+}
+
 function* ListsSaga() {
   yield all([
     takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
@@ -239,6 +267,7 @@ function* ListsSaga() {
     takeLatest(GET_TRANSMISSION_TYPES, fetchTranmissionTypes),
     takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes),
     takeLatest(FETCH_COMPLETE_DETAILS, fetchVehicleCompleteDetails),
+    takeLatest(GET_FAQ_LIST, fetchFaqList),
   ]);
 }
 

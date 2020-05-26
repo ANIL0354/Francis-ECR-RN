@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, StatusBar, SafeAreaView, Alert, Keyboard } from 'react-native';
@@ -57,7 +58,7 @@ const AppHoc = ({
               label: STRINGS.LOGIN_OR_SIGNUP,
               onPress: () => {
                 stopLoader();
-                navigation.navigate(SCREENS.LOGIN)
+                navigation.navigate(SCREENS.LOGIN, { fromDetails: false })
               }
             }
           ]}

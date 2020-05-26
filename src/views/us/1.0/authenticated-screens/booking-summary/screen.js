@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from "react";
 import {
     View,
@@ -51,14 +52,7 @@ export const Screen = ({
     route
 }) => {
     let { vehicleDetails } = route.params;
-    const onViewRef = React.useRef((viewableItems) => {
-        if (viewableItems.changed[0].index <= 1) {
-            showUpButton(false);
-        }
-        if (viewableItems.changed[0].index >= 2) {
-            showUpButton(true);
-        }
-    })
+
     const today = new Date();
     const largeScaledFont = scaleText(18);
     const mediumScaledFont = scaleText(16)

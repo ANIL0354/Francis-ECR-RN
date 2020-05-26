@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useRef } from 'react';
 import { View, Image, TouchableOpacity, Text, Alert } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';

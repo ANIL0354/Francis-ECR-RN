@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from "react";
 import {
     View,
@@ -349,7 +350,6 @@ export const Screen = ({
                                     paddingVertical: 2,
                                     paddingBottom: 0,
                                     marginBottom: 0,
-                                    textAlign: 'left',
                                 },
                                 datePickerCon: {
                                     backfaceVisibility: false,

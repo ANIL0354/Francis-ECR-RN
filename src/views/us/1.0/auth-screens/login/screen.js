@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
 import {
@@ -28,7 +29,7 @@ export const Screen = ({
     const [signUpTab, setSignUpTab] = useState(false);
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
-    let { fromDetails = false, vehicleDetails } = route.params;
+    let { fromDetails = false } = route.params;
 
     GoogleSignin.configure({
         scopes: [],
@@ -37,6 +38,8 @@ export const Screen = ({
         loginHint: '',
         forceCodeForRefreshToken: false,
     });
+
+
 
     const facebookAuth = () => {
         LoginManager.logInWithPermissions(["public_profile", 'email']).then(
@@ -59,7 +62,6 @@ export const Screen = ({
                                         name: result.first_name,
                                         surname: result.last_name
                                     }, (response) => {
-                                        // navigation.navigate('HOME_SCREEN');
                                         if (fromDetails) {
                                             navigation.reset({
                                                 index: 3,
