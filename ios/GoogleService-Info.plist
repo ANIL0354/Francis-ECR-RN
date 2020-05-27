@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>628352863690-5luvegkrhkuqmp85ge4fjoqeq6das40i.apps.googleusercontent.com</string>
+	<string>18046953276-d7r0cskobi06nbhr6rgooqa6b0nl0eq5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.628352863690-5luvegkrhkuqmp85ge4fjoqeq6das40i</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>628352863690-irist8iae8c3acn4bkuf1lfklduvhghl.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.18046953276-d7r0cskobi06nbhr6rgooqa6b0nl0eq5</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAgM5_vVLus0WX3v7K9K3XRWFQgeMAt5JI</string>
+	<string>AIzaSyAqlusS9ujY8farve4a2M9ud2V99UcKmMY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>628352863690</string>
+	<string>18046953276</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.easycarrelo</string>
 	<key>PROJECT_ID</key>
-	<string>easy-car-relo</string>
+	<string>easycarrelo</string>
 	<key>STORAGE_BUCKET</key>
-	<string>easy-car-relo.appspot.com</string>
+	<string>easycarrelo.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:628352863690:ios:8fb01d3af7916ff434d333</string>
+	<string>1:18046953276:ios:04e1a1122921ff61372039</string>
 	<key>DATABASE_URL</key>
-	<string>https://easy-car-relo.firebaseio.com</string>
+	<string>https://easycarrelo.firebaseio.com</string>
 </dict>
 </plist>

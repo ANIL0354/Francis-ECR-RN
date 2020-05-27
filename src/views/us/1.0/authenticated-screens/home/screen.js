@@ -108,7 +108,12 @@ export const Screen = ({
     }
   }
   useEffect(() => {
-    requestUserPermission()
+    const deviceToken = messaging()
+      .getToken()
+      .then(token => {
+        return token;
+      });
+    console.log('token', deviceToken)
   }, [])
 
   useEffect(() => {
