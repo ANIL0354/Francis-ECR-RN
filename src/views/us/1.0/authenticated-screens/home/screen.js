@@ -11,6 +11,7 @@ import {
   ScrollView,
   TouchableOpacity,
   AppState,
+  Platform,
   PermissionsAndroid,
 } from 'react-native';
 import messaging, { AuthorizationStatus } from '@react-native-firebase/messaging';
@@ -97,21 +98,15 @@ export const Screen = ({
 
   const scaledFont = scaleText(14);
 
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === AuthorizationStatus.AUTHORIZED ||
-      authStatus === AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  }
   useEffect(() => {
     const deviceToken = messaging()
       .getToken()
       .then(token => {
         return token;
+      })
+      .catch((error) => {
+        console.log('err', error)
       });
     console.log('token', deviceToken)
   }, [])
@@ -147,6 +142,7 @@ export const Screen = ({
     if (fuelTypesList && vehicleTypesList && transmissionTypesList) {
       stopLoader();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fuelTypesList, transmissionTypesList, vehicleTypesList]);
 
   const handleAppStateChange = (nextAppState) => {

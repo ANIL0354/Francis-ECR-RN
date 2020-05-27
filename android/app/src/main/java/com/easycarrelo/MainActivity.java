@@ -1,4 +1,4 @@
-package com.francis_ecr_rn;
+package com.easycarrelo;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
