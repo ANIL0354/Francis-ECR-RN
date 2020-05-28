@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
     return ({
         userToken: state.CommonReducer.userToken,
         faqList: state.CommonReducer.faqList,
-        completeDetails: state.ListsReducer.completeDetails
+        completeDetails: state.ListsReducer.completeDetails,
     });
 }
 const mapDispatchToProps = (dispatch) => {

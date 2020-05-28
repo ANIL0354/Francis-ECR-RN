@@ -1,6 +1,4 @@
 rootProject.name = 'Francis_ECR_RN'
-include ':tipsi-stripe'
-project(':tipsi-stripe').projectDir = new File(rootProject.projectDir, '../node_modules/tipsi-stripe/android')
 include ':react-native-android-location-enabler'
 project(':react-native-android-location-enabler').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-android-location-enabler/android')
 include ':@react-native-community_netinfo'

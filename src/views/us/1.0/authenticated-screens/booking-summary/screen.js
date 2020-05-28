@@ -14,7 +14,8 @@ import {
     LayoutAnimation,
     UIManager,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    Dimensions
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -27,11 +28,12 @@ import {
     NAV_ARROW_ICON,
     CAR_SEATS_ICON,
     AC_ICON,
-    TURN_RIGHT,
+    STRAIGHT_ARROW,
     DOORS_ICON,
     GEAR_ICON,
     SEARCH_ICON,
     LUGGAGE_ICON,
+    RIDE_BOOKED,
     LIMITS,
     LABELS,
     FUEL_INACTIVE,
@@ -49,22 +51,30 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 
 export const Screen = ({
     navigation,
-    route
+    route,
+    driverData,
+    submitBookingRequest
 }) => {
     let { vehicleDetails } = route.params;
 
     const today = new Date();
     const largeScaledFont = scaleText(18);
-    const mediumScaledFont = scaleText(16)
+    const mediumScaledFont = scaleText(16);
+    const [rideBooked, setRideBooked] = useState(false);
 
     return (
-        <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+        <AppHoc
+            rightIcon={MENU_LOGO}
+            leftIcon={APP_LOGO}
+            centerIcon={USER_ICON}
+            fromSummary={true}
+        >
             <ScrollView
                 bounces={false}
                 keyboardShouldPersistTaps="always"
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.childContainer}>
-                    <TouchableOpacity
+                    {!rideBooked && <TouchableOpacity
                         style={styles.navArrowContainer}
                         onPress={() => navigation.goBack()}>
                         <Image
@@ -74,28 +84,47 @@ export const Screen = ({
                             resizeMode={'contain'}
                             style={{ alignSelf: 'center', marginVertical: scaleText(5).fontSize }}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                     <Text
                         style={{
                             ...styles.subHeaderText,
                             fontSize: largeScaledFont.fontSize,
                         }}>
-                        {'Summary'}
+                        {rideBooked ? 'Thank You' : 'Summary'}
                     </Text>
                 </View>
 
-                <View style={{ paddingHorizontal: scaleText(10).fontSize }}>
-                    <View>
+                {rideBooked
+                    ?
+                    <View style={{ flex: 1, paddingHorizontal: scaleText(20).fontSize, justifyContent: 'center', minHeight: Dimensions.get('window').height - scaleText(130).fontSize, }}>
+
+                        <View>
+                            <SimpleImage source={RIDE_BOOKED} style={{ flex: 1, alignSelf: 'center', marginBottom: scaleText(50).fontSize, }} resizeMode={'contain'} />
+                            <Text
+                                style={{ ...styles.carTitle, fontSize: scaleText(20).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Ride Booked!'}</Text>
+                            <Text
+                                style={{ color: 'black', fontSize: scaleText(16).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Thank you, your ride has been booked with us.'}</Text>
+                            <CustomButton
+                                title={'Go To Home Page'}
+                                titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
+                                onPress={() => {
+                                    navigation.navigate(SCREENS.HOME);
+                                }}
+                                buttonStyle={{ ...styles.vehicleListButton, marginTop: scaleText(50).fontSize }}
+                            />
+                        </View>
+                    </View>
+                    : < View style={{ paddingHorizontal: scaleText(20).fontSize }}>
                         <View style={styles.detailsWrapper}>
-                            <View style={{ flexDirection: 'row' }}>
+                            <View style={{ flex: 1, flexDirection: 'row' }}>
                                 <View style={styles.detailsLeftContainer}>
                                     <Image
                                         source={{ uri: vehicleDetails.vehicleData.url[0] }}
                                         resizeMode={'contain'}
                                         style={{
                                             ...styles.alignSelfCenter,
-                                            height: scaleText(150).fontSize,
-                                            width: scaleText(150).fontSize,
+                                            height: scaleText(100).fontSize,
+                                            width: scaleText(100).fontSize,
                                         }}
                                     />
                                 </View>
@@ -103,7 +132,7 @@ export const Screen = ({
                                     <Text
                                         style={styles.carTitle}>{vehicleDetails.vehicleData ? vehicleDetails.vehicleData.name : ''}</Text>
                                     <View style={styles.carFeaturesWrapper}>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
                                             <IconText
                                                 icon={CAR_SEATS_ICON}
                                                 title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child${vehicleDetails.vehicleData.childSeats > 1 ? 's' : ''}`}
@@ -160,93 +189,108 @@ export const Screen = ({
                                                 containerStyle={styles.iconTextContainer}
                                             />
                                             {/* <IconText
-                                                icon={VEHICLE_YEAR_RANGE}
-                                                title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
-                                                titleFontSize={14}
-                                                titleStyle={styles.iconText}
-                                                containerStyle={styles.iconTextContainer}
-                                            /> */}
+                                            icon={VEHICLE_YEAR_RANGE}
+                                            title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
+                                            titleFontSize={14}
+                                            titleStyle={styles.iconText}
+                                            containerStyle={styles.iconTextContainer}
+                                        /> */}
                                         </View>
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                            <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly' }}>
+                                {/* <View style={styles.listLocationWrapper}> */}
                                 <Text
                                     ellipsizeMode={'tail'}
                                     numberOfLines={1}
                                     style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
-                                <SimpleImage source={TURN_RIGHT} />
+                                {/* <View style={styles.listDropoffWrapper}> */}
+                                <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center' }} />
                                 <Text
                                     ellipsizeMode={'tail'}
                                     numberOfLines={1}
                                     style={styles.listPickupText}>{vehicleDetails.dropoffBranchData.city}</Text>
                             </View>
                         </View>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <View style={{ flex: 1 }}>
-                            <View style={{ flex: 1, flexDirection: 'row', }}>
-                                <Text style={{ color: 'black', flex: 1, }}>{'Pick-up Date: '}</Text>
-                                <Text style={{ color: 'black', flex: 1, }}>{'20/05/2020'}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(10).fontSize }}>
+                            <View style={{ flex: 1 }}>
+                                <View style={{ flex: 1, flexDirection: 'row', }}>
+                                    <Text style={{ color: 'black', flex: 1, }}>{'Pick-up Date: '}</Text>
+                                    <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.pickupDate).format('DD/MM/YYYY')}</Text>
+                                </View>
+                                <View style={{ flex: 1, flexDirection: 'row', }}>
+                                    <Text style={{ color: 'black', flex: 1, }}>{'Return Date: '}</Text>
+                                    <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.dropoffDate).format('DD/MM/YYYY')}</Text>
+                                </View>
                             </View>
-                            <View style={{ flex: 1, flexDirection: 'row', }}>
-                                <Text style={{ color: 'black', flex: 1, }}>{'Return Date: '}</Text>
-                                <Text style={{ color: 'black', flex: 1, }}>{'28/05/2020'}</Text>
-                            </View>
-                        </View>
-                        <View style={{ flex: 1 }}>
                             <CustomButton
                                 title={'Change'}
                                 titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'capitalize' }}
                                 onPress={() => {
                                     navigation.goBack();
                                 }}
-                                buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050' }}
+                                buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', }}
                             />
                         </View>
-                    </View>
-                    <View style={{
-                        backgroundColor: '#f8f8f8',
-                        padding: scaleText(20).fontSize,
-                        borderRadius: scaleText(10).fontSize,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <View style={{ flex: 1, }}>
-                            <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                <Text style={{ flex: 1 }}>{'Free Days : '}</Text>
-                                <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                    <Text>{`$${30} x ${4} days`}</Text>
-                                    <Text>{' = '}</Text>
-                                    <Text>{`$${30}`}</Text>
+                        <View style={{
+                            backgroundColor: '#f8f8f8',
+                            padding: scaleText(20).fontSize,
+                            borderRadius: scaleText(10).fontSize,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <View style={{ flex: 1, }}>
+                                <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Free Days : '}</Text>
+                                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${0} x ${vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays} day${vehicleDetails.freeDays > 1 ? 's' : ''}`}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0}`}</Text>
+                                    </View>
+                                </View>
+                                {(vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay) && <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Paid Days : '}</Text>
+                                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${vehicleDetails.ratePerDay} x ${vehicleDetails.totalSelectedDate > vehicleDetails.freeDays ? (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays) : 0} days`}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${vehicleDetails.totalSelectedDate > vehicleDetails.freeDays ? vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays) : 0}`}</Text>
+                                    </View>
+                                </View>}
+                                <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: scaleText(5).fontSize }}>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Total : '}</Text>
+                                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{``}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{''}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0 + (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0}`}</Text>
+                                    </View>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                <Text style={{ flex: 1 }}>{'Paid Days : '}</Text>
-                                <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                    <Text>{`$${30} x ${4} days`}</Text>
-                                    <Text>{' = '}</Text>
-                                    <Text>{`$${30}`}</Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: scaleText(5).fontSize }}>
-                                <Text style={{ flex: 1, }}>{'Total : '}</Text>
-                                <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                    <Text>{`$${30} x ${4} days`}</Text>
-                                    <Text>{' = '}</Text>
-                                    <Text>{`$${30}`}</Text>
-                                </View>
-                            </View>
+                            <CustomButton
+                                title={'Submit your request'}
+                                titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
+                                onPress={() => {
+                                    submitBookingRequest(
+                                        driverData._id,
+                                        {
+                                            startDate: vehicleDetails.pickupDate,
+                                            endDate: vehicleDetails.dropoffDate,
+                                            selectedFreeDays: vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays,
+                                            bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
+                                            commentForAgency: '',
+                                            commentForECRByDriver: '',
+                                            rateForAgency: 0
+                                        },
+                                        (response) => {
+                                            setRideBooked(true)
+                                        },
+                                        () => { }
+                                    )
+                                }}
+                                buttonStyle={styles.vehicleListButton}
+                            />
                         </View>
-                        <CustomButton
-                            title={'Submit your request'}
-                            titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
-                            onPress={() => {
-                            }}
-                            buttonStyle={styles.vehicleListButton}
-                        />
-                    </View>
-                </View>
+                    </View>}
             </ScrollView>
         </AppHoc >
     );

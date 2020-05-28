@@ -17,6 +17,7 @@ export const SET_PICKUP_DATE = 'SET_PICKUP_DATE';
 export const SET_DROPOFF_LOCATION = 'SET_DROPOFF_LOCATION';
 export const GET_FAQ_LIST = 'GET_FAQ_LIST';
 export const SAVE_FAQ_LIST = 'SAVE_FAQ_LIST';
+export const SAVE_DRIVER_DATA = 'SAVE_DRIVER_DATA';
 
 export const setUserLocation = userLocation => ({
     type: SET_USER_LOCATION,
@@ -134,3 +135,10 @@ export const saveFaqList = data => {
         data,
     };
 };
+
+export const saveDriverData = data => {
+    return {
+        type: SAVE_DRIVER_DATA,
+        data
+    }
+}

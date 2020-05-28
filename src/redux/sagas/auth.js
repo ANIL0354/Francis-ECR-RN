@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { takeLatest, all, put, delay } from "redux-saga/effects";
 import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-simple-toast';
@@ -13,6 +14,7 @@ import {
     saveUserInfo,
     stopLoader,
     LOGOUT_USER,
+    saveDriverData
 } from '../actions';
 const { defaultConfig: { LOCATION } } = require(`../../config/default`);
 const api = require(`../../shared/api`);
@@ -41,6 +43,7 @@ function* registerNewUser({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.REGISTER_USER}`, DATA: data });
         if (response.data.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
             return;
@@ -75,6 +78,7 @@ function* checkLogin({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             return;
         }
@@ -86,6 +90,7 @@ function* checkLogin({ data, success, failure }) {
         else {
             yield put(setAuthorization(response.data.data.token))
             success(response.data);
+            yield put(saveDriverData(response.data.data))
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
         }
@@ -103,6 +108,7 @@ function* checkSocialLogin({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             return;
         }
@@ -114,6 +120,7 @@ function* checkSocialLogin({ data, success, failure }) {
         else {
             yield put(setAuthorization(response.data.data.token));
             yield put(saveUserInfo(response.data.data))
+            yield put(saveDriverData(response.data.data))
             success(response.data.msg);
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
@@ -139,6 +146,7 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
         const response = yield postRequestNoAuth({ API: `${api.URL.FORGOT_PASSWORD}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             return;
         }
@@ -172,6 +180,7 @@ function* completeUserProfile({ data, success, failure }) {
         const response = yield postRequest({ API: `${api.URL.CHALLENGES}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             return;
         }
@@ -210,17 +219,17 @@ function* logoutUser({ token, success, failure }) {
         if (response.status === STATUS_CODE.unAuthorized) {
 
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             return;
         }
         if (response.status !== STATUS_CODE.successful) {
-
-            yield put(setAuthorization(null));
             Toast.show(response.data.msg, Toast.LONG);
             yield put(stopLoader());
         }
         else {
             yield put(setAuthorization(null));
+            yield put(saveDriverData(null))
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
         }

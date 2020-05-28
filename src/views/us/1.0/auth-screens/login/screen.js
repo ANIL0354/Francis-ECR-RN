@@ -11,6 +11,7 @@ import {
     GoogleSignin,
     statusCodes,
 } from '@react-native-community/google-signin';
+import messaging from '@react-native-firebase/messaging';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, GOOGLE_SIGNIN_WEB_CLIENT_ID, LABELS, SCREENS, NAV_ARROW_ICON } from '../../../../../shared/constants'
 import { LoginForm } from './login-form';
@@ -29,7 +30,8 @@ export const Screen = ({
     const [signUpTab, setSignUpTab] = useState(false);
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
-    let { fromDetails = false } = route.params;
+    const [deviceToken, setDeviceToken] = useState('');
+    let { fromDetails = false, vehicleDetails = {} } = route.params;
 
     GoogleSignin.configure({
         scopes: [],
@@ -39,7 +41,11 @@ export const Screen = ({
         forceCodeForRefreshToken: false,
     });
 
-
+    useEffect(() => {
+        messaging().getToken().then(token => {
+            setDeviceToken(token);
+        })
+    }, [])
 
     const facebookAuth = () => {
         LoginManager.logInWithPermissions(["public_profile", 'email']).then(
@@ -56,7 +62,7 @@ export const Screen = ({
                                     socialLogin({
                                         loginType: 2,
                                         socialId: result.id,
-                                        "deviceToken": "string",
+                                        deviceToken: deviceToken,
                                         email: result.email,
                                         role: 1,
                                         name: result.first_name,
@@ -65,7 +71,7 @@ export const Screen = ({
                                         if (fromDetails) {
                                             navigation.reset({
                                                 index: 3,
-                                                routes: [{ name: SCREENS.BOOKING_SUMMARY }]
+                                                routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
                                             })
                                         }
                                         else {
@@ -112,14 +118,22 @@ export const Screen = ({
             socialLogin({
                 loginType: 3,
                 socialId: userInfo.user.id,
-                "deviceToken": "string",
+                deviceToken: deviceToken,
                 email: userInfo.user.email,
                 role: 1,
                 name: userInfo.user.givenName,
                 surname: userInfo.user.familyName
             }, (response) => {
                 stopLoader();
-                navigation.goBack();
+                if (fromDetails) {
+                    navigation.reset({
+                        index: 3,
+                        routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
+                    })
+                }
+                else {
+                    navigation.goBack();
+                }
             }, (response) => {
                 stopLoader();
             })
@@ -253,13 +267,21 @@ export const Screen = ({
                             onSubmit={(formData) => {
                                 Keyboard.dismiss();
                                 checkLogin({
-                                    deviceToken: "string",
+                                    deviceToken: deviceToken,
                                     email: formData.email,
                                     password: formData.password,
                                     role: 1
                                 }, (response) => {
                                     stopLoader();
-                                    navigation.goBack();
+                                    if (fromDetails) {
+                                        navigation.reset({
+                                            index: 3,
+                                            routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
+                                        })
+                                    }
+                                    else {
+                                        navigation.goBack();
+                                    }
                                 }, (response) => {
                                     stopLoader();
                                 })

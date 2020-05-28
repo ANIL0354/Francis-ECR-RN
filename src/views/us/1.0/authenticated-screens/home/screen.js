@@ -45,8 +45,6 @@ import CustomDatePicker from '../../../../../components/atoms/CustomDatePicker';
 import styles from './style.js';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 
-import messaging from '@react-native-firebase/messaging';
-
 export const Screen = ({
   logout,
   userToken,
@@ -96,14 +94,6 @@ export const Screen = ({
   const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
-
-
-  useEffect(() => {
-    messaging().getToken().then(token => {
-      console.log(token);
-
-    })
-  }, [])
 
   useEffect(() => {
     Geocoder.init(GOOGLE_API_KEY);

@@ -131,8 +131,10 @@ export const Screen = ({
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
-            refreshVehicleList();
-            setPageIndex(0);
+            if (navigation.isFocused()) {
+                refreshVehicleList();
+                setPageIndex(0);
+            }
             stopLoader();
         });
     }, []);

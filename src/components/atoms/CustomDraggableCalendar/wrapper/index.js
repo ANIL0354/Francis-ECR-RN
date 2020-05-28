@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 
 import {
@@ -278,53 +279,58 @@ export class DraggableCalendar extends Component {
 
   _onPressDay(date, available) {
     let { availableDateRange } = this.props;
-    if (date > availableDateRange[1] || date < availableDateRange[0]) {
+    if (date > availableDateRange[1] || date < availableDateRange[0] || (((this.props.endDate - this.props.startDate) / (1000 * 3600 * 24) + 1) === this.props.totalSelectable) || !date) {
       return;
     }
-    if (this.state.firstPick) {
-      this.setState({
-        firstDate: date,
-        firstPick: !this.state.firstPick
-      }, () => {
-        if (this.state.secondDate && this.state.firstDate < this.state.secondDate) {
-          this.setState({
-            startDate: this.state.firstDate
-          })
-        }
-        else if (this.state.secondDate && this.state.firstDate > this.state.secondDate) {
-          this.setState({
-            endDate: this.state.firstDate
-          })
-        }
-        else {
-          this.setState({
-            startDate: this.state.firstDate
-          })
-        }
-      })
+    if (this.props.startDate) {
+      this.props.setEndDate(date)
     }
     else {
-      this.setState({
-        secondDate: date,
-        firstPick: !this.state.firstPick
-      }, () => {
-        if (this.state.firstDate && this.state.firstDate < this.state.secondDate) {
-          this.setState({
-            endDate: this.state.secondDate
-          })
-        }
-        else if (this.state.firstDate && this.state.firstDate > this.state.secondDate) {
-          this.setState({
-            startDate: this.state.secondDate
-          })
-        }
-        else {
-          this.setState({
-            endDate: this.state.secondDate
-          })
-        }
-      })
+      this.props.setStartDate(date)
     }
+    // if (this.props.startDate) {
+    //   this.setState({
+    //     endDate: date,
+    //   }, () => {
+    //     if (this.state.secondDate && this.state.firstDate < this.state.secondDate) {
+    //       this.setState({
+    //         startDate: this.state.firstDate
+    //       })
+    //     }
+    //     else if (this.state.secondDate && this.state.firstDate > this.state.secondDate) {
+    //       this.setState({
+    //         endDate: this.state.firstDate
+    //       })
+    //     }
+    //     else {
+    //       this.setState({
+    //         startDate: this.state.firstDate
+    //       })
+    //     }
+    //   })
+    // }
+    // else {
+    //   this.setState({
+    //     secondDate: date,
+    //     firstPick: !this.state.firstPick
+    //   }, () => {
+    //     if (this.state.firstDate && this.state.firstDate < this.state.secondDate) {
+    //       this.setState({
+    //         endDate: this.state.secondDate
+    //       })
+    //     }
+    //     else if (this.state.firstDate && this.state.firstDate > this.state.secondDate) {
+    //       this.setState({
+    //         startDate: this.state.secondDate
+    //       })
+    //     }
+    //     else {
+    //       this.setState({
+    //         endDate: this.state.secondDate
+    //       })
+    //     }
+    //   })
+    // }
     if (date && available) {
     }
   }
@@ -389,7 +395,7 @@ export class DraggableCalendar extends Component {
 
   _renderMonth({ identifier, data, index }) {
     return (
-      <View style={{ flex: 1, minWidth: scaleText(270).fontSize }}>
+      <View style={{ flex: 1, minWidth: scaleText(270).fontSize, }}>
         {this._renderMonthHeader({ identifier })}
         {this._renderMonthBody({ identifier, data, index })}
       </View>
@@ -422,7 +428,7 @@ export class DraggableCalendar extends Component {
 
   _renderMonthBody({ identifier, data, index }) {
     const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    let { startDate, endDate } = this.state;
+    let { startDate, endDate } = this.props;
     return (
       <>
         <View style={[{

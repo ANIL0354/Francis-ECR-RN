@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, { PureComponent } from 'react';
 
 import {
@@ -51,79 +53,88 @@ export class Day extends PureComponent {
   render() {
     const { data, renderDay, weekDays, startDate, endDate, freeDays, availableDateRange } = this.props;
     const { usedDayTextStyle, usedDayContainerStyle } = this._genStyle();
+    // console.log('availableDateRange', availableDateRange, 'startDate', startDate, 'enDate', endDate)
     return (
       <TouchableWithoutFeedback style={styles.fullContainer} onPress={this._onPress}>
 
-        <View style={{
-          ...styles.fullContainer,
-          marginVertical: scaleText(3).fontSize,
-          backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? '#1dd1a1' : 'transparent',
-          borderTopLeftRadius:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
-              ? scaleText(20).fontSize
-              : 0,
-          borderBottomLeftRadius:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
-              ? scaleText(20).fontSize
-              : 0,
-          borderTopRightRadius:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
-              ? scaleText(20).fontSize
-              : 0,
-          borderBottomRightRadius:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
-              ? scaleText(20).fontSize
-              : 0,
-          paddingLeft:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
-              ? scaleText(5).fontSize
-              : 0,
-          paddingRight:
-            moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
-              ? scaleText(5).fontSize :
-              0
-        }}>
-          {renderDay ?
-            renderDay(data) :
-            <View style={[
-              usedDayContainerStyle,
-              {
-                backgroundColor:
-                  data.date && (startDate && endDate && data.available
-                    ? data.date >= startDate && data.date <= endDate
-                    : data.date === startDate || data.date === endDate)
-                    ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
-                    : 'transparent',
-                borderRadius:
-                  !startDate || !endDate
-                    ? scaleText(20).fontSize
-                    : 0,
-                borderTopLeftRadius:
-                  data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
-                    ? scaleText(20).fontSize
-                    : 0,
-                borderBottomLeftRadius:
-                  data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
-                    ? scaleText(20).fontSize
-                    : 0,
-                borderTopRightRadius:
-                  data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
-                    ? scaleText(20).fontSize
-                    : 0,
-                borderBottomRightRadius:
-                  data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
-                    ? scaleText(20).fontSize
-                    : 0
-              }]}>
-              {data.date && (
-                <Text style={[...usedDayTextStyle, !data.available && { color: 'white', opacity: .6 }]}>
-                  {data.date.getDate()}
-                </Text>
-              )}
-            </View>
-          }
+        <View style={styles.fullContainer}>
+          <View style={{
+            ...styles.fullContainer,
+            padding: 0,
+            backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? data.date && (startDate && endDate && data.available
+              ? data.date >= startDate && data.date <= endDate
+              : data.date === startDate || data.date === endDate)
+              ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225' : '#1dd1a1' : 'transparent',
+            // borderTopRightRadius:
+            //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+            //     ? scaleText(20).fontSize
+            //     : data.date === availableDateRange[1]
+            //       ? scaleText(20).fontSize
+            //       : 0,
+            // borderBottomRightRadius:
+            //   data.date === availableDateRange[1]
+            //     ? scaleText(20).fontSize
+            //     : data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+            //       ? scaleText(20).fontSize
+            //       : 0
+            // borderRadius:
+            // red : #fe6a67 ==== yellow: '#f2c225' ==== blue : '#1dd1a1'
+            //   !startDate || !endDate
+            //     ? scaleText(20).fontSize
+            //     : 0,
+            // paddingLeft:
+            //   moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+            //     ? scaleText(5).fontSize
+            //     : 0,
+            // paddingRight:
+            //   moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+            //     ? scaleText(5).fontSize :
+            //     0
+          }}>
+            {renderDay ?
+              renderDay(data) :
+              <View style={[
+                usedDayContainerStyle,
+                // {
+                //   backgroundColor:
+                //     data.date && (startDate && endDate && data.available
+                //       ? data.date >= startDate && data.date <= endDate
+                //       : data.date === startDate || data.date === endDate)
+                //       ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
+                //       : 'transparent',
+                // borderRadius:
+                //   !startDate || !endDate
+                //     ? scaleText(20).fontSize
+                //     : 0,
+                // borderTopLeftRadius:
+                //   data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                //     ? scaleText(20).fontSize
+                //     : 0,
+                // borderBottomLeftRadius:
+                //   data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                //     ? scaleText(20).fontSize
+                //     : 0,
+                // borderTopRightRadius:
+                //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                //     ? scaleText(20).fontSize
+                //     : 0,
+                // borderBottomRightRadius:
+                //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                //     ? scaleText(20).fontSize
+                //     : 0
+                // }
+              ]}>
+
+                {data.date && (
+                  <Text style={[...usedDayTextStyle, (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? { color: 'white' } : { color: 'white', opacity: .6 }]}>
+                    {data.date.getDate()}
+                  </Text>
+                )}
+              </View>
+            }
+          </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback >
 
     );
   }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
-import { CANCEL_ICON } from '../../../shared/constants';
+
 import Slider from '../../atoms/CustomSlider';
 import CustomButton from '../../atoms/CustomButton';
 import styles from './style';
@@ -8,6 +8,7 @@ import MultiCheckGroup from '../../molecules/MultiCheckGroup';
 import {
     FILTER_OPTIONS,
     FUEL_OPTIONS,
+    CANCEL_ICON,
     VEHICLE_TYPE_OPTIONS,
     TRANSMISSION_OPTIONS
 } from '../../../shared/constants';

@@ -20,7 +20,8 @@ import {
     SET_PICKUP_LOCATION,
     SET_PICKUP_DATE,
     SET_DROPOFF_LOCATION,
-    SAVE_FAQ_LIST
+    SAVE_FAQ_LIST,
+    SAVE_DRIVER_DATA
 } from '../actions';
 
 const { defaultConfig: { PLATFORM } } = require(`../../config/default`);
@@ -29,8 +30,6 @@ const { updateAuthToken } = require(`../../helpers`);
 const initialCommonState = {
     userToken: '',
     userInfo: null,
-    platformType: null,
-    rememberCredentials: null,
     loader: false,
     gpsEnabled: false,
     locationEnabled: false,
@@ -45,7 +44,8 @@ const initialCommonState = {
     pickupLocation: '',
     dropOffLocation: '',
     pickupDate: null,
-    faqList: null
+    faqList: null,
+    driverData: null
 };
 
 const CommonReducer = (state = { ...initialCommonState }, action) => {
@@ -65,20 +65,10 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
                 ...state,
                 loader: false
             }
-        case SET_PLATFORM_TYPE:
-            return {
-                ...state,
-                platformType: action.role
-            }
         case SAVE_USER_INFO:
             return {
                 ...state,
                 userInfo: action.data
-            }
-        case REMEMBER_ME:
-            return {
-                ...state,
-                rememberCredentials: action.credentials
             }
         case UPDATE_INTERNET_STATUS:
             return {
@@ -150,14 +140,18 @@ const CommonReducer = (state = { ...initialCommonState }, action) => {
                 ...state,
                 faqList: action.data
             }
+        case SAVE_DRIVER_DATA:
+            return {
+                ...state,
+                driverData: action.data
+            }
         case REHYDRATE:
             let common = ((action || {}).payload || {}).CommonReducer || initialCommonState
             updateAuthToken(common.userToken || '');
             return {
                 ...state,
                 userToken: common.userToken,
-                platformType: common.platformType,
-                rememberCredentials: common.rememberCredentials,
+                driverData: common.driverData,
                 ...(action.payload || {}).common
             };
         default:

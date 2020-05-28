@@ -28,7 +28,7 @@ import {
     NAV_ARROW_ICON,
     CAR_SEATS_ICON,
     AC_ICON,
-    TURN_RIGHT,
+    STRAIGHT_ARROW,
     DOORS_ICON,
     GEAR_ICON,
     SEARCH_ICON,
@@ -45,6 +45,7 @@ import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilt
 import styles from "./styles.js";
 import IconText from "../../../../../components/atoms/IconTextComponent";
 import CustomButton from "../../../../../components/atoms/CustomButton";
+import MultiImageViewer from '../../../../../components/atoms/MultiImageViewer';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 import CustomLoader from "../../../../../components/atoms/Loader";
 import ImageButton from '../../../../../components/atoms/ImageButton';
@@ -63,6 +64,13 @@ export const Screen = ({
     faqList,
     fetchCompleteDetails
 }) => {
+
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalSelectedDate, setTotalSelectedDates] = useState(0);
+    const [imageExpanded, setImageExpanded] = useState(false);
+    const [availableImages, setAvailableImages] = useState([]);
+
     let { vehicleDetails } = route.params;
     useEffect(() => {
         getFaqList(
@@ -74,12 +82,31 @@ export const Screen = ({
             () => { stopLoader(); },
             () => { stopLoader(); }
         )
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        let images = [];
+        vehicleDetails.vehicleData.url.map((item) => {
+            images.push({ url: item });
+            return null;
+        });
+        setAvailableImages(images)
+    }, [vehicleDetails && vehicleDetails.vehicleData && vehicleDetails.vehicleData.url && vehicleDetails.vehicleData.url.length])
+
+    useEffect(() => {
+        let total = 0;
+        if (startDate && !endDate) {
+            total = 1;
+            setEndDate(startDate)
+        }
+        else if (startDate && endDate) {
+            total = ((endDate - startDate) / (1000 * 3600 * 24)) + 1
+        }
+        setTotalSelectedDates(total);
+    }, [startDate, endDate]);
 
     const today = new Date();
     const largeScaledFont = scaleText(18);
-
-    console.log('faqList', faqList)
 
     return (
         <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
@@ -90,7 +117,9 @@ export const Screen = ({
                 <View style={styles.childContainer}>
                     <TouchableOpacity
                         style={styles.navArrowContainer}
-                        onPress={() => navigation.goBack()}>
+                        onPress={() => navigation.goBack()}
+                        hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
+                    >
                         <Image
                             source={NAV_ARROW_ICON}
                             height={20}
@@ -106,25 +135,29 @@ export const Screen = ({
                         {LABELS.yourRequest}
                     </Text>
                 </View>
+                <MultiImageViewer
+                    visible={imageExpanded}
+                    closeView={() => setImageExpanded(false)}
+                    images={availableImages} />
                 <View style={{ paddingHorizontal: scaleText(20).fontSize }}>
-                    <View style={{ ...styles.detailsWrapper, backgroundColor: 'red' }}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.detailsLeftContainer}>
+                    <View style={styles.detailsWrapper}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => setImageExpanded(true)} style={styles.detailsLeftContainer}>
                                 <Image
                                     source={{ uri: vehicleDetails.vehicleData.url[0] }}
                                     resizeMode={'contain'}
                                     style={{
                                         ...styles.alignSelfCenter,
-                                        height: scaleText(150).fontSize,
-                                        width: scaleText(150).fontSize,
+                                        height: scaleText(100).fontSize,
+                                        width: scaleText(100).fontSize,
                                     }}
                                 />
-                            </View>
+                            </TouchableOpacity>
                             <View style={styles.detailsRightContainer}>
                                 <Text
                                     style={styles.carTitle}>{vehicleDetails.vehicleData ? vehicleDetails.vehicleData.name : ''}</Text>
                                 <View style={styles.carFeaturesWrapper}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
                                         <IconText
                                             icon={CAR_SEATS_ICON}
                                             title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child${vehicleDetails.vehicleData.childSeats > 1 ? 's' : ''}`}
@@ -198,7 +231,7 @@ export const Screen = ({
                                 numberOfLines={1}
                                 style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
                             {/* <View style={styles.listDropoffWrapper}> */}
-                            <SimpleImage source={TURN_RIGHT} />
+                            <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center' }} />
                             <Text
                                 ellipsizeMode={'tail'}
                                 numberOfLines={1}
@@ -211,7 +244,16 @@ export const Screen = ({
                         </Text>
                     </View>}
                     <View>
-                        <CustomDraggableCalendar />
+                        {completeDetails && <CustomDraggableCalendar
+                            startDate={startDate}
+                            endDate={endDate}
+                            freeDays={completeDetails.freeDays}
+                            setStartDate={(date) => setStartDate(date)}
+                            setEndDate={(date) => setEndDate(date)}
+                            pickupDate={completeDetails.pickupDate}
+                            dropoffDate={completeDetails.dropoffDate}
+                            totalSelectable={completeDetails.freeDays + (completeDetails.extraPaidDays ? completeDetails.extraPaidDays : 0)}
+                        />}
                     </View>
                     <View style={{ marginVertical: scaleText(20).fontSize }}>
                         <Text
@@ -225,27 +267,27 @@ export const Screen = ({
                         }}>
                             <View style={{ flex: 1, }}>
                                 <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1 }}>{'Free Days : '}</Text>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Free Days : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3 }}>{`$${0} x ${4} days`}</Text>
-                                        <Text style={{ flex: 1 }}>{' = '}</Text>
-                                        <Text style={{ flex: 1 }}>{`$${0}`}</Text>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${0} x ${totalSelectedDate < completeDetails.freeDays ? totalSelectedDate : completeDetails.freeDays} day${completeDetails.freeDays > 1 ? 's' : ''}`}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0}`}</Text>
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1 }}>{'Paid Days : '}</Text>
+                                {(completeDetails.extraPaidDays && completeDetails.ratePerDay) && <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Paid Days : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3 }}>{`$${completeDetails.ratePerDay} x ${4} days`}</Text>
-                                        <Text style={{ flex: 1 }}>{' = '}</Text>
-                                        <Text style={{ flex: 1 }}>{`$${completeDetails.ratePerDay * 4}`}</Text>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${completeDetails.ratePerDay} x ${totalSelectedDate > completeDetails.freeDays ? (totalSelectedDate - completeDetails.freeDays) : 0} days`}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${totalSelectedDate > completeDetails.freeDays ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
                                     </View>
-                                </View>
+                                </View>}
                                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1, }}>{'Total : '}</Text>
+                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Total : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3 }}>{``}</Text>
-                                        <Text style={{ flex: 1 }}>{''}</Text>
-                                        <Text style={{ flex: 1 }}>{`$${0 + completeDetails.ratePerDay * 4}`}</Text>
+                                        <Text style={{ flex: 3, color: '#0091ff' }}>{``}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{''}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0 + (completeDetails.extraPaidDays && completeDetails.ratePerDay && totalSelectedDate && totalSelectedDate > completeDetails.freeDays) ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
                                     </View>
                                 </View>
 
@@ -253,9 +295,32 @@ export const Screen = ({
                                     title={'Make a request'}
                                     titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                                     onPress={() => {
-                                        userToken
-                                            ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
-                                            : navigation.navigate(SCREENS.LOGIN, { fromDetails: true })
+                                        if (!totalSelectedDate || !startDate || !endDate) {
+                                            Alert.alert(
+                                                'Select Travel Dates',
+                                                'Please select your travel dates before proceeding.',
+                                                [
+                                                    {
+                                                        text: 'Okay',
+                                                        onPress: () => { },
+                                                    },
+                                                ],
+                                            );
+                                        }
+                                        else {
+                                            userToken
+                                                ? navigation.navigate(SCREENS.BOOKING_SUMMARY, {
+                                                    vehicleDetails: {
+                                                        ...vehicleDetails,
+                                                        pickupDate: startDate,
+                                                        dropoffDate: endDate,
+                                                        totalSelectedDate: totalSelectedDate,
+                                                        ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
+                                                        freeDays: completeDetails.freeDays
+                                                    }
+                                                })
+                                                : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
+                                        }
                                     }}
                                     buttonStyle={styles.vehicleListButton}
                                 />
@@ -272,7 +337,7 @@ export const Screen = ({
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                             <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Extra Paid days available:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.extraPaidDays} day${completeDetails.extraPaidDays > 1 ? 's' : ''}`}</Text>
+                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{(completeDetails.extraPaidDays && completeDetails.ratePerDay) ? `${completeDetails.extraPaidDays} day${completeDetails.extraPaidDays > 1 ? 's' : ''}` : 'Not Available'}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                             <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Pick-up from:'}</Text>
@@ -513,9 +578,23 @@ export const Screen = ({
                             title={'Make a request'}
                             titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                             onPress={() => {
-                                userToken
-                                    ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
-                                    : navigation.navigate(SCREENS.LOGIN, { fromDetails: true })
+                                if (!totalSelectedDate || !startDate || !endDate) {
+                                    Alert.alert(
+                                        'Select Travel Dates',
+                                        'Please select your travel dates before proceeding.',
+                                        [
+                                            {
+                                                text: 'Okay',
+                                                onPress: () => { },
+                                            },
+                                        ],
+                                    );
+                                }
+                                else {
+                                    userToken
+                                        ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
+                                        : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
+                                }
                             }}
                             buttonStyle={{ ...styles.vehicleListButton, marginHorizontal: scaleText(10).fontSize }}
                         />

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
@@ -28,19 +29,20 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     detailsWrapper: {
+        flex: 1,
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
         alignSelf: 'flex-start'
     },
     detailsLeftContainer: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
     detailsRightContainer: {
-        flex: 3,
+        flex: 2,
         flexDirection: 'column',
         justifyContent: 'center',
         marginLeft: scaleText(10).fontSize,
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // flexWrap: 'wrap',
         // maxWidth: '90%',
+        flex: 1,
         justifyContent: 'center'
     },
     iconTextContainer: {

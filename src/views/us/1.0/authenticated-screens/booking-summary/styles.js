@@ -1,26 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
-    childContainer: {
-        flexDirection: 'row',
-        backgroundColor: '#0091ff',
-        paddingHorizontal: 30,
-        paddingVertical: scaleText(20).fontSize,
-        alignItems: 'center',
-    },
-    navArrowContainer: {
-        flex: 1,
-        height: 20,
-        maxWidth: 20,
-        alignItems: 'center',
-    },
-    subHeaderText: {
-        color: 'white',
-        flex: 1,
-        textAlign: 'center',
-        textTransform: 'uppercase'
-    },
     rowFlex: {
         flex: 1,
         flexDirection: 'row'
@@ -28,21 +10,39 @@ const styles = StyleSheet.create({
     alignSelfCenter: {
         alignSelf: 'center'
     },
+    childContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#0091ff',
+        paddingHorizontal: scaleText(30).fontSize,
+        paddingVertical: scaleText(20).fontSize,
+        alignItems: 'center',
+    },
+    navArrowContainer: {
+        height: scaleText(20).fontSize,
+        width: scaleText(20).fontSize,
+        alignItems: 'center'
+    },
+    subHeaderText: {
+        color: 'white',
+        flex: 1,
+        textAlign: 'center',
+        textTransform: 'uppercase'
+    },
     detailsWrapper: {
-        marginHorizontal: scaleText(10).fontSize
+        flex: 1,
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
         alignSelf: 'flex-start'
     },
     detailsLeftContainer: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
     },
     detailsRightContainer: {
-        flex: 3,
+        flex: 2,
         flexDirection: 'column',
         justifyContent: 'center',
         marginLeft: scaleText(10).fontSize,
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // flexWrap: 'wrap',
         // maxWidth: '90%',
+        flex: 1,
         justifyContent: 'center'
     },
     iconTextContainer: {

@@ -34,6 +34,6 @@ export const DOWN_ARROW = require(`../../assets/down_small.png`);
 export const VERTICAL_LINE = require(`../../assets/vertical.png`);
 export const DATE_ICON = require(`../../assets/date_icon.png`);
 export const SCROLL_UP = require(`../../assets/top-arrow.png`);
-// export const STRAIGHT_ARROW = require(`../../assets/straight_arrow.png`);
+export const STRAIGHT_ARROW = require(`../../assets/straight_arrow.png`);
 export const PLUS_ICON = require(`../../assets/plus_icon.png`)
 export const MINUS_ICON = require(`../../assets/minus_icon.png`);

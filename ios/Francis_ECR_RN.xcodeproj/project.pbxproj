@@ -38,13 +38,7 @@
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "Francis_ECR_RN-tvOS";
 		};
-		E29E66632477D33F00A5F2B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E29E665F2477D33F00A5F2B0 /* PushNotificationIOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9B97F66B220DEC6000B61540;
-			remoteInfo = RNCPushNotificationIOS;
-		};
+		
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -59,31 +53,43 @@
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Francis_ECR_RN/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Francis_ECR_RN/Info.plist; sourceTree = "<group>"; };
+		172F4BF6253E429ACE818E53 /* Pods-Francis_ECR_RN-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOS/Pods-Francis_ECR_RN-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Francis_ECR_RN/main.m; sourceTree = "<group>"; };
 		17B952F3518446019328C8AF /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		2C2F09F6D7977E7318AD8646 /* Pods-Francis_ECR_RN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN/Pods-Francis_ECR_RN.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Francis_ECR_RN-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Francis_ECR_RN-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Francis_ECR_RN-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Francis_ECR_RN-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		310DE584A8762D2983699670 /* Pods-Francis_ECR_RN-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOSTests/Pods-Francis_ECR_RN-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		348639B9A5AE4A11A0CE15EA /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		392D4BF472B141EF8F5927BF /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		3BF76EF9ACCFB8A90F65E9A0 /* libPods-Francis_ECR_RN-Francis_ECR_RNTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-Francis_ECR_RNTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B15BFAC0DB48189C50FFFC /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		48EE79B95AFD4CEBA218E298 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		56394CC16F43B77C8DCE2656 /* Pods-Francis_ECR_RN-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOSTests/Pods-Francis_ECR_RN-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5D65FF5FC189BECD5ABB9D7B /* Pods-Francis_ECR_RN-Francis_ECR_RNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-Francis_ECR_RNTests.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-Francis_ECR_RNTests/Pods-Francis_ECR_RN-Francis_ECR_RNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4960D54B247D328800589049 /* Easy Car Relo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Easy Car Relo.entitlements"; path = "Francis_ECR_RN/Easy Car Relo.entitlements"; sourceTree = "<group>"; };
 		52023983CF98C98031257CC5 /* Pods-Francis_ECR_RN-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOS/Pods-Francis_ECR_RN-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		630C0E0695094BE7A8AFE69C /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		63705E553F6ED7AC0AC7C835 /* libPods-Francis_ECR_RN-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE185A12440CD1A006AD726 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6C081A6CB039530D6C903C48 /* Pods-Francis_ECR_RN-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOS/Pods-Francis_ECR_RN-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		6E403EEAD41EF2037CDC5D75 /* libPods-Francis_ECR_RN-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ED7EDF57B4DEE7A1B6890B3 /* libPods-Francis_ECR_RN-Francis_ECR_RNTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-Francis_ECR_RNTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89B38593D584735CD5196C6D /* Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-Francis_ECR_RNTests/Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig"; sourceTree = "<group>"; };
 		93D82BD62FA447A3AE72115D /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		A2C3BB8EEBE3F2B6C19A16CF /* Pods-Francis_ECR_RN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN/Pods-Francis_ECR_RN.release.xcconfig"; sourceTree = "<group>"; };
+		A5C94EE7E81E11538529B948 /* libPods-Francis_ECR_RN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		95CA16F30448EBD47906C982 /* libPods-Francis_ECR_RN-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5C5AA3F1C0D0B985F4B0E8E /* libPods-Francis_ECR_RN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4498A009C8D4CC4969B87AF /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B583B6D7BC7047DBA19731AC /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B6BF18BD9E354818A8847D7A /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		B76AC3B8105022DA0D7D605E /* libPods-Francis_ECR_RN-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Francis_ECR_RN-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B76D7D836161F153CB4F4D4B /* Pods-Francis_ECR_RN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN/Pods-Francis_ECR_RN.release.xcconfig"; sourceTree = "<group>"; };
 		BBF8523C24ABC3CE93180D0B /* Pods-Francis_ECR_RN-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-tvOS/Pods-Francis_ECR_RN-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BD19C5D8C2364E6E8307A4AD /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		C609774AF27240E0865FB305 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		D217539E2C0139792B67AC96 /* Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN-Francis_ECR_RNTests/Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig"; sourceTree = "<group>"; };
 		D07260249E6394AA18615171 /* Pods-Francis_ECR_RN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Francis_ECR_RN.debug.xcconfig"; path = "Target Support Files/Pods-Francis_ECR_RN/Pods-Francis_ECR_RN.debug.xcconfig"; sourceTree = "<group>"; };
 		DCDA0979282A4BD78BC6CE15 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		E29E665F2477D33F00A5F2B0 /* PushNotificationIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PushNotificationIOS.xcodeproj; path = "../node_modules/@react-native-community/push-notification-ios/ios/PushNotificationIOS.xcodeproj"; sourceTree = "<group>"; };
@@ -149,6 +155,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+				1140D98D2AA0186CAC4237EC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C2F09F6D7977E7318AD8646 /* Pods-Francis_ECR_RN.debug.xcconfig */,
+				A2C3BB8EEBE3F2B6C19A16CF /* Pods-Francis_ECR_RN.release.xcconfig */,
+				5D65FF5FC189BECD5ABB9D7B /* Pods-Francis_ECR_RN-Francis_ECR_RNTests.debug.xcconfig */,
+				D217539E2C0139792B67AC96 /* Pods-Francis_ECR_RN-Francis_ECR_RNTests.release.xcconfig */,
+				172F4BF6253E429ACE818E53 /* Pods-Francis_ECR_RN-tvOS.debug.xcconfig */,
+				6C081A6CB039530D6C903C48 /* Pods-Francis_ECR_RN-tvOS.release.xcconfig */,
+				56394CC16F43B77C8DCE2656 /* Pods-Francis_ECR_RN-tvOSTests.debug.xcconfig */,
+				310DE584A8762D2983699670 /* Pods-Francis_ECR_RN-tvOSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* Francis_ECR_RN */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +191,11 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				A5C94EE7E81E11538529B948 /* libPods-Francis_ECR_RN.a */,
+				7ED7EDF57B4DEE7A1B6890B3 /* libPods-Francis_ECR_RN-Francis_ECR_RNTests.a */,
+				B76AC3B8105022DA0D7D605E /* libPods-Francis_ECR_RN-tvOS.a */,
+				6E403EEAD41EF2037CDC5D75 /* libPods-Francis_ECR_RN-tvOSTests.a */,
+
 				A5C5AA3F1C0D0B985F4B0E8E /* libPods-Francis_ECR_RN.a */,
 				3BF76EF9ACCFB8A90F65E9A0 /* libPods-Francis_ECR_RN-Francis_ECR_RNTests.a */,
 				95CA16F30448EBD47906C982 /* libPods-Francis_ECR_RN-tvOS.a */,
@@ -204,7 +230,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				E29E665F2477D33F00A5F2B0 /* PushNotificationIOS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -218,6 +243,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				62F264C0703448E0A39CBDC9 /* Resources */,
+				1140D98D2AA0186CAC4237EC /* Pods */,
 				D504DDF444B59C68C245B5F4 /* Pods */,
 			);
 			indentWidth = 2;
@@ -251,14 +277,7 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		E29E66602477D33F00A5F2B0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E29E66642477D33F00A5F2B0 /* libRNCPushNotificationIOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
+		
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -267,10 +286,13 @@
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Francis_ECR_RNTests" */;
 			buildPhases = (
 				8555C0CF82AC0841CCA6B9C8 /* [CP] Check Pods Manifest.lock */,
+				30C4B22392E6FCC25177094B /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				53C0938015E850544C721D80 /* [CP] Copy Pods Resources */,
+				8165DE9DB8558EE394E036DA /* [CP] Copy Pods Resources */,
+
 			);
 			buildRules = (
 			);
@@ -287,6 +309,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Francis_ECR_RN" */;
 			buildPhases = (
 				5D1EFCB08D51F40E4E72D22A /* [CP] Check Pods Manifest.lock */,
+				6A67E9BA81331E1E00CF4A7F /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -294,6 +317,8 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				C624479FAFFBC02EE7C6513B /* [CP] Copy Pods Resources */,
 				AD37790CDE36960E9610A6AF /* [CP-User] [RNFB] Core Configuration */,
+				9A3AEA6ACBD0BD82B9517F62 /* [CP] Copy Pods Resources */,
+				A2EE0535160269A7893E3A08 /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -382,12 +407,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E29E66602477D33F00A5F2B0 /* Products */;
-					ProjectRef = E29E665F2477D33F00A5F2B0 /* PushNotificationIOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* Francis_ECR_RN */,
@@ -398,15 +417,6 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		E29E66642477D33F00A5F2B0 /* libRNCPushNotificationIOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNCPushNotificationIOS.a;
-			remoteRef = E29E66632477D33F00A5F2B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -541,7 +551,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -563,7 +572,6 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -649,7 +657,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -671,7 +678,6 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

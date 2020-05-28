@@ -9,6 +9,7 @@ import {
   GET_TRANSMISSION_TYPES,
   GET_VEHICLE_TYPES,
   FETCH_COMPLETE_DETAILS,
+  SUBMIT_BOOKING_REQUEST,
   GET_FAQ_LIST,
   setAuthorization,
   saveVehicleTypes,
@@ -20,16 +21,13 @@ import {
   saveCompleteDetails,
   saveVehicleListing,
   saveTransmissionTypes,
+  saveDriverData
 } from '../actions';
 const {
   defaultConfig: { LOCATION },
 } = require(`../../config/default`);
 const api = require(`../../shared/api`);
-const {
-  updateAuthToken,
-  getRequestNoAuth,
-  getRequest,
-} = require(`../../helpers`);
+const { updateAuthToken, getRequestNoAuth, getRequest, putRequest } = require(`../../helpers`);
 const { STATUS_CODE } = require(`../../shared/constants`);
 
 import axios from 'axios';
@@ -40,6 +38,7 @@ function* fetchPopularPlaces({ data, success, failure }) {
     });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       Toast.show(response.data.msg, Toast.LONG);
       return;
     }
@@ -102,6 +101,7 @@ function* fetchVehicleList({ data, success, failure }) {
     });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       failure();
@@ -127,6 +127,7 @@ function* fetchFuelTypes({ data, success = () => { }, failure = () => { } }) {
     const response = yield getRequest({ API: `${api.URL.FUEL_LISTING}` });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       return;
@@ -156,6 +157,7 @@ function* fetchTranmissionTypes({
     const response = yield getRequest({ API: `${api.URL.TRANSMISSION_LISTING}` });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       return;
@@ -181,6 +183,7 @@ function* fetchVehicleTypes({ data, success = () => { }, failure = () => { } }) 
     const response = yield getRequest({ API: `${api.URL.VEHICLE_TYPE_LISTING}` });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       return;
@@ -214,6 +217,7 @@ function* fetchVehicleCompleteDetails({
     });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       return;
@@ -240,6 +244,7 @@ function* fetchFaqList({ success = () => { }, failure = () => { } }) {
     const response = yield getRequest({ API: `${api.URL.FAQ_LIST}` });
     if (response.status === STATUS_CODE.unAuthorized) {
       yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
       stopLoader();
       Toast.show(response.data.msg, Toast.LONG);
       return;
@@ -259,6 +264,40 @@ function* fetchFaqList({ success = () => { }, failure = () => { } }) {
   }
 }
 
+function* submitRequest({ driverId, data, success, failure }) {
+  try {
+    yield put(startLoader())
+    if (!data.commentForAgency) {
+      delete data.commentForAgency;
+    }
+    if (!data.commentForECRByDriver) {
+      delete data.commentForECRByDriver;
+    }
+    if (!data.rateForAgency) {
+      delete data.rateForAgency;
+    }
+    const response = yield putRequest({ API: `${api.URL.VEHICLE_LISTING}/${driverId}/driver`, DATA: data });
+    if (response.status === STATUS_CODE.unAuthorized) {
+      yield put(setAuthorization(null));
+      yield put(saveDriverData(null));
+      return;
+    }
+    if (response.status !== STATUS_CODE.successful) {
+      failure(response.data);
+      yield put(stopLoader())
+    }
+    else {
+      success(response.data);
+      yield put(stopLoader())
+    }
+  }
+  catch (error) {
+    return;
+  } finally {
+    yield put(stopLoader())
+  }
+}
+
 function* ListsSaga() {
   yield all([
     takeLatest(GET_POPULAR_PLACES, fetchPopularPlaces),
@@ -268,6 +307,7 @@ function* ListsSaga() {
     takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes),
     takeLatest(FETCH_COMPLETE_DETAILS, fetchVehicleCompleteDetails),
     takeLatest(GET_FAQ_LIST, fetchFaqList),
+    takeLatest(SUBMIT_BOOKING_REQUEST, submitRequest)
   ]);
 }
 

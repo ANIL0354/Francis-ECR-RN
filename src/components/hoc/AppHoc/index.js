@@ -15,6 +15,7 @@ const AppHoc = ({
   centerIcon,
   loader,
   logout,
+  fromSummary = false,
   userToken,
   stopLoader,
   children,
@@ -37,16 +38,21 @@ const AppHoc = ({
           ? [
             {
               label: STRINGS.LOGOUT,
-              onPress: () => Alert.alert(STRINGS.LOGOUT, STRINGS.LOGOUT_DESCRIPTION, [
+              onPress: () => Alert.alert(fromSummary ? 'Warning' : STRINGS.LOGOUT,
+                fromSummary ? 'You will loose all your data. Are you sure, you want to logout?' : STRINGS.LOGOUT_DESCRIPTION, [
                 {
                   text: STRINGS.CANCEL,
                   onPress: () => { },
                 },
                 {
-                  text: STRINGS.CONFIRM,
+                  text: fromSummary ? "Yes, I'm sure" : STRINGS.CONFIRM,
                   onPress: () => logout(
                     userToken,
-                    () => { },
+                    () => {
+                      if (fromSummary) {
+                        navigation.navigate(SCREENS.HOME)
+                      }
+                    },
                     () => { },
                   )
                 },

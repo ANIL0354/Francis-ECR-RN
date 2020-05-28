@@ -7,4 +7,5 @@ export const PASSENGER_CAR = require('../../assets/images/passenger_car.png');
 export const RECREATIONAL_CAR = require('../../assets/images/recreational.png');
 export const TRUCKS = require('../../assets/images/trucks.png');
 export const BIG_NORMAL_CAR = require(`../../assets/images/big_car.png`);
-export const SPLASH_SCREEN = require(`../../assets/images/splash.png`)
+export const SPLASH_SCREEN = require(`../../assets/images/splash.png`);
+export const RIDE_BOOKED = require(`../../assets/images/car_mobile.png`)

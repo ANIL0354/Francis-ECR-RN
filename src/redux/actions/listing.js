@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const GET_POPULAR_PLACES = 'GET_POPULAR_PLACES';
 export const SAVE_POPULAR_PLACES = 'SAVE_POPULAR_PLACES';
 export const FETCH_VEHICLE_LISTING = 'FETCH_VEHICLE_LISTING';
@@ -11,6 +12,7 @@ export const SAVE_VEHICLE_TYPES = 'SAVE_VEHICLE_TYPES';
 export const REFRESH_VEHICLE_LIST = 'REFRESH_VEHICLE_LIST';
 export const FETCH_COMPLETE_DETAILS = 'FETCH_COMPLETE_DETAILS';
 export const SAVE_COMPLETE_DETAILS = 'SAVE_COMPLETE_DETAILS';
+export const SUBMIT_BOOKING_REQUEST = 'SUBMIT_BOOKING_REQUEST';
 
 export const getFuelTypes = ({ data, success, failure }) => {
     return {
@@ -112,4 +114,14 @@ export const saveCompleteDetails = data => {
         type: SAVE_COMPLETE_DETAILS,
         data
     }
-}
+};
+
+export const submitBookingRequest = (driverId, data, success, failure) => {
+    return {
+        type: SUBMIT_BOOKING_REQUEST,
+        driverId,
+        data,
+        success,
+        failure,
+    };
+};
