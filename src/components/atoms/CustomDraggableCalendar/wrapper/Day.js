@@ -53,7 +53,7 @@ export class Day extends PureComponent {
   render() {
     const { data, renderDay, weekDays, startDate, endDate, freeDays, availableDateRange } = this.props;
     const { usedDayTextStyle, usedDayContainerStyle } = this._genStyle();
-    // console.log('availableDateRange', availableDateRange, 'startDate', startDate, 'enDate', endDate)
+    console.log(data.date, 'availableDateRange', availableDateRange, 'startDate', startDate, 'enDate', endDate)
     return (
       <TouchableWithoutFeedback style={styles.fullContainer} onPress={this._onPress}>
 
@@ -65,6 +65,11 @@ export class Day extends PureComponent {
               ? data.date >= startDate && data.date <= endDate
               : data.date === startDate || data.date === endDate)
               ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225' : '#1dd1a1' : 'transparent',
+            borderTopRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
+            borderBottomRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
+            borderTopLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
+            borderBottomLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
+            // borderRadius: scaleText(20).fontSize
             // borderTopRightRadius:
             //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
             //     ? scaleText(20).fontSize
@@ -95,34 +100,6 @@ export class Day extends PureComponent {
               renderDay(data) :
               <View style={[
                 usedDayContainerStyle,
-                // {
-                //   backgroundColor:
-                //     data.date && (startDate && endDate && data.available
-                //       ? data.date >= startDate && data.date <= endDate
-                //       : data.date === startDate || data.date === endDate)
-                //       ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
-                //       : 'transparent',
-                // borderRadius:
-                //   !startDate || !endDate
-                //     ? scaleText(20).fontSize
-                //     : 0,
-                // borderTopLeftRadius:
-                //   data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
-                //     ? scaleText(20).fontSize
-                //     : 0,
-                // borderBottomLeftRadius:
-                //   data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
-                //     ? scaleText(20).fontSize
-                //     : 0,
-                // borderTopRightRadius:
-                //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
-                //     ? scaleText(20).fontSize
-                //     : 0,
-                // borderBottomRightRadius:
-                //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
-                //     ? scaleText(20).fontSize
-                //     : 0
-                // }
               ]}>
 
                 {data.date && (
