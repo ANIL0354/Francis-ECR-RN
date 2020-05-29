@@ -397,7 +397,6 @@ export class DraggableCalendar extends Component {
   }
 
   _renderMonth({ identifier, data, index }) {
-    console.log(this.props.availableDateRange[0])
     return (
       <View style={{ flex: 1, minWidth: scaleText(270).fontSize, }}>
         {this._renderMonthHeader({ identifier })}

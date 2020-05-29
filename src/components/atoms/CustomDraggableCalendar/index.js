@@ -62,7 +62,7 @@ const CustomDraggableCalendar = ({
                 endDate={endDate}
                 setStartDate={(date) => setStartDate(date)}
                 setEndDate={(date) => setEndDate(date)}
-                fullDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue, 0, 0, 0), new Date(dropoffYear, dropoffMonth, dropoffDateValue, 0, 0, 0)]}
+                fullDateRange={[new Date(pickupYear, pickupMonth, 1, 0, 0, 0), new Date(dropoffYear + 1, dropoffMonth, 30, 0, 0, 0)]}
                 availableDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue), new Date(dropoffYear, dropoffMonth, dropoffDateValue)]}
                 onSelectionChange={(value) => { }}
                 totalSelectable={totalSelectable}
