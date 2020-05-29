@@ -59,15 +59,49 @@ export class Day extends PureComponent {
         <View style={styles.fullContainer}>
           <View style={{
             ...styles.fullContainer,
-            padding: 0,
-            backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? data.date && (startDate && endDate && data.available
-              ? data.date >= startDate && data.date <= endDate
-              : data.date === startDate || data.date === endDate)
-              ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225' : '#1dd1a1' : 'transparent',
-            borderTopRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
-            borderBottomRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
-            borderTopLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
-            borderBottomLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
+            backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1])
+              ?
+              data.date && (startDate && endDate && data.available
+                ? data.date >= startDate && data.date <= endDate
+                : data.date === startDate || data.date === endDate)
+                ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
+                : '#1dd1a1' : 'transparent',
+            borderTopLeftRadius:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+                ? scaleText(20).fontSize
+                : 0,
+            borderBottomLeftRadius:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+                ? scaleText(20).fontSize
+                : 0,
+            borderTopRightRadius:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+                ? scaleText(20).fontSize
+                : 0,
+            borderBottomRightRadius:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+                ? scaleText(20).fontSize
+                : 0,
+            paddingLeft:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[0]).format('YYYY-MM-DD')
+                ? scaleText(5).fontSize
+                : 0,
+            paddingRight:
+              moment(data.date).format('YYYY-MM-DD') === moment(availableDateRange[1]).format('YYYY-MM-DD')
+                ? scaleText(5).fontSize :
+                0,
+
+
+            // ...styles.fullContainer,
+            // padding: 0,
+            // backgroundColor: data.date && availableDateRange && (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? data.date && (startDate && endDate && data.available
+            //   ? data.date >= startDate && data.date <= endDate
+            //   : data.date === startDate || data.date === endDate)
+            //   ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225' : '#1dd1a1' : 'transparent',
+            // borderTopRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
+            // borderBottomRightRadius: data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24) + 1) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[1]).getDate() ? scaleText(20).fontSize : 0,
+            // borderTopLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
+            // borderBottomLeftRadius: data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays) || new Date(data.date).getDate() === new Date(availableDateRange[0]).getDate() || new Date(data.date).getDate() === (new Date(endDate).getDate() + 1) ? scaleText(20).fontSize : 0,
             // borderRadius: scaleText(20).fontSize
             // borderTopRightRadius:
             //   data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
@@ -99,6 +133,35 @@ export class Day extends PureComponent {
               renderDay(data) :
               <View style={[
                 usedDayContainerStyle,
+                {
+                  backgroundColor:
+                    data.date && (startDate && endDate && data.available
+                      ? data.date >= startDate && data.date <= endDate
+                      : data.date === startDate || data.date === endDate)
+                      ? (((data.date - startDate) / (1000 * 3600 * 24)) < freeDays) ? '#fe6a67' : '#f2c225'
+                      : 'transparent',
+                  borderRadius:
+                    !startDate || !endDate
+                      ? scaleText(20).fontSize
+                      : 0,
+                  borderTopLeftRadius:
+                    data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                      ? scaleText(20).fontSize
+                      : 0,
+                  borderBottomLeftRadius:
+                    data.date === startDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays)
+                      ? scaleText(20).fontSize
+                      : 0,
+                  borderTopRightRadius:
+                    data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                      ? scaleText(20).fontSize
+                      : 0,
+                  borderBottomRightRadius:
+                    data.date === endDate || (((data.date - startDate) / (1000 * 3600 * 24)) === freeDays - 1) || !endDate
+                      ? scaleText(20).fontSize
+                      : 0
+                }
+
               ]}>
 
                 {data.date && (
