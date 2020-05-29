@@ -568,7 +568,7 @@ export const Screen = ({
                         <CollapsableWrapper wrapperLabel={'Policy'}>
                             <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                                 <HTML
-                                    html={completeDetails.termsData.description ? completeDetails.termsData.description : ''}
+                                    html={(completeDetails.termsData || {}).description ? completeDetails.termsData.description : ''}
                                     imagesMaxWidth={Dimensions.get('window').width}
                                     textSelectable={false}
                                     tagStyles={{
