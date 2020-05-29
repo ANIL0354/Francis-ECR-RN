@@ -62,6 +62,7 @@ export const Screen = ({
     stopLoader,
     getFaqList,
     faqList,
+    saveCompleteDetails,
     fetchCompleteDetails
 }) => {
     const scrollRef = useRef();
@@ -70,6 +71,7 @@ export const Screen = ({
     const [totalSelectedDate, setTotalSelectedDates] = useState(0);
     const [imageExpanded, setImageExpanded] = useState(false);
     const [availableImages, setAvailableImages] = useState([]);
+    const [pickupDateValue, setPickupDateValue] = useState(null)
 
     let { vehicleDetails, fromSummary = false } = route.params;
     useEffect(() => {
@@ -108,6 +110,12 @@ export const Screen = ({
     const today = new Date();
     const largeScaledFont = scaleText(18);
 
+
+    useEffect(() => {
+        return () => {
+            saveCompleteDetails(null)
+        }
+    }, [])
 
     return (
         <AppHoc

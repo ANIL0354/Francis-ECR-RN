@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DraggableCalendar } from './wrapper';
 import { scaleText } from '../../../helpers';
@@ -32,12 +32,20 @@ const CustomDraggableCalendar = ({
     dropoffDate,
     totalSelectable
 }) => {
-    let pickupDateValue = new Date(pickupDate).getDate();
-    let pickupMonth = new Date(pickupDate).getMonth();
-    let pickupYear = new Date(pickupDate).getFullYear();
+    const [pickup, setPickup] = useState(null);
+    const [pickupDateValue, setPickupDateValue] = useState(new Date(pickupDate).getDate());
+    const [pickupMonth, setPickupMonth] = useState(new Date(pickupDate).getMonth());
+    const [pickupYear, setPickupYear] = useState(new Date(pickupDate).getFullYear());
     let dropoffDateValue = new Date(dropoffDate).getDate();
     let dropoffMonth = new Date(dropoffDate).getMonth();
     let dropoffYear = new Date(dropoffDate).getFullYear();
+
+
+    useEffect(() => {
+        setPickupDateValue(new Date(pickupDate).getDate());
+        setPickupMonth(new Date(pickupDate).getMonth());
+        setPickupYear(new Date(pickupDate).getFullYear());
+    }, [pickupDate])
 
     const _genStyles = () => {
         return {
@@ -52,6 +60,7 @@ const CustomDraggableCalendar = ({
             endDayContainerStyle: styles.selectedDayContainer
         };
     }
+
     return (
         <View style={{ marginVertical: scaleText(20).fontSize }}>
             <Text style={{ color: '#737171', marginVertical: scaleText(5).fontSize, fontSize: scaleText(16).fontSize }}>{'Select your travel dates:'}</Text>
@@ -62,7 +71,7 @@ const CustomDraggableCalendar = ({
                 endDate={endDate}
                 setStartDate={(date) => setStartDate(date)}
                 setEndDate={(date) => setEndDate(date)}
-                fullDateRange={[new Date(pickupYear, pickupMonth, 1, 0, 0, 0), new Date(dropoffYear + 1, dropoffMonth, 30, 0, 0, 0)]}
+                fullDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue > 1 ? 1 : pickupDateValue, 0, 0, 0), new Date(dropoffYear + 1, dropoffMonth, 30, 0, 0, 0)]}
                 availableDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue), new Date(dropoffYear, dropoffMonth, dropoffDateValue)]}
                 onSelectionChange={(value) => { }}
                 totalSelectable={totalSelectable}

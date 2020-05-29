@@ -5,7 +5,8 @@ import {
     startLoader,
     stopLoader,
     getFaqList,
-    fetchCompleteDetails
+    fetchCompleteDetails,
+    saveCompleteDetails
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -20,7 +21,8 @@ const mapDispatchToProps = (dispatch) => {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
         fetchCompleteDetails: (id, success, failure) => dispatch(fetchCompleteDetails(id, success, failure)),
-        getFaqList: (success, failure) => dispatch(getFaqList(success, failure))
+        getFaqList: (success, failure) => dispatch(getFaqList(success, failure)),
+        saveCompleteDetails: data => dispatch(saveCompleteDetails(data))
     }
 }
 export const BookingDetails = connect(mapStateToProps, mapDispatchToProps)(Screen);
