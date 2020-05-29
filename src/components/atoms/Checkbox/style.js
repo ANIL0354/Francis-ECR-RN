@@ -10,13 +10,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
     },
     checkedIconStyle: {
-        height: 15,
-        width: 15,
         resizeMode: 'center'
     },
     unCheckedIconStyle: {
-        height: 15,
-        width: 15,
         resizeMode: 'center'
     },
     textStyle: {

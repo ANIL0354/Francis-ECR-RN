@@ -123,7 +123,7 @@ export const Screen = ({
                     </View>
                     : < View style={{ paddingHorizontal: scaleText(20).fontSize }}>
                         <View style={styles.detailsWrapper}>
-                            <Text style={{ color: 'gray', flex: 1, textAlign: 'center', textAlignVertical: 'center', marginVertical: scaleText(15).fontSize }}>{'One last thing, please review your request details.'}</Text>
+                            <Text style={{ color: 'gray', flex: 1, textAlign: 'center', fontWeight: 'bold', textAlignVertical: 'center', marginVertical: scaleText(15).fontSize }}>{'One last thing, please review your request details.'}</Text>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 <View style={styles.detailsLeftContainer}>
                                     <Image

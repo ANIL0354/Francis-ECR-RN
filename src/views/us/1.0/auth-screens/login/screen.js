@@ -114,8 +114,10 @@ export const Screen = ({
 
     const googleAuth = async () => {
         try {
+            console.log('hi')
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
+            console.log('user', userInfo)
             socialLogin({
                 loginType: 3,
                 socialId: userInfo.user.id,
