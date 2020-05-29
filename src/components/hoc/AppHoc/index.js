@@ -34,6 +34,7 @@ const AppHoc = ({
         centerIcon={centerIcon}
         leftIcon={leftIcon}
         userToken={userToken}
+        onLeftIconTap={() => navigation.navigate(SCREENS.HOME)}
         rightMenuItems={userToken
           ? [
             {

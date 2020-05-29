@@ -7,6 +7,7 @@ import {
     GraphRequest,
     GraphRequestManager
 } from 'react-native-fbsdk';
+import { StackActions } from '@react-navigation/native';
 import {
     GoogleSignin,
     statusCodes,
@@ -25,7 +26,8 @@ export const Screen = ({
     socialLogin,
     stopLoader,
     navigation,
-    route
+    route,
+    state
 }) => {
     const [signUpTab, setSignUpTab] = useState(false);
     const [subscribed, setSubscribed] = useState(false)
@@ -46,7 +48,6 @@ export const Screen = ({
             setDeviceToken(token);
         })
     }, [])
-
     const facebookAuth = () => {
         LoginManager.logInWithPermissions(["public_profile", 'email']).then(
             function (result) {

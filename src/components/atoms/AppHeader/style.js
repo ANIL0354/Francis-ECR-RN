@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../helpers';
 
 const styles = StyleSheet.create({
     headerContainer: {
@@ -6,11 +7,12 @@ const styles = StyleSheet.create({
         padding: 10,
         minHeight: 50,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     leftIconStyle: {
-        height: 35,
-        width: 90
+        height: scaleText(35).fontSize,
+        width: scaleText(90).fontSize
     },
     centerIconWrapper: {
         flex: 1,

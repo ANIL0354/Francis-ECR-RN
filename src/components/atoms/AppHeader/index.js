@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { View, Image, TouchableOpacity, Text, Alert } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
+import { scaleText } from '../../../helpers';
 import styles from './style';
 
 const AppHeader = ({
@@ -19,7 +20,12 @@ const AppHeader = ({
             <View style={{
                 flex: centerIcon && rightIcon ? 3 : 7
             }}>
-                {leftIcon && <Image style={styles.leftIconStyle} source={leftIcon} />}
+                {leftIcon && <TouchableOpacity style={{
+                    height: scaleText(35).fontSize,
+                    width: scaleText(90).fontSize,
+                }} onPress={onLeftIconTap}>
+                    <Image style={styles.leftIconStyle} source={leftIcon} />
+                </TouchableOpacity>}
             </View>
             <View style={styles.centerIconWrapper}>
                 {centerIcon && <TouchableOpacity onPress={() => onCenterIconTap()}>
