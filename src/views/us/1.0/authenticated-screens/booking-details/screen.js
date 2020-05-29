@@ -319,7 +319,17 @@ export const Screen = ({
                                                         freeDays: completeDetails.freeDays
                                                     }
                                                 })
-                                                : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
+                                                : navigation.navigate(SCREENS.LOGIN, {
+                                                    fromDetails: true,
+                                                    vehicleDetails: {
+                                                        ...vehicleDetails,
+                                                        pickupDate: startDate,
+                                                        dropoffDate: endDate,
+                                                        totalSelectedDate: totalSelectedDate,
+                                                        ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
+                                                        freeDays: completeDetails.freeDays
+                                                    }
+                                                })
                                         }
                                     }}
                                     buttonStyle={styles.vehicleListButton}
@@ -592,8 +602,27 @@ export const Screen = ({
                                 }
                                 else {
                                     userToken
-                                        ? navigation.navigate(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
-                                        : navigation.navigate(SCREENS.LOGIN, { fromDetails: true, vehicleDetails: vehicleDetails })
+                                        ? navigation.navigate(SCREENS.BOOKING_SUMMARY, {
+                                            vehicleDetails: {
+                                                ...vehicleDetails,
+                                                pickupDate: startDate,
+                                                dropoffDate: endDate,
+                                                totalSelectedDate: totalSelectedDate,
+                                                ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
+                                                freeDays: completeDetails.freeDays
+                                            }
+                                        })
+                                        : navigation.navigate(SCREENS.LOGIN, {
+                                            fromDetails: true,
+                                            vehicleDetails: {
+                                                ...vehicleDetails,
+                                                pickupDate: startDate,
+                                                dropoffDate: endDate,
+                                                totalSelectedDate: totalSelectedDate,
+                                                ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
+                                                freeDays: completeDetails.freeDays
+                                            }
+                                        })
                                 }
                             }}
                             buttonStyle={{ ...styles.vehicleListButton, marginHorizontal: scaleText(10).fontSize }}

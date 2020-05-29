@@ -16,6 +16,7 @@ const AppHoc = ({
   loader,
   logout,
   fromSummary = false,
+  rideBooked = false,
   userToken,
   stopLoader,
   children,
@@ -39,8 +40,8 @@ const AppHoc = ({
           ? [
             {
               label: STRINGS.LOGOUT,
-              onPress: () => Alert.alert(fromSummary ? 'Warning' : STRINGS.LOGOUT,
-                fromSummary ? 'You will loose all your data. Are you sure, you want to logout?' : STRINGS.LOGOUT_DESCRIPTION, [
+              onPress: () => Alert.alert(fromSummary && !rideBooked ? 'Warning' : STRINGS.LOGOUT,
+                fromSummary && !rideBooked ? 'You will loose all your data. Are you sure, you want to logout?' : STRINGS.LOGOUT_DESCRIPTION, [
                 {
                   text: STRINGS.CANCEL,
                   onPress: () => { },
@@ -50,11 +51,12 @@ const AppHoc = ({
                   onPress: () => logout(
                     userToken,
                     () => {
-                      if (fromSummary) {
+                      if (fromSummary || rideBooked) {
                         navigation.navigate(SCREENS.HOME)
                       }
                     },
-                    () => { },
+                    () => {
+                    },
                   )
                 },
               ])

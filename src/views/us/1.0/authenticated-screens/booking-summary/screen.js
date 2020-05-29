@@ -68,6 +68,8 @@ export const Screen = ({
             leftIcon={APP_LOGO}
             centerIcon={USER_ICON}
             fromSummary={true}
+            rideBooked={rideBooked}
+            navigation={navigation}
         >
             <ScrollView
                 bounces={false}

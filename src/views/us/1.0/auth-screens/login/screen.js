@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useNavigationState } from "react";
 import { View, Text, Image, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
 import {
     LoginManager,
@@ -47,7 +47,8 @@ export const Screen = ({
         messaging().getToken().then(token => {
             setDeviceToken(token);
         })
-    }, [])
+    }, []);
+
     const facebookAuth = () => {
         LoginManager.logInWithPermissions(["public_profile", 'email']).then(
             function (result) {
@@ -70,10 +71,9 @@ export const Screen = ({
                                         surname: result.last_name
                                     }, (response) => {
                                         if (fromDetails) {
-                                            navigation.reset({
-                                                index: 3,
-                                                routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
-                                            })
+                                            navigation.replace(
+                                                { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
+                                            )
                                         }
                                         else {
                                             navigation.goBack();
@@ -127,10 +127,9 @@ export const Screen = ({
             }, (response) => {
                 stopLoader();
                 if (fromDetails) {
-                    navigation.reset({
-                        index: 3,
-                        routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
-                    })
+                    navigation.replace(
+                        { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
+                    )
                 }
                 else {
                     navigation.goBack();
@@ -275,10 +274,7 @@ export const Screen = ({
                                 }, (response) => {
                                     stopLoader();
                                     if (fromDetails) {
-                                        navigation.reset({
-                                            index: 3,
-                                            routes: [{ name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }]
-                                        })
+                                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
                                     }
                                     else {
                                         navigation.goBack();

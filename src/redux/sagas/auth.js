@@ -230,6 +230,7 @@ function* logoutUser({ token, success, failure }) {
         else {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null))
+            success();
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
         }

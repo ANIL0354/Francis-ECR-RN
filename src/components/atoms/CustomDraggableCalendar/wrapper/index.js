@@ -279,7 +279,7 @@ export class DraggableCalendar extends Component {
 
   _onPressDay(date, available) {
     let { availableDateRange } = this.props;
-    if (date > availableDateRange[1] || date < availableDateRange[0] || (((this.props.endDate - this.props.startDate) / (1000 * 3600 * 24) + 1) === this.props.totalSelectable) || !date) {
+    if (date > availableDateRange[1] || date < availableDateRange[0] || (this.props.endDate && this.props.startDate && (((this.props.endDate - this.props.startDate) / (1000 * 3600 * 24) + 1) === this.props.totalSelectable)) || !date) {
       return;
     }
     if (this.props.startDate) {
