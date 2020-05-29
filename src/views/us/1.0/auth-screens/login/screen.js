@@ -33,7 +33,7 @@ export const Screen = ({
     const [subscribed, setSubscribed] = useState(false)
     const [dateString, setDateString] = useState(null);
     const [deviceToken, setDeviceToken] = useState('');
-    let { fromDetails = false, vehicleDetails = {} } = route.params;
+    let { fromDetails = false, vehicleDetails = {}, scrollRef = {} } = route.params;
 
     GoogleSignin.configure({
         scopes: [],
@@ -73,7 +73,7 @@ export const Screen = ({
                                     }, (response) => {
                                         if (fromDetails) {
                                             navigation.replace(
-                                                { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
+                                                { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
                                             )
                                         }
                                         else {
@@ -129,7 +129,7 @@ export const Screen = ({
                     stopLoader();
                     if (fromDetails) {
                         navigation.replace(
-                            { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
+                            { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
                         )
                     }
                     else {
@@ -278,7 +278,7 @@ export const Screen = ({
                                 }, (response) => {
                                     stopLoader();
                                     if (fromDetails) {
-                                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails })
+                                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails, scrollRef: scrollRef })
                                     }
                                     else {
                                         navigation.goBack();

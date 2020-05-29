@@ -39,7 +39,7 @@ const CustomDraggableCalendar = ({
     let dropoffMonth = new Date(dropoffDate).getMonth();
     let dropoffYear = new Date(dropoffDate).getFullYear();
 
-    _genStyles = () => {
+    const _genStyles = () => {
         return {
             style: styles.draggableContainer,
             headerTextStyle: styles.dayText,
@@ -62,7 +62,7 @@ const CustomDraggableCalendar = ({
                 endDate={endDate}
                 setStartDate={(date) => setStartDate(date)}
                 setEndDate={(date) => setEndDate(date)}
-                fullDateRange={[new Date(2020, 4, 1, 0, 0, 0), new Date(2021, 4, 30, 0, 0, 0)]}
+                fullDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue, 0, 0, 0), new Date(dropoffYear, dropoffMonth, dropoffDateValue, 0, 0, 0)]}
                 availableDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue), new Date(dropoffYear, dropoffMonth, dropoffDateValue)]}
                 onSelectionChange={(value) => { }}
                 totalSelectable={totalSelectable}

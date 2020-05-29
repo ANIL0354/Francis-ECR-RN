@@ -59,7 +59,7 @@ export const Screen = ({
     driverData,
     submitBookingRequest
 }) => {
-    let { vehicleDetails } = route.params;
+    let { vehicleDetails, scrollRef = {} } = route.params;
 
     const today = new Date();
     const largeScaledFont = scaleText(18);
@@ -83,7 +83,10 @@ export const Screen = ({
                 <View style={styles.childContainer}>
                     {!rideBooked && <TouchableOpacity
                         style={styles.navArrowContainer}
-                        onPress={() => navigation.goBack()}>
+                        onPress={() => {
+                            scrollRef.current.scrollTo(0);
+                            navigation.goBack()
+                        }}>
                         <Image
                             source={NAV_ARROW_ICON}
                             height={20}
@@ -236,6 +239,7 @@ export const Screen = ({
                                 title={'Change'}
                                 titleStyle={{ color: 'white', fontSize: scaleText(14).fontSize, textAlign: 'center', textAlignVertical: 'center', textTransform: 'capitalize' }}
                                 onPress={() => {
+                                    scrollRef.current.scrollTo(0);
                                     navigation.goBack();
                                 }}
                                 buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}

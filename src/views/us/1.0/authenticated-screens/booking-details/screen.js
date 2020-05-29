@@ -71,7 +71,7 @@ export const Screen = ({
     const [imageExpanded, setImageExpanded] = useState(false);
     const [availableImages, setAvailableImages] = useState([]);
 
-    let { vehicleDetails } = route.params;
+    let { vehicleDetails, fromSummary = false } = route.params;
     useEffect(() => {
         getFaqList(
             () => { },
@@ -108,9 +108,6 @@ export const Screen = ({
     const today = new Date();
     const largeScaledFont = scaleText(18);
 
-    useEffect(() => {
-        scrollRef.current.scrollTo(0);
-    }, [navigation.isFocused()])
 
     return (
         <AppHoc
@@ -327,7 +324,8 @@ export const Screen = ({
                                                         totalSelectedDate: totalSelectedDate,
                                                         ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
                                                         freeDays: completeDetails.freeDays
-                                                    }
+                                                    },
+                                                    scrollRef: scrollRef
                                                 })
                                                 : navigation.navigate(SCREENS.LOGIN, {
                                                     fromDetails: true,
@@ -338,7 +336,8 @@ export const Screen = ({
                                                         totalSelectedDate: totalSelectedDate,
                                                         ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
                                                         freeDays: completeDetails.freeDays
-                                                    }
+                                                    },
+                                                    scrollRef: scrollRef
                                                 })
                                         }
                                     }}
@@ -620,7 +619,8 @@ export const Screen = ({
                                                 totalSelectedDate: totalSelectedDate,
                                                 ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
                                                 freeDays: completeDetails.freeDays
-                                            }
+                                            },
+                                            scrollRef: scrollRef
                                         })
                                         : navigation.navigate(SCREENS.LOGIN, {
                                             fromDetails: true,
@@ -631,7 +631,8 @@ export const Screen = ({
                                                 totalSelectedDate: totalSelectedDate,
                                                 ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
                                                 freeDays: completeDetails.freeDays
-                                            }
+                                            },
+                                            scrollRef: scrollRef
                                         })
                                 }
                             }}
