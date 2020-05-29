@@ -61,6 +61,7 @@ export const Screen = ({
                                 if (error) {
                                     console.log('error', error)
                                 } else {
+                                    console.log('hi', error, result)
                                     socialLogin({
                                         loginType: 2,
                                         socialId: result.id,
@@ -100,7 +101,7 @@ export const Screen = ({
                         }, (error) => {
                             console.log('err', error)
                         }
-                    )
+                    ).catch((error) => console.log('error', error))
                 }
             },
             function (error) {
@@ -114,31 +115,32 @@ export const Screen = ({
 
     const googleAuth = async () => {
         try {
-            console.log('hi')
             await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-            console.log('user', userInfo)
-            socialLogin({
-                loginType: 3,
-                socialId: userInfo.user.id,
-                deviceToken: deviceToken,
-                email: userInfo.user.email,
-                role: 1,
-                name: userInfo.user.givenName,
-                surname: userInfo.user.familyName
-            }, (response) => {
-                stopLoader();
-                if (fromDetails) {
-                    navigation.replace(
-                        { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
-                    )
-                }
-                else {
-                    navigation.goBack();
-                }
-            }, (response) => {
-                stopLoader();
-            })
+            const userInfo = await GoogleSignin.signIn().then((result) => {
+                socialLogin({
+                    loginType: 3,
+                    socialId: result.user.id,
+                    deviceToken: deviceToken,
+                    email: result.user.email,
+                    role: 1,
+                    name: result.user.givenName,
+                    surname: result.user.familyName
+                }, (response) => {
+                    stopLoader();
+                    if (fromDetails) {
+                        navigation.replace(
+                            { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails } }
+                        )
+                    }
+                    else {
+                        navigation.goBack();
+                    }
+                }, (response) => {
+                    stopLoader();
+                })
+            }).catch((error) => {
+            });
+
 
             stopLoader();
         } catch (error) {

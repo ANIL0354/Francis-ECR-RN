@@ -27,7 +27,7 @@ export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))
 export const NAME_REGX = /^[A-Z.a-z ]+$/;
 export const PHONE_REGX = /^[0-9]+$/;
 
-export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com';
+export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com';
 
 export const KEY_CODES = {
   enterKey: 13,

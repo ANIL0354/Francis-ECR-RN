@@ -54,7 +54,6 @@ export class Day extends PureComponent {
     const { data, renderDay, weekDays, startDate, endDate, freeDays, availableDateRange } = this.props;
     const { usedDayTextStyle, usedDayContainerStyle } = this._genStyle();
 
-    // console.log(startDate, new , data.date)
     return (
       <TouchableWithoutFeedback style={styles.fullContainer} onPress={this._onPress}>
 
