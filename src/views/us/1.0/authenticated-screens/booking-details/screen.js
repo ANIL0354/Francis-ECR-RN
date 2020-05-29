@@ -586,7 +586,7 @@ export const Screen = ({
                                     faqList.length && faqList.map((item, index) => (
                                         <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontWeight: 'bold', fontSize: scaleText(14).fontSize }}>{`${index + 1}. ${item.question}`}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{item.question}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{item.answer}</Text>
                                         </View>
                                     ))
                                 }
