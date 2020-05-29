@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     },
     vehicleListButton: {
         flex: 1,
+        minWidth: '100%',
         maxHeight: scaleText(40).fontSize,
         borderRadius: scaleText(10).fontSize,
         marginTop: scaleText(10).fontSize,

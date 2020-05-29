@@ -8,12 +8,14 @@ const Checkbox = ({
     checked = false,
     toggleCheck,
     checkedIcon,
-    uncheckedIcon
+    uncheckedIcon,
+    titleStyle = {},
+    checkboxStyle = {}
 }) => {
     return (
         <CheckBox
             title={title}
-            containerStyle={styles.containerStyle}
+            containerStyle={{ ...styles.containerStyle, ...checkboxStyle }}
             checkedIcon={<Image
                 source={checkedIcon}
                 style={styles.checkedIconStyle}
@@ -26,7 +28,7 @@ const Checkbox = ({
                 height={15}
                 width={15}
             />}
-            textStyle={styles.textStyle}
+            textStyle={{ ...styles.textStyle, ...titleStyle }}
             onPress={(event) => toggleCheck(event)}
             checked={checked}
         />

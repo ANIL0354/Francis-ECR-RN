@@ -420,6 +420,7 @@ export class DraggableCalendar extends Component {
           }
         }
         }
+        index={this.state.index}
         monthHeaderTextStyle={monthHeaderTextStyle}
         renderMonthHeader={renderMonthHeader}
       />

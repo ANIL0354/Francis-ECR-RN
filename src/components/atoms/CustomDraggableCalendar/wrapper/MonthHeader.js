@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { PureComponent } from 'react';
 
 import {
@@ -11,19 +12,20 @@ import { scaleText } from '../../../../helpers';
 
 export class MonthHeader extends PureComponent {
   render() {
-    const { identifier, monthHeaderTextStyle, renderMonthHeader, renderPreviousMonth, renderNextMonth } = this.props;
+    const { index, identifier, monthHeaderTextStyle, renderMonthHeader, renderPreviousMonth, renderNextMonth } = this.props;
     const [year, month] = identifier.split('-');
     return (
       <View>
         {renderMonthHeader ?
           renderMonthHeader(identifier) :
           <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => { renderPreviousMonth(); }}>
+            <TouchableOpacity disabled={index === 0} onPress={() => { renderPreviousMonth(); }}>
               <Text
                 style={[
                   styles.monthHeaderText,
                   monthHeaderTextStyle,
                   {
+                    color: index === 0 ? 'rgba(255,255,255,0.4)' : 'white',
                     textAlign: 'center',
                     textAlignVertical: 'center',
                     fontSize: scaleText(20).fontSize,

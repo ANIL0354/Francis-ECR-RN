@@ -15,12 +15,14 @@ import {
     UIManager,
     TouchableOpacity,
     BackHandler,
-    Dimensions
+    Dimensions,
+    Linking
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import Image from 'react-native-image-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
+import Checkbox from '../../../../../components/atoms/Checkbox';
 import {
     APP_LOGO,
     MENU_LOGO,
@@ -32,9 +34,11 @@ import {
     DOORS_ICON,
     GEAR_ICON,
     SEARCH_ICON,
+    CHECKBOX_ICON,
     LUGGAGE_ICON,
     RIDE_BOOKED,
     LIMITS,
+    CHECKBOX_ACTIVE,
     LABELS,
     FUEL_INACTIVE,
     VEHICLE_YEAR_RANGE,
@@ -61,6 +65,7 @@ export const Screen = ({
     const largeScaledFont = scaleText(18);
     const mediumScaledFont = scaleText(16);
     const [rideBooked, setRideBooked] = useState(false);
+    const [accepted, setAccepted] = useState(false);
 
     return (
         <AppHoc
@@ -118,6 +123,7 @@ export const Screen = ({
                     </View>
                     : < View style={{ paddingHorizontal: scaleText(20).fontSize }}>
                         <View style={styles.detailsWrapper}>
+                            <Text style={{ color: 'gray', flex: 1, textAlign: 'center', textAlignVertical: 'center', marginVertical: scaleText(15).fontSize }}>{'One last thing, please review your request details.'}</Text>
                             <View style={{ flex: 1, flexDirection: 'row' }}>
                                 <View style={styles.detailsLeftContainer}>
                                     <Image
@@ -137,7 +143,7 @@ export const Screen = ({
                                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
                                             <IconText
                                                 icon={CAR_SEATS_ICON}
-                                                title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child${vehicleDetails.vehicleData.childSeats > 1 ? 's' : ''}`}
+                                                title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child`}
                                                 titleFontSize={14}
                                                 titleStyle={styles.iconText}
                                                 containerStyle={styles.iconTextContainer}
@@ -228,11 +234,11 @@ export const Screen = ({
                             </View>
                             <CustomButton
                                 title={'Change'}
-                                titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'capitalize' }}
+                                titleStyle={{ color: 'white', fontSize: scaleText(14).fontSize, textAlign: 'center', textAlignVertical: 'center', textTransform: 'capitalize' }}
                                 onPress={() => {
                                     navigation.goBack();
                                 }}
-                                buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', }}
+                                buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}
                             />
                         </View>
                         <View style={{
@@ -267,27 +273,62 @@ export const Screen = ({
                                         <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0 + (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0}`}</Text>
                                     </View>
                                 </View>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Checkbox
+                                        title={' '}
+                                        toggleCheck={() => setAccepted(!accepted)}
+                                        checked={accepted}
+                                        checkedIcon={CHECKBOX_ACTIVE}
+                                        uncheckedIcon={CHECKBOX_ICON}
+                                        titleStyle={{ textTransform: 'uppercase' }}
+                                        checkboxStyle={{ flex: 1, maxWidth: '5%' }}
+                                    />
+                                    <View style={{ flex: 1, minWidth: '90%', flexDirection: 'row', flexWrap: 'wrap' }}>
+                                        <Text style={{ color: 'black' }}>
+                                            {'I have read and agree with the '}
+                                        </Text>
+                                        <Text
+                                            onPress={() => Linking.openURL('https://easycarrelo.co.nz/terms')}
+                                            style={{ color: '#0091ff', textDecorationLine: 'underline' }}>
+                                            {'Terms & Conditions.'}
+                                        </Text>
+                                    </View>
+                                </View>
                             </View>
                             <CustomButton
                                 title={'Submit your request'}
                                 titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                                 onPress={() => {
-                                    submitBookingRequest(
-                                        driverData._id,
-                                        {
-                                            startDate: vehicleDetails.pickupDate,
-                                            endDate: vehicleDetails.dropoffDate,
-                                            selectedFreeDays: vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays,
-                                            bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
-                                            commentForAgency: '',
-                                            commentForECRByDriver: '',
-                                            rateForAgency: 0
-                                        },
-                                        (response) => {
-                                            setRideBooked(true)
-                                        },
-                                        () => { }
-                                    )
+                                    if (!accepted) {
+                                        Alert.alert(
+                                            'Accept Terms & Conditions.',
+                                            'Kindly read and accept all Terms and Conditions before proceeding.',
+                                            [
+                                                {
+                                                    text: 'Okay',
+                                                    onPress: () => { },
+                                                },
+                                            ],
+                                        );
+                                    }
+                                    else {
+                                        submitBookingRequest(
+                                            driverData._id,
+                                            {
+                                                startDate: vehicleDetails.pickupDate,
+                                                endDate: vehicleDetails.dropoffDate,
+                                                selectedFreeDays: vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays,
+                                                bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
+                                                commentForAgency: '',
+                                                commentForECRByDriver: '',
+                                                rateForAgency: 0
+                                            },
+                                            (response) => {
+                                                setRideBooked(true)
+                                            },
+                                            () => { }
+                                        )
+                                    }
                                 }}
                                 buttonStyle={styles.vehicleListButton}
                             />

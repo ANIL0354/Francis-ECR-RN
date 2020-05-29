@@ -109,7 +109,12 @@ export const Screen = ({
     const largeScaledFont = scaleText(18);
 
     return (
-        <AppHoc rightIcon={MENU_LOGO} leftIcon={APP_LOGO} centerIcon={USER_ICON}>
+        <AppHoc
+            rightIcon={MENU_LOGO}
+            leftIcon={APP_LOGO}
+            centerIcon={USER_ICON}
+            navigation={navigation}
+        >
             <ScrollView
                 bounces={false}
                 keyboardShouldPersistTaps="always"
@@ -160,7 +165,7 @@ export const Screen = ({
                                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
                                         <IconText
                                             icon={CAR_SEATS_ICON}
-                                            title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child${vehicleDetails.vehicleData.childSeats > 1 ? 's' : ''}`}
+                                            title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child`}
                                             titleFontSize={14}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
@@ -562,7 +567,7 @@ export const Screen = ({
                                     imagesMaxWidth={Dimensions.get('window').width}
                                     textSelectable={false}
                                     tagStyles={{
-                                        p: { color: 'blck' },
+                                        p: { color: 'black' },
                                         h1: { color: 'black' },
                                         h2: { color: 'black' },
                                         strong: { color: 'black' }

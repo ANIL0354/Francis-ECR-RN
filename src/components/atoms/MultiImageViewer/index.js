@@ -14,6 +14,7 @@ const MultiImageViewer = ({
         <Modal
             visible={visible}
             onRequestClose={() => closeView()}
+            supportedOrientations={['portrait', 'landscape']}
             transparent={true}>
             <ImageViewer
                 renderHeader={() => (<TouchableOpacity

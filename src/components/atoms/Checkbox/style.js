@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     containerStyle: {
+        flex: 1,
         backgroundColor: 'transparent',
-        maxWidth: '80%',
         marginLeft: 0,
         marginTop: -10,
         borderColor: 'transparent',

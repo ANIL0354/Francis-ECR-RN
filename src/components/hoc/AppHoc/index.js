@@ -35,7 +35,33 @@ const AppHoc = ({
         centerIcon={centerIcon}
         leftIcon={leftIcon}
         userToken={userToken}
-        onLeftIconTap={() => navigation.navigate(SCREENS.HOME)}
+        onLeftIconTap={() => {
+          if (fromSummary && !rideBooked) {
+            Alert.alert(fromSummary && !rideBooked ? 'Warning' : STRINGS.LOGOUT,
+              fromSummary && !rideBooked ? 'You will loose all your data. Are you sure, you want to logout?' : STRINGS.LOGOUT_DESCRIPTION, [
+              {
+                text: STRINGS.CANCEL,
+                onPress: () => { },
+              },
+              {
+                text: fromSummary ? "Yes, I'm sure" : STRINGS.CONFIRM,
+                onPress: () => logout(
+                  userToken,
+                  () => {
+                    if (fromSummary || rideBooked) {
+                      navigation.navigate(SCREENS.HOME)
+                    }
+                  },
+                  () => {
+                  },
+                )
+              },
+            ])
+          }
+          else {
+            navigation.navigate(SCREENS.HOME)
+          }
+        }}
         rightMenuItems={userToken
           ? [
             {
