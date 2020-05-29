@@ -377,7 +377,7 @@ export const Screen = ({
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                             <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Estimated travel distance:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'999 Kms'}</Text>
+                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.estimatedDistance} Km${completeDetails.estimatedDistance > 1 ? 's' : ''}`}</Text>
                         </View>
                     </View>}
                     {completeDetails && <View style={{ flex: 1, marginVertical: scaleText(20).fontSize }}>
