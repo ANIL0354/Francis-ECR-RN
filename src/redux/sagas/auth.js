@@ -106,6 +106,7 @@ function* checkSocialLogin({ data, success, failure }) {
     try {
         yield put(startLoader())
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
+        console.log('res', JSON.stringify(response))
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null))

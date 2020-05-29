@@ -64,7 +64,7 @@ export const Screen = ({
     faqList,
     fetchCompleteDetails
 }) => {
-
+    const scrollRef = useRef();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [totalSelectedDate, setTotalSelectedDates] = useState(0);
@@ -108,6 +108,10 @@ export const Screen = ({
     const today = new Date();
     const largeScaledFont = scaleText(18);
 
+    useEffect(() => {
+        scrollRef.current.scrollTo(0);
+    }, [navigation.isFocused()])
+
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -117,6 +121,7 @@ export const Screen = ({
         >
             <ScrollView
                 bounces={false}
+                ref={scrollRef}
                 keyboardShouldPersistTaps="always"
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.childContainer}>
