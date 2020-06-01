@@ -12,7 +12,7 @@ import { scaleText } from '../../../../helpers';
 
 export class MonthHeader extends PureComponent {
   render() {
-    const { index, identifier, monthHeaderTextStyle, renderMonthHeader, renderPreviousMonth, renderNextMonth } = this.props;
+    const { index, totalMonths, identifier, monthHeaderTextStyle, renderMonthHeader, renderPreviousMonth, renderNextMonth } = this.props;
     const [year, month] = identifier.split('-');
     return (
       <View>
@@ -39,6 +39,7 @@ export class MonthHeader extends PureComponent {
               {`${moment(identifier).format('MMMM YYYY')}`}
             </Text>
             <TouchableOpacity
+              disabled={index === (totalMonths.length - 1)}
               onPress={() => {
                 renderNextMonth()
               }}>
@@ -46,6 +47,7 @@ export class MonthHeader extends PureComponent {
                 styles.monthHeaderText,
                 monthHeaderTextStyle,
                 {
+                  color: index === (totalMonths.length - 1) ? 'rgba(255,255,255,0.4)' : 'white',
                   textAlign: 'center',
                   textAlignVertical: 'center',
                   fontSize: scaleText(20).fontSize,

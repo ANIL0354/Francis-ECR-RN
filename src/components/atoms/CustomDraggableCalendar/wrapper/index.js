@@ -407,7 +407,7 @@ export class DraggableCalendar extends Component {
 
   _renderMonthHeader({ identifier }) {
     const { monthHeaderTextStyle, renderMonthHeader } = this.props;
-    let totalMonths = Object.keys(this.state.calendarData)
+    let totalMonths = Object.keys(this.state.calendarData);
     return (
       <MonthHeader
         key={identifier}
@@ -424,6 +424,7 @@ export class DraggableCalendar extends Component {
         }
         }
         index={this.state.index}
+        totalMonths={totalMonths}
         monthHeaderTextStyle={monthHeaderTextStyle}
         renderMonthHeader={renderMonthHeader}
       />
