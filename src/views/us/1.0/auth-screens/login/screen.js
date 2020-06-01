@@ -1,24 +1,30 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useNavigationState } from "react";
-import { View, Text, Image, Button, TouchableOpacity, KeyboardAvoidingView, Keyboard, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, Keyboard, ScrollView, Platform } from 'react-native';
 import {
     LoginManager,
     AccessToken,
     GraphRequest,
-    GraphRequestManager
+    GraphRequestManager,
 } from 'react-native-fbsdk';
-import { StackActions } from '@react-navigation/native';
 import {
     GoogleSignin,
     statusCodes,
 } from '@react-native-community/google-signin';
 import messaging from '@react-native-firebase/messaging';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
-import { APP_LOGO, GOOGLE_SIGNIN_WEB_CLIENT_ID, LABELS, SCREENS, NAV_ARROW_ICON } from '../../../../../shared/constants'
+import {
+    APP_LOGO,
+    GOOGLE_SIGNIN_WEB_CLIENT_ID,
+    LABELS,
+    SCREENS,
+    NAV_ARROW_ICON,
+    USER_TYPES,
+} from '../../../../../shared/constants';
 import { LoginForm } from './login-form';
 import { SignupForm } from './signup-form';
-import { scaleText } from '../../../../../helpers'
-import styles from "./style.js";
+import { scaleText } from '../../../../../helpers';
+import styles from './style.js';
 
 export const Screen = ({
     registerUser,
@@ -30,7 +36,7 @@ export const Screen = ({
     state
 }) => {
     const [signUpTab, setSignUpTab] = useState(false);
-    const [subscribed, setSubscribed] = useState(false)
+    const [subscribed, setSubscribed] = useState(false);
     const [dateString, setDateString] = useState(null);
     const [deviceToken, setDeviceToken] = useState('');
     let { fromDetails = false, vehicleDetails = {}, scrollRef = {} } = route.params;
@@ -46,7 +52,7 @@ export const Screen = ({
     useEffect(() => {
         messaging().getToken().then(token => {
             setDeviceToken(token);
-        })
+        });
     }, []);
 
     const facebookAuth = () => {
@@ -59,28 +65,27 @@ export const Screen = ({
                             const accessToken = data.accessToken;
                             const responseInfoCallback = (error, result) => {
                                 if (error) {
-                                    console.log('error', error)
+                                    console.log('error', error);
                                 } else {
-                                    console.log('hi', error, result)
                                     socialLogin({
                                         loginType: 2,
                                         socialId: result.id,
                                         deviceToken: deviceToken,
                                         email: result.email,
-                                        role: 1,
+                                        userType: USER_TYPES.driver,
                                         name: result.first_name,
                                         surname: result.last_name
                                     }, (response) => {
                                         if (fromDetails) {
                                             navigation.replace(
                                                 { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
-                                            )
+                                            );
                                         }
                                         else {
                                             navigation.goBack();
                                         }
                                     }, (response) => {
-                                    })
+                                    });
                                     return;
                                 }
                             };
@@ -99,18 +104,18 @@ export const Screen = ({
                             new GraphRequestManager().addRequest(infoRequest).start();
                             return;
                         }, (error) => {
-                            console.log('err', error)
+                            console.log('err', error);
                         }
-                    ).catch((error) => console.log('error', error))
+                    ).catch((error) => console.log('error', error));
                 }
             },
             function (error) {
             }
         ).catch((error) => {
-            console.log('error', error)
+            console.log('error', error);
         }).finally((error) => {
-            console.log('finally', error)
-        })
+            console.log('finally', error);
+        });
     };
 
     const googleAuth = async () => {
@@ -122,22 +127,22 @@ export const Screen = ({
                     socialId: result.user.id,
                     deviceToken: deviceToken,
                     email: result.user.email,
-                    role: 1,
+                    userType: USER_TYPES.driver,
                     name: result.user.givenName,
-                    surname: result.user.familyName
+                    surname: result.user.familyName,
                 }, (response) => {
                     stopLoader();
                     if (fromDetails) {
                         navigation.replace(
                             { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
-                        )
+                        );
                     }
                     else {
                         navigation.goBack();
                     }
                 }, (response) => {
                     stopLoader();
-                })
+                });
             }).catch((error) => {
             });
 
@@ -156,11 +161,11 @@ export const Screen = ({
 
     useEffect(() => {
         setSubscribed(false);
-    }, [signUpTab])
+    }, [signUpTab]);
 
     useEffect(() => {
         stopLoader();
-    })
+    });
 
     return (
         <AuthHoc
@@ -183,7 +188,7 @@ export const Screen = ({
                         ...styles.subHeaderText,
                         height: Platform.OS == 'ios' ? scaleText(18).lineHeight + 2 : 'auto',
                         fontSize: scaleText(18).fontSize,
-                        lineHeight: scaleText(18).lineHeight
+                        lineHeight: scaleText(18).lineHeight,
                     }}>
                     {LABELS.loginOrRegister}
                 </Text>
@@ -203,7 +208,7 @@ export const Screen = ({
                             ...styles.authTabButtonText,
                             height: Platform.OS == 'ios' ? scaleText(16).lineHeight + 2 : 'auto',
                             fontSize: scaleText(16).fontSize,
-                            lineHeight: scaleText(16).lineHeight
+                            lineHeight: scaleText(16).lineHeight,
                         }}>{LABELS.iAmNew}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -253,14 +258,14 @@ export const Screen = ({
                                         },
                                         city: formData.city,
                                         country: formData.country,
-                                        subscribe: subscribed
+                                        userType: USER_TYPES.driver,
+                                        subscribe: subscribed,
                                     }, (response) => {
                                         stopLoader();
                                         setSignUpTab(false);
-                                        navigation.goBack();
                                     }, (response) => {
                                         stopLoader();
-                                    })
+                                    });
                                 }}
                             />
                         }
@@ -274,18 +279,18 @@ export const Screen = ({
                                     deviceToken: deviceToken,
                                     email: formData.email,
                                     password: formData.password,
-                                    role: 1
+                                    userType: USER_TYPES.driver,
                                 }, (response) => {
                                     stopLoader();
                                     if (fromDetails) {
-                                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails, scrollRef: scrollRef })
+                                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails, scrollRef: scrollRef });
                                     }
                                     else {
                                         navigation.goBack();
                                     }
                                 }, (response) => {
                                     stopLoader();
-                                })
+                                });
                             }}
                         />}
 
@@ -297,4 +302,4 @@ export const Screen = ({
             </View>
         </AuthHoc >
     );
-}
+};

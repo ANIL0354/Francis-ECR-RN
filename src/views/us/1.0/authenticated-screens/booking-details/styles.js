@@ -5,10 +5,17 @@ import { scaleText } from '../../../../../helpers';
 const styles = StyleSheet.create({
     rowFlex: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     alignSelfCenter: {
-        alignSelf: 'center'
+        alignSelf: 'center',
+    },
+    navArrow: {
+        alignSelf: 'center',
+        marginVertical: scaleText(5).fontSize,
+    },
+    screenContentWrapper: {
+        paddingHorizontal: scaleText(20).fontSize,
     },
     childContainer: {
         flexDirection: 'row',
@@ -20,20 +27,20 @@ const styles = StyleSheet.create({
     navArrowContainer: {
         height: scaleText(20).fontSize,
         width: scaleText(20).fontSize,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     subHeaderText: {
         color: 'white',
         flex: 1,
         textAlign: 'center',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     detailsWrapper: {
         flex: 1,
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
     },
     detailsLeftContainer: {
         flex: 1,
@@ -61,18 +68,18 @@ const styles = StyleSheet.create({
         // flexWrap: 'wrap',
         // maxWidth: '90%',
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     iconTextContainer: {
         paddingVertical: 5,
-        marginRight: scaleText(7).fontSize
+        marginRight: scaleText(7).fontSize,
     },
     iconText: {
         color: 'gray',
         textAlign: 'left',
         fontSize: scaleText(14).fontSize,
         textAlignVertical: 'center',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
     },
     listPickupText: {
         textTransform: 'uppercase',
@@ -81,13 +88,31 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         borderRadius: 15,
     },
+    locationWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
     vehicleListButton: {
         flex: 1,
         maxHeight: scaleText(40).fontSize,
         borderRadius: scaleText(10).fontSize,
         marginTop: scaleText(10).fontSize,
-        backgroundColor: '#009000'
-    }
+        backgroundColor: '#009000',
+    },
+    descriptionText: {
+        textAlign: 'center',
+        fontSize: scaleText(14).fontSize,
+        textAlignVertical: 'center',
+        color: 'black',
+    },
+    costSummaryWrapper: {
+        backgroundColor: '#f8f8f8',
+        padding: scaleText(20).fontSize,
+        borderRadius: scaleText(10).fontSize,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default styles;

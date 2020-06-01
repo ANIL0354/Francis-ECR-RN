@@ -1,14 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Modal, TouchableOpacity, Text } from 'react-native';
+import { Modal, TouchableOpacity, Text } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { CANCEL_ICON } from '../../../shared/constants';
-import { scaleText } from '../../../helpers';
+import styles from './styles';
 
 const MultiImageViewer = ({
     images,
     visible,
-    closeView
+    closeView,
 }) => {
     return (
         <Modal
@@ -19,12 +18,12 @@ const MultiImageViewer = ({
             <ImageViewer
                 renderHeader={() => (<TouchableOpacity
                     onPress={() => closeView()}
-                    style={{ padding: scaleText(5).fontSize, justifyContent: 'flex-end', borderRadius: scaleText(10).fontSize, justifyContent: 'center', }} >
-                    <Text style={{ color: 'white', fontSize: scaleText(24).fontSize, textAlign: 'right', margin: scaleText(10).fontSize }}>{'X'}</Text>
+                    style={styles.closeButtonWrapper} >
+                    <Text style={styles.closeButtonText}>{'X'}</Text>
                 </TouchableOpacity>)}
                 imageUrls={images} />
         </Modal>
-    )
+    );
 };
 
 export default MultiImageViewer;

@@ -1,21 +1,19 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
-    TextInput,
     Image as SimpleImage,
     RefreshControl,
     FlatList,
-    Animated,
     Alert,
     Keyboard,
     ScrollView,
     Dimensions,
     LayoutAnimation,
     UIManager,
+    Platform,
     TouchableOpacity,
-    BackHandler
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -26,14 +24,12 @@ import {
     APP_LOGO,
     MENU_LOGO,
     USER_ICON,
-    VEHICLE_TYPE_LISTING,
     NAV_ARROW_ICON,
     CAR_SEATS_ICON,
     AC_ICON,
     TURN_RIGHT,
     DOORS_ICON,
     VERTICAL_LINE,
-    VEHICLE_DETAILS_LISTING,
     GEAR_ICON,
     SEARCH_ICON,
     LUGGAGE_ICON,
@@ -42,15 +38,15 @@ import {
     SCREENS,
     SCROLL_UP,
     FUEL_INACTIVE,
-    VEHICLE_YEAR_RANGE
+    VEHICLE_YEAR_RANGE,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
-import styles from "./styles.js";
-import IconText from "../../../../../components/atoms/IconTextComponent";
-import CustomButton from "../../../../../components/atoms/CustomButton";
+import styles from './styles.js';
+import IconText from '../../../../../components/atoms/IconTextComponent';
+import CustomButton from '../../../../../components/atoms/CustomButton';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
-import CustomLoader from "../../../../../components/atoms/Loader";
+import CustomLoader from '../../../../../components/atoms/Loader';
 import ImageButton from '../../../../../components/atoms/ImageButton';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -88,15 +84,15 @@ export const Screen = ({
     setTransmissionType,
 }) => {
 
-    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const vehicleListRef = useRef();
     const today = new Date();
     const maxDate = today.setMonth(today.getMonth() + 12);
     const [filterMenu, showFilterMenu] = useState(false);
     const [modifySearch, setModifySearch] = useState(false);
+    const [detailsList, setDetailsList] = useState(null);
     const [dateValue, onDateChange] = useState(pickupDate);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [detailsList, setDetailsList] = useState(null);
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -114,46 +110,44 @@ export const Screen = ({
                 showUpButton(true);
             }
         }
-    })
+    });
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
     const scaledMediumFont = scaleText(16);
     const scaledSmallFont = scaleText(14);
     const scaledSmallerFont = scaleText(12);
-    const scaledFont = scaleText(14)
-    let animatedValue = new Animated.Value(0);
+    const scaledFont = scaleText(14);
 
     const showSearchBarAnimation = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setModifySearch(!modifySearch);
-    }
+    };
 
     useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => {
-            if (navigation.isFocused()) {
-                refreshVehicleList();
-                setPageIndex(0);
-            }
+        return () => {
+            refreshVehicleList();
+            setPageIndex(0);
             stopLoader();
-        });
+        };
     }, []);
 
+
     useEffect(() => {
-        setDetailsList(vehicleListItems)
+        setDetailsList(vehicleListItems);
     }, [vehicleListItems]);
 
     useEffect(() => {
         Dimensions.addEventListener('change', () => {
             Dimensions.get('window').width > Dimensions.get('window').height
                 ? setPortraitOrientation(false)
-                : setPortraitOrientation(true)
-        })
+                : setPortraitOrientation(true);
+        });
     }, []);
 
     const scrollToTop = () => {
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
-    }
+    };
 
     return (
         <AppHoc
@@ -187,7 +181,7 @@ export const Screen = ({
                             adultSeats,
                             transmissionValue,
                             vehicleValue,
-                            fuelValue
+                            fuelValue,
                         } = data;
 
                         let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
@@ -218,12 +212,12 @@ export const Screen = ({
                 />
             )}
             <View
-                style={{ backgroundColor: '#0091ff', minHeight: scaleText(60).fontSize }}>
-                {!modifySearch && <View style={{ ...styles.childContainer, flexDirection: 'row', }} >
+                style={styles.screenHeaderWrapper}>
+                {!modifySearch && <View style={styles.displayLocationWrapper} >
                     <TouchableOpacity
                         onPress={() => {
                             refreshVehicleList();
-                            navigation.navigate(SCREENS.HOME)
+                            navigation.navigate(SCREENS.HOME);
                         }}
                         hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                     >
@@ -282,13 +276,13 @@ export const Screen = ({
                     style={{
                         paddingVertical: scaleText(20).fontSize,
                     }}
-                    keyboardShouldPersistTaps="always"
+                    keyboardShouldPersistTaps='always'
                     showsVerticalScrollIndicator={false}>
                     <View
                         style={{
                             backgroundColor: '#1e5e9e',
                             padding: scaleText(20).fontSize,
-                            marginHorizontal: scaleText(20).fontSize
+                            marginHorizontal: scaleText(20).fontSize,
                         }}>
                         <LocationSearch
                             pickupLocation={modifiedLocation || modifiedLocation === '' ? modifiedLocation : pickupLocation}
@@ -302,7 +296,7 @@ export const Screen = ({
                         />
 
                         <DatePicker
-                            mode="date"
+                            mode='date'
                             placeholder={modifiedDate
                                 ? `${moment(modifiedDate).format('DD-MM-YYYY')}` :
                                 pickupDate
@@ -313,8 +307,8 @@ export const Screen = ({
                             minDate={new Date()}
                             maxDate={new Date(maxDate)}
                             // date={modifiedDate ? modifiedDate : pickupDate}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
+                            confirmBtnText='Confirm'
+                            cancelBtnText='Cancel'
                             style={{
                                 padding: 0,
                                 margin: 0,

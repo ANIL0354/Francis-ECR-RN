@@ -1,25 +1,17 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
-    TextInput,
     Image as SimpleImage,
-    RefreshControl,
-    FlatList,
-    Animated,
     Alert,
-    Keyboard,
     ScrollView,
-    LayoutAnimation,
     UIManager,
     TouchableOpacity,
-    BackHandler,
     Dimensions,
     Linking
 } from 'react-native';
 import moment from 'moment';
-import DatePicker from 'react-native-datepicker';
 import Image from 'react-native-image-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import Checkbox from '../../../../../components/atoms/Checkbox';
@@ -33,37 +25,27 @@ import {
     STRAIGHT_ARROW,
     DOORS_ICON,
     GEAR_ICON,
-    SEARCH_ICON,
     CHECKBOX_ICON,
     LUGGAGE_ICON,
     RIDE_BOOKED,
-    LIMITS,
     CHECKBOX_ACTIVE,
-    LABELS,
     FUEL_INACTIVE,
     VEHICLE_YEAR_RANGE,
     SCREENS,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
-import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
 import styles from "./styles.js";
 import IconText from "../../../../../components/atoms/IconTextComponent";
 import CustomButton from "../../../../../components/atoms/CustomButton";
-import CustomDraggableCalendar from '../../../../../components/atoms/CustomDraggableCalendar';
-import CollapsableWrapper from '../../../../../components/hoc/CollapsableWrapper';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
     navigation,
     route,
-    driverData,
     submitBookingRequest
 }) => {
     let { vehicleDetails, scrollRef = {} } = route.params;
-
-    const today = new Date();
     const largeScaledFont = scaleText(18);
-    const mediumScaledFont = scaleText(16);
     const [rideBooked, setRideBooked] = useState(false);
     const [accepted, setAccepted] = useState(false);
 
@@ -199,24 +181,15 @@ export const Screen = ({
                                                 titleStyle={styles.iconText}
                                                 containerStyle={styles.iconTextContainer}
                                             />
-                                            {/* <IconText
-                                            icon={VEHICLE_YEAR_RANGE}
-                                            title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
-                                            titleFontSize={14}
-                                            titleStyle={styles.iconText}
-                                            containerStyle={styles.iconTextContainer}
-                                        /> */}
                                         </View>
                                     </View>
                                 </View>
                             </View>
                             <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly' }}>
-                                {/* <View style={styles.listLocationWrapper}> */}
                                 <Text
                                     ellipsizeMode={'tail'}
                                     numberOfLines={1}
                                     style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
-                                {/* <View style={styles.listDropoffWrapper}> */}
                                 <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center' }} />
                                 <Text
                                     ellipsizeMode={'tail'}
@@ -261,9 +234,9 @@ export const Screen = ({
                                         <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0}`}</Text>
                                     </View>
                                 </View>
-                                {(vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay) && <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Paid Days : '}</Text>
-                                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                {(vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay) && <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize, }}>
+                                    <Text style={{ flex: 1, color: '#0091ff', }}>{'Paid Days : '}</Text>
+                                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly', }}>
                                         <Text style={{ flex: 3, color: '#0091ff' }}>{`$${vehicleDetails.ratePerDay} x ${vehicleDetails.totalSelectedDate > vehicleDetails.freeDays ? (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays) : 0} days`}</Text>
                                         <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
                                         <Text style={{ flex: 1, color: '#0091ff' }}>{`$${vehicleDetails.totalSelectedDate > vehicleDetails.freeDays ? vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays) : 0}`}</Text>
@@ -272,28 +245,28 @@ export const Screen = ({
                                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: scaleText(5).fontSize }}>
                                     <Text style={{ flex: 1, color: '#0091ff' }}>{'Total : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3, color: '#0091ff' }}>{``}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{''}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0 + (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0}`}</Text>
+                                        <Text style={{ flex: 3, color: '#0091ff', }}>{``}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff', }}>{''}</Text>
+                                        <Text style={{ flex: 1, color: '#0091ff', }}>{`$${0 + (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0}`}</Text>
                                     </View>
                                 </View>
-                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, flexDirection: 'row', }}>
                                     <Checkbox
                                         title={' '}
                                         toggleCheck={() => setAccepted(!accepted)}
                                         checked={accepted}
                                         checkedIcon={CHECKBOX_ACTIVE}
                                         uncheckedIcon={CHECKBOX_ICON}
-                                        titleStyle={{ textTransform: 'uppercase' }}
-                                        checkboxStyle={{ flex: 1, maxWidth: '5%' }}
+                                        titleStyle={{ textTransform: 'uppercase', }}
+                                        checkboxStyle={{ flex: 1, maxWidth: '5%', }}
                                     />
-                                    <View style={{ flex: 1, minWidth: '90%', flexDirection: 'row', flexWrap: 'wrap' }}>
+                                    <View style={{ flex: 1, minWidth: '90%', flexDirection: 'row', flexWrap: 'wrap', }}>
                                         <Text style={{ color: 'black' }}>
                                             {'I have read and agree with the '}
                                         </Text>
                                         <Text
                                             onPress={() => Linking.openURL('https://easycarrelo.co.nz/terms')}
-                                            style={{ color: '#0091ff', textDecorationLine: 'underline' }}>
+                                            style={{ color: '#0091ff', textDecorationLine: 'underline', }}>
                                             {'Terms & Conditions.'}
                                         </Text>
                                     </View>
@@ -301,7 +274,7 @@ export const Screen = ({
                             </View>
                             <CustomButton
                                 title={'Submit your request'}
-                                titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
+                                titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase', }}
                                 onPress={() => {
                                     if (!accepted) {
                                         Alert.alert(
@@ -317,7 +290,7 @@ export const Screen = ({
                                     }
                                     else {
                                         submitBookingRequest(
-                                            driverData._id,
+                                            vehicleDetails._id,
                                             {
                                                 startDate: vehicleDetails.pickupDate,
                                                 endDate: vehicleDetails.dropoffDate,
@@ -325,13 +298,13 @@ export const Screen = ({
                                                 bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
                                                 commentForAgency: '',
                                                 commentForECRByDriver: '',
-                                                rateForAgency: 0
+                                                rateForAgency: 0,
                                             },
                                             (response) => {
-                                                setRideBooked(true)
+                                                setRideBooked(true);
                                             },
                                             () => { }
-                                        )
+                                        );
                                     }
                                 }}
                                 buttonStyle={styles.vehicleListButton}

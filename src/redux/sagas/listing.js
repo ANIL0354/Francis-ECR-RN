@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { takeLatest, all, put, delay } from 'redux-saga/effects';
-import NetInfo from '@react-native-community/netinfo';
+import { takeLatest, all, put } from 'redux-saga/effects';
 import Toast from 'react-native-simple-toast';
 import {
   GET_POPULAR_PLACES,
@@ -21,16 +20,13 @@ import {
   saveCompleteDetails,
   saveVehicleListing,
   saveTransmissionTypes,
-  saveDriverData
+  saveDriverData,
 } from '../actions';
-const {
-  defaultConfig: { LOCATION },
-} = require(`../../config/default`);
-const api = require(`../../shared/api`);
-const { updateAuthToken, getRequestNoAuth, getRequest, putRequest } = require(`../../helpers`);
-const { STATUS_CODE } = require(`../../shared/constants`);
 
-import axios from 'axios';
+const api = require('../../shared/api');
+const { getRequest, putRequest } = require('../../helpers');
+const { STATUS_CODE } = require('../../shared/constants');
+
 function* fetchPopularPlaces({ data, success, failure }) {
   try {
     const response = yield getRequest({
@@ -66,7 +62,6 @@ function* fetchVehicleList({ data, success, failure }) {
     if (!data.pickupDate) {
       delete data.pickupDate;
     }
-    // data.pickupDate = '2020-05-19'
     if (!(data.fuelType && data.fuelType.length)) {
       delete data.fuelType;
     }
@@ -266,7 +261,7 @@ function* fetchFaqList({ success = () => { }, failure = () => { } }) {
 
 function* submitRequest({ driverId, data, success, failure }) {
   try {
-    yield put(startLoader())
+    yield put(startLoader());
     if (!data.commentForAgency) {
       delete data.commentForAgency;
     }
@@ -284,17 +279,17 @@ function* submitRequest({ driverId, data, success, failure }) {
     }
     if (response.status !== STATUS_CODE.successful) {
       failure(response.data);
-      yield put(stopLoader())
+      yield put(stopLoader());
     }
     else {
       success(response.data);
-      yield put(stopLoader())
+      yield put(stopLoader());
     }
   }
   catch (error) {
     return;
   } finally {
-    yield put(stopLoader())
+    yield put(stopLoader());
   }
 }
 
@@ -307,7 +302,7 @@ function* ListsSaga() {
     takeLatest(GET_VEHICLE_TYPES, fetchVehicleTypes),
     takeLatest(FETCH_COMPLETE_DETAILS, fetchVehicleCompleteDetails),
     takeLatest(GET_FAQ_LIST, fetchFaqList),
-    takeLatest(SUBMIT_BOOKING_REQUEST, submitRequest)
+    takeLatest(SUBMIT_BOOKING_REQUEST, submitRequest),
   ]);
 }
 

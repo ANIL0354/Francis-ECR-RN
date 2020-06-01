@@ -1,24 +1,16 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
-    TextInput,
     Image as SimpleImage,
-    RefreshControl,
-    FlatList,
-    Animated,
     Alert,
-    Keyboard,
     ScrollView,
-    LayoutAnimation,
     UIManager,
     Dimensions,
     TouchableOpacity,
-    BackHandler
 } from 'react-native';
 import moment from 'moment';
-import DatePicker from 'react-native-datepicker';
 import Image from 'react-native-image-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import {
@@ -31,24 +23,18 @@ import {
     STRAIGHT_ARROW,
     DOORS_ICON,
     GEAR_ICON,
-    SEARCH_ICON,
     LUGGAGE_ICON,
-    LIMITS,
     LABELS,
     FUEL_INACTIVE,
     VEHICLE_YEAR_RANGE,
     SCREENS,
-    FREQUENCY
+    FREQUENCY,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
-import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
-import styles from "./styles.js";
-import IconText from "../../../../../components/atoms/IconTextComponent";
-import CustomButton from "../../../../../components/atoms/CustomButton";
+import styles from './styles.js';
+import IconText from '../../../../../components/atoms/IconTextComponent';
+import CustomButton from '../../../../../components/atoms/CustomButton';
 import MultiImageViewer from '../../../../../components/atoms/MultiImageViewer';
-import LocationSearch from '../../../../../components/atoms/LocationSearch';
-import CustomLoader from "../../../../../components/atoms/Loader";
-import ImageButton from '../../../../../components/atoms/ImageButton';
 import CustomDraggableCalendar from '../../../../../components/atoms/CustomDraggableCalendar';
 import CollapsableWrapper from '../../../../../components/hoc/CollapsableWrapper';
 import HTML from 'react-native-render-html';
@@ -63,7 +49,7 @@ export const Screen = ({
     getFaqList,
     faqList,
     saveCompleteDetails,
-    fetchCompleteDetails
+    fetchCompleteDetails,
 }) => {
     const scrollRef = useRef();
     const [startDate, setStartDate] = useState(null);
@@ -71,7 +57,7 @@ export const Screen = ({
     const [totalSelectedDate, setTotalSelectedDates] = useState(0);
     const [imageExpanded, setImageExpanded] = useState(false);
     const [availableImages, setAvailableImages] = useState([]);
-    const [pickupDateValue, setPickupDateValue] = useState(null)
+    const [portrait, setPortraitOrientation] = useState(true);
 
     let { vehicleDetails, fromSummary = false } = route.params;
     useEffect(() => {
@@ -92,30 +78,37 @@ export const Screen = ({
             images.push({ url: item });
             return null;
         });
-        setAvailableImages(images)
+        setAvailableImages(images);
     }, [vehicleDetails && vehicleDetails.vehicleData && vehicleDetails.vehicleData.url && vehicleDetails.vehicleData.url.length])
 
     useEffect(() => {
         let total = 0;
         if (startDate && !endDate) {
             total = 1;
-            setEndDate(startDate)
+            setEndDate(startDate);
         }
         else if (startDate && endDate) {
-            total = ((endDate - startDate) / (1000 * 3600 * 24)) + 1
+            total = ((endDate - startDate) / (1000 * 3600 * 24)) + 1;
         }
         setTotalSelectedDates(total);
     }, [startDate, endDate]);
 
-    const today = new Date();
     const largeScaledFont = scaleText(18);
 
 
     useEffect(() => {
         return () => {
-            saveCompleteDetails(null)
-        }
-    }, [])
+            saveCompleteDetails(null);
+        };
+    }, []);
+
+    useEffect(() => {
+        Dimensions.addEventListener('change', () => {
+            Dimensions.get('window').width > Dimensions.get('window').height
+                ? setPortraitOrientation(false)
+                : setPortraitOrientation(true);
+        });
+    }, []);
 
     return (
         <AppHoc
@@ -139,7 +132,7 @@ export const Screen = ({
                             source={NAV_ARROW_ICON}
                             height={20}
                             width={20}
-                            style={{ alignSelf: 'center', marginVertical: scaleText(5).fontSize }}
+                            style={styles.navArrow}
                         />
                     </TouchableOpacity>
                     <Text
@@ -154,9 +147,9 @@ export const Screen = ({
                     visible={imageExpanded}
                     closeView={() => setImageExpanded(false)}
                     images={availableImages} />
-                <View style={{ paddingHorizontal: scaleText(20).fontSize }}>
+                <View style={styles.screenContentWrapper}>
                     <View style={styles.detailsWrapper}>
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <View style={styles.rowFlex}>
                             <TouchableOpacity onPress={() => setImageExpanded(true)} style={styles.detailsLeftContainer}>
                                 <Image
                                     source={{ uri: vehicleDetails.vehicleData.url[0] }}
@@ -172,7 +165,7 @@ export const Screen = ({
                                 <Text
                                     style={styles.carTitle}>{vehicleDetails.vehicleData ? vehicleDetails.vehicleData.name : ''}</Text>
                                 <View style={styles.carFeaturesWrapper}>
-                                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
+                                    <View style={styles.rowFlex}>
                                         <IconText
                                             icon={CAR_SEATS_ICON}
                                             title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child`}
@@ -228,25 +221,16 @@ export const Screen = ({
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
-                                        {/* <IconText
-                                            icon={VEHICLE_YEAR_RANGE}
-                                            title={`${vehicleDetails.vehicleData.manufactureYear || 'N/A'}`}
-                                            titleFontSize={14}
-                                            titleStyle={styles.iconText}
-                                            containerStyle={styles.iconTextContainer}
-                                        /> */}
                                     </View>
                                 </View>
                             </View>
                         </View>
-                        <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly' }}>
-                            {/* <View style={styles.listLocationWrapper}> */}
+                        <View style={styles.locationWrapper}>
                             <Text
                                 ellipsizeMode={'tail'}
                                 numberOfLines={1}
                                 style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
-                            {/* <View style={styles.listDropoffWrapper}> */}
-                            <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center' }} />
+                            <SimpleImage source={STRAIGHT_ARROW} style={styles.alignSelfCenter} />
                             <Text
                                 ellipsizeMode={'tail'}
                                 numberOfLines={1}
@@ -254,7 +238,7 @@ export const Screen = ({
                         </View>
                     </View>
                     {completeDetails && <View style={{ paddingHorizontal: scaleText(5).fontSize, marginVertical: scaleText(10).fontSize }}>
-                        <Text style={{ textAlign: 'center', fontSize: scaleText(14).fontSize, textAlignVertical: 'center', color: 'black' }}>
+                        <Text style={styles.descriptionText}>
                             {completeDetails.vehicleData.description}
                         </Text>
                     </View>}
@@ -273,13 +257,7 @@ export const Screen = ({
                     <View style={{ marginVertical: scaleText(20).fontSize }}>
                         <Text
                             style={styles.carTitle}>{'Cost Summary'}</Text>
-                        {completeDetails && <View style={{
-                            backgroundColor: '#f8f8f8',
-                            padding: scaleText(20).fontSize,
-                            borderRadius: scaleText(10).fontSize,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
+                        {completeDetails && <View style={styles.costSummarWrapper}>
                             <View style={{ flex: 1, }}>
                                 <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
                                     <Text style={{ flex: 1, color: '#0091ff' }}>{'Free Days : '}</Text>
@@ -331,9 +309,9 @@ export const Screen = ({
                                                         dropoffDate: endDate,
                                                         totalSelectedDate: totalSelectedDate,
                                                         ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
-                                                        freeDays: completeDetails.freeDays
+                                                        freeDays: completeDetails.freeDays,
                                                     },
-                                                    scrollRef: scrollRef
+                                                    scrollRef: scrollRef,
                                                 })
                                                 : navigation.navigate(SCREENS.LOGIN, {
                                                     fromDetails: true,
@@ -343,10 +321,10 @@ export const Screen = ({
                                                         dropoffDate: endDate,
                                                         totalSelectedDate: totalSelectedDate,
                                                         ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
-                                                        freeDays: completeDetails.freeDays
+                                                        freeDays: completeDetails.freeDays,
                                                     },
-                                                    scrollRef: scrollRef
-                                                })
+                                                    scrollRef: scrollRef,
+                                                });
                                         }
                                     }}
                                     buttonStyle={styles.vehicleListButton}
