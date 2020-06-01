@@ -3,25 +3,8 @@ import React, { Component, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DraggableCalendar } from './wrapper';
 import { scaleText } from '../../../helpers';
-const styles = StyleSheet.create({
-    draggableContainer: {
-        backgroundColor: '#303658',
-        minHeight: scaleText(375).fontSize,
-        paddingHorizontal: scaleText(30).fontSize,
-        paddingVertical: scaleText(10).fontSize
-    },
-    dayText: {
-        color: 'white'
-    },
-    selectedDayText: {
-        color: 'white',
-        fontSize: scaleText(15).fontSize,
-    },
-    selectedDayContainer: {
-        backgroundColor: 'red',
-        height: scaleText(15).fontSize,
-    }
-});
+import styles from './styles';
+
 const CustomDraggableCalendar = ({
     startDate,
     endDate,
@@ -63,7 +46,7 @@ const CustomDraggableCalendar = ({
 
     return (
         <View style={{ marginVertical: scaleText(20).fontSize }}>
-            <Text style={{ color: '#737171', marginVertical: scaleText(5).fontSize, fontSize: scaleText(16).fontSize }}>{'Select your travel dates:'}</Text>
+            <Text style={styles.headerText}>{'Select your travel dates:'}</Text>
             <DraggableCalendar
                 {..._genStyles()}
                 freeDays={freeDays}
@@ -71,30 +54,39 @@ const CustomDraggableCalendar = ({
                 endDate={endDate}
                 setStartDate={(date) => setStartDate(date)}
                 setEndDate={(date) => setEndDate(date)}
-                fullDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue > 1 ? 1 : pickupDateValue, 0, 0, 0), new Date(dropoffYear + 1, dropoffMonth, 30, 0, 0, 0)]}
+                fullDateRange={[new Date(pickupYear, pickupMonth, 1, 0, 0, 0), new Date(dropoffYear, dropoffMonth, dropoffMonth % 2 ? 30 : 31, 0, 0, 0)]}
                 availableDateRange={[new Date(pickupYear, pickupMonth, pickupDateValue), new Date(dropoffYear, dropoffMonth, dropoffDateValue)]}
                 onSelectionChange={(value) => { }}
                 totalSelectable={totalSelectable}
             />
-            <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View style={styles.indicatorWrapper}>
                 <View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ backgroundColor: '#1dd1a1', minWidth: scaleText(20).fontSize, height: scaleText(10).fontSize, borderRadius: scaleText(5).fontSize }} />
-                        <Text style={{ color: '#737171', marginHorizontal: scaleText(5).fontSize, fontSize: scaleText(14).fontSize }}>{'Available Days'}</Text>
+                    <View style={styles.indicatorRow}>
+                        <View style={{
+                            backgroundColor: '#1dd1a1',
+                            ...styles.indicatorColor,
+                        }} />
+                        <Text style={styles.indicatorText}>{'Available Days'}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ backgroundColor: '#fe6a67', minWidth: scaleText(20).fontSize, height: scaleText(10).fontSize, borderRadius: scaleText(5).fontSize }} />
-                        <Text style={{ color: '#737171', marginHorizontal: scaleText(5).fontSize, fontSize: scaleText(14).fontSize }}>{'Selected Free Days'}</Text>
+                    <View style={styles.indicatorRow}>
+                        <View style={{
+                            backgroundColor: '#fe6a67',
+                            ...styles.indicatorColor,
+                        }} />
+                        <Text style={styles.indicatorText}>{'Selected Free Days'}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ backgroundColor: '#f2c225', minWidth: scaleText(20).fontSize, height: scaleText(10).fontSize, borderRadius: scaleText(5).fontSize }} />
-                        <Text style={{ color: '#737171', marginHorizontal: scaleText(5).fontSize, fontSize: scaleText(14).fontSize }}>{'Selected Paid Days'}</Text>
+                    <View style={styles.indicatorRow}>
+                        <View style={{
+                            backgroundColor: '#f2c225',
+                            ...styles.indicatorColor
+                        }} />
+                        <Text style={styles.indicatorText}>{'Selected Paid Days'}</Text>
                     </View>
                 </View>
-                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <View style={styles.clearSelectionWrapper}>
                     <Text
                         onPress={() => { setStartDate(null); setEndDate(null) }}
-                        style={{ color: '#0091ff', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize }}>{'Clear Selection'}</Text>
+                        style={styles.clearSelectionText}>{'Clear Selection'}</Text>
                 </View>
             </View>
         </View>

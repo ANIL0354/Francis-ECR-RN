@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "18046953276-l8f8doml0vcaib06pmv6lt3e36u16ohk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easycarrelo",
+            "certificate_hash": "145f5fbf19757ce887c230b293891bfc5bc70322"
+          }
+        },
+        {
           "client_id": "18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com",
           "client_type": 3
         }
