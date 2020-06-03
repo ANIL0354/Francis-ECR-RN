@@ -20,13 +20,13 @@ const AppHoc = ({
   userToken,
   stopLoader,
   children,
-  navigation
+  navigation,
 }) => {
   useEffect(() => {
     if (loader) {
       Keyboard.dismiss();
     }
-  }, [loader])
+  }, [loader]);
   return (
     <SafeAreaView style={styles.hocWrapper}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -49,18 +49,21 @@ const AppHoc = ({
                   userToken,
                   () => {
                     if (fromSummary || rideBooked) {
-                      navigation.navigate(SCREENS.HOME)
+                      navigation.navigate(SCREENS.HOME);
                     }
                   },
                   () => {
                   },
-                )
+                ),
               },
-            ])
+            ]);
           }
           else {
-            navigation.navigate(SCREENS.HOME)
+            navigation.navigate(SCREENS.HOME);
           }
+        }}
+        onCenterIconTap={() => {
+          navigation.navigate(SCREENS.PROFILE);
         }}
         rightMenuItems={userToken
           ? [
@@ -78,24 +81,24 @@ const AppHoc = ({
                     userToken,
                     () => {
                       if (fromSummary || rideBooked) {
-                        navigation.navigate(SCREENS.HOME)
+                        navigation.navigate(SCREENS.HOME);
                       }
                     },
                     () => {
                     },
-                  )
+                  ),
                 },
-              ])
-            }
+              ]),
+            },
           ]
           : [
             {
               label: STRINGS.LOGIN_OR_SIGNUP,
               onPress: () => {
                 stopLoader();
-                navigation.navigate(SCREENS.LOGIN, { fromDetails: false })
-              }
-            }
+                navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
+              },
+            },
           ]}
       />
       {children}

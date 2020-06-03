@@ -242,7 +242,7 @@ const reduxFormFunction = reduxForm({
     fields: ['email', 'password'],
     // onSubmitFail,
     validate: validator,
-    enableReinitialize: true
+    enableReinitialize: true,
 })(Form);
 
 export const SignupForm = connect(mapStateToProps, { changeField })(reduxFormFunction);

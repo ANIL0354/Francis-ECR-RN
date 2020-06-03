@@ -11,6 +11,8 @@ import { HomeScreen } from '../../../views/us/1.0/authenticated-screens/home';
 import { VehicleListing } from '../../../views/us/1.0/authenticated-screens/vehicle-listing';
 import { BookingDetails } from '../../../views/us/1.0/authenticated-screens/booking-details';
 import { BookingSummary } from '../../../views/us/1.0/authenticated-screens/booking-summary';
+import { ProfileScreen } from '../../../views/us/1.0/authenticated-screens/profile';
+import { ChangePasswordScreen } from '../../../views/us/1.0/authenticated-screens/change-password';
 import { SCREENS } from '../../../shared/constants';
 import { connect } from 'react-redux';
 
@@ -27,6 +29,8 @@ const AuthNavigator = () => {
                 <Stack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
                 <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotScreen} />
                 <Stack.Screen name={SCREENS.COMPLETE_DETAILS} component={CompleteDetailsScreen} />
+                <Stack.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
+                <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePasswordScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

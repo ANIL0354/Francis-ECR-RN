@@ -74,6 +74,7 @@ const CountryCodePicker = ({
     countryValue,
     codeValue,
     placeholder,
+    takeErrorSpace = true,
     countryDrop = false,
     meta: { touched, error, visited },
     setCallingCode = () => { },
@@ -107,7 +108,8 @@ const CountryCodePicker = ({
             <TouchableOpacity
                 onPress={() => setShowCountries(true)}
                 style={{
-                    height: 2.5 * scaledFont.lineHeight,
+                    height:
+                        takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
                     ...styles.countryDropWrapper,
@@ -220,14 +222,14 @@ const CountryCodePicker = ({
                 )}
             </TouchableOpacity>
 
-            <Text style={{
+            {(takeErrorSpace || !!validationMessage) && <Text style={{
                 color: 'red',
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-                height: 2 * scaledFont.lineHeight,
+                height: takeErrorSpace ? 2 * scaledFont.lineHeight : scaledFont.lineHeight,
                 ...style
-            }}>{validationMessage}</Text>
+            }}>{validationMessage}</Text>}
         </View>
     )
 }
