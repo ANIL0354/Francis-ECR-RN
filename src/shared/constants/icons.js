@@ -41,3 +41,6 @@ export const EDIT_ICON = require('../../assets/edit_icon.png');
 export const RATING_STAR = require('../../assets/empty_star.png');
 export const TRIP_CALENDAR = require('../../assets/Calendar.png');
 export const LIST_ARROW = require('../../assets/Arrow.png');
+export const LOCATION_CIRCLE = require('../../assets/location_circle.png');
+export const LOCATION_ARROWS = require('../../assets/arrows.png');
+export const LOCATION_VERTICAL_LINE = require('../../assets/vertical_line.png');

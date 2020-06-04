@@ -14,6 +14,7 @@ const CustomFormInput = ({
     returnKeyType,
     takeErrorSpace = true,
     secureTextEntry = false,
+    multiline = false,
     meta: { touched, error, visited },
     ...props
 }) => {
@@ -26,13 +27,15 @@ const CustomFormInput = ({
                 placeholder={placeholder}
                 placeholderTextColor={'black'}
                 underlineColorAndroid={'transparent'}
+                multiline={multiline}
                 style={{
                     ...style,
                     ...styles.inputStyle,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
+                    textAlignVertical: multiline ? 'top' : 'center',
                     height:
-                        takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
+                        multiline ? 10 * scaledFont.lineHeight : takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                 }}
                 returnKeyType={returnKeyType}
                 secureTextEntry={secureTextEntry}

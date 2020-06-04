@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     alignSelfCenter: {
         alignSelf: 'center',
     },
+    justifySpaceBetween: {
+        justifyContent: 'space-between',
+    },
     navArrow: {
         alignSelf: 'center',
         marginVertical: scaleText(5).fontSize,
@@ -63,9 +66,17 @@ const styles = StyleSheet.create({
         fontSize: scaleText(14).fontSize,
     },
     changePasswordButton: {
+        flex: 1,
+        width: '95%',
         borderColor: '#0091ff',
         borderWidth: 1,
+        backgroundColor: 'white',
         fontSize: scaleText(16).fontSize,
+        marginTop: scaleText(20).fontSize,
+        minWidth: scaleText(100).fontSize,
+        minHeight: scaleText(40).fontSize,
+        justifyContent: 'center',
+        alignItems: 'center',
         paddingHorizontal: scaleText(20).fontSize,
         paddingVertical: scaleText(5).fontSize,
         borderRadius: scaleText(5).fontSize,
@@ -87,6 +98,30 @@ const styles = StyleSheet.create({
         minWidth: scaleText(200).fontSize,
         marginTop: scaleText(30).fontSize,
         alignSelf: 'center',
+    },
+    submitEditButton: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: '#009000',
+        borderColor: '#009000',
+        borderWidth: 1,
+        fontSize: scaleText(16).fontSize,
+        marginTop: scaleText(20).fontSize,
+        minWidth: scaleText(100).fontSize,
+        minHeight: scaleText(40).fontSize,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: scaleText(20).fontSize,
+        paddingVertical: scaleText(5).fontSize,
+        borderRadius: scaleText(5).fontSize,
+    },
+    basicBlueText: {
+        color: '#0091ff',
+        fontSize: scaleText(14).fontSize,
+    },
+    basicWhiteText: {
+        color: 'white',
+        fontSize: scaleText(14).fontSize,
     },
     verticalFiveMargin: {
         marginVertical: scaleText(5).fontSize,

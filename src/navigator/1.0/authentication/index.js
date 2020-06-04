@@ -16,6 +16,8 @@ import { ProfileScreen } from '../../../views/us/1.0/authenticated-screens/profi
 import { ChangePasswordScreen } from '../../../views/us/1.0/authenticated-screens/change-password';
 import { TripListScreen } from '../../../views/us/1.0/authenticated-screens/trips-list';
 import { RatingListScreen } from '../../../views/us/1.0/authenticated-screens/ratings-list';
+import { RatingDetailScreen } from '../../../views/us/1.0/authenticated-screens/rating-details';
+import { TripDetailScreen } from '../../../views/us/1.0/authenticated-screens/trip-details';
 import { SCREENS } from '../../../shared/constants';
 import { connect } from 'react-redux';
 
@@ -36,6 +38,8 @@ const AuthNavigator = () => {
                 <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePasswordScreen} />
                 <Stack.Screen name={SCREENS.YOUR_TRIPS} component={TripListScreen} />
                 <Stack.Screen name={SCREENS.YOUR_RATINGS} component={RatingListScreen} />
+                <Stack.Screen name={SCREENS.RATING_DETAILS} component={RatingDetailScreen} />
+                <Stack.Screen name={SCREENS.TRIP_DETAILS} component={TripDetailScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -187,7 +187,7 @@ export const Screen = ({
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Pickup Location: Wellington'}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Drop-off Location: Auckland (HEN)'}</Text>
                                         </View>
-                                        <TouchableOpacity style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={10}

@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
         marginTop: scaleText(30).fontSize,
         alignSelf: 'center',
     },
-    verticalFiveMargin: {
-        marginVertical: scaleText(5).fontSize,
-    },
+    dividingLine: {
+        flex: 1,
+    }
 });
 
 export default styles;

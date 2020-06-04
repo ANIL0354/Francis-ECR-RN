@@ -100,14 +100,14 @@ export const Screen = ({
                                 <View style={styles.rowFlex}>
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 5 }}>
-                                            <Text style={{ color: 'black', fontSize: scaleText(16).fontSize, fontWeight: 'bold' }}>{'Agency: Bargain Rentals'}</Text>
+                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize, }}>{'Agency: Bargain Rentals'}</Text>
                                             <Rating
                                                 ratingCount={5}
                                                 // ratingImage={RATING_STAR}
                                                 startingValue={4.5}
                                                 ratingColor={'rgb(255,255,255)'}
                                                 // ratingColor={'rgb(255,255,255)'}
-                                                imageSize={20}
+                                                imageSize={14}
                                                 ratingBackgroundColor={'rgb(255,188,0)'}
                                                 minValue={1}
                                                 fractions={0.1}
@@ -117,14 +117,15 @@ export const Screen = ({
                                                 style={styles.alignSelfStart}
                                                 onFinishRating={(rating) => console.log('rating', rating)}
                                             />
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize }}>{'Vehicle: Mazda Damio'}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Vehicle: Mazda Damio'}</Text>
                                         </View>
-                                        <TouchableOpacity style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.RATING_DETAILS)} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image
                                                 source={LIST_ARROW}
-                                                height={20}
-                                                width={20}
-                                                style={{ alignSelf: 'flex-end' }}
+                                                height={14}
+                                                width={14}
+                                                resizeMode={'contain'}
+                                                style={{ alignSelf: 'flex-end', height: scaleText(14).fontSize, width: scaleText(14).fontSize }}
                                             />
                                         </TouchableOpacity>
                                     </View>

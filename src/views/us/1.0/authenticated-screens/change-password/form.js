@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
+import { View, Text } from 'react-native';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -15,30 +16,42 @@ const Form = ({
 }) => {
     return (
         <React.Fragment>
-            <Field
-                name={STRINGS.CURRENT_INPUT_NAME}
-                component={CustomFormInput}
-                secureTextEntry={true}
-                returnKeyType={'go'}
-                placeholder={STRINGS.CURRENT_PASSWORD_PLACEHOLDER}
-                style={styles.flexOne}
-            />
-            <Field
-                name={STRINGS.PASSWORD_INPUT_NAME}
-                component={CustomFormInput}
-                secureTextEntry={true}
-                returnKeyType={'go'}
-                placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
-                style={styles.flexOne}
-            />
-            <Field
-                name={STRINGS.RE_PASSWORD_INPUT_NAME}
-                component={CustomFormInput}
-                secureTextEntry={true}
-                returnKeyType={'go'}
-                placeholder={STRINGS.LOGIN_PASSWORD_PLACEHOLDER}
-                style={styles.flexOne}
-            />
+            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                <Text style={styles.label}>{'Current Password:'}</Text>
+                <Field
+                    name={STRINGS.CURRENT_INPUT_NAME}
+                    component={CustomFormInput}
+                    secureTextEntry={true}
+                    returnKeyType={'go'}
+                    takeErrorSpace={false}
+                    placeholder={STRINGS.CURRENT_PASSWORD_PLACEHOLDER}
+                    style={styles.flexOne}
+                />
+            </View>
+            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                <Text style={styles.label}>{'New Password:'}</Text>
+                <Field
+                    name={STRINGS.PASSWORD_INPUT_NAME}
+                    component={CustomFormInput}
+                    secureTextEntry={true}
+                    returnKeyType={'go'}
+                    takeErrorSpace={false}
+                    placeholder={STRINGS.NEW_PASSWORD_PLACEHOLDER}
+                    style={styles.flexOne}
+                />
+            </View>
+            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                <Text style={styles.label}>{'Re-enter new password:'}</Text>
+                <Field
+                    name={STRINGS.RE_PASSWORD_INPUT_NAME}
+                    component={CustomFormInput}
+                    secureTextEntry={true}
+                    returnKeyType={'go'}
+                    takeErrorSpace={false}
+                    placeholder={STRINGS.RE_NEW_PASSWORD_PLACEHOLDER}
+                    style={styles.flexOne}
+                />
+            </View>
             <Button
                 titleStyle={styles.loginSubmitTitle}
                 buttonStyle={styles.submitButton}
