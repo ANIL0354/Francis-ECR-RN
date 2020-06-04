@@ -68,6 +68,14 @@ const AppHoc = ({
         rightMenuItems={userToken
           ? [
             {
+              label: 'Your Trips',
+              onPress: () => navigation.navigate(SCREENS.YOUR_TRIPS),
+            },
+            {
+              label: 'Your Ratings',
+              onPress: () => navigation.navigate(SCREENS.YOUR_RATINGS),
+            },
+            {
               label: STRINGS.LOGOUT,
               onPress: () => Alert.alert(fromSummary && !rideBooked ? 'Warning' : STRINGS.LOGOUT,
                 fromSummary && !rideBooked ? 'You will loose all your data. Are you sure, you want to logout?' : STRINGS.LOGOUT_DESCRIPTION, [

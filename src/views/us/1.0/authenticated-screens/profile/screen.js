@@ -16,6 +16,7 @@ import {
     EDIT_ICON,
     LABELS,
     SCREENS,
+    RATING_STAR,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
@@ -124,13 +125,17 @@ export const Screen = ({
                         <View>
                             <Rating
                                 ratingCount={5}
+                                // ratingImage={RATING_STAR}
                                 startingValue={4.5}
+                                ratingColor={'rgb(255,255,255)'}
+                                // ratingColor={'rgb(255,255,255)'}
                                 imageSize={20}
+                                ratingBackgroundColor={'rgb(255,188,0)'}
                                 minValue={1}
                                 fractions={0.1}
-                                type={'star'}
                                 showRating={false}
                                 readonly={true}
+                                type={'star'}
                                 style={styles.alignSelfStart}
                                 onFinishRating={(rating) => console.log('rating', rating)}
                             />

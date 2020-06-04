@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +14,8 @@ import { BookingDetails } from '../../../views/us/1.0/authenticated-screens/book
 import { BookingSummary } from '../../../views/us/1.0/authenticated-screens/booking-summary';
 import { ProfileScreen } from '../../../views/us/1.0/authenticated-screens/profile';
 import { ChangePasswordScreen } from '../../../views/us/1.0/authenticated-screens/change-password';
+import { TripListScreen } from '../../../views/us/1.0/authenticated-screens/trips-list';
+import { RatingListScreen } from '../../../views/us/1.0/authenticated-screens/ratings-list';
 import { SCREENS } from '../../../shared/constants';
 import { connect } from 'react-redux';
 
@@ -31,6 +34,8 @@ const AuthNavigator = () => {
                 <Stack.Screen name={SCREENS.COMPLETE_DETAILS} component={CompleteDetailsScreen} />
                 <Stack.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
                 <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePasswordScreen} />
+                <Stack.Screen name={SCREENS.YOUR_TRIPS} component={TripListScreen} />
+                <Stack.Screen name={SCREENS.YOUR_RATINGS} component={RatingListScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )
