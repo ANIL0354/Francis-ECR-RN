@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: scaleText(14).fontSize,
         fontWeight: 'bold',
-        marginVertical: scaleText(3).fontSize,
     },
     value: {
         color: 'black',
@@ -68,10 +67,9 @@ const styles = StyleSheet.create({
     },
     changePasswordButton: {
         flex: 1,
-        width: '90%',
+        width: '95%',
         borderColor: '#0091ff',
         borderWidth: 1,
-        alignSelf: 'flex-start',
         backgroundColor: 'white',
         fontSize: scaleText(16).fontSize,
         marginTop: scaleText(20).fontSize,
@@ -103,11 +101,10 @@ const styles = StyleSheet.create({
     },
     submitEditButton: {
         flex: 1,
-        width: '90%',
+        width: '100%',
         backgroundColor: '#009000',
         borderColor: '#009000',
         borderWidth: 1,
-        alignSelf: 'flex-end',
         fontSize: scaleText(16).fontSize,
         marginTop: scaleText(20).fontSize,
         minWidth: scaleText(100).fontSize,
@@ -125,6 +122,7 @@ const styles = StyleSheet.create({
     basicWhiteText: {
         color: 'white',
         fontSize: scaleText(14).fontSize,
+        textTransform: 'uppercase',
     },
     verticalFiveMargin: {
         marginVertical: scaleText(5).fontSize,

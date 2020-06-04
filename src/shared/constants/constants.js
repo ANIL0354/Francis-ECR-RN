@@ -99,6 +99,7 @@ export const LABELS = {
   emailAgency: STRINGS.EMAIL_AGENCY,
   sendEmail: STRINGS.SEND_EMAIL,
   rateTrip: STRINGS.RATE_TRIP,
+  howWasYourTrip: STRINGS.HOW_WAS_YOUR_TRIP,
 };
 
 export const STATUS_CODE = {

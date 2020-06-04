@@ -194,7 +194,7 @@ export const Screen = ({
                                 : <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize, marginHorizontal: scaleText(80).fontSize }]}>
                                     <TouchableOpacity
                                         style={styles.changePasswordButton}
-                                        onPress={() => { }}>
+                                        onPress={() => { navigation.navigate(SCREENS.RATE_AGENCY) }}>
                                         <Text>{LABELS.rateTrip}</Text>
                                     </TouchableOpacity>
                                 </View>}

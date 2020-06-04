@@ -102,4 +102,5 @@ export const STRINGS = {
   EMAIL_SUBJECT_NAME: 'subject',
   SUBJECT_REQUIRED: 'Subject is required.',
   BODY_REQUIRED: 'Body is required.',
+  HOW_WAS_YOUR_TRIP: 'Your was your trip?',
 };
