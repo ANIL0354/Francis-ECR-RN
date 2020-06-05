@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -21,11 +21,14 @@ import {
     SCREENS,
     SCROLL_UP,
     LIST_ARROW,
+    LIMITS,
 } from '../../../../../shared/constants';
+import CustomLoader from '../../../../../components/atoms/Loader';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import { Rating } from 'react-native-elements';
 import styles from './style';
+import moment from 'moment';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
 import ImageButton from '../../../../../components/atoms/ImageButton';
 
@@ -33,12 +36,17 @@ export const Screen = ({
     startLoader,
     stopLoader,
     navigation,
+    pastTrips,
+    upcomingTrips,
+    fetchPastTrips,
+    fetchUpcomingTrips,
 }) => {
     const largeScaledFont = scaleText(18);
     const tripListRef = useRef();
-    const [editMode, setEditMode] = useState(false);
     const [upcomingVisible, showUpcoming] = useState(true);
     const [upButton, showUpButton] = useState(false);
+    const [pageIndex, setPageIndex] = useState(0);
+    const [fetchingData, setFetchingData] = useState(false);
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const scrollToTop = () => {
         tripListRef.current.scrollToIndex({ animated: true, index: 0 });
@@ -54,6 +62,21 @@ export const Screen = ({
             }
         }
     });
+
+    useEffect(() => {
+        if (upcomingVisible) {
+            fetchUpcomingTrips({
+                index: 0,
+                limit: LIMITS.vehicleList,
+            }, () => { }, () => { });
+        }
+        else {
+            fetchPastTrips({
+                index: 0,
+                limit: LIMITS.vehicleList,
+            }, () => { }, () => { });
+        }
+    }, [upcomingVisible]);
 
     return (
         <AppHoc
@@ -92,7 +115,6 @@ export const Screen = ({
                         activeOpacity={0.6}
                         onPress={() => {
                             showUpcoming(true);
-                            scrollToTop();
                         }}
                         style={[{
                             flex: 1,
@@ -127,7 +149,6 @@ export const Screen = ({
                         activeOpacity={0.6}
                         onPress={() => {
                             showUpcoming(false);
-                            scrollToTop();
                         }}
                         style={[{
                             flex: 1,
@@ -168,7 +189,51 @@ export const Screen = ({
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
-                        data={[{ id: 'sbs' }, { id: 'sgsdg' }, { id: 'syerbs' }, { id: 'ryyr' }, { id: 'sgs' }, { id: 'uyr' }, { id: 'sgghms' }, { id: 'wa' }, { id: 'ssf' }]}
+                        onEndReachedThreshold={0.8}
+                        ListFooterComponent={
+                            <View style={{
+                                width: '100%',
+                                height: 40,
+                                opacity: 1,
+                                marginVertical: 10,
+                            }}>
+                                {fetchingData && <CustomLoader size={30} />}
+                            </View>}
+                        onEndReached={() => {
+                            if (upcomingTrips.totalCount === upcomingTrips.length) {
+                                return;
+                            }
+                            setFetchingData(true)
+                            if (upcomingVisible) {
+                                fetchUpcomingTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => {
+                                    setFetchingData(false);
+                                    setPageIndex(pageIndex + 1);
+                                }, () => { });
+                            }
+                            else {
+                                fetchPastTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => {
+                                    setFetchingData(false);
+                                    setPageIndex(pageIndex + 1);
+                                }, () => { });
+                            }
+                        }}
+                        ListEmptyComponent={<View>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No upcoming trip.'}</Text>
+                        </View>}
+                        data={upcomingVisible
+                            ? upcomingTrips && upcomingTrips.trips
+                                ? upcomingTrips.trips
+                                : []
+                            : pastTrips && pastTrips.trips
+                                ? pastTrips.trips
+                                : []
+                        }
                         keyExtractor={(item, index) => (item.id ? item.id : `${index}`)}
                         renderItem={({ item }) => {
                             return (
@@ -183,9 +248,9 @@ export const Screen = ({
                                     </View>
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 5 }}>
-                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{upcomingVisible ? 'Thursday, 4 June' : 'Tuesday, 2 June'}</Text>
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Pickup Location: Wellington'}</Text>
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Drop-off Location: Auckland (HEN)'}</Text>
+                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{upcomingVisible ? moment(item.startDate).format('dddd, DD MMMM YYYY') : 'Tuesday, 2 June'}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${item.pickupBranch.name}`}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${item.dropoffBranch.name}`}</Text>
                                         </View>
                                         <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image

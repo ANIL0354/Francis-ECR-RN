@@ -44,3 +44,4 @@ export const LIST_ARROW = require('../../assets/Arrow.png');
 export const LOCATION_CIRCLE = require('../../assets/location_circle.png');
 export const LOCATION_ARROWS = require('../../assets/arrows.png');
 export const LOCATION_VERTICAL_LINE = require('../../assets/vertical_line.png');
+export const EYE_ICON = require('../../assets/eye.png');

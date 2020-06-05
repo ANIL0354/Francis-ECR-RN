@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, TextInput, Platform } from 'react-native';
+import { View, Text, TextInput, Image, Platform } from 'react-native';
 import { scaleText } from '../../../helpers';
+import { EYE_ICON } from '../../../shared/constants';
 import styles from './style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const CustomFormInput = ({
     label,
@@ -14,6 +16,7 @@ const CustomFormInput = ({
     returnKeyType,
     takeErrorSpace = true,
     secureTextEntry = false,
+    showEye = true,
     multiline = false,
     meta: { touched, error, visited },
     ...props
@@ -42,6 +45,23 @@ const CustomFormInput = ({
                 {...input}
                 {...props}
             />
+            {/* <TouchableOpacity style={{
+               
+                backgroundColor: 'red'
+            }}> */}
+            {secureTextEntry && showEye && <Image
+                source={EYE_ICON}
+                resizeMode={'contain'}
+                style={{
+                    position: 'absolute',
+                    right: scaleText(10).fontSize,
+                    top: scaleText(10).fontSize,
+                    bottom: scaleText(5).fontSize,
+                    height: scaleText(20).fontSize,
+                    width: scaleText(20).fontSize,
+                }}
+            />}
+            {/* </TouchableOpacity> */}
             {(takeErrorSpace || !!validationMessage) && <Text style={{
                 ...style,
                 ...styles.errorTextStyle,

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -20,6 +20,7 @@ import {
     SCREENS,
     SCROLL_UP,
     LIST_ARROW,
+    LIMITS,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
@@ -31,7 +32,9 @@ import ImageButton from '../../../../../components/atoms/ImageButton';
 export const Screen = ({
     startLoader,
     stopLoader,
+    ratingList,
     navigation,
+    fetchRatingList,
 }) => {
     const largeScaledFont = scaleText(18);
     const rateListRef = useRef();
@@ -52,6 +55,15 @@ export const Screen = ({
             }
         }
     });
+
+    useEffect(() => {
+        fetchRatingList({
+            index: 0,
+            limit: LIMITS.vehicleList,
+        },
+            () => { },
+            () => { })
+    }, []);
 
     return (
         <AppHoc
