@@ -31,7 +31,7 @@ const Form = ({
             <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                 <Text style={styles.label}>{'New Password:'}</Text>
                 <Field
-                    name={STRINGS.PASSWORD_INPUT_NAME}
+                    name={STRINGS.NEW_PASSWORD_INPUT_NAME}
                     component={CustomFormInput}
                     secureTextEntry={true}
                     returnKeyType={'go'}

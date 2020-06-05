@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -21,6 +21,7 @@ import {
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import { Rating } from 'react-native-elements';
+import moment from 'moment';
 import styles from './style';
 import { EditProfileForm } from './form';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
@@ -29,9 +30,17 @@ export const Screen = ({
     startLoader,
     stopLoader,
     navigation,
+    profileData,
+    completeProfile,
+    fetchProfile,
 }) => {
     const largeScaledFont = scaleText(18);
     const [editMode, setEditMode] = useState(false);
+
+    useEffect(() => {
+        fetchProfile(() => { }, () => { });
+    }, []);
+
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -81,52 +90,76 @@ export const Screen = ({
                     ? < View style={styles.detailsWrapper}>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Name:'}</Text>
-                            <Text style={styles.value}>{'Aditi'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.name ? profileData.name : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Surname:'}</Text>
-                            <Text style={styles.value}>{'Singh'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.surname ? profileData.surname : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'DOB:'}</Text>
-                            <Text style={styles.value}>{'21-02-1998'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.dob ? moment(profileData.dob).format('DD/MM/YYYY') : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'City:'}</Text>
-                            <Text style={styles.value}>{'Delhi'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.city ? profileData.city : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Country:'}</Text>
-                            <Text style={styles.value}>{'India'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.country ? profileData.country : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Email:'}</Text>
-                            <Text style={styles.value}>{'aditi.singh@chicmic.co.in'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.dob ? profileData.email : ''}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Country Code:'}</Text>
-                            <Text style={styles.value}>{'+91'}</Text>
+                            <Text style={styles.value}>{`+${profileData && profileData.phoneNumber && profileData.phoneNumber.code ? profileData.phoneNumber.code : ''}`}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Phone:'}</Text>
-                            <Text style={styles.value}>{'1234567890'}</Text>
+                            <Text style={styles.value}>{profileData && profileData.phoneNumber && profileData.phoneNumber.phone ? profileData.phoneNumber.phone : ''}</Text>
                         </View>
                     </View>
                     : < View style={styles.detailsWrapper}>
                         <EditProfileForm
+                            profileData={profileData}
                             onCancel={() => setEditMode(false)}
-                            onSubmit={() => { }}
+                            onSubmit={(formData) => {
+                                var dobStamp = new Date(formData.dob);
+                                dobStamp = new Date(formData.dob).getTime();
+                                completeProfile({
+                                    email: formData.email,
+                                    password: formData.password,
+                                    name: formData.name,
+                                    surname: formData.surname,
+                                    dob: dobStamp,
+                                    phoneNumber: {
+                                        code: formData['country-code'],
+                                        phone: formData.phone,
+                                    },
+                                    city: formData.city,
+                                    country: formData.country,
+                                }, (response) => {
+                                    setEditMode(false);
+                                    fetchProfile(() => {
+                                    }, () => { });
+
+                                }, (response) => {
+                                    stopLoader();
+                                });
+                            }}
                         />
                     </View>
                 }
                 {!editMode && <View style={styles.flexOne}>
                     <View style={styles.ratingWrapper}>
-                        <Text style={styles.overallText}>{`Your overall score is ${4.5} out of ${5}`}</Text>
+                        <Text style={styles.overallText}>{`Your overall score is ${profileData && profileData.overallRating ? profileData.overallRating : 0} out of ${5}`}</Text>
                         <View>
                             <Rating
                                 ratingCount={5}
                                 // ratingImage={RATING_STAR}
-                                startingValue={4.5}
+                                startingValue={profileData && profileData.overallRating ? profileData.overallRating : 0}
                                 ratingColor={'rgb(255,255,255)'}
                                 // ratingColor={'rgb(255,255,255)'}
                                 imageSize={20}
@@ -141,11 +174,11 @@ export const Screen = ({
                             />
                         </View>
                     </View>
-                    <View style={styles.changePasswordWrapper}>
+                    {profileData && (profileData.loginType === 1) && <View style={styles.changePasswordWrapper}>
                         <TouchableOpacity style={styles.changePasswordButton} onPress={() => navigation.navigate(SCREENS.CHANGE_PASSWORD)}>
                             <Text>{LABELS.changePassword}</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View>}
                 </View>}
             </ScrollView>
         </AppHoc>

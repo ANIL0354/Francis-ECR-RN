@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from "react";
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements'
@@ -142,14 +143,14 @@ const Form = ({
 const mapStateToProps = (state, props) => {
     return {
     };
-}
+};
 
 const reduxFormFunction = reduxForm({
     form: "details",
     // fields: ['email', 'password'],
     // onSubmitFail,
     validate: validator,
-    enableReinitialize: true
+    enableReinitialize: true,
 })(Form);
 
 export const DetailsForm = connect(mapStateToProps, { changeField })(reduxFormFunction);

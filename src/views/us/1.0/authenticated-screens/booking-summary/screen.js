@@ -295,7 +295,7 @@ export const Screen = ({
                                                 startDate: vehicleDetails.pickupDate,
                                                 endDate: vehicleDetails.dropoffDate,
                                                 selectedFreeDays: vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays,
-                                                bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
+                                                bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
                                                 commentForAgency: '',
                                                 commentForECRByDriver: '',
                                                 rateForAgency: 0,

@@ -661,7 +661,7 @@ export const Screen = ({
                                 index: pageIndex + 1,
                             },
                             () => {
-                                setFetchingData(false)
+                                setFetchingData(false);
                                 setPageIndex(pageIndex + 1);
                             },
                             () => { },

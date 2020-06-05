@@ -124,7 +124,7 @@ const CountryCodePicker = ({
                         withAlphaFilter,
                         withCallingCode,
                         withEmoji,
-                        onSelect
+                        onSelect,
                     }}
 
                     flatListProps={{
@@ -214,6 +214,7 @@ const CountryCodePicker = ({
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',
+                                height: 2.5 * scaledFont.lineHeight,
                                 fontSize: scaledFont.fontSize,
                                 lineHeight: scaledFont.lineHeight,
                                 ...styles.data

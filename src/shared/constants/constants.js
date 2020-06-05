@@ -25,7 +25,7 @@ const { STRINGS } = require(`./us/strings`);
 export const GOOGLE_API_KEY = 'AIzaSyCwe-4k_nGXdLcNt9YcIy0WeJzlL1Ot77k';
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const NAME_REGX = /^[A-Z.a-z ]+$/;
+export const NAME_REGX = /^[A-Z.'a-z ]+$/;
 export const PHONE_REGX = /^[0-9]+$/;
 
 export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com';

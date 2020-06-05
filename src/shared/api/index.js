@@ -16,5 +16,8 @@ module.exports = {
     VEHICLE_TYPE_LISTING: SERVER_URL + API_VERSION + '/vehicleType',
     VEHICLE_DETAILS: SERVER_URL + API_VERSION + '/listingByID​',
     FAQ_LIST: SERVER_URL + API_VERSION + '/faq',
+    PROFILE: SERVER_URL + API_VERSION + '/user/profile',
+    CHANGE_PASSWORD: SERVER_URL + API_VERSION + '/user/change-password',
+    COMPLETE_USER_PROFILE: SERVER_URL + API_VERSION + '/user/complete-profile',
   },
 };

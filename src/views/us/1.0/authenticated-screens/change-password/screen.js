@@ -26,6 +26,7 @@ export const Screen = ({
     startLoader,
     stopLoader,
     navigation,
+    changePassword,
 }) => {
     const largeScaledFont = scaleText(18);
     return (
@@ -73,7 +74,14 @@ export const Screen = ({
                     </View>
                     <View style={{ flex: 1 }}>
                         <ChangePasswordForm
-                            onSubmit={() => { }}
+                            onSubmit={(formProps) => {
+                                changePassword({
+                                    currentPassword: formProps.currentPassword,
+                                    newPassword: formProps.newPassword,
+                                }, () => {
+                                    navigation.goBack();
+                                }, () => { });
+                            }}
                         />
                     </View>
                 </View>

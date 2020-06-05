@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     changePasswordButton: {
         flex: 1,
-        width: '90%',
+        width: '94%',
         borderColor: '#0091ff',
         borderWidth: 1,
         alignSelf: 'flex-start',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     submitEditButton: {
         flex: 1,
-        width: '90%',
+        width: '94%',
         backgroundColor: '#009000',
         borderColor: '#009000',
         borderWidth: 1,

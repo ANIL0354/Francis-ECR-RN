@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { reduxForm, Field, change as changeField } from 'redux-form';
@@ -25,6 +26,8 @@ import styles from './style';
 const Form = ({
     handleSubmit,
     onSubmit,
+    profileData,
+    initialValues,
     changeField,
     onCancel,
     saveDateString,
@@ -33,6 +36,14 @@ const Form = ({
     const maxDate = today.setFullYear(today.getFullYear() - 16);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
+
+    useEffect(() => {
+        changeField('edit_profile', STRINGS.COUNTRY_INPUT, initialValues.country);
+        setSelectedCountry(initialValues.country);
+        changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, initialValues['country-code']);
+        setSelectedCountryCode(initialValues['country-code']);
+    }, []);
+
     return (
         <React.Fragment>
             <View style={[styles.flexOne, styles.verticalFiveMargin]}>
@@ -43,7 +54,7 @@ const Form = ({
                     placeholder={STRINGS.NAME_PLACEHOLDER}
                     returnKeyType={'next'}
                     takeErrorSpace={false}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -55,7 +66,7 @@ const Form = ({
                     placeholder={STRINGS.SURNAME_PLACEHOLDER}
                     returnKeyType={'next'}
                     takeErrorSpace={false}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -74,7 +85,7 @@ const Form = ({
                         saveDateString(date);
                     }}
                     maxDate={new Date(maxDate)}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -86,7 +97,7 @@ const Form = ({
                     placeholder={STRINGS.CITY_PLACEHOLDER}
                     returnKeyType={'next'}
                     takeErrorSpace={false}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -109,7 +120,7 @@ const Form = ({
                     returnKeyType={'go'}
                     countryDrop={true}
                     placeholder={'Country'}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -122,7 +133,7 @@ const Form = ({
                     takeErrorSpace={false}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -144,7 +155,7 @@ const Form = ({
                     }}
                     returnKeyType={'go'}
                     placeholder={'Country Code'}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                 />
             </View>
 
@@ -157,7 +168,7 @@ const Form = ({
                     keyboardType={'phone-pad'}
                     maxLength={15}
                     takeErrorSpace={false}
-                    style={{ flex: 1, }}
+                    style={{ flex: 1 }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
@@ -180,13 +191,19 @@ const Form = ({
 };
 
 const mapStateToProps = (state, props) => {
+    let profileValues = {
+        ...props.profileData,
+        'country-code': props.profileData.phoneNumber.code,
+        phone: props.profileData.phoneNumber.phone,
+    };
     return {
+        initialValues: profileValues,
     };
 };
 
 const reduxFormFunction = reduxForm({
     form: 'edit_profile',
-    fields: ['old_password', 'new_password', 're_password'],
+    fields: ['name', 'surname', 'dob'],
     validate: validator,
     enableReinitialize: true,
 })(Form);
