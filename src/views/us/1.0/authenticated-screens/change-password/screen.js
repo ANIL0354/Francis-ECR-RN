@@ -7,6 +7,7 @@ import {
     Image,
     ScrollView,
 } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import {
     APP_LOGO,
     MENU_LOGO,
@@ -27,8 +28,10 @@ export const Screen = ({
     stopLoader,
     navigation,
     changePassword,
+    routes,
 }) => {
     const largeScaledFont = scaleText(18);
+    const popAction = StackActions.pop(2);
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -79,7 +82,7 @@ export const Screen = ({
                                     currentPassword: formProps.currentPassword,
                                     newPassword: formProps.newPassword,
                                 }, () => {
-                                    navigation.goBack();
+                                    navigation.dispatch(popAction);
                                 }, () => { });
                             }}
                         />

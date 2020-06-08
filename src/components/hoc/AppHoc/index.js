@@ -32,7 +32,7 @@ const AppHoc = ({
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <AppHeader
         rightIcon={rightIcon}
-        centerIcon={centerIcon}
+        centerIcon={userToken && centerIcon ? centerIcon : null}
         leftIcon={leftIcon}
         userToken={userToken}
         onLeftIconTap={() => {

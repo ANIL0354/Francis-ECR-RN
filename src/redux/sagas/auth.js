@@ -294,9 +294,11 @@ function* changeUserPassword({ data, success, failure }) {
             Toast.show(response.data.msg, Toast.LONG);
         }
         else {
+            yield put(setAuthorization(null));
+            yield put(saveDriverData(null));
             success(response.data);
             yield put(stopLoader());
-            Toast.show(response.data.msg, Toast.LONG);
+            Toast.show('Your password was successfully updated. Kindly login again.', Toast.LONG);
         }
     }
     catch (error) {

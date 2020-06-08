@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState, useRef } from 'react';
 import {
@@ -15,11 +16,7 @@ import {
     MENU_LOGO,
     USER_ICON,
     NAV_ARROW_ICON,
-    EDIT_ICON,
     LABELS,
-    SCREENS,
-    SCROLL_UP,
-    LIST_ARROW,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
@@ -32,8 +29,14 @@ export const Screen = ({
     startLoader,
     stopLoader,
     navigation,
+    rateAgency,
+    route,
 }) => {
     const largeScaledFont = scaleText(18);
+    const [agencyRating, setAgencyRating] = useState(0);
+    const [commentsForAgency, setCommentsForAgency] = useState('');
+    const [commentsForECR, setCommentsForECR] = useState('');
+    let { id } = route.params;
 
     return (
         <AppHoc
@@ -71,7 +74,7 @@ export const Screen = ({
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: scaleText(20).fontSize, }}>
                         <View style={{ marginVertical: scaleText(10).fontSize }}>
-                            <Text style={{ color: 'black', fontSize: scaleText(15).fontSize, textAlign: 'left', fontWeight: 'bold', marginBottom: scaleText(20).fontSize }}>{'How would you rate your whole experience with Bargain Rental Cars'}</Text>
+                            <Text style={{ color: 'black', fontSize: scaleText(15).fontSize, textAlign: 'left', marginBottom: scaleText(20).fontSize }}>{'How would you rate your whole experience with Bargain Rental Cars'}</Text>
                             <Rating
                                 ratingCount={5}
                                 // ratingImage={RATING_STAR}
@@ -86,16 +89,21 @@ export const Screen = ({
                                 readonly={false}
                                 type={'star'}
                                 style={[styles.alignSelfCenter]}
-                                onFinishRating={(rating) => console.log('rating', rating)}
+                                onFinishRating={(rating) => {
+                                    console.log('rating', rating);
+                                    setAgencyRating(rating);
+                                }}
                             />
                         </View>
                         <View style={[styles.flexOne, { width: '100%', marginVertical: scaleText(10).fontSize }]}>
-                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(15).fontSize, textAlign: 'left', marginVertical: scaleText(5).fontSize }}>{'You can leave a comment about the agency'}</Text>
+                            <Text style={{ color: 'black', fontSize: scaleText(15).fontSize, textAlign: 'left', marginVertical: scaleText(5).fontSize }}>{'You can leave a comment about the agency'}</Text>
                             <TextInput
                                 placeholder={'Type your comments here...'}
                                 placeholderTextColor={'black'}
                                 underlineColorAndroid={'transparent'}
                                 multiline={true}
+                                value={commentsForAgency}
+                                onChangeText={(text) => { setCommentsForAgency(text); }}
                                 style={{
                                     flex: 1,
                                     width: '100%',
@@ -110,12 +118,14 @@ export const Screen = ({
                             />
                         </View>
                         <View style={[styles.flexOne, { width: '100%', marginVertical: scaleText(10).fontSize }]}>
-                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(15).fontSize, textAlign: 'left', marginVertical: scaleText(5).fontSize }}>{'You can leave a comment to us about any aspect of the relocation'}</Text>
+                            <Text style={{ color: 'black', fontSize: scaleText(15).fontSize, textAlign: 'left', marginVertical: scaleText(5).fontSize }}>{'You can leave a comment to us about any aspect of the relocation'}</Text>
                             <TextInput
                                 placeholder={'Type your comments here...'}
                                 placeholderTextColor={'black'}
                                 underlineColorAndroid={'transparent'}
                                 multiline={true}
+                                value={commentsForECR}
+                                onChangeText={(text) => { setCommentsForECR(text); }}
                                 style={{
                                     flex: 1,
                                     width: '100%',
@@ -132,7 +142,16 @@ export const Screen = ({
                         <View style={[styles.changePasswordWrapper, {}]}>
                             <TouchableOpacity
                                 style={styles.submitEditButton}
-                                onPress={() => { }}>
+                                onPress={() => rateAgency(
+                                    id,
+                                    {
+                                        commentForECRByDriver: commentsForECR,
+                                        commentForAgency: commentsForAgency,
+                                        rateForAgency: agencyRating,
+                                    },
+                                    () => { },
+                                    () => { })
+                                }>
                                 <Text style={styles.basicWhiteText}>{STRINGS.SUBMIT}</Text>
                             </TouchableOpacity>
                         </View>

@@ -18,7 +18,7 @@ const AppHeader = ({
     return (
         <View style={styles.headerContainer}>
             <View style={{
-                flex: centerIcon && rightIcon ? 3 : 7
+                flex: centerIcon && rightIcon ? 3 : 20
             }}>
                 {leftIcon && <TouchableOpacity style={{
                     height: scaleText(35).fontSize,
