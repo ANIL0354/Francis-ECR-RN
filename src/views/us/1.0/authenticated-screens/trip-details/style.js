@@ -129,6 +129,14 @@ const styles = StyleSheet.create({
     verticalFiveMargin: {
         marginVertical: scaleText(5).fontSize,
     },
+    inputStyle: {
+        borderColor: 'black',
+        borderRadius: 5,
+        borderWidth: 0.8,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        paddingBottom: 0,
+    },
 });
 
 export default styles;

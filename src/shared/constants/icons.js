@@ -45,3 +45,4 @@ export const LOCATION_CIRCLE = require('../../assets/location_circle.png');
 export const LOCATION_ARROWS = require('../../assets/arrows.png');
 export const LOCATION_VERTICAL_LINE = require('../../assets/vertical_line.png');
 export const EYE_ICON = require('../../assets/eye.png');
+export const EYE_OFF_ICON = require('../../assets/eye_cut.png');

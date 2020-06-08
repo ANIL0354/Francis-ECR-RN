@@ -6,6 +6,7 @@ import {
     Text,
     TouchableOpacity,
     TextInput,
+    RefreshControl,
     Image,
     ScrollView,
     LayoutAnimation,
@@ -47,10 +48,12 @@ export const Screen = ({
     const [upButton, showUpButton] = useState(false);
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const scrollToTop = () => {
         tripListRef.current.scrollToIndex({ animated: true, index: 0 });
     };
+
 
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems && viewableItems.viewableItems && viewableItems.viewableItems[0] && viewableItems.viewableItems[0].index) {
@@ -185,6 +188,22 @@ export const Screen = ({
                     <FlatList
                         style={{ flex: 1, minHeight: scaleText(250).fontSize }}
                         contentContainerStyle={{}}
+                        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
+                            setPageIndex(0);
+                            setIsRefreshing(true);
+                            if (upcomingVisible) {
+                                fetchUpcomingTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => { setIsRefreshing(false); }, () => { });
+                            }
+                            else {
+                                fetchPastTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => { setIsRefreshing(false); }, () => { });
+                            }
+                        }} />}
                         ref={tripListRef}
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
@@ -200,10 +219,10 @@ export const Screen = ({
                                 {fetchingData && <CustomLoader size={30} />}
                             </View>}
                         onEndReached={() => {
-                            if (upcomingTrips.totalCount === upcomingTrips.length) {
+                            if (upcomingVisible ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
                                 return;
                             }
-                            setFetchingData(true)
+                            setFetchingData(true);
                             if (upcomingVisible) {
                                 fetchUpcomingTrips({
                                     index: 0,
@@ -211,7 +230,9 @@ export const Screen = ({
                                 }, () => {
                                     setFetchingData(false);
                                     setPageIndex(pageIndex + 1);
-                                }, () => { });
+                                }, () => {
+                                    setFetchingData(false);
+                                });
                             }
                             else {
                                 fetchPastTrips({
@@ -220,11 +241,14 @@ export const Screen = ({
                                 }, () => {
                                     setFetchingData(false);
                                     setPageIndex(pageIndex + 1);
-                                }, () => { });
+                                }, () => {
+                                    setFetchingData(false);
+                                });
                             }
+                            setFetchingData(false);
                         }}
                         ListEmptyComponent={<View>
-                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No upcoming trip.'}</Text>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{upcomingVisible ? 'No upcoming trip.' : 'No past trip.'}</Text>
                         </View>}
                         data={upcomingVisible
                             ? upcomingTrips && upcomingTrips.trips
@@ -248,11 +272,11 @@ export const Screen = ({
                                     </View>
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 5 }}>
-                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{upcomingVisible ? moment(item.startDate).format('dddd, DD MMMM YYYY') : 'Tuesday, 2 June'}</Text>
+                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{upcomingVisible ? moment(item.startDate).format('dddd, DD MMMM YYYY') : moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${item.pickupBranch.name}`}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${item.dropoffBranch.name}`}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible, tripDetails: item })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={10}

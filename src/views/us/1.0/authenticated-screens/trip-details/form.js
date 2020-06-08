@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -13,12 +13,35 @@ import styles from './style';
 
 
 const Form = ({
+    emailTo,
     handleSubmit,
     onSubmit,
     onCancel
 }) => {
     return (
         <React.Fragment>
+
+            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                <Text style={styles.label}>{'To:'}</Text>
+                <TextInput
+                    placeholder={'Enter Reciepant'}
+                    placeholderTextColor={'black'}
+                    underlineColorAndroid={'transparent'}
+                    multiline={false}
+                    value={emailTo}
+                    style={{
+                        ...styles.inputStyle,
+                        color: 'black',
+                        backgroundColor: 'lightgray',
+                        fontSize: scaleText(14).fontSize,
+                        lineHeight: scaleText(14).fontSize,
+                        textAlignVertical: 'center',
+                        height: 2 * (scaleText(14).lineHeight),
+                    }}
+                    returnKeyType={'next'}
+                    editable={false}
+                />
+            </View>
 
             <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                 <Text style={styles.label}>{'Subject:'}</Text>

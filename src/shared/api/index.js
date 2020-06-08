@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://d9380d854fe8.ngrok.io'; //Live URL
+const SERVER_URL = 'https://461bdf5c678b.ngrok.io'; //Live URL
 // http://13.238.207.250:5000
 // https://31fe34be1e16.ngrok.io
 const API_VERSION = '/v1';
@@ -22,7 +22,8 @@ module.exports = {
     CHANGE_PASSWORD: SERVER_URL + API_VERSION + '/user/change-password',
     COMPLETE_USER_PROFILE: SERVER_URL + API_VERSION + '/user/complete-profile',
     FETCH_UPCOMING_TRIPS: SERVER_URL + API_VERSION + '/driver/upcoming-trips',
-    FETCH_PAST_TRIPS: SERVER_URL + API_VERSION + '',
+    FETCH_PAST_TRIPS: SERVER_URL + API_VERSION + '/driver/past-trips',
     FETCH_RATINGS_LIST: SERVER_URL + API_VERSION + '/driver/ratings',
+    EMAIL_AGENCY: SERVER_URL + API_VERSION + '/driver/email-to-agency',
   },
 };

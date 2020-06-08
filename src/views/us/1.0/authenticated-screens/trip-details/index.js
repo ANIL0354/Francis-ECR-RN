@@ -4,6 +4,7 @@ import { Screen } from './screen';
 import {
     startLoader,
     stopLoader,
+    emailAgency,
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -14,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
+        emailAgency: (data, success, failure) => dispatch(emailAgency(data, success, failure)),
     };
 };
 export const TripDetailScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);

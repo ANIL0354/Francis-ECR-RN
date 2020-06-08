@@ -25,9 +25,10 @@ const CustomDraggableCalendar = ({
 
 
     useEffect(() => {
-        setPickupDateValue(new Date(pickupDate).getDate());
-        setPickupMonth(new Date(pickupDate).getMonth());
-        setPickupYear(new Date(pickupDate).getFullYear());
+        let pickFrom = new Date(pickupDate) > new Date() ? pickupDate : new Date();
+        setPickupDateValue(new Date(pickFrom).getDate());
+        setPickupMonth(new Date(pickFrom).getMonth());
+        setPickupYear(new Date(pickFrom).getFullYear());
     }, [pickupDate])
 
     const _genStyles = () => {

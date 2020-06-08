@@ -289,11 +289,15 @@ export const Screen = ({
                                         );
                                     }
                                     else {
+                                        let modifiedPickupDate = vehicleDetails.pickupDate.setHours(0, 0, 0, 0);
+                                        modifiedPickupDate = new Date(modifiedPickupDate);
+                                        let modifiedDropoffDate = vehicleDetails.dropoffDate.setHours(0, 0, 0, 0);
+                                        modifiedDropoffDate = new Date(modifiedDropoffDate);
                                         submitBookingRequest(
                                             vehicleDetails._id,
                                             {
-                                                startDate: vehicleDetails.pickupDate,
-                                                endDate: vehicleDetails.dropoffDate,
+                                                startDate: modifiedPickupDate,
+                                                endDate: modifiedDropoffDate,
                                                 selectedFreeDays: vehicleDetails.totalSelectedDate < vehicleDetails.freeDays ? vehicleDetails.totalSelectedDate : vehicleDetails.freeDays,
                                                 bookingPrice: (vehicleDetails.extraPaidDays && vehicleDetails.ratePerDay && vehicleDetails.totalSelectedDate && vehicleDetails.totalSelectedDate > vehicleDetails.freeDays) ? (vehicleDetails.ratePerDay * (vehicleDetails.totalSelectedDate - vehicleDetails.freeDays)) : 0,
                                                 commentForAgency: '',
