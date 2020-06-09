@@ -71,6 +71,7 @@ const CustomFormInput = ({
                 ...styles.errorTextStyle,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
+                marginTop: scaleText(5).fontSize,
                 height: takeErrorSpace ? 2 * scaledFont.lineHeight : scaledFont.lineHeight,
             }}>{validationMessage}</Text>}
         </View>

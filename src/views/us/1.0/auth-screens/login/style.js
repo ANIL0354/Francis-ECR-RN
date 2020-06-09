@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     formWrapper: {
-        padding: 5,
+        padding: scaleText(5).fontSize,
+        marginHorizontal: scaleText(5).fontSize,
         flex: 1,
     },
     formContainer: {

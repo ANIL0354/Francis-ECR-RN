@@ -61,7 +61,7 @@ const CustomDraggableCalendar = ({
                 totalSelectable={totalSelectable}
             />
             <View style={styles.indicatorWrapper}>
-                <View>
+                <View style={styles.verticalFiveMargin}>
                     <View style={styles.indicatorRow}>
                         <View style={{
                             backgroundColor: '#1dd1a1',

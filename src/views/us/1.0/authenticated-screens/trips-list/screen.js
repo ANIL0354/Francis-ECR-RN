@@ -34,6 +34,7 @@ import { STRINGS } from '../../../../../shared/constants/us/strings';
 import ImageButton from '../../../../../components/atoms/ImageButton';
 
 export const Screen = ({
+    route,
     startLoader,
     stopLoader,
     navigation,
@@ -49,11 +50,13 @@ export const Screen = ({
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [screenFocused, setScreenFocused] = useState(false);
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const scrollToTop = () => {
         tripListRef.current.scrollToIndex({ animated: true, index: 0 });
     };
 
+    let { fromNotification = false, targetId = '5edf1ec7b9db4806b7f11152' } = route.params;
 
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems && viewableItems.viewableItems && viewableItems.viewableItems[0] && viewableItems.viewableItems[0].index) {
@@ -65,6 +68,10 @@ export const Screen = ({
             }
         }
     });
+
+    useEffect(() => {
+        setScreenFocused(true);
+    }, []);
 
     useEffect(() => {
         if (upcomingVisible) {
@@ -80,6 +87,42 @@ export const Screen = ({
             }, () => { }, () => { });
         }
     }, [upcomingVisible]);
+
+    useEffect(() => {
+        if (upcomingTrips) {
+            if (!!fromNotification) {
+                let data = null;
+                let targetData = null;
+                if (upcomingVisible) {
+
+                    data = upcomingTrips.trips;
+                }
+                else {
+                    data = pastTrips.trips;
+                }
+                if (data) {
+                    data.map((item) => {
+                        if (item._id === targetId) {
+                            targetData = item;
+                            return;
+                        }
+                    });
+                    if (Object.keys(data).length) {
+                        navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible, tripDetails: targetData });
+                    }
+                }
+
+            }
+        }
+    }, [upcomingTrips])
+
+    useEffect(() => {
+        return () => {
+            setScreenFocused(false);
+            setPageIndex(0);
+            stopLoader();
+        };
+    }, []);
 
     return (
         <AppHoc
@@ -208,7 +251,6 @@ export const Screen = ({
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
-                        onEndReachedThreshold={0.8}
                         ListFooterComponent={
                             <View style={{
                                 width: '100%',
@@ -218,14 +260,20 @@ export const Screen = ({
                             }}>
                                 {fetchingData && <CustomLoader size={30} />}
                             </View>}
+                        scrollEnabled={true}
+                        onEndReachedThreshold={0.8}
                         onEndReached={() => {
-                            if (upcomingVisible ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
+                            if (!screenFocused) {
                                 return;
                             }
-                            setFetchingData(true);
-                            if (upcomingVisible) {
+                            else if (upcomingVisible ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
+                                return;
+                            }
+                            else if (upcomingVisible) {
+                                console.log('end');
+                                setFetchingData(true);
                                 fetchUpcomingTrips({
-                                    index: 0,
+                                    index: pageIndex,
                                     limit: LIMITS.vehicleList,
                                 }, () => {
                                     setFetchingData(false);
@@ -236,7 +284,7 @@ export const Screen = ({
                             }
                             else {
                                 fetchPastTrips({
-                                    index: 0,
+                                    index: pageIndex,
                                     limit: LIMITS.vehicleList,
                                 }, () => {
                                     setFetchingData(false);

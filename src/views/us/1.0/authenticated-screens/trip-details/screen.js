@@ -45,6 +45,7 @@ export const Screen = ({
     const largeScaledFont = scaleText(18);
     const [formVisible, setFormVisible] = useState(false);
     let { upcomingTrip, tripDetails } = route.params;
+    console.log('tripDetails._id', tripDetails._id)
     return (
         <AppHoc
             rightIcon={MENU_LOGO}

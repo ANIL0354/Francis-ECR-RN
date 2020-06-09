@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
     selectedDayContainer: {
         backgroundColor: 'red',
         height: scaleText(15).fontSize,
-    }
+    },
+    verticalFiveMargin: {
+        marginVertical: scaleText(5).fontSize,
+    },
 });
 
 export default styles;

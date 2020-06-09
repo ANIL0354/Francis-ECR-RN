@@ -97,19 +97,20 @@ export class Day extends PureComponent {
         <View style={styles.fullContainer}>
           <View style={[
             styles.fullContainer,
-            {
-              marginVertical: scaleText(3).fontSize,
-              backgroundColor: isFreedate ? '#fe6a67' : isPaidDate ? '#f2c225' : this.checkDay(allDays, activeDate) ? '#1dd1a1' : 'transparent',
-              borderTopRightRadius: (beforeStartDate == activeDate || activeDate == datesAvailabel[1] || paidDates[paidDates.length - 1] == activeDate || freeDates[freeDates.length - 1] == activeDate) ? scaleText(20).fontSize : 0,
-              borderBottomRightRadius: (beforeStartDate == activeDate || activeDate == datesAvailabel[1] || paidDates[paidDates.length - 1] == activeDate || freeDates[freeDates.length - 1] == activeDate) ? scaleText(20).fontSize : 0,
-              borderTopLeftRadius: (afterEndDate == activeDate || activeDate == datesAvailabel[0] || paidDates[0] == activeDate || freeDates[0] == activeDate) ? scaleText(20).fontSize : 0,
-              borderBottomLeftRadius: (afterEndDate == activeDate || activeDate == datesAvailabel[0] || paidDates[0] == activeDate || freeDates[0] == activeDate) ? scaleText(20).fontSize : 0,
-            }
           ]}>
 
             {renderDay ?
               renderDay(data) :
-              <View style={usedDayContainerStyle}>
+              <View style={[usedDayContainerStyle,
+                {
+                  marginVertical: scaleText(5).fontSize,
+                  backgroundColor: isFreedate ? '#fe6a67' : isPaidDate ? '#f2c225' : this.checkDay(allDays, activeDate) ? '#1dd1a1' : 'transparent',
+                  borderTopRightRadius: (beforeStartDate == activeDate || activeDate == datesAvailabel[1] || paidDates[paidDates.length - 1] == activeDate || freeDates[freeDates.length - 1] == activeDate) ? scaleText(20).fontSize : 0,
+                  borderBottomRightRadius: (beforeStartDate == activeDate || activeDate == datesAvailabel[1] || paidDates[paidDates.length - 1] == activeDate || freeDates[freeDates.length - 1] == activeDate) ? scaleText(20).fontSize : 0,
+                  borderTopLeftRadius: (afterEndDate == activeDate || activeDate == datesAvailabel[0] || paidDates[0] == activeDate || freeDates[0] == activeDate) ? scaleText(20).fontSize : 0,
+                  borderBottomLeftRadius: (afterEndDate == activeDate || activeDate == datesAvailabel[0] || paidDates[0] == activeDate || freeDates[0] == activeDate) ? scaleText(20).fontSize : 0,
+                }
+              ]}>
                 {data.date && (
                   <Text style={[...usedDayTextStyle, (data.date >= availableDateRange[0] && data.date <= availableDateRange[1]) ? { color: 'white' } : { color: 'white', opacity: .6 }]}>
                     {data.date.getDate()}

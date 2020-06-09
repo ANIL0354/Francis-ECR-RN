@@ -388,7 +388,7 @@ export const Screen = ({
                 dateIcon: {
                   marginLeft: -1 * (scaleText(30).fontSize),
                   height: scaleText(25).fontSize,
-                  width: scaleText(25).fontSize
+                  width: scaleText(25).fontSize,
                 },
                 dateInput: {
                   textAlign: 'left',
@@ -444,8 +444,6 @@ export const Screen = ({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingVertical: 5,
-                marginBottom: 2,
               }}>
               <Image source={SEARCH_ICON} />
               <Text

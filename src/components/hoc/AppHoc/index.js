@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { View, StatusBar, SafeAreaView, Alert, Keyboard } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader, logout } from '../../../redux/actions';
+import messaging from '@react-native-firebase/messaging';
 import CustomLoader from '../../atoms/Loader';
 import { STRINGS } from '../../../shared/constants/us/strings';
 import styles from './style';
@@ -27,6 +28,31 @@ const AppHoc = ({
       Keyboard.dismiss();
     }
   }, [loader]);
+
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('res', remoteMessage)
+      if (userToken) {
+        navigation.navigate(SCREENS.YOUR_TRIPS, { fromNotification: true, targetId: '5edf80cefd48590e142ec6b4' });
+      }
+      else {
+        navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
+      }
+    });
+
+    // messaging().getInitialNotification().then(remoteMessage => {
+    //   if (userToken) {
+    //     navigation.navigate(SCREENS.YOUR_TRIPS, { fromNotification: true, targetId: '5edf187dad652005c0f4abcb' });
+    //   }
+    //   else {
+    //     navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
+    //   }
+    // }).catch(error => {
+    //   console.log('error', error);
+    //   navigation.navigate(SCREENS.HOME);
+    // });
+  }, [])
+
   return (
     <SafeAreaView style={styles.hocWrapper}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -69,7 +95,7 @@ const AppHoc = ({
           ? [
             {
               label: 'Your Trips',
-              onPress: () => navigation.navigate(SCREENS.YOUR_TRIPS),
+              onPress: () => navigation.navigate(SCREENS.YOUR_TRIPS, { fromNotification: false, targetId: '5edf80cefd48590e142ec6b4' }),
             },
             {
               label: 'Your Ratings',

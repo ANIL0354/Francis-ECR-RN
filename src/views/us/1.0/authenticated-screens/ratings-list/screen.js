@@ -7,6 +7,7 @@ import {
     TextInput,
     Image,
     FlatList,
+    RefreshControl,
     ScrollView,
     LayoutAnimation,
 } from 'react-native';
@@ -40,6 +41,8 @@ export const Screen = ({
     const rateListRef = useRef();
     const [editMode, setEditMode] = useState(false);
     const [upButton, showUpButton] = useState(false);
+    const [fetchingData, setFetchingData] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const scrollToTop = () => {
         rateListRef.current.scrollToIndex({ animated: true, index: 0 });
@@ -102,6 +105,22 @@ export const Screen = ({
                         style={{ flex: 1, minHeight: scaleText(250).fontSize }}
                         contentContainerStyle={{}}
                         ref={rateListRef}
+                        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
+                            setPageIndex(0);
+                            setIsRefreshing(true);
+                            if (upcomingVisible) {
+                                fetchUpcomingTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => { setIsRefreshing(false); }, () => { });
+                            }
+                            else {
+                                fetchPastTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => { setIsRefreshing(false); }, () => { });
+                            }
+                        }} />}
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
