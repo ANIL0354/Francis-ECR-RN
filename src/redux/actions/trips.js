@@ -4,6 +4,7 @@ export const SAVE_UPCOMING_TRIP_LIST = 'SAVE_UPCOMING_TRIP_LIST';
 export const FETCH_PAST_TRIPS = 'FETCH_PAST_TRIPS';
 export const SAVE_PAST_TRIP_LIST = 'SAVE_PAST_TRIP_LIST';
 export const EMAIL_AGENCY = 'EMAIL_AGENCY';
+export const CANCEL_TRIP = 'CANCEL_TRIP';
 
 export const fetchUpcomingTrips = (data, success, failure) => {
     return {
@@ -43,5 +44,15 @@ export const emailAgency = (data, success, failure) => {
         data,
         success,
         failure,
-    }
-}
+    };
+};
+
+export const cancelTrip = (listingId, data, success, failure) => {
+    return {
+        type: CANCEL_TRIP,
+        listingId,
+        data,
+        success,
+        failure,
+    };
+};

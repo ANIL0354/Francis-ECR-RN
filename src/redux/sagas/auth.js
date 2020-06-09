@@ -272,14 +272,6 @@ function* getDriverProfile({ data, success, failure }) {
 
 function* changeUserPassword({ data, success, failure }) {
     try {
-        NetInfo.addEventListener((state) => {
-            if (!state.isConnected) {
-                stopLoader();
-                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
-                return;
-            }
-        });
-        yield put(startLoader());
         const response = yield postRequest({ API: `${api.URL.CHANGE_PASSWORD}`, DATA: data });
         if (response.data.statusCode === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));

@@ -48,6 +48,7 @@ const Form = ({
                     secureTextEntry={true}
                     returnKeyType={'go'}
                     takeErrorSpace={false}
+                    showEye={false}
                     placeholder={STRINGS.RE_NEW_PASSWORD_PLACEHOLDER}
                     style={styles.flexOne}
                 />

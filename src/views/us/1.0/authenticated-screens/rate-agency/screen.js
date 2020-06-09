@@ -149,7 +149,7 @@ export const Screen = ({
                                         commentForAgency: commentsForAgency,
                                         rateForAgency: agencyRating,
                                     },
-                                    () => { },
+                                    () => { navigation.goBack(); },
                                     () => { })
                                 }>
                                 <Text style={styles.basicWhiteText}>{STRINGS.SUBMIT}</Text>

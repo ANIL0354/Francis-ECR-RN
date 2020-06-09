@@ -30,17 +30,16 @@ import {
 import moment from 'moment';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { Rating } from 'react-native-elements';
 import styles from './style';
 import { EmailForm } from './form';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
-import ImageButton from '../../../../../components/atoms/ImageButton';
 
 export const Screen = ({
     startLoader,
     stopLoader,
     navigation,
     emailAgency,
+    cancelTrip,
     route,
 }) => {
     const largeScaledFont = scaleText(18);
@@ -92,13 +91,17 @@ export const Screen = ({
                             onSubmit={(formProps) => {
                                 let body = formProps.body.replace(/\n/g, '<br>');
                                 body = `<p>${body}</p>`;
+                                startLoader();
                                 emailAgency({
                                     to: tripDetails.pickupBranch.email,
                                     subject: formProps.subject,
                                     body: body,
                                 },
-                                    () => { setFormVisible(false) },
-                                    () => { })
+                                    () => {
+                                        setFormVisible(false);
+                                        stopLoader();
+                                    },
+                                    () => { stopLoader(); })
                             }}
                             onCancel={() => { setFormVisible(false) }}
                         />
@@ -190,7 +193,16 @@ export const Screen = ({
                                                 },
                                                 {
                                                     text: STRINGS.CONFIRM,
-                                                    onPress: () => { },
+                                                    onPress: () => {
+                                                        cancelTrip(
+                                                            tripDetails._id,
+                                                            {
+                                                                status: 4,
+                                                            },
+                                                            () => { },
+                                                            () => { }
+                                                        );
+                                                    },
                                                 },
                                             ])}>
                                             <Text>{LABELS.cancelReservation}</Text>

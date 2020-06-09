@@ -20,29 +20,6 @@ const Form = ({
 }) => {
     return (
         <React.Fragment>
-
-            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
-                <Text style={styles.label}>{'To:'}</Text>
-                <TextInput
-                    placeholder={'Enter Reciepant'}
-                    placeholderTextColor={'black'}
-                    underlineColorAndroid={'transparent'}
-                    multiline={false}
-                    value={emailTo}
-                    style={{
-                        ...styles.inputStyle,
-                        color: 'black',
-                        backgroundColor: 'lightgray',
-                        fontSize: scaleText(14).fontSize,
-                        lineHeight: scaleText(14).fontSize,
-                        textAlignVertical: 'center',
-                        height: 2 * (scaleText(14).lineHeight),
-                    }}
-                    returnKeyType={'next'}
-                    editable={false}
-                />
-            </View>
-
             <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                 <Text style={styles.label}>{'Subject:'}</Text>
                 <Field

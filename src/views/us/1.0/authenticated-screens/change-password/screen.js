@@ -78,12 +78,16 @@ export const Screen = ({
                     <View style={{ flex: 1 }}>
                         <ChangePasswordForm
                             onSubmit={(formProps) => {
+                                startLoader();
                                 changePassword({
                                     currentPassword: formProps.currentPassword,
                                     newPassword: formProps.newPassword,
                                 }, () => {
+                                    stopLoader();
                                     navigation.dispatch(popAction);
-                                }, () => { });
+                                }, () => {
+                                    stopLoader();
+                                });
                             }}
                         />
                     </View>

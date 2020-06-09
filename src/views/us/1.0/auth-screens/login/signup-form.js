@@ -158,6 +158,7 @@ const Form = ({
                     name={STRINGS.RE_PASSWORD_INPUT_NAME}
                     component={CustomFormInput}
                     secureTextEntry={true}
+                    showEye={false}
                     returnKeyType={'go'}
                     maxLength={15}
                     style={{ flex: 1, marginLeft: scaleText(5).fontSize }}

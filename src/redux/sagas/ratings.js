@@ -62,6 +62,7 @@ function* sendAgencyRating({ listingId, data, success, failure }) {
         }
         else {
             success(response.data);
+            Toast.show('Your rating was sent successfully.', Toast.LONG);
             yield put(stopLoader());
         }
     }

@@ -33,7 +33,6 @@ export const Screen = ({
     stopLoader,
     navigation,
     route,
-    state
 }) => {
     const [signUpTab, setSignUpTab] = useState(false);
     const [subscribed, setSubscribed] = useState(false);

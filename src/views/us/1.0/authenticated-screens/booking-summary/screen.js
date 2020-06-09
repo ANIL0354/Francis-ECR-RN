@@ -303,6 +303,7 @@ export const Screen = ({
                                                 commentForAgency: '',
                                                 commentForECRByDriver: '',
                                                 rateForAgency: 0,
+                                                status: 6,
                                             },
                                             (response) => {
                                                 setRideBooked(true);
