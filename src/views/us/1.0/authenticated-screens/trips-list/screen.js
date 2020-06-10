@@ -23,6 +23,7 @@ import {
     SCROLL_UP,
     LIST_ARROW,
     LIMITS,
+    LISTING_STATUS,
 } from '../../../../../shared/constants';
 import CustomLoader from '../../../../../components/atoms/Loader';
 import { scaleText } from '../../../../../helpers';
@@ -45,7 +46,7 @@ export const Screen = ({
 }) => {
     const largeScaledFont = scaleText(18);
     const tripListRef = useRef();
-    const [upcomingVisible, showUpcoming] = useState(true);
+    const [tabValue, setTabValue] = useState(0);
     const [upButton, showUpButton] = useState(false);
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
@@ -74,7 +75,7 @@ export const Screen = ({
     }, []);
 
     useEffect(() => {
-        if (upcomingVisible) {
+        if (tabValue === 0) {
             startLoader();
             fetchUpcomingTrips({
                 index: 0,
@@ -85,24 +86,24 @@ export const Screen = ({
                 stopLoader();
             });
         }
-        else {
+        else if (tabValue === 1) {
             fetchPastTrips({
                 index: 0,
                 limit: LIMITS.vehicleList,
             }, () => { }, () => { });
         }
-    }, [upcomingVisible]);
+    }, [tabValue]);
 
     useEffect(() => {
         if (upcomingTrips) {
             if (!!fromNotification) {
                 let data = null;
                 let targetData = null;
-                if (upcomingVisible) {
+                if (tabValue === 0) {
 
                     data = upcomingTrips.trips;
                 }
-                else {
+                else if (tabValue === 1) {
                     data = pastTrips.trips;
                 }
                 if (data) {
@@ -113,7 +114,7 @@ export const Screen = ({
                         }
                     });
                     if (Object.keys(data).length) {
-                        navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible, tripDetails: targetData });
+                        navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: (tabValue === 0), tripDetails: targetData });
                     }
                 }
 
@@ -161,11 +162,11 @@ export const Screen = ({
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row', marginTop: scaleText(20).fontSize, alignSelf: 'center', marginHorizontal: scaleText(80).fontSize, }}>
+                <View style={{ flexDirection: 'row', marginTop: scaleText(20).fontSize, alignSelf: 'center', marginHorizontal: scaleText(60).fontSize }}>
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
-                            showUpcoming(true);
+                            setTabValue(0);
                         }}
                         style={[{
                             flex: 1,
@@ -179,7 +180,7 @@ export const Screen = ({
                             borderTopRightRadius: 0,
                             borderBottomRightRadius: 0,
                         },
-                        upcomingVisible ? {
+                        (tabValue === 0) ? {
                             backgroundColor: '#0091ff',
                         } : {
                                 backgroundColor: 'white',
@@ -190,7 +191,7 @@ export const Screen = ({
                             alignSelf: 'center',
                             fontSize: scaleText(15).fontSize,
                         },
-                        upcomingVisible ? {
+                        tabValue === 0 ? {
                             color: 'white',
                         } : {
                                 color: '#0091ff',
@@ -199,7 +200,41 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
-                            showUpcoming(false);
+                            setTabValue(1);
+                        }}
+                        style={[{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderColor: '#0091ff',
+                            borderWidth: 1,
+                            borderLeftWidth: 0.5,
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            padding: scaleText(5).fontSize,
+                        },
+                        tabValue === 1 ? {
+                            backgroundColor: '#0091ff',
+                        } : {
+                                backgroundColor: 'white',
+                            }]}>
+                        <Text style={[{
+                            textAlign: 'center',
+                            textAlignVertical: 'center',
+                            alignSelf: 'center',
+                            fontSize: scaleText(15).fontSize,
+                        },
+                        tabValue === 1 ? {
+                            color: 'white',
+                        } : {
+                                color: '#0091ff',
+                            },
+                        ]}>{'Past'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => {
+                            setTabValue(2);
                         }}
                         style={[{
                             flex: 1,
@@ -213,7 +248,7 @@ export const Screen = ({
                             borderBottomLeftRadius: 0,
                             padding: scaleText(5).fontSize,
                         },
-                        !upcomingVisible ? {
+                        tabValue === 2 ? {
                             backgroundColor: '#0091ff',
                         } : {
                                 backgroundColor: 'white',
@@ -224,12 +259,12 @@ export const Screen = ({
                             alignSelf: 'center',
                             fontSize: scaleText(15).fontSize,
                         },
-                        !upcomingVisible ? {
+                        tabValue === 2 ? {
                             color: 'white',
                         } : {
                                 color: '#0091ff',
                             },
-                        ]}>{'Past'}</Text>
+                        ]}>{'Cancelled'}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, paddingHorizontal: scaleText(30).fontSize }}>
@@ -239,13 +274,13 @@ export const Screen = ({
                         refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
                             setPageIndex(0);
                             setIsRefreshing(true);
-                            if (upcomingVisible) {
+                            if (tabValue === 0) {
                                 fetchUpcomingTrips({
                                     index: 0,
                                     limit: LIMITS.vehicleList,
                                 }, () => { setIsRefreshing(false); }, () => { });
                             }
-                            else {
+                            else if (tabValue === 1) {
                                 fetchPastTrips({
                                     index: 0,
                                     limit: LIMITS.vehicleList,
@@ -271,10 +306,10 @@ export const Screen = ({
                             if (!screenFocused) {
                                 return;
                             }
-                            else if (upcomingVisible ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
+                            else if (tabValue === 0 ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
                                 return;
                             }
-                            else if (upcomingVisible) {
+                            else if (tabValue === 0) {
                                 console.log('end');
                                 setFetchingData(true);
                                 fetchUpcomingTrips({
@@ -287,7 +322,7 @@ export const Screen = ({
                                     setFetchingData(false);
                                 });
                             }
-                            else {
+                            else if (tabValue === 1) {
                                 fetchPastTrips({
                                     index: pageIndex,
                                     limit: LIMITS.vehicleList,
@@ -301,9 +336,9 @@ export const Screen = ({
                             setFetchingData(false);
                         }}
                         ListEmptyComponent={<View>
-                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{upcomingVisible ? 'No upcoming trip.' : 'No past trip.'}</Text>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{tabValue === 0 ? 'No upcoming trip.' : 'No past trip.'}</Text>
                         </View>}
-                        data={upcomingVisible
+                        data={tabValue === 0
                             ? upcomingTrips && upcomingTrips.trips
                                 ? upcomingTrips.trips
                                 : []
@@ -324,12 +359,24 @@ export const Screen = ({
                                         />
                                     </View>
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
-                                        <View style={{ flex: 5 }}>
-                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{upcomingVisible ? moment(item.startDate).format('dddd, DD MMMM YYYY') : moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
+                                        <View style={{ flex: 9 }}>
+                                            <View style={{ flex: 1, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{tabValue === 0 ? moment(item.startDate).format('dddd, DD MMMM YYYY') : moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
+                                                <Text style={{
+                                                    marginHorizontal: scaleText(2).fontSize,
+                                                    borderColor: item.status === LISTING_STATUS.PENDING ? '#ff7113' : '#007bff',
+                                                    borderWidth: 0.5,
+                                                    fontWeight: '300',
+                                                    textAlignVertical: 'center',
+                                                    paddingHorizontal: scaleText(2).fontSize,
+                                                    color: item.status === LISTING_STATUS.PENDING ? '#ff7113' : '#007bff',
+                                                    fontSize: scaleText(8).fontSize,
+                                                }}>{item.status === LISTING_STATUS.PENDING ? ' Requested' : item.status === LISTING_STATUS.BOOKED ? ' Booked' : ''}</Text>
+                                            </View>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${item.pickupBranch.name}`}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${item.dropoffBranch.name}`}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: upcomingVisible, tripDetails: item })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: (tabValue === 0), tripDetails: item })} style={[styles.flexOne, { alignItems: 'flex-start', paddingTop: scaleText(3).fontSize, justifyContent: 'flex-start' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={10}

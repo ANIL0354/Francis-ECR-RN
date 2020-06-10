@@ -41,6 +41,7 @@ export const Screen = ({
         fetchProfile(() => { }, () => { });
     }, []);
 
+    console.log('profileData', profileData)
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -114,7 +115,7 @@ export const Screen = ({
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Country Code:'}</Text>
-                            <Text style={styles.value}>{`+${profileData && profileData.phoneNumber && profileData.phoneNumber.code ? profileData.phoneNumber.code : ''}`}</Text>
+                            <Text style={styles.value}>{`${profileData && profileData.phoneNumber && profileData.phoneNumber.code ? profileData.phoneNumber.code : ''}`}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Phone:'}</Text>

@@ -289,3 +289,14 @@ export const FREQUENCY = [
 export const USER_TYPES = {
   driver: 1,
 };
+
+export const LISTING_STATUS = {
+  AVAILABLE: 1,
+  BOOKED: 2,
+  COMPLETE: 3,
+  CANCELLED_BY_DRIVER: 4,
+  CANCELLED_BY_AGENCY: 5,
+  PENDING: 6,
+  NO_SHOW: 7,
+  EXPIRE: 8,
+};

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -42,12 +42,18 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 export const Screen = ({
     navigation,
     route,
-    submitBookingRequest
+    profileData,
+    fetchProfile,
+    submitBookingRequest,
 }) => {
     let { vehicleDetails, scrollRef = {} } = route.params;
     const largeScaledFont = scaleText(18);
     const [rideBooked, setRideBooked] = useState(false);
     const [accepted, setAccepted] = useState(false);
+
+    useEffect(() => {
+        fetchProfile(() => { }, () => { });
+    }, [])
 
     return (
         <AppHoc
@@ -276,7 +282,23 @@ export const Screen = ({
                                 title={'Submit your request'}
                                 titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase', }}
                                 onPress={() => {
-                                    if (!accepted) {
+                                    if (!(profileData && profileData.name && profileData.surname && profileData.dob && profileData.city && profileData.country && profileData.email && profileData.phoneNumber && profileData.phoneNumber.code && profileData.phoneNumber.phone)) {
+                                        Alert.alert(
+                                            'Kindly Complete Your Details First',
+                                            'We require your complete details before proceeding ahead, kindly complete your details first.',
+                                            [
+                                                {
+                                                    text: 'Cancel',
+                                                    onPress: () => { },
+                                                },
+                                                {
+                                                    text: 'Okay',
+                                                    onPress: () => { navigation.navigate(SCREENS.COMPLETE_DETAILS) },
+                                                },
+                                            ],
+                                        );
+                                    }
+                                    else if (!accepted) {
                                         Alert.alert(
                                             'Accept Terms & Conditions.',
                                             'Kindly read and accept all Terms and Conditions before proceeding.',

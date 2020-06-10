@@ -38,10 +38,12 @@ const Form = ({
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
 
     useEffect(() => {
+        let codeValue = initialValues['country-code'];
+        codeValue = codeValue.replace(/^[+]/g, '');
         changeField('edit_profile', STRINGS.COUNTRY_INPUT, initialValues.country);
         setSelectedCountry(initialValues.country);
-        changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, initialValues['country-code']);
-        setSelectedCountryCode(initialValues['country-code']);
+        changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, codeValue);
+        setSelectedCountryCode(codeValue);
     }, []);
 
     return (
@@ -133,6 +135,7 @@ const Form = ({
                     takeErrorSpace={false}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
+                    editable={false}
                     style={{ flex: 1 }}
                 />
             </View>

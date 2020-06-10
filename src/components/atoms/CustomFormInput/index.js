@@ -10,6 +10,7 @@ const CustomFormInput = ({
     onChangeText,
     input,
     style,
+    editable = true,
     placeholder,
     fontSize = 14,
     returnKeyType,
@@ -36,10 +37,13 @@ const CustomFormInput = ({
                     ...styles.inputStyle,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
+                    color: 'black',
                     textAlignVertical: multiline ? 'top' : 'center',
+                    backgroundColor: editable ? 'white' : 'lightgray',
                     height:
                         multiline ? 10 * scaledFont.lineHeight : takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                 }}
+                editable={editable}
                 returnKeyType={returnKeyType}
                 secureTextEntry={secureTextEntry && !passwordVisible}
                 {...input}
