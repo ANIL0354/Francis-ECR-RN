@@ -31,9 +31,8 @@ const AppHoc = ({
 
   useEffect(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log('res', remoteMessage)
       if (userToken) {
-        navigation.navigate(SCREENS.YOUR_TRIPS, { fromNotification: true, targetId: '5edf80cefd48590e142ec6b4' });
+        navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, targetId: '5ed9e4270b4d885979062ae7', tripDetails: { _id: remoteMessage.data.listingId } });
       }
       else {
         navigation.navigate(SCREENS.LOGIN, { fromDetails: false });

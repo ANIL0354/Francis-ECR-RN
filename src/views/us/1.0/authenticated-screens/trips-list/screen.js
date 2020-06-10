@@ -75,10 +75,15 @@ export const Screen = ({
 
     useEffect(() => {
         if (upcomingVisible) {
+            startLoader();
             fetchUpcomingTrips({
                 index: 0,
                 limit: LIMITS.vehicleList,
-            }, () => { }, () => { });
+            }, () => {
+                stopLoader();
+            }, () => {
+                stopLoader();
+            });
         }
         else {
             fetchPastTrips({
@@ -296,7 +301,7 @@ export const Screen = ({
                             setFetchingData(false);
                         }}
                         ListEmptyComponent={<View>
-                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{upcomingVisible ? 'No upcoming trip.' : 'No past trip.'}</Text>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{upcomingVisible ? 'No upcoming trip.' : 'No past trip.'}</Text>
                         </View>}
                         data={upcomingVisible
                             ? upcomingTrips && upcomingTrips.trips

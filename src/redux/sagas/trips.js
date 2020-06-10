@@ -20,7 +20,6 @@ const { STATUS_CODE } = require('../../shared/constants');
 
 function* getUpcomingTripList({ data, success, failure }) {
     try {
-        yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.FETCH_UPCOMING_TRIPS}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));

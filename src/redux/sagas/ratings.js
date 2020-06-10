@@ -19,7 +19,6 @@ function* getRatingList({ data, success, failure }) {
     try {
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.FETCH_RATINGS_LIST}` });
-        console.log(JSON.stringify(response));
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null));

@@ -41,6 +41,7 @@ export const Screen = ({
     const rateListRef = useRef();
     const [editMode, setEditMode] = useState(false);
     const [upButton, showUpButton] = useState(false);
+    const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
@@ -108,34 +109,55 @@ export const Screen = ({
                         refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={() => {
                             setPageIndex(0);
                             setIsRefreshing(true);
-                            if (upcomingVisible) {
-                                fetchUpcomingTrips({
-                                    index: 0,
-                                    limit: LIMITS.vehicleList,
-                                }, () => { setIsRefreshing(false); }, () => { });
-                            }
-                            else {
-                                fetchPastTrips({
-                                    index: 0,
-                                    limit: LIMITS.vehicleList,
-                                }, () => { setIsRefreshing(false); }, () => { });
-                            }
+                            fetchRatingList({
+                                index: 0,
+                                limit: LIMITS.vehicleList,
+                            },
+                                () => { },
+                                () => { })
                         }} />}
+                        ListFooterComponent={
+                            <View style={{
+                                width: '100%',
+                                height: 40,
+                                opacity: 1,
+                                marginVertical: 10,
+                            }}>
+                                {fetchingData && <CustomLoader size={30} />}
+                            </View>}
+                        scrollEnabled={true}
+                        onEndReachedThreshold={0.8}
+                        onEndReached={() => {
+
+                            setFetchingData(true);
+                            fetchRatingList({
+                                index: pageIndex + 1,
+                                limit: LIMITS.vehicleList,
+                            },
+                                () => { },
+                                () => { });
+                            setFetchingData(false);
+                            setPageIndex(pageIndex + 1);
+
+                        }}
+                        ListEmptyComponent={<View>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{'No rating received yet.'}</Text>
+                        </View>}
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
-                        data={[{ id: 'sbs' }, { id: 'sgsdg' }, { id: 'syerbs' }, { id: 'jn' }, { id: 'syefdrbs' }, { id: 'ew' }, { id: 'hjj' }, { id: 'mghm' }, { id: 'ad' }]}
+                        data={ratingList ? ratingList : []}
                         keyExtractor={(item, index) => (item.id ? item.id : `${index}`)}
                         renderItem={({ item }) => {
                             return (
                                 <View style={styles.rowFlex}>
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 5 }}>
-                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize, }}>{'Agency: Bargain Rentals'}</Text>
+                                            <Text style={{ color: 'black', fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`Agency: ${item.agency && item.agency.name ? item.agency.name : ''}`}</Text>
                                             <Rating
                                                 ratingCount={5}
                                                 // ratingImage={RATING_STAR}
-                                                startingValue={4.5}
+                                                startingValue={item.rateForDriver ? item.rateForDriver : 0}
                                                 ratingColor={'rgb(255,255,255)'}
                                                 // ratingColor={'rgb(255,255,255)'}
                                                 imageSize={14}
@@ -148,9 +170,9 @@ export const Screen = ({
                                                 style={styles.alignSelfStart}
                                                 onFinishRating={(rating) => console.log('rating', rating)}
                                             />
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{'Vehicle: Mazda Damio'}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize, textTransform: 'capitalize' }}>{`Vehicle: ${item.vehicle && item.vehicle.name ? item.vehicle.name : ''}`}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.RATING_DETAILS)} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.RATING_DETAILS, { ratingDetails: item })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={14}
