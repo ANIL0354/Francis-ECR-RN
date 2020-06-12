@@ -35,12 +35,12 @@ export const Screen = ({
 }) => {
     let { id, editMode, completeDetails } = route.params;
     const largeScaledFont = scaleText(18);
-    const [agencyRating, setAgencyRating] = useState(editMode ? completeDetails.rateForAgency : 0);
+    const [agencyRating, setAgencyRating] = useState(editMode ? completeDetails.rateForAgency : 1);
     const [commentsForAgency, setCommentsForAgency] = useState(editMode ? completeDetails.commentForAgency : '');
     const [commentsForECR, setCommentsForECR] = useState(editMode ? completeDetails.commentForECRByDriver : '');
 
     useEffect(() => {
-        setAgencyRating(editMode ? completeDetails.rateForAgency : 0);
+        setAgencyRating(editMode ? completeDetails.rateForAgency : 1);
         setCommentsForAgency(editMode ? completeDetails.commentForAgency : '');
         setCommentsForECR(editMode ? completeDetails.commentForECRByDriver : '');
     }, [editMode]);

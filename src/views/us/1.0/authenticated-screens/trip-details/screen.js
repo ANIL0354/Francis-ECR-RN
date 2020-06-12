@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState, useRef, useEffect } from 'react';
 import {
@@ -21,6 +22,7 @@ import {
     LABELS,
     SCREENS,
     SCROLL_UP,
+    LISTING_STATUS,
     LIST_ARROW,
     DIVIDING_LINE,
     LOCATION_VERTICAL_LINE,
@@ -254,7 +256,7 @@ export const Screen = ({
                                                         cancelTrip(
                                                             tripDetails._id,
                                                             {
-                                                                status: 4,
+                                                                status: LISTING_STATUS.CANCELLED_BY_DRIVER,
                                                             },
                                                             () => {
                                                                 navigation.goBack();

@@ -160,6 +160,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            scrollToTop();
                             setPageIndex(0);
                             setTabValue(0);
                         }}
@@ -195,6 +196,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            scrollToTop();
                             setPageIndex(0);
                             setTabValue(1);
                         }}
@@ -231,6 +233,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            scrollToTop();
                             setPageIndex(0);
                             setTabValue(2);
                         }}
