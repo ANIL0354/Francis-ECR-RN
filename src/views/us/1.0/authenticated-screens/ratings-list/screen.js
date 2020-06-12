@@ -38,6 +38,7 @@ export const Screen = ({
     ratingList,
     navigation,
     fetchRatingList,
+    getPopularPlaces,
 }) => {
     const largeScaledFont = scaleText(18);
     const rateListRef = useRef();
@@ -70,6 +71,17 @@ export const Screen = ({
             () => { },
             () => { })
     }, []);
+
+    useEffect(() => {
+        return () => {
+            getPopularPlaces(
+                {},
+                () => { },
+                () => { },
+            );
+        };
+    }, []);
+
     return (
         <AppHoc
             rightIcon={MENU_LOGO}

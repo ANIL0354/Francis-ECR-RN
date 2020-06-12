@@ -7,6 +7,9 @@ export const SAVE_PAST_TRIP_LIST = 'SAVE_PAST_TRIP_LIST';
 export const EMAIL_AGENCY = 'EMAIL_AGENCY';
 export const CANCEL_TRIP = 'CANCEL_TRIP';
 export const SAVE_CANCELLED_TRIP_LIST = 'SAVE_CANCELLED_TRIP_LIST';
+export const APPEND_UPCOMING_TRIP_LIST = 'APPEND_UPCOMING_TRIP_LIST';
+export const APPEND_PAST_TRIP_LIST = 'APPEND_PAST_TRIP_LIST';
+export const APPEND_CANCELLED_TRIP_LIST = 'APPEND_CANCELLED_TRIP_LIST';
 
 export const fetchUpcomingTrips = (data, success, failure) => {
     return {
@@ -42,6 +45,13 @@ export const saveUpcomingTripList = data => {
     };
 };
 
+export const appendUpcomingTripList = data => {
+    return {
+        type: APPEND_UPCOMING_TRIP_LIST,
+        data,
+    };
+};
+
 export const savePastTripList = data => {
     return {
         type: SAVE_PAST_TRIP_LIST,
@@ -49,9 +59,23 @@ export const savePastTripList = data => {
     };
 };
 
+export const appendPastTripList = data => {
+    return {
+        type: APPEND_PAST_TRIP_LIST,
+        data,
+    };
+};
+
 export const saveCancelledTripList = data => {
     return {
         type: SAVE_CANCELLED_TRIP_LIST,
+        data,
+    };
+};
+
+export const appendCancelledTripList = data => {
+    return {
+        type: APPEND_CANCELLED_TRIP_LIST,
         data,
     };
 };

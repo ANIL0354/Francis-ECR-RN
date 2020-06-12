@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://9e85d476d6c7.ngrok.io'; //Live URL
+const SERVER_URL = 'http://13.238.207.250:5000'; //Live URL
 // http://13.238.207.250:5000
 // https://31fe34be1e16.ngrok.io
 const API_VERSION = '/v1';

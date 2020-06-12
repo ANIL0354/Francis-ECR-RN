@@ -4,6 +4,7 @@ import { Screen } from './screen';
 import {
     startLoader,
     stopLoader,
+    getPopularPlaces,
     fetchRatingList,
 } from '../../../../../redux/actions';
 
@@ -16,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
+        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure)),
         fetchRatingList: (data, success, failure) => dispatch(fetchRatingList(data, success, failure)),
     };
 };

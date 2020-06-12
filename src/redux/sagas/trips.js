@@ -13,7 +13,10 @@ import {
     saveDriverData,
     saveCancelledTripList,
     savePastTripList,
+    appendPastTripList,
     saveUpcomingTripList,
+    appendUpcomingTripList,
+    appendCancelledTripList,
 } from '../actions';
 const api = require('../../shared/api');
 const { getRequest, postRequest, putRequest } = require('../../helpers');
@@ -35,7 +38,12 @@ function* getUpcomingTripList({ data, success, failure }) {
             Toast.show(response.data.msg, Toast.LONG);
         } else {
             yield put(stopLoader());
-            yield put(saveUpcomingTripList(response.data.data));
+            if (data.index === 0) {
+                yield put(saveUpcomingTripList(response.data.data));
+            }
+            else {
+                yield put(appendUpcomingTripList(response.data.data));
+            }
         }
     } catch (error) {
         console.log('catch', error);
@@ -57,9 +65,15 @@ function* getPastTripList({ data, success, failure }) {
         if (response.status !== STATUS_CODE.successful) {
             yield put(stopLoader());
             Toast.show(response.data.msg, Toast.LONG);
-        } else {
+        }
+        else {
             yield put(stopLoader());
-            yield put(savePastTripList(response.data.data));
+            if (data.index === 0) {
+                yield put(savePastTripList(response.data.data));
+            }
+            else {
+                yield put(appendPastTripList(response.data.data));
+            }
         }
     } catch (error) {
         console.log('catch', error);
@@ -83,7 +97,12 @@ function* getCancelledTripList({ data, success, failure }) {
             Toast.show(response.data.msg, Toast.LONG);
         } else {
             yield put(stopLoader());
-            yield put(saveCancelledTripList(response.data.data));
+            if (data.index === 0) {
+                yield put(saveCancelledTripList(response.data.data));
+            }
+            else {
+                yield put(appendCancelledTripList(response.data.data));
+            }
         }
     } catch (error) {
         console.log('catch', error);

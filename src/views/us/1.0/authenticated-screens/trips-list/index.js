@@ -5,6 +5,7 @@ import {
     startLoader,
     stopLoader,
     fetchPastTrips,
+    getPopularPlaces,
     fetchUpcomingTrips,
     fetchCancelledTrips,
 } from '../../../../../redux/actions';
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
         stopLoader: () => dispatch(stopLoader()),
         fetchUpcomingTrips: (data, success, failure) => dispatch(fetchUpcomingTrips(data, success, failure)),
         fetchPastTrips: (data, success, failure) => dispatch(fetchPastTrips(data, success, failure)),
+        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure)),
         fetchCancelledTrips: (data, success, failure) => dispatch(fetchCancelledTrips(data, success, failure)),
     };
 };

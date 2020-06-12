@@ -43,6 +43,7 @@ export const Screen = ({
     pastTrips,
     cancelledTrips,
     upcomingTrips,
+    getPopularPlaces,
     fetchPastTrips,
     fetchCancelledTrips,
     fetchUpcomingTrips,
@@ -112,6 +113,11 @@ export const Screen = ({
 
     useEffect(() => {
         return () => {
+            getPopularPlaces(
+                {},
+                () => { },
+                () => { },
+            );
             setScreenFocused(false);
             setPageIndex(0);
             stopLoader();
@@ -382,24 +388,27 @@ export const Screen = ({
                                         <View style={{ flex: 9 }}>
                                             <View style={{ flex: 1, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                                                 <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
-                                                {tabValue !== 1 && <Text style={{
-                                                    marginHorizontal: scaleText(2).fontSize,
+                                                {tabValue !== 1 && <View style={{
                                                     borderColor: item.status === LISTING_STATUS.PENDING ? '#ff7113' : item.cancelledBy ? 'red' : '#007bff',
                                                     borderWidth: 0.5,
+                                                    paddingHorizontal: scaleText(5).fontSize,
+                                                    paddingVertical: scaleText(2).fontSize,
+                                                }}><Text style={{
                                                     fontWeight: '300',
+                                                    textAlign: 'center',
                                                     textAlignVertical: 'center',
-                                                    paddingHorizontal: scaleText(2).fontSize,
                                                     color: item.status === LISTING_STATUS.PENDING ? '#ff7113' : item.cancelledBy ? 'red' : '#007bff',
                                                     fontSize: scaleText(8).fontSize,
                                                 }}>{item.status === LISTING_STATUS.PENDING
-                                                    ? ' Requested'
+                                                    ? 'Requested'
                                                     : item.status === LISTING_STATUS.BOOKED
-                                                        ? ' Booked'
+                                                        ? 'Booked'
                                                         : item.cancelledBy === USER_ROLE.DRIVER
                                                             ? 'By You'
                                                             : item.cancelledBy === USER_ROLE.AGENCY || item.cancelledBy === USER_ROLE.MANAGER
                                                                 ? 'By Agency'
-                                                                : ''}</Text>}
+                                                                : ''}</Text>
+                                                </View>}
                                             </View>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${tabValue === 2 ? item.pickupLocation : item.pickupBranch.name}`}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${tabValue === 2 ? item.dropoffLocation : item.dropoffBranch.name}`}</Text>
