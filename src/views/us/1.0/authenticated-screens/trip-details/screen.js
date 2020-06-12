@@ -26,6 +26,7 @@ import {
     LOCATION_VERTICAL_LINE,
     LOCATION_ARROWS,
     LOCATION_CIRCLE,
+    LIMITS,
 } from '../../../../../shared/constants';
 import moment from 'moment';
 import { scaleText } from '../../../../../helpers';
@@ -43,17 +44,56 @@ export const Screen = ({
     emailAgency,
     cancelTrip,
     route,
+    fetchPastTrips,
+    fetchUpcomingTrips,
+    fetchCancelledTrips,
 }) => {
     const largeScaledFont = scaleText(18);
     const [formVisible, setFormVisible] = useState(false);
-    let { upcomingTrip, tripDetails } = route.params;
+    let { tabValue, tripDetails } = route.params;
 
     useEffect(() => {
         fetchCompleteDetails(
-            tripDetails._id,
+            tripDetails.listingId ? tripDetails.listingId : tripDetails._id,
             () => { stopLoader(); },
             () => { stopLoader(); }
         )
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            startLoader();
+            if (tabValue === 0) {
+                fetchUpcomingTrips({
+                    index: 0,
+                    limit: LIMITS.vehicleList,
+                }, () => {
+                    stopLoader();
+                }, () => {
+                    stopLoader();
+                });
+            }
+            else if (tabValue === 1) {
+                fetchPastTrips({
+                    index: 0,
+                    limit: LIMITS.vehicleList,
+                }, () => {
+                    stopLoader();
+                }, () => {
+                    stopLoader();
+                });
+            }
+            else {
+                fetchCancelledTrips({
+                    index: 0,
+                    limit: LIMITS.vehicleList,
+                }, () => {
+                    stopLoader();
+                }, () => {
+                    stopLoader();
+                });
+            }
+        }
     }, []);
 
     return (
@@ -74,7 +114,9 @@ export const Screen = ({
                     <View style={styles.childContainer}>
                         <TouchableOpacity
                             style={styles.navArrowContainer}
-                            onPress={() => navigation.goBack()}
+                            onPress={() => {
+                                navigation.goBack();
+                            }}
                             hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                         >
                             <Image
@@ -120,19 +162,19 @@ export const Screen = ({
                     : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: scaleText(20).fontSize, }}>
                         <View style={{ flex: 1, marginVertical: scaleText(20).fontSize, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style={{ flex: 1 }}>
-                                <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`Reference - ${completeDetails && completeDetails.reference ? completeDetails.reference : 'NA'}`}</Text>
+                                <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`Reference - ${completeDetails && completeDetails.reference ? completeDetails.reference : 'N/A'}`}</Text>
                             </View>
                             <View style={{ flex: 1 }}>
-                                <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{'ID - XY001'}</Text>
+                                <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`ID - ${completeDetails && completeDetails.bookingId ? completeDetails.bookingId : 'N/A'}`}</Text>
                             </View>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', width: '100%', backgroundColor: 'rgb(233,233,233)', borderRadius: scaleText(5).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                             <View style={{ flex: 1, borderColor: 'white', borderWidth: 0, borderRightWidth: 0.5, padding: scaleText(10).fontSize, }}>
-                                <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{completeDetails && completeDetails.startDate ? moment(completeDetails.startDate).format('DD MMM, YYYY') : 'NA'}</Text>
+                                <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{completeDetails && completeDetails.startDate ? moment(completeDetails.startDate).format('DD MMM, YYYY') : 'N/A'}</Text>
                                 <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{'Pick-up Date'}</Text>
                             </View>
                             <View style={{ flex: 1, borderColor: 'white', borderWidth: 0, borderLeftWidth: 0.5, padding: scaleText(10).fontSize, }}>
-                                <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{completeDetails && completeDetails.endDate ? moment(completeDetails.endDate).format('DD MMM, YYYY') : 'NA'}</Text>
+                                <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{completeDetails && completeDetails.endDate ? moment(completeDetails.endDate).format('DD MMM, YYYY') : 'N/A'}</Text>
                                 <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{'Drop-off Date'}</Text>
                             </View>
                         </View>
@@ -190,8 +232,12 @@ export const Screen = ({
                             <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'left', fontSize: scaleText(15).fontSize, }}>{'Vehicle'}</Text>
                             <Text style={{ textAlignVertical: 'center', textAlign: 'left', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`${completeDetails && completeDetails.vehicleData && completeDetails.vehicleData.name ? `${completeDetails.vehicleData.name}` : ''}`}</Text>
                         </View>
+                        <View style={{ flex: 1, width: '100%', marginTop: scaleText(20).fontSize }}>
+                            <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'left', fontSize: scaleText(15).fontSize, }}>{'Rego'}</Text>
+                            <Text style={{ textAlignVertical: 'center', textAlign: 'left', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`${completeDetails && completeDetails.rego ? `${completeDetails.rego}` : 'N/A'}`}</Text>
+                        </View>
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            {upcomingTrip ?
+                            {tabValue === 0 ?
                                 <React.Fragment>
                                     <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
                                         <TouchableOpacity
@@ -210,30 +256,32 @@ export const Screen = ({
                                                             {
                                                                 status: 4,
                                                             },
-                                                            () => { },
+                                                            () => {
+                                                                navigation.goBack();
+                                                            },
                                                             () => { }
                                                         );
                                                     },
                                                 },
                                             ])}>
-                                            <Text>{LABELS.cancelReservation}</Text>
+                                            <Text style={styles.basicBlueText}>{LABELS.cancelReservation}</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
                                         <TouchableOpacity
                                             style={styles.changePasswordButton}
                                             onPress={() => { setFormVisible(true) }}>
-                                            <Text>{LABELS.emailAgency}</Text>
+                                            <Text style={styles.basicBlueText}>{LABELS.emailAgency}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </React.Fragment>
-                                : <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize, marginHorizontal: scaleText(80).fontSize }]}>
+                                : tabValue === 1 ? <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize, marginHorizontal: scaleText(80).fontSize }]}>
                                     <TouchableOpacity
                                         style={styles.changePasswordButton}
-                                        onPress={() => { navigation.navigate(SCREENS.RATE_AGENCY, { id: tripDetails._id }) }}>
-                                        <Text>{LABELS.rateTrip}</Text>
+                                        onPress={() => { navigation.navigate(SCREENS.RATE_AGENCY, { id: tripDetails._id, editMode: !(completeDetails && !completeDetails.rateForAgency), completeDetails: completeDetails }) }}>
+                                        <Text style={styles.basicBlueText}>{completeDetails && !completeDetails.rateForAgency ? LABELS.rateTrip : LABELS.editRating}</Text>
                                     </TouchableOpacity>
-                                </View>}
+                                </View> : null}
                         </View>
                     </View>}
 

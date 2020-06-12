@@ -6,10 +6,12 @@ import {
     FETCH_PAST_TRIPS,
     EMAIL_AGENCY,
     CANCEL_TRIP,
+    FETCH_CANCELLED_TRIPS,
     setAuthorization,
     startLoader,
     stopLoader,
     saveDriverData,
+    saveCancelledTripList,
     savePastTripList,
     saveUpcomingTripList,
 } from '../actions';
@@ -20,7 +22,7 @@ const { STATUS_CODE } = require('../../shared/constants');
 
 function* getUpcomingTripList({ data, success, failure }) {
     try {
-        const response = yield getRequest({ API: `${api.URL.FETCH_UPCOMING_TRIPS}` });
+        const response = yield getRequest({ API: `${api.URL.FETCH_UPCOMING_TRIPS}?limit=${data.limit}&index=${data.index}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null));
@@ -44,8 +46,7 @@ function* getUpcomingTripList({ data, success, failure }) {
 
 function* getPastTripList({ data, success, failure }) {
     try {
-        yield put(startLoader());
-        const response = yield getRequest({ API: `${api.URL.FETCH_PAST_TRIPS}` });
+        const response = yield getRequest({ API: `${api.URL.FETCH_PAST_TRIPS}?limit=${data.limit}&index=${data.index}` });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null));
@@ -59,6 +60,30 @@ function* getPastTripList({ data, success, failure }) {
         } else {
             yield put(stopLoader());
             yield put(savePastTripList(response.data.data));
+        }
+    } catch (error) {
+        console.log('catch', error);
+        yield put(stopLoader());
+        return;
+    }
+}
+
+function* getCancelledTripList({ data, success, failure }) {
+    try {
+        const response = yield getRequest({ API: `${api.URL.CANCELLED_TRIPS}?limit=${data.limit}&index=${data.index}` });
+        if (response.status === STATUS_CODE.unAuthorized) {
+            yield put(setAuthorization(null));
+            yield put(saveDriverData(null));
+            yield put(stopLoader());
+            Toast.show(response.data.msg, Toast.LONG);
+            return;
+        }
+        if (response.status !== STATUS_CODE.successful) {
+            yield put(stopLoader());
+            Toast.show(response.data.msg, Toast.LONG);
+        } else {
+            yield put(stopLoader());
+            yield put(saveCancelledTripList(response.data.data));
         }
     } catch (error) {
         console.log('catch', error);
@@ -126,6 +151,7 @@ function* TripSaga() {
         takeLatest(FETCH_PAST_TRIPS, getPastTripList),
         takeLatest(EMAIL_AGENCY, emailAgency),
         takeLatest(CANCEL_TRIP, cancelBooking),
+        takeLatest(FETCH_CANCELLED_TRIPS, getCancelledTripList),
     ]);
 }
 

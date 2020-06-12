@@ -24,6 +24,7 @@ import {
     LIST_ARROW,
     LIMITS,
     LISTING_STATUS,
+    USER_ROLE,
 } from '../../../../../shared/constants';
 import CustomLoader from '../../../../../components/atoms/Loader';
 import { scaleText } from '../../../../../helpers';
@@ -40,8 +41,10 @@ export const Screen = ({
     stopLoader,
     navigation,
     pastTrips,
+    cancelledTrips,
     upcomingTrips,
     fetchPastTrips,
+    fetchCancelledTrips,
     fetchUpcomingTrips,
 }) => {
     const largeScaledFont = scaleText(18);
@@ -56,8 +59,6 @@ export const Screen = ({
     const scrollToTop = () => {
         tripListRef.current.scrollToIndex({ animated: true, index: 0 });
     };
-
-    let { fromNotification = false, targetId = '5edf1ec7b9db4806b7f11152' } = route.params;
 
     const onViewRef = React.useRef((viewableItems) => {
         if (viewableItems && viewableItems.viewableItems && viewableItems.viewableItems[0] && viewableItems.viewableItems[0].index) {
@@ -75,8 +76,8 @@ export const Screen = ({
     }, []);
 
     useEffect(() => {
+        startLoader();
         if (tabValue === 0) {
-            startLoader();
             fetchUpcomingTrips({
                 index: 0,
                 limit: LIMITS.vehicleList,
@@ -90,37 +91,24 @@ export const Screen = ({
             fetchPastTrips({
                 index: 0,
                 limit: LIMITS.vehicleList,
-            }, () => { }, () => { });
+            }, () => {
+                stopLoader();
+            }, () => {
+                stopLoader();
+            });
+        }
+        else {
+            fetchCancelledTrips({
+                index: 0,
+                limit: LIMITS.vehicleList,
+            }, () => {
+                stopLoader();
+            }, () => {
+                stopLoader();
+            });
         }
     }, [tabValue]);
 
-    useEffect(() => {
-        if (upcomingTrips) {
-            if (!!fromNotification) {
-                let data = null;
-                let targetData = null;
-                if (tabValue === 0) {
-
-                    data = upcomingTrips.trips;
-                }
-                else if (tabValue === 1) {
-                    data = pastTrips.trips;
-                }
-                if (data) {
-                    data.map((item) => {
-                        if (item._id === targetId) {
-                            targetData = item;
-                            return;
-                        }
-                    });
-                    if (Object.keys(data).length) {
-                        navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: (tabValue === 0), tripDetails: targetData });
-                    }
-                }
-
-            }
-        }
-    }, [upcomingTrips])
 
     useEffect(() => {
         return () => {
@@ -166,6 +154,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            setPageIndex(0);
                             setTabValue(0);
                         }}
                         style={[{
@@ -200,6 +189,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            setPageIndex(0);
                             setTabValue(1);
                         }}
                         style={[{
@@ -209,6 +199,7 @@ export const Screen = ({
                             borderColor: '#0091ff',
                             borderWidth: 1,
                             borderLeftWidth: 0.5,
+                            borderRightWidth: 0.5,
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
                             padding: scaleText(5).fontSize,
@@ -234,6 +225,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
+                            setPageIndex(0);
                             setTabValue(2);
                         }}
                         style={[{
@@ -278,14 +270,24 @@ export const Screen = ({
                                 fetchUpcomingTrips({
                                     index: 0,
                                     limit: LIMITS.vehicleList,
-                                }, () => { setIsRefreshing(false); }, () => { });
+                                }, () => { setIsRefreshing(false); }, () => { setIsRefreshing(false); });
                             }
                             else if (tabValue === 1) {
                                 fetchPastTrips({
                                     index: 0,
                                     limit: LIMITS.vehicleList,
-                                }, () => { setIsRefreshing(false); }, () => { });
+                                }, () => { setIsRefreshing(false); }, () => { setIsRefreshing(false); });
+                            } else {
+                                fetchCancelledTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => {
+                                    setIsRefreshing(false);
+                                }, () => {
+                                    setIsRefreshing(false);
+                                });
                             }
+                            setIsRefreshing(false);
                         }} />}
                         ref={tripListRef}
                         onViewableItemsChanged={onViewRef.current}
@@ -306,11 +308,14 @@ export const Screen = ({
                             if (!screenFocused) {
                                 return;
                             }
-                            else if (tabValue === 0 ? upcomingTrips.totalCount === upcomingTrips.length : pastTrips.totalCount === pastTrips.length) {
+                            else if (tabValue === 0
+                                ? upcomingTrips.totalCount === upcomingTrips.length
+                                : tabValue === 1
+                                    ? pastTrips.totalCount === pastTrips.length
+                                    : cancelledTrips.totalCount === cancelledTrips.length) {
                                 return;
                             }
                             else if (tabValue === 0) {
-                                console.log('end');
                                 setFetchingData(true);
                                 fetchUpcomingTrips({
                                     index: pageIndex,
@@ -332,19 +337,34 @@ export const Screen = ({
                                 }, () => {
                                     setFetchingData(false);
                                 });
+                            } else {
+                                fetchCancelledTrips({
+                                    index: 0,
+                                    limit: LIMITS.vehicleList,
+                                }, () => {
+                                    setFetchingData(false);
+                                    setPageIndex(pageIndex + 1);
+                                }, () => {
+                                    setFetchingData(false);
+                                    setPageIndex(pageIndex + 1);
+                                });
                             }
                             setFetchingData(false);
                         }}
                         ListEmptyComponent={<View>
-                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{tabValue === 0 ? 'No upcoming trip.' : 'No past trip.'}</Text>
+                            <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{tabValue === 0 ? 'No upcoming trip.' : tabValue === 1 ? 'No past trip.' : 'No cancelled trip.'}</Text>
                         </View>}
                         data={tabValue === 0
                             ? upcomingTrips && upcomingTrips.trips
                                 ? upcomingTrips.trips
                                 : []
-                            : pastTrips && pastTrips.trips
-                                ? pastTrips.trips
-                                : []
+                            : tabValue === 1
+                                ? pastTrips && pastTrips.trips
+                                    ? pastTrips.trips
+                                    : []
+                                : cancelledTrips && cancelledTrips.trips ?
+                                    cancelledTrips.trips
+                                    : []
                         }
                         keyExtractor={(item, index) => (item.id ? item.id : `${index}`)}
                         renderItem={({ item }) => {
@@ -361,22 +381,30 @@ export const Screen = ({
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 9 }}>
                                             <View style={{ flex: 1, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{tabValue === 0 ? moment(item.startDate).format('dddd, DD MMMM YYYY') : moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
-                                                <Text style={{
+                                                <Text style={{ color: 'black', fontSize: scaleText(14).fontSize }}>{moment(item.startDate).format('dddd, DD MMMM YYYY')}</Text>
+                                                {tabValue !== 1 && <Text style={{
                                                     marginHorizontal: scaleText(2).fontSize,
-                                                    borderColor: item.status === LISTING_STATUS.PENDING ? '#ff7113' : '#007bff',
+                                                    borderColor: item.status === LISTING_STATUS.PENDING ? '#ff7113' : item.cancelledBy ? 'red' : '#007bff',
                                                     borderWidth: 0.5,
                                                     fontWeight: '300',
                                                     textAlignVertical: 'center',
                                                     paddingHorizontal: scaleText(2).fontSize,
-                                                    color: item.status === LISTING_STATUS.PENDING ? '#ff7113' : '#007bff',
+                                                    color: item.status === LISTING_STATUS.PENDING ? '#ff7113' : item.cancelledBy ? 'red' : '#007bff',
                                                     fontSize: scaleText(8).fontSize,
-                                                }}>{item.status === LISTING_STATUS.PENDING ? ' Requested' : item.status === LISTING_STATUS.BOOKED ? ' Booked' : ''}</Text>
+                                                }}>{item.status === LISTING_STATUS.PENDING
+                                                    ? ' Requested'
+                                                    : item.status === LISTING_STATUS.BOOKED
+                                                        ? ' Booked'
+                                                        : item.cancelledBy === USER_ROLE.DRIVER
+                                                            ? 'By You'
+                                                            : item.cancelledBy === USER_ROLE.AGENCY || item.cancelledBy === USER_ROLE.MANAGER
+                                                                ? 'By Agency'
+                                                                : ''}</Text>}
                                             </View>
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${item.pickupBranch.name}`}</Text>
-                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${item.dropoffBranch.name}`}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${tabValue === 2 ? item.pickupLocation : item.pickupBranch.name}`}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${tabValue === 2 ? item.dropoffLocation : item.dropoffBranch.name}`}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { upcomingTrip: (tabValue === 0), tripDetails: item })} style={[styles.flexOne, { alignItems: 'flex-start', paddingTop: scaleText(3).fontSize, justifyContent: 'flex-start' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { tabValue: tabValue, tripDetails: item })} style={[styles.flexOne, { alignItems: 'flex-start', paddingTop: scaleText(3).fontSize, justifyContent: 'flex-start' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={10}
@@ -404,7 +432,7 @@ export const Screen = ({
                             property: LayoutAnimation.Properties.opacity,
                             type: 'fadeOut',
                         },
-                    })
+                    });
                 }}
                 source={SCROLL_UP}
                 style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
