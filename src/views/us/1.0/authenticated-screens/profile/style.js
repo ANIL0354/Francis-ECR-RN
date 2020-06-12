@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: scaleText(20).fontSize,
     },
     verticalFiveMargin: {
         marginVertical: scaleText(5).fontSize,

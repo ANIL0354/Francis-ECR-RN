@@ -18,7 +18,7 @@ const validator = values => {
         errors[STRINGS.PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.PASSWORD_REQUIRED;
     }
-    if (values[STRINGS.PASSWORD_INPUT_NAME] && (values[STRINGS.PASSWORD_INPUT_NAME].length < 6 || values[STRINGS.PASSWORD_INPUT_NAME].length > 8)) {
+    if (values[STRINGS.PASSWORD_INPUT_NAME] && (values[STRINGS.PASSWORD_INPUT_NAME].length < 6)) {
         errors[STRINGS.PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.PASSWORD_LENGTH_ERROR;
     }

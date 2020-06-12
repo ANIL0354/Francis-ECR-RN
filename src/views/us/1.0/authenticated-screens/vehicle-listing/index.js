@@ -12,7 +12,7 @@ import {
     stopLoader,
     setAdultSeats,
     setChildSeats,
-    setGpsEnabled,
+    getPopularPlaces,
     setLocationEnabled,
     setNeverAskPermission,
     setPickupLocation,
@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => {
         setTransmissionType: value => dispatch(setTransmissionType(value)),
         setSeatsValue: value => dispatch(setSeatsValue(value)),
         setVehicleType: value => dispatch(setVehicleType(value)),
+        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure)),
         fetchVehicleListing: (data, success, failure) => dispatch(fetchVehicleListing(data, success, failure))
     }
 }

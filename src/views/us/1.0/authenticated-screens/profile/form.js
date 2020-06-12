@@ -39,11 +39,15 @@ const Form = ({
 
     useEffect(() => {
         let codeValue = initialValues['country-code'];
-        codeValue = codeValue.replace(/^[+]/g, '');
-        changeField('edit_profile', STRINGS.COUNTRY_INPUT, initialValues.country);
-        setSelectedCountry(initialValues.country);
-        changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, codeValue);
-        setSelectedCountryCode(codeValue);
+        if (codeValue) {
+            codeValue = codeValue.replace(/^[+]/g, '');
+            changeField('details', STRINGS.COUNTRY_CODE_INPUT, codeValue);
+            setSelectedCountryCode(codeValue);
+        }
+        if (initialValues.country) {
+            changeField('details', STRINGS.COUNTRY_INPUT, initialValues.country);
+            setSelectedCountry(initialValues.country);
+        }
     }, []);
 
     return (
@@ -196,9 +200,14 @@ const Form = ({
 const mapStateToProps = (state, props) => {
     let profileValues = {
         ...props.profileData,
-        'country-code': props.profileData.phoneNumber.code,
-        phone: props.profileData.phoneNumber.phone,
     };
+    if (props.profileData.phoneNumber && props.profileData.phoneNumber.code && props.profileData.phoneNumber.phone) {
+        profileValues = {
+            ...profileValues,
+            'country-code': props.profileData.phoneNumber.code,
+            phone: props.profileData.phoneNumber.phone,
+        };
+    }
     return {
         initialValues: profileValues,
     };

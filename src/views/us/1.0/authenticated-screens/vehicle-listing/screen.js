@@ -74,6 +74,7 @@ export const Screen = ({
     pickupDate,
     setVehicleType,
     fuelTypesList,
+    getPopularPlaces,
     setDropoffLocation,
     fetchVehicleListing,
     transmissionTypesList,
@@ -126,6 +127,11 @@ export const Screen = ({
 
     useEffect(() => {
         return () => {
+            getPopularPlaces(
+                {},
+                () => { },
+                () => { },
+            );
             refreshVehicleList();
             setPageIndex(0);
             stopLoader();

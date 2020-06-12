@@ -104,4 +104,5 @@ export const STRINGS = {
   SUBJECT_REQUIRED: 'Subject is required.',
   BODY_REQUIRED: 'Body is required.',
   HOW_WAS_YOUR_TRIP: 'Your was your trip?',
+  EDIT_RATING: 'Edit Rating',
 };

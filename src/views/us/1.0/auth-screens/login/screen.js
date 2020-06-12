@@ -50,7 +50,6 @@ export const Screen = ({
 
     useEffect(() => {
         messaging().getToken().then(token => {
-            // console.log(token)
             setDeviceToken(token);
         });
     }, []);

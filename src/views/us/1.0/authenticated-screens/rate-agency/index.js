@@ -5,6 +5,7 @@ import {
     startLoader,
     stopLoader,
     rateAgency,
+    fetchCompleteDetails,
 } from '../../../../../redux/actions';
 
 const mapStateToProps = (state) => {
@@ -15,6 +16,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
+        fetchCompleteDetails: (id, success, failure) => dispatch(fetchCompleteDetails(id, success, failure)),
         rateAgency: (listingId, data, success, failure) => dispatch(rateAgency(listingId, data, success, failure)),
     };
 };

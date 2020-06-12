@@ -173,13 +173,6 @@ function* sendRecoverPasswordEmail({ data, success, failure }) {
 function* completeUserProfile({ data, success, failure }) {
     try {
         yield put(startLoader());
-        NetInfo.addEventListener((state) => {
-            if (!state.isConnected) {
-                stopLoader();
-                Toast.show('You appears to be offline. Please check your internet connectivity.', Toast.LONG);
-                return;
-            }
-        });
         const response = yield postRequest({ API: `${api.URL.COMPLETE_USER_PROFILE}`, DATA: data });
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));

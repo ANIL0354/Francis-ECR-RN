@@ -100,6 +100,7 @@ export const LABELS = {
   sendEmail: STRINGS.SEND_EMAIL,
   rateTrip: STRINGS.RATE_TRIP,
   howWasYourTrip: STRINGS.HOW_WAS_YOUR_TRIP,
+  editRating: STRINGS.EDIT_RATING,
 };
 
 export const STATUS_CODE = {
@@ -300,3 +301,9 @@ export const LISTING_STATUS = {
   NO_SHOW: 7,
   EXPIRE: 8,
 };
+
+export const USER_ROLE = {
+  DRIVER: 1,
+  AGENCY: 2,
+  MANAGER: 3,
+}

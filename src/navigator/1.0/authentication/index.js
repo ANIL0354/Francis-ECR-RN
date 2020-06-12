@@ -44,8 +44,8 @@ const AuthNavigator = () => {
                 <Stack.Screen name={SCREENS.RATE_AGENCY} component={RatingAgencyScreen} />
             </Stack.Navigator>
         </NavigationContainer>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
     return {
