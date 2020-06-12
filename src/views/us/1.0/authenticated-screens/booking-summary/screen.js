@@ -44,6 +44,7 @@ export const Screen = ({
     route,
     profileData,
     fetchProfile,
+    getPopularPlaces,
     submitBookingRequest,
 }) => {
     let { vehicleDetails, scrollRef = {} } = route.params;
@@ -53,6 +54,16 @@ export const Screen = ({
 
     useEffect(() => {
         fetchProfile(() => { }, () => { });
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            getPopularPlaces(
+                {},
+                () => { },
+                () => { },
+            );
+        }
     }, [])
 
     return (
@@ -284,7 +295,7 @@ export const Screen = ({
                                 onPress={() => {
                                     if (!(profileData && profileData.name && profileData.surname && profileData.dob && profileData.city && profileData.country && profileData.email && profileData.phoneNumber && profileData.phoneNumber.code && profileData.phoneNumber.phone)) {
                                         Alert.alert(
-                                            'Kindly Complete Your Details First',
+                                            'Complete Your Details',
                                             'We require your complete details before proceeding ahead, kindly complete your details first.',
                                             [
                                                 {

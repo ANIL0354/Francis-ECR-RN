@@ -1,5 +1,5 @@
 const { STRINGS } = require(`../../../../../shared/constants/us/strings`);
-const { VALIDATION_MESSAGES, EMAIL_REGX } = require(`../../../../../shared/constants`)
+const { VALIDATION_MESSAGES, EMAIL_REGX, PHONE_REGX } = require(`../../../../../shared/constants`)
 
 const validator = values => {
     const errors = {};
@@ -61,6 +61,23 @@ const validator = values => {
     if (values[STRINGS.COUNTRY_INPUT] && !(values[STRINGS.COUNTRY_INPUT].trim())) {
         errors[STRINGS.COUNTRY_INPUT] =
             VALIDATION_MESSAGES.VALUE_CANNOT_BE_EMPTY_SPACES;
+    } if (!values[STRINGS.COUNTRY_CODE_INPUT]) {
+        errors[STRINGS.COUNTRY_CODE_INPUT] =
+            VALIDATION_MESSAGES.COUNTRY_CODE_REQUIRED;
+    }
+    if (!values[STRINGS.PHONE_NUMBER]) {
+        errors[STRINGS.PHONE_NUMBER] =
+            VALIDATION_MESSAGES.PHONE_NUMBER_REQUIRED;
+    } else if (
+        !PHONE_REGX.test(
+            values[STRINGS.PHONE_NUMBER].toLowerCase()
+        )
+    ) {
+        errors[STRINGS.PHONE_NUMBER] =
+            VALIDATION_MESSAGES.PHONE_INVALID;
+    }
+    if (values[STRINGS.PHONE_NUMBER] && (values[STRINGS.PHONE_NUMBER].length < 7 || values[STRINGS.PHONE_NUMBER].length > 15)) {
+        errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 7-15 characters long.'
     }
     if (!values[STRINGS.RE_PASSWORD_INPUT_NAME]) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =

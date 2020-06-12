@@ -5,6 +5,7 @@ import {
     startLoader,
     stopLoader,
     fetchProfile,
+    getPopularPlaces,
     submitBookingRequest,
 } from '../../../../../redux/actions';
 
@@ -18,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
         startLoader: () => dispatch(startLoader()),
         stopLoader: () => dispatch(stopLoader()),
         fetchProfile: (success, failure) => dispatch(fetchProfile(success, failure)),
+        getPopularPlaces: (data, success, failure) => dispatch(getPopularPlaces(data, success, failure)),
         submitBookingRequest: (driverId, data, success, failure) => dispatch(submitBookingRequest(driverId, data, success, failure)),
     };
 };
