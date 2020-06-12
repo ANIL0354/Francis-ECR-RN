@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -20,7 +20,7 @@ import {
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { Rating } from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-elements';
 import styles from './style';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
 import ImageButton from '../../../../../components/atoms/ImageButton';
@@ -30,13 +30,30 @@ export const Screen = ({
     stopLoader,
     navigation,
     rateAgency,
+    fetchCompleteDetails,
     route,
 }) => {
+    let { id, editMode, completeDetails } = route.params;
     const largeScaledFont = scaleText(18);
-    const [agencyRating, setAgencyRating] = useState(0);
-    const [commentsForAgency, setCommentsForAgency] = useState('');
-    const [commentsForECR, setCommentsForECR] = useState('');
-    let { id } = route.params;
+    const [agencyRating, setAgencyRating] = useState(editMode ? completeDetails.rateForAgency : 0);
+    const [commentsForAgency, setCommentsForAgency] = useState(editMode ? completeDetails.commentForAgency : '');
+    const [commentsForECR, setCommentsForECR] = useState(editMode ? completeDetails.commentForECRByDriver : '');
+
+    useEffect(() => {
+        setAgencyRating(editMode ? completeDetails.rateForAgency : 0);
+        setCommentsForAgency(editMode ? completeDetails.commentForAgency : '');
+        setCommentsForECR(editMode ? completeDetails.commentForECRByDriver : '');
+    }, [editMode]);
+
+    useEffect(() => {
+        return () => {
+            fetchCompleteDetails(
+                id,
+                () => { stopLoader(); },
+                () => { stopLoader(); }
+            );
+        };
+    }, []);
 
     return (
         <AppHoc
@@ -75,24 +92,16 @@ export const Screen = ({
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: scaleText(20).fontSize, }}>
                         <View style={{ marginVertical: scaleText(10).fontSize }}>
                             <Text style={{ color: 'black', fontSize: scaleText(15).fontSize, textAlign: 'left', marginBottom: scaleText(20).fontSize }}>{'How would you rate your whole experience with Bargain Rental Cars'}</Text>
-                            <Rating
-                                ratingCount={5}
-                                // ratingImage={RATING_STAR}
-                                startingValue={0}
-                                ratingColor={'rgb(255,255,255)'}
-                                // ratingColor={'rgb(255,255,255)'}
-                                imageSize={25}
-                                ratingBackgroundColor={'rgb(255,188,0)'}
-                                minValue={1}
-                                fractions={0.1}
+                            <AirbnbRating
+                                count={5}
+                                reviews={[]}
                                 showRating={false}
-                                readonly={false}
-                                type={'star'}
-                                style={[styles.alignSelfCenter]}
+                                defaultRating={editMode ? completeDetails.rateForAgency : 1}
+                                size={scaleText(25).fontSize}
                                 onFinishRating={(rating) => {
-                                    console.log('rating', rating);
                                     setAgencyRating(rating);
                                 }}
+                                starStyle={{ backgroundColor: 'white', }}
                             />
                         </View>
                         <View style={[styles.flexOne, { width: '100%', marginVertical: scaleText(10).fontSize }]}>

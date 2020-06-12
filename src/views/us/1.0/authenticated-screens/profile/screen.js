@@ -20,7 +20,7 @@ import {
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { Rating } from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-elements';
 import moment from 'moment';
 import styles from './style';
 import { EditProfileForm } from './form';
@@ -41,7 +41,6 @@ export const Screen = ({
         fetchProfile(() => { }, () => { });
     }, []);
 
-    console.log('profileData', profileData)
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -91,35 +90,35 @@ export const Screen = ({
                     ? < View style={styles.detailsWrapper}>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Name:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.name ? profileData.name : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.name ? profileData.name : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Surname:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.surname ? profileData.surname : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.surname ? profileData.surname : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'DOB:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.dob ? moment(profileData.dob).format('DD/MM/YYYY') : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.dob ? moment(profileData.dob).format('DD/MM/YYYY') : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'City:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.city ? profileData.city : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.city ? profileData.city : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Country:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.country ? profileData.country : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.country ? profileData.country : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Email:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.dob ? profileData.email : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.dob ? profileData.email : '--'}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Country Code:'}</Text>
-                            <Text style={styles.value}>{`${profileData && profileData.phoneNumber && profileData.phoneNumber.code ? profileData.phoneNumber.code : ''}`}</Text>
+                            <Text style={styles.value}>{`${profileData && profileData.phoneNumber && profileData.phoneNumber.code ? profileData.phoneNumber.code : '--'}`}</Text>
                         </View>
                         <View style={[styles.flexOne, styles.verticalFiveMargin]}>
                             <Text style={styles.label}>{'Phone:'}</Text>
-                            <Text style={styles.value}>{profileData && profileData.phoneNumber && profileData.phoneNumber.phone ? profileData.phoneNumber.phone : ''}</Text>
+                            <Text style={styles.value}>{profileData && profileData.phoneNumber && profileData.phoneNumber.phone ? profileData.phoneNumber.phone : '--'}</Text>
                         </View>
                     </View>
                     : < View style={styles.detailsWrapper}>
@@ -155,24 +154,18 @@ export const Screen = ({
                 }
                 {!editMode && <View style={styles.flexOne}>
                     <View style={styles.ratingWrapper}>
-                        <Text style={styles.overallText}>{`Your overall score is ${profileData && profileData.overallRating ? profileData.overallRating : 0} out of ${5}`}</Text>
+                        <Text style={styles.overallText}>{`Your overall score is ${profileData && profileData.overallRating ? profileData.overallRating % 1 ? profileData.overallRating.toFixed(2) : profileData.overallRating : 0} out of ${5}`}</Text>
                         <View>
-                            <Rating
-                                ratingCount={5}
-                                // ratingImage={RATING_STAR}
-                                startingValue={profileData && profileData.overallRating ? profileData.overallRating : 0}
-                                ratingColor={'rgb(255,255,255)'}
-                                // ratingColor={'rgb(255,255,255)'}
-                                imageSize={20}
-                                ratingBackgroundColor={'rgb(255,188,0)'}
-                                minValue={1}
-                                fractions={0.1}
-                                showRating={false}
-                                readonly={true}
-                                type={'star'}
-                                style={styles.alignSelfStart}
-                                onFinishRating={(rating) => console.log('rating', rating)}
-                            />
+                            <View style={{ flex: 1, width: '40%', justifyContent: 'flex-start' }}>
+                                <AirbnbRating
+                                    count={5}
+                                    reviews={[]}
+                                    showRating={false}
+                                    defaultRating={profileData && profileData.overallRating ? profileData.overallRating : 0}
+                                    size={scaleText(20).fontSize}
+                                    isDisabled={true}
+                                />
+                            </View>
                         </View>
                     </View>
                     {profileData && (profileData.loginType === 1) && <View style={styles.changePasswordWrapper}>

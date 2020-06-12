@@ -28,7 +28,7 @@ import {
 import moment from 'moment';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { Rating } from 'react-native-elements';
+import { AirbnbRating } from 'react-native-elements';
 import styles from './style';
 
 export const Screen = ({
@@ -77,42 +77,35 @@ export const Screen = ({
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: scaleText(20).fontSize, }}>
                     <View style={{ marginVertical: scaleText(20).fontSize }}>
-                        <Rating
-                            ratingCount={5}
-                            // ratingImage={RATING_STAR}
-                            startingValue={ratingDetails.rateForDriver}
-                            ratingColor={'rgb(255,255,255)'}
-                            // ratingColor={'rgb(255,255,255)'}
-                            imageSize={25}
-                            ratingBackgroundColor={'rgb(255,188,0)'}
-                            minValue={1}
-                            fractions={0.1}
+                        <AirbnbRating
+                            count={5}
+                            reviews={[]}
                             showRating={false}
-                            readonly={true}
-                            type={'star'}
-                            style={styles.alignSelfCenter}
-                            onFinishRating={(rating) => console.log('rating', rating)}
+                            defaultRating={ratingDetails.rateForDriver}
+                            size={scaleText(25).fontSize}
+                            isDisabled={true}
+                            starStyle={{ backgroundColor: 'white', }}
                         />
                     </View>
                     <View style={{ flex: 1, width: '100%', paddingBottom: scaleText(10).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                         <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(15).fontSize, textAlign: 'left' }}>{'Comment:'}</Text>
-                        <Text style={{ color: 'black', fontSize: scaleText(14).fontSize, textAlign: 'left' }}>{ratingDetails.commentForDriver ? ratingDetails.commentForDriver : '--'}</Text>
+                        <Text style={{ color: 'rgb(103,100,100)', fontSize: scaleText(14).fontSize, textAlign: 'left' }}>{ratingDetails.commentForDriver ? ratingDetails.commentForDriver : '--'}</Text>
                     </View>
                     <View style={{ flex: 1, marginVertical: scaleText(20).fontSize, flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`Reference - ${ratingDetails.reference ? ratingDetails.reference : 'NA'}`}</Text>
+                            <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`Reference - ${ratingDetails.reference ? ratingDetails.reference : 'N/A'}`}</Text>
                         </View>
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`ID - ${ratingDetails.id ? ratingDetails.id : 'NA'}`}</Text>
+                            <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{`ID - ${ratingDetails.bookingId ? ratingDetails.bookingId : 'N/A'}`}</Text>
                         </View>
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', width: '100%', backgroundColor: 'rgb(233,233,233)', borderRadius: scaleText(5).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                         <View style={{ flex: 1, borderColor: 'white', borderWidth: 0, borderRightWidth: 0.5, padding: scaleText(10).fontSize, }}>
-                            <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{ratingDetails.startDate ? moment(ratingDetails.startDate).format('DD MMM, YYYY') : 'NA'}</Text>
+                            <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{ratingDetails.startDate ? moment(ratingDetails.startDate).format('DD MMM, YYYY') : 'N/A'}</Text>
                             <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{'Pick-up Date'}</Text>
                         </View>
                         <View style={{ flex: 1, borderColor: 'white', borderWidth: 0, borderLeftWidth: 0.5, padding: scaleText(10).fontSize, }}>
-                            <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{ratingDetails.endDate ? moment(ratingDetails.endDate).format('DD MMM, YYYY') : 'NA'}</Text>
+                            <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'center', fontSize: scaleText(15).fontSize, }}>{ratingDetails.endDate ? moment(ratingDetails.endDate).format('DD MMM, YYYY') : 'N/A'}</Text>
                             <Text style={{ textAlignVertical: 'center', textAlign: 'center', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, }}>{'Drop-off Date'}</Text>
                         </View>
                     </View>
@@ -171,6 +164,10 @@ export const Screen = ({
                             <Text style={{ color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'left', fontSize: scaleText(15).fontSize }}>{'Vehicle'}</Text>
                             <Text style={{ textAlignVertical: 'center', textAlign: 'left', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${ratingDetails && ratingDetails.vehicle && ratingDetails.vehicle.name ? `${ratingDetails.vehicle.name}` : ''}`}</Text>
                         </View>
+                    </View>
+                    <View style={{ flex: 1, width: '100%', justifyContent: 'flex-start' }}>
+                        <Text style={{ flex: 1, color: 'rgb(103,100,100)', textAlignVertical: 'center', textAlign: 'left', fontSize: scaleText(15).fontSize }}>{'Rated On: '}</Text>
+                        <Text style={{ flex: 1, textAlignVertical: 'center', textAlign: 'left', color: 'rgb(155,155,155)', fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${ratingDetails && ratingDetails.driverRatedOn ? `${moment(ratingDetails.driverRatedOn).format('dddd, DD MMMM YYYY')}` : ''}`}</Text>
                     </View>
                 </View>
             </ScrollView>

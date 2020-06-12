@@ -25,7 +25,9 @@ import {
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AppHoc from '../../../../../components/hoc/AppHoc';
-import { Rating } from 'react-native-elements';
+import CustomLoader from '../../../../../components/atoms/Loader';
+import { AirbnbRating } from 'react-native-elements';
+import moment from 'moment';
 import styles from './style';
 import { STRINGS } from '../../../../../shared/constants/us/strings';
 import ImageButton from '../../../../../components/atoms/ImageButton';
@@ -68,7 +70,6 @@ export const Screen = ({
             () => { },
             () => { })
     }, []);
-
     return (
         <AppHoc
             rightIcon={MENU_LOGO}
@@ -154,23 +155,19 @@ export const Screen = ({
                                     <View style={{ flex: 5, flexDirection: 'row', paddingVertical: scaleText(20).fontSize, borderColor: 'transparent', borderBottomColor: 'rgb(222,219,219)', borderWidth: 1 }}>
                                         <View style={{ flex: 5 }}>
                                             <Text style={{ color: 'black', fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`Agency: ${item.agency && item.agency.name ? item.agency.name : ''}`}</Text>
-                                            <Rating
-                                                ratingCount={5}
-                                                // ratingImage={RATING_STAR}
-                                                startingValue={item.rateForDriver ? item.rateForDriver : 0}
-                                                ratingColor={'rgb(255,255,255)'}
-                                                // ratingColor={'rgb(255,255,255)'}
-                                                imageSize={14}
-                                                ratingBackgroundColor={'rgb(255,188,0)'}
-                                                minValue={1}
-                                                fractions={0.1}
-                                                showRating={false}
-                                                readonly={true}
-                                                type={'star'}
-                                                style={styles.alignSelfStart}
-                                                onFinishRating={(rating) => console.log('rating', rating)}
-                                            />
+                                            <View style={{ flex: 1, width: '35%', justifyContent: 'flex-start' }}>
+                                                <AirbnbRating
+                                                    count={5}
+                                                    reviews={[]}
+                                                    showRating={false}
+                                                    defaultRating={item.rateForDriver ? item.rateForDriver : 0}
+                                                    size={scaleText(14).fontSize}
+                                                    isDisabled={true}
+                                                    starStyle={{ backgroundColor: 'white', marginHorizontal: scaleText(2).fontSize }}
+                                                />
+                                            </View>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize, textTransform: 'capitalize' }}>{`Vehicle: ${item.vehicle && item.vehicle.name ? item.vehicle.name : ''}`}</Text>
+                                            <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize, textTransform: 'capitalize' }}>{`Rated On: ${moment(item.driverRatedOn).format('dddd, DD MMMM YYYY')}`}</Text>
                                         </View>
                                         <TouchableOpacity onPress={() => navigation.navigate(SCREENS.RATING_DETAILS, { ratingDetails: item })} style={[styles.flexOne, { alignItems: 'center', justifyContent: 'center' }]}>
                                             <Image
