@@ -44,7 +44,6 @@ export const postRequestNoAuth = ({
 };
 
 export const updateAuthToken = (token = '') => {
-    console.log('token', token)
     instance.defaults.headers = {
         ...instance.defaults.headers,
         ...{ Authorization: token }
