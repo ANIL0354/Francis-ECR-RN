@@ -73,12 +73,10 @@ export const Screen = ({
                                         email: result.email,
                                         userType: USER_TYPES.driver,
                                         name: result.first_name,
-                                        surname: result.last_name
-                                    }, (response) => {
+                                        surname: result.last_name,
+                                    }, () => {
                                         if (fromDetails) {
-                                            navigation.replace(
-                                                { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
-                                            );
+                                            navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails, scrollRef: scrollRef });
                                         }
                                         else {
                                             navigation.goBack();
@@ -129,12 +127,10 @@ export const Screen = ({
                     userType: USER_TYPES.driver,
                     name: result.user.givenName,
                     surname: result.user.familyName,
-                }, (response) => {
+                }, () => {
                     stopLoader();
                     if (fromDetails) {
-                        navigation.replace(
-                            { name: SCREENS.BOOKING_SUMMARY, params: { vehicleDetails: vehicleDetails, scrollRef: scrollRef } }
-                        );
+                        navigation.replace(SCREENS.BOOKING_SUMMARY, { vehicleDetails: vehicleDetails, scrollRef: scrollRef });
                     }
                     else {
                         navigation.goBack();
