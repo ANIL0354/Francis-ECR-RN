@@ -390,7 +390,7 @@ export const Screen = ({
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'Insurance'}>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
-                                {completeDetails && completeDetails.insurancrData
+                                {completeDetails && completeDetails.insuranceData
                                     ? <React.Fragment>
                                         {/* <Text style={{
                                             color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
@@ -400,26 +400,26 @@ export const Screen = ({
                                         }}>{'Basic Details: '}</Text>
                                         <View style={{ flex: 1, paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Insurance Name: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.insurancrData.name}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.insuranceData.name}</Text>
                                         </View>
                                         <View style={{ flex: 1, paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Insurance Description: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insurancrData.description}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.description ? completeDetails.insuranceData.description : 'N/A'}`}</Text>
                                         </View>
                                         <Text style={{
                                             color: 'black', flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(15).fontSize, fontWeight: 'bold'
                                         }}>{'Other Insurance Details: '}</Text>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Bond: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insurancrData.bond ? completeDetails.insurancrData.bond : 0} year${completeDetails.insurancrData.bond > 1 ? 's' : ''}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.bond ? completeDetails.insuranceData.bond : 0} year${completeDetails.insuranceData.bond > 1 ? 's' : ''}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Excess: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.excess ? completeDetails.insurancrData.excess : 0}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.excess ? completeDetails.insuranceData.excess : 0}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Daily Fee: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insurancrData.dailyFee ? completeDetails.insurancrData.dailyFee : 0}`}</Text>
+                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.dailyFee ? completeDetails.insuranceData.dailyFee : 0}`}</Text>
                                         </View>
                                     </React.Fragment>
                                     : <Text style={{
@@ -568,12 +568,17 @@ export const Screen = ({
                         <CollapsableWrapper wrapperLabel={'FAQs'}>
                             {faqList && <View>
                                 {
-                                    faqList.length && faqList.map((item, index) => (
+                                    faqList.length ? faqList.map((item, index) => (
                                         <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
                                             <Text style={{ color: 'black', flex: 1, fontWeight: 'bold', fontSize: scaleText(14).fontSize }}>{`${index + 1}. ${item.question}`}</Text>
                                             <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{item.answer}</Text>
                                         </View>
                                     ))
+                                        : (
+                                            <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
+                                                <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`No FAQs found.`}</Text>
+                                            </View>
+                                        )
                                 }
                             </View>}
                         </CollapsableWrapper>
