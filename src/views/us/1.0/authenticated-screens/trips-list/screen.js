@@ -84,6 +84,7 @@ export const Screen = ({
                 limit: LIMITS.vehicleList,
             }, () => {
                 stopLoader();
+                scrollToTop();
             }, () => {
                 stopLoader();
             });
@@ -94,6 +95,7 @@ export const Screen = ({
                 limit: LIMITS.vehicleList,
             }, () => {
                 stopLoader();
+                scrollToTop();
             }, () => {
                 stopLoader();
             });
@@ -104,6 +106,7 @@ export const Screen = ({
                 limit: LIMITS.vehicleList,
             }, () => {
                 stopLoader();
+                scrollToTop();
             }, () => {
                 stopLoader();
             });
@@ -160,7 +163,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
-                            scrollToTop();
+                            // scrollToTop();
                             setPageIndex(0);
                             setTabValue(0);
                         }}
@@ -196,7 +199,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
-                            scrollToTop();
+                            // scrollToTop();
                             setPageIndex(0);
                             setTabValue(1);
                         }}
@@ -233,7 +236,7 @@ export const Screen = ({
                     <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() => {
-                            scrollToTop();
+                            // scrollToTop();
                             setPageIndex(0);
                             setTabValue(2);
                         }}
