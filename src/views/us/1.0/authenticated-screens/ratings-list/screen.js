@@ -141,17 +141,20 @@ export const Screen = ({
                         scrollEnabled={true}
                         onEndReachedThreshold={0.8}
                         onEndReached={() => {
-
-                            setFetchingData(true);
-                            fetchRatingList({
-                                index: pageIndex + 1,
-                                limit: LIMITS.vehicleList,
-                            },
-                                () => { },
-                                () => { });
-                            setFetchingData(false);
-                            setPageIndex(pageIndex + 1);
-
+                            if (ratingList.totalCount === ratingList.length) {
+                                return;
+                            }
+                            else {
+                                setFetchingData(true);
+                                fetchRatingList({
+                                    index: pageIndex + 1,
+                                    limit: LIMITS.vehicleList,
+                                },
+                                    () => { },
+                                    () => { });
+                                setFetchingData(false);
+                                setPageIndex(pageIndex + 1);
+                            }
                         }}
                         ListEmptyComponent={<View>
                             <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center', paddingVertical: scaleText(20).fontSize }}>{'No rating received yet.'}</Text>
@@ -159,7 +162,7 @@ export const Screen = ({
                         onViewableItemsChanged={onViewRef.current}
                         viewabilityConfig={viewConfigRef.current}
                         showsVerticalScrollIndicator={false}
-                        data={ratingList ? ratingList : []}
+                        data={ratingList && ratingList.data ? ratingList.data : []}
                         keyExtractor={(item, index) => (item.id ? item.id : `${index}`)}
                         renderItem={({ item }) => {
                             return (

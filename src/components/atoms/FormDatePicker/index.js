@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-native-datepicker';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions, Platform } from 'react-native';
 import { scaleText } from '../../../helpers';
 import moment from 'moment';
 import styles from './style';
@@ -25,11 +25,15 @@ const CustomDatePicker = ({
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
+    let desiredWidth = (takeErrorSpace ? Dimensions.get('screen').width / 2 : Dimensions.get('screen').width)
+
     return (
         <View
             onLayout={({ nativeEvent }) => { setParentWidth(nativeEvent.layout.width) }}
             style={{
                 ...style,
+                width: desiredWidth - scaleText(20).fontSize,
+                marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
                 maxHeight: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
             }}>
             <DatePicker
@@ -44,20 +48,21 @@ const CustomDatePicker = ({
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateTouchBody: {
-                        width: scaleText(parentWidth).fontSize + scaleText(10).fontSize,
+                        width: desiredWidth - scaleText(Platform.OS === 'ios' ? 25 : 20).fontSize,
+                        marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
                         padding: 0,
-                        maxHeight: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
+                        // maxHeight: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     },
                     dateIcon: styles.dateIcon,
                     dateInput: {
                         ...style,
                         ...styles.dateInput,
                         margin: 0,
-                        width: scaleText(parentWidth).fontSize,
+                        width: desiredWidth - scaleText(25).fontSize,
+                        marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
-                        height:
-                            takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
+                        height: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     },
                     datePickerCon: {
                         backfaceVisibility: false

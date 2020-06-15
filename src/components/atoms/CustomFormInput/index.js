@@ -36,9 +36,8 @@ const CustomFormInput = ({
                     ...style,
                     ...styles.inputStyle,
                     fontSize: scaledFont.fontSize,
-                    lineHeight: scaledFont.lineHeight,
-                    color: 'black',
-                    textAlignVertical: multiline ? 'top' : 'center',
+                    lineHeight: Platform.OS === 'ios' ? 1.2 * scaledFont.lineHeight : scaledFont.lineHeight, color: 'black',
+                    textAlignVertical: multiline ? 'top' : Platform.OS === 'ios' ? 'top' : 'center',
                     backgroundColor: editable ? 'white' : 'lightgray',
                     height:
                         multiline ? 10 * scaledFont.lineHeight : takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
