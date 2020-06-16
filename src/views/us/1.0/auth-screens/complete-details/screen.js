@@ -26,6 +26,7 @@ export const Screen = ({
         }
     }, []);
 
+
     useEffect(() => {
         startLoader();
         fetchProfile(() => { stopLoader(); }, () => { stopLoader(); });

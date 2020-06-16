@@ -75,7 +75,7 @@ export const Screen = ({
                             width={20}
                         />
                     </View>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, paddingVertical: scaleText(20).fontSize }}>
                         <ChangePasswordForm
                             onSubmit={(formProps) => {
                                 startLoader();

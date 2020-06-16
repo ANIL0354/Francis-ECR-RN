@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://api.easycarrelo.co.nz'; //Live URL
+const SERVER_URL = 'https://65f2e8f2f180.ngrok.io'; //Live URL
 // test server: http://13.238.207.250:5000
 // live server: https://api.easycarrelo.co.nz
 const API_VERSION = '/v1';
@@ -18,7 +18,7 @@ module.exports = {
     VEHICLE_TYPE_LISTING: SERVER_URL + API_VERSION + '/vehicleType',
     VEHICLE_DETAILS: SERVER_URL + API_VERSION + '/listingByID​',
     FAQ_LIST: SERVER_URL + API_VERSION + '/faq',
-    PROFILE: SERVER_URL + API_VERSION + '/user/profile',
+    PROFILE: SERVER_URL + API_VERSION + '/driver/profile',
     CHANGE_PASSWORD: SERVER_URL + API_VERSION + '/user/change-password',
     COMPLETE_USER_PROFILE: SERVER_URL + API_VERSION + '/user/complete-profile',
     FETCH_UPCOMING_TRIPS: SERVER_URL + API_VERSION + '/driver/upcoming-trips',

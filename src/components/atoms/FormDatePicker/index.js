@@ -25,7 +25,7 @@ const CustomDatePicker = ({
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
-    let desiredWidth = (takeErrorSpace ? Dimensions.get('screen').width / 2 : Dimensions.get('screen').width)
+    let desiredWidth = (takeErrorSpace ? Dimensions.get('screen').width / 2 : Dimensions.get('screen').width - scaleText(15).fontSize)
 
     return (
         <View

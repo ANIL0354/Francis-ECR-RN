@@ -108,6 +108,7 @@ function* checkSocialLogin({ data, success, failure }) {
     try {
         yield put(startLoader());
         const response = yield postRequestNoAuth({ API: `${api.URL.SOCIAL_LOGIN}`, DATA: data });
+
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null));
@@ -242,6 +243,7 @@ function* getDriverProfile({ data, success, failure }) {
     try {
         yield put(startLoader());
         const response = yield getRequest({ API: `${api.URL.PROFILE}` });
+
         if (response.status === STATUS_CODE.unAuthorized) {
             yield put(setAuthorization(null));
             yield put(saveDriverData(null));

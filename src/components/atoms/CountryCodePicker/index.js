@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
         borderBottomColor: 'rgba(0,0,0,0.3)',
         borderWidth: 0.8,
+        alignItems: 'center',
         paddingHorizontal: 8
     },
     emojiStyle: {
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'black',
         fontSize: 13,
-        paddingLeft: 10
+        paddingLeft: 10,
+        textAlignVertical: 'center'
     },
     themeStyle: {
     }
@@ -210,7 +212,7 @@ const CountryCodePicker = ({
                 {countryValue !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
-                            value={countryDrop ? `${input.value}` : codeValue ? `+${input.value}` : ''}
+                            value={countryDrop ? `${input.value}` : codeValue ? `${input.value.includes('+') ? '' : '+'}${input.value}` : ''}
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',

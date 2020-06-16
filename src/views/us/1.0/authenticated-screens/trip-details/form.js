@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -18,51 +18,62 @@ const Form = ({
     onSubmit,
     onCancel
 }) => {
+    let bodyField = useRef();
     return (
-        <React.Fragment>
-            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
-                <Text style={styles.label}>{'Subject:'}</Text>
-                <Field
-                    name={STRINGS.EMAIL_SUBJECT_NAME}
-                    component={CustomFormInput}
-                    placeholder={STRINGS.TYPE_SUBJECT_HERE}
-                    returnKeyType={'next'}
-                    takeErrorSpace={false}
-                    style={styles.flexOne}
-                />
-            </View>
-
-
-            <View style={[styles.flexOne, styles.verticalFiveMargin]}>
-                <Text style={styles.label}>{'Body:'}</Text>
-                <Field
-                    name={STRINGS.EMAIL_BODY_NAME}
-                    component={CustomFormInput}
-                    multiline={true}
-                    returnKeyType={'go'}
-                    takeErrorSpace={false}
-                    placeholder={STRINGS.TYPE_HERE}
-                    style={styles.flexOne}
-                />
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
-                    <TouchableOpacity
-                        style={styles.changePasswordButton}
-                        onPress={onCancel}>
-                        <Text style={styles.basicBlueText}>{STRINGS.CANCEL}</Text>
-                    </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={(event) => {
+            if (event.target === bodyField.current) {
+                return;
+            }
+            else {
+                Keyboard.dismiss();
+            }
+        }}>
+            <View>
+                <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                    <Text style={styles.label}>{'Subject:'}</Text>
+                    <Field
+                        name={STRINGS.EMAIL_SUBJECT_NAME}
+                        component={CustomFormInput}
+                        placeholder={STRINGS.TYPE_SUBJECT_HERE}
+                        returnKeyType={'next'}
+                        takeErrorSpace={false}
+                        style={styles.flexOne}
+                    />
                 </View>
-                <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
-                    <TouchableOpacity
-                        style={styles.submitEditButton}
-                        onPress={handleSubmit(onSubmit)}>
-                        <Text style={styles.basicWhiteText}>{LABELS.sendEmail}</Text>
-                    </TouchableOpacity>
+
+
+                <View style={[styles.flexOne, styles.verticalFiveMargin]}>
+                    <Text style={styles.label}>{'Body:'}</Text>
+                    <View ref={bodyField}>
+                        <Field
+                            name={STRINGS.EMAIL_BODY_NAME}
+                            component={CustomFormInput}
+                            multiline={true}
+                            returnKeyType={'go'}
+                            takeErrorSpace={false}
+                            placeholder={STRINGS.TYPE_HERE}
+                            style={styles.flexOne}
+                        />
+                    </View>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
+                        <TouchableOpacity
+                            style={styles.changePasswordButton}
+                            onPress={onCancel}>
+                            <Text style={styles.basicBlueText}>{STRINGS.CANCEL}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.changePasswordWrapper, { marginVertical: scaleText(20).fontSize }]}>
+                        <TouchableOpacity
+                            style={styles.submitEditButton}
+                            onPress={handleSubmit(onSubmit)}>
+                            <Text style={styles.basicWhiteText}>{LABELS.sendEmail}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-
-        </React.Fragment>
+        </TouchableWithoutFeedback>
     );
 };
 
