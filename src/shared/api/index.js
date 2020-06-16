@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://api.easycarrelo.co.nz'; //Live URL
+const SERVER_URL = 'https://65f2e8f2f180.ngrok.io'; //Live URL
 // test server: http://13.238.207.250:5000
 // live server: https://api.easycarrelo.co.nz
 const API_VERSION = '/v1';
