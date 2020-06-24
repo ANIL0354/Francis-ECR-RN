@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { View, StatusBar, KeyboardAvoidingView, Platform, SafeAreaView, Alert, Keyboard } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader, logout } from '../../../redux/actions';
-import messaging from '@react-native-firebase/messaging';
+import messaging, { AuthorizationStatus } from '@react-native-firebase/messaging';
 import CustomLoader from '../../atoms/Loader';
 import { STRINGS } from '../../../shared/constants/us/strings';
 import styles from './style';
@@ -15,14 +15,29 @@ const AppHoc = ({
   leftIcon,
   centerIcon,
   loader,
-  logout,
   fromSummary = false,
   rideBooked = false,
   userToken,
-  stopLoader,
   children,
   navigation,
 }) => {
+  const [notificationPermissionGranted, setNotificationPermissionGranted] = useState(false)
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === 1 || authStatus === 2;
+
+    if (enabled) {
+      // console.log('Authorization status:', authStatus);
+      setNotificationPermissionGranted(enabled);
+    }
+  }
+  useEffect(() => {
+    if (!notificationPermissionGranted) {
+      requestUserPermission();
+    }
+  }, [notificationPermissionGranted]);
+
   useEffect(() => {
     if (loader) {
       Keyboard.dismiss();
@@ -46,7 +61,6 @@ const AppHoc = ({
         }
         else {
           navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
-
         }
       }
       else {
