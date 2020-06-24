@@ -176,11 +176,9 @@ const CountryCodePicker = ({
                     containerButtonStyle={{
                         margin: 0,
                         flexDirection: 'row',
-                        margin: 0,
                         padding: 0,
                         zIndex: 0,
                         alignContent: 'center',
-                        display: codeValue && countryValue ? 'none' : 'flex',
                         display: 'none'
                     }}
                     onSelect={(value) => {

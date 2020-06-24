@@ -19,6 +19,8 @@ const AppHoc = ({
   rideBooked = false,
   userToken,
   children,
+  logout,
+  stopLoader,
   navigation,
 }) => {
   const [notificationPermissionGranted, setNotificationPermissionGranted] = useState(false)
