@@ -52,7 +52,7 @@ const AppHoc = ({
         navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, tripDetails: { _id: remoteMessage.data.listingId } });
       }
       else {
-        navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
+        return;
       }
     });
 
@@ -62,11 +62,11 @@ const AppHoc = ({
           navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, tripDetails: { _id: remoteMessage.data.listingId } });
         }
         else {
-          navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
+          return;
         }
       }
       else {
-        return
+        return;
       }
     }).catch(error => {
       console.log('error', error);

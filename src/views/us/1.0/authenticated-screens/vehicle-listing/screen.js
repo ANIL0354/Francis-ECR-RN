@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -315,53 +316,19 @@ export const Screen = ({
                             // date={modifiedDate ? modifiedDate : pickupDate}
                             confirmBtnText='Confirm'
                             cancelBtnText='Cancel'
-                            style={{
-                                padding: 0,
-                                margin: 0,
-                                width: '100%',
-                            }}
+                            style={styles.datePickerStyle}
                             getDateStr={(date) => {
                                 onDateChange(date);
                                 setModifiedDate(date);
                             }}
                             iconSource={DATE_ICON}
                             customStyles={{
-                                dateTouchBody: {
-                                    marginVertical: scaleText(20).fontSize,
-                                    zIndex: 10,
-                                },
-                                dateIcon: {
-                                    marginLeft: -1 * (scaleText(30).fontSize),
-                                    height: scaleText(25).fontSize,
-                                    width: scaleText(25).fontSize
-                                },
-                                dateInput: {
-                                    textAlign: 'left',
-                                    minWidth: '40%',
-                                    margin: 0,
-                                    backgroundColor: 'white',
-                                    padding: 0,
-                                    height: 2.5 * scaledFont.lineHeight,
-                                    borderColor: 'black',
-                                    borderRadius: 5,
-                                    borderWidth: 0.8,
-                                    fontSize: scaledFont.fontSize,
-                                    lineHeight: scaledFont.lineHeight,
-                                    paddingHorizontal: 10,
-                                    alignSelf: 'center',
-                                    paddingVertical: 2,
-                                    paddingBottom: 0,
-                                    marginBottom: 0,
-                                },
+                                dateTouchBody: styles.dateTouchBody,
+                                dateIcon: styles.dateIcon,
+                                dateInput: styles.dateInput,
+                                dateText: styles.dateText,
                                 datePickerCon: {
                                     backfaceVisibility: false,
-                                },
-                                dateText: {
-                                    textAlign: 'left',
-                                    margin: 0,
-                                    fontSize: scaledFont.fontSize,
-                                    lineHeight: scaledFont.lineHeight,
-                                    padding: 0,
                                 },
                                 placeholderText: {
                                     textAlign: 'left',
@@ -378,14 +345,14 @@ export const Screen = ({
                                 },
                                 btnConfirm: {
                                     flex: 1,
-                                    paddingHorizontal: scaleText(10).fontSize
+                                    paddingHorizontal: scaleText(10).fontSize,
                                 },
                                 btnTextCancel: {
-                                    textAlign: 'center'
+                                    textAlign: 'center',
                                 },
                                 btnTextConfirm: {
-                                    textAlign: 'center'
-                                }
+                                    textAlign: 'center',
+                                },
                             }}
                             onDateChange={(date) => {
                                 setSelectedDate(date);
@@ -393,32 +360,15 @@ export const Screen = ({
                         />
                         <TouchableOpacity
                             onPress={() => showFilterMenu(true)}
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                paddingVertical: 5,
-                                marginBottom: 2,
-                            }}>
+                            style={styles.advanceTextWrapper}>
                             <SimpleImage source={SEARCH_ICON} />
                             <Text
-                                style={{
-                                    color: 'white',
-                                    fontSize: scaleText(18).fontSize,
-                                    textAlign: 'left',
-                                    marginLeft: scaleText(5).fontSize,
-                                    textAlignVertical: 'center',
-                                }}>
+                                style={styles.advanceSearchText}>
                                 {'Advanced Search'}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{
-                                backgroundColor: '#fff93e',
-                                alignItems: 'center',
-                                borderRadius: 5,
-                                padding: scaleText(10).fontSize,
-                                marginTop: scaleText(20).fontSize,
-                            }}
+                            style={styles.modifyTextWrapper}
                             activeOpacity={0.7}
                             onPress={() => {
                                 Keyboard.dismiss();
@@ -478,11 +428,7 @@ export const Screen = ({
                                 }
                             }}>
                             <Text
-                                style={{
-                                    fontWeight: '700',
-                                    color: 'black',
-                                    fontSize: scaleText(16).fontSize,
-                                }}>
+                                style={styles.modifyText}>
                                 {'Modify Search'}
                             </Text>
                         </TouchableOpacity>
@@ -493,15 +439,7 @@ export const Screen = ({
                             setModifiedLocation(null);
                             showSearchBarAnimation();
                         }}
-                        style={{
-                            color: 'white',
-                            fontSize: scaleText(14).fontSize,
-                            fontWeight: 'bold',
-                            textAlign: 'right',
-                            textAlignVertical: 'center',
-                            marginRight: scaleText(20).fontSize,
-                            marginTop: scaleText(20).fontSize
-                        }}
+                        style={styles.cancelText}
                     >{'CANCEL'}</Text>
                 </ScrollView>}
             </View>
@@ -531,7 +469,7 @@ export const Screen = ({
                                 index: 0,
                             },
                             () => {
-                                setIsRefreshing(false)
+                                setIsRefreshing(false);
                             },
                             () => { },
                         );
@@ -548,7 +486,7 @@ export const Screen = ({
                                             style={{
                                                 fontSize: scaledLargeFont.fontSize,
                                                 lineHeight: scaledLargeFont.lineHeight,
-                                                ...styles.pageHeading
+                                                ...styles.pageHeading,
                                             }}>
                                             {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicle${vehicleListing.totalCount > 1 ? 's' : ''} available from ${pickupLocation}.`}
                                         </Text>
@@ -595,7 +533,7 @@ export const Screen = ({
                                                         }} style={styles.vehicleTypeContainer}>
                                                             <Text style={{
                                                                 fontSize: scaledSmallerFont.fontSize,
-                                                                ...styles.vehicleTypeTitle
+                                                                ...styles.vehicleTypeTitle,
                                                             }}>{item.name}</Text>
                                                             <Image
                                                                 source={{ uri: item.URL }}
@@ -604,7 +542,7 @@ export const Screen = ({
                                                                 style={{
                                                                     ...styles.alignSelfCenter,
                                                                     height: scaleText(60).fontSize,
-                                                                    width: scaleText(80).fontSize
+                                                                    width: scaleText(80).fontSize,
                                                                 }}
                                                             />
                                                         </TouchableOpacity>

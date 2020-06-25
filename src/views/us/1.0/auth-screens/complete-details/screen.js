@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from "react";
-import { View, Image, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, Text, Button, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON } from '../../../../../shared/constants';
 import { DetailsForm } from './form';
-import { scaleText } from '../../../../../helpers'
-import styles from "./style.js";
-import { startLoader } from "../../../../../redux/actions";
+import { scaleText } from '../../../../../helpers';
+import styles from './style.js';
+import { startLoader } from '../../../../../redux/actions';
 
 
 export const Screen = ({
