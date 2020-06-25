@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
@@ -9,18 +9,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: scaleText(30).fontSize,
         paddingVertical: scaleText(20).fontSize,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     subHeaderText: {
         color: 'white',
         textAlign: 'center',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     authTabContainer: {
         flexDirection: 'row',
         paddingHorizontal: scaleText(50).fontSize,
         paddingTop: scaleText(20).fontSize,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     authTabButton: {
         minWidth: 150,
@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
         paddingVertical: scaleText(10).fontSize,
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
-        marginHorizontal: 2
+        marginHorizontal: 2,
     },
     authTabButtonText: {
         color: 'white',
         opacity: 1,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     formWrapper: {
         padding: scaleText(5).fontSize,
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         flex: 1,
-        padding: 10
+        padding: 10,
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
     },
     socialButton: {
         backgroundColor: 'darkblue',
@@ -60,26 +60,26 @@ const styles = StyleSheet.create({
         width: 200,
         justifyContent: 'space-evenly',
         height: 30,
-        marginVertical: 5
+        marginVertical: 5,
     },
     loginSubmit: {
         backgroundColor: '#009000',
         maxWidth: 200,
         minWidth: 200,
         marginBottom: 10,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     loginSubmitTitle: {
         textAlign: 'center',
         flexWrap: 'wrap',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     facebookButton: {
         backgroundColor: '#3b5998',
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center',
-        borderRadius: 5
+        borderRadius: 5,
     },
     facebookButtonTitle: {
         textAlign: 'center',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center',
-        borderRadius: 5
+        borderRadius: 5,
     },
     socialButtonTitle: {
         flex: 1,
@@ -102,37 +102,37 @@ const styles = StyleSheet.create({
     socialButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 15
+        marginBottom: 15,
     },
     forgotPasswordLabel: {
         marginLeft: 5,
         marginTop: 30,
         color: '#0091ff',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     connectWithText: {
         textAlign: 'center',
         marginBottom: 20,
         marginTop: 5,
-        color: 'black'
+        color: 'black',
     },
     dividingLine: {
         width: '100%',
         height: 1.5,
-        marginVertical: 20
+        marginVertical: 20,
     },
     registerButtonStyle: {
         backgroundColor: '#009000',
         maxWidth: 200,
         minWidth: 200,
         marginBottom: 30,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     fieldsRow: {
         flexDirection: 'row',
         minWidth: '100%',
         justifyContent: 'space-between',
-    }
+    },
 });
 
 export default styles;

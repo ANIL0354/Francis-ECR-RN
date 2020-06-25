@@ -52,7 +52,7 @@ export const Screen = ({
 }) => {
     const largeScaledFont = scaleText(18);
     const [formVisible, setFormVisible] = useState(false);
-    let { tabValue, tripDetails } = route.params;
+    let { tabValue, tripDetails, fromNotification } = route.params;
 
     useEffect(() => {
         fetchCompleteDetails(
@@ -64,37 +64,40 @@ export const Screen = ({
 
     useEffect(() => {
         return () => {
-            startLoader();
-            if (tabValue === 0) {
-                fetchUpcomingTrips({
-                    index: 0,
-                    limit: LIMITS.vehicleList,
-                }, () => {
-                    stopLoader();
-                }, () => {
-                    stopLoader();
-                });
+            if (!fromNotification) {
+                startLoader();
+                if (tabValue === 0) {
+                    fetchUpcomingTrips({
+                        index: 0,
+                        limit: LIMITS.vehicleList,
+                    }, () => {
+                        stopLoader();
+                    }, () => {
+                        stopLoader();
+                    });
+                }
+                else if (tabValue === 1) {
+                    fetchPastTrips({
+                        index: 0,
+                        limit: LIMITS.vehicleList,
+                    }, () => {
+                        stopLoader();
+                    }, () => {
+                        stopLoader();
+                    });
+                }
+                else {
+                    fetchCancelledTrips({
+                        index: 0,
+                        limit: LIMITS.vehicleList,
+                    }, () => {
+                        stopLoader();
+                    }, () => {
+                        stopLoader();
+                    });
+                }
             }
-            else if (tabValue === 1) {
-                fetchPastTrips({
-                    index: 0,
-                    limit: LIMITS.vehicleList,
-                }, () => {
-                    stopLoader();
-                }, () => {
-                    stopLoader();
-                });
-            }
-            else {
-                fetchCancelledTrips({
-                    index: 0,
-                    limit: LIMITS.vehicleList,
-                }, () => {
-                    stopLoader();
-                }, () => {
-                    stopLoader();
-                });
-            }
+
         }
     }, []);
 

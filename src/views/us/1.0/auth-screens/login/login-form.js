@@ -1,13 +1,14 @@
-import React from "react";
-import { reduxForm, Field } from "redux-form";
+/* eslint-disable prettier/prettier */
+import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { DIVIDING_LINE, GOOGLE_ICON, FACEBOOK_ICON, LABELS } from '../../../../../shared/constants'
-import { STRINGS } from "../../../../../shared/constants/us/strings";
-import { scaleText } from "../../../../../helpers";
-import validator from "./validator";
+import { STRINGS } from '../../../../../shared/constants/us/strings';
+import { scaleText } from '../../../../../helpers';
+import validator from './validator';
 import styles from './style';
 
 
@@ -38,7 +39,7 @@ const Form = ({
 
             <View style={{
                 flexDirection: 'row',
-                padding: scaleText(10).fontSize
+                padding: scaleText(10).fontSize,
             }}>
                 <TouchableOpacity
                     onPress={googleAuth}
@@ -56,11 +57,11 @@ const Form = ({
                     <View style={{ flex: 1, alignItems: 'center', }}>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.loginWith}</Text>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.google}</Text>
                     </View>
                 </TouchableOpacity>
@@ -79,7 +80,7 @@ const Form = ({
                     />
                     <Text style={{
                         ...styles.socialButtonTitle,
-                        fontSize: scaleText(13).fontSize
+                        fontSize: scaleText(13).fontSize,
                     }}>{LABELS.loginWithFacebook}</Text>
                 </TouchableOpacity>
             </View>
@@ -97,13 +98,13 @@ const Form = ({
 const mapStateToProps = (state, props) => {
     return {
     };
-}
+};
 
 const reduxFormFunction = reduxForm({
-    form: "login",
+    form: 'login',
     fields: ['email', 'password'],
     validate: validator,
-    enableReinitialize: true
+    enableReinitialize: true,
 })(Form);
 
-export const LoginForm = connect(mapStateToProps, null)(reduxFormFunction);
+export const LoginForm = connect(mapStateToProps, null)(reduxFormFunction)

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, StatusBar, KeyboardAvoidingView, Platform, SafeAreaView, Alert, Keyboard } from 'react-native';
 import AppHeader from '../../atoms/AppHeader';
 import { stopLoader, logout } from '../../../redux/actions';
-import messaging, { AuthorizationStatus } from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import CustomLoader from '../../atoms/Loader';
 import { STRINGS } from '../../../shared/constants/us/strings';
 import styles from './style';
@@ -49,7 +49,7 @@ const AppHoc = ({
   useEffect(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
       if (userToken) {
-        navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, targetId: '5ed9e4270b4d885979062ae7', tripDetails: { _id: remoteMessage.data.listingId } });
+        navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, tripDetails: { _id: remoteMessage.data.listingId } });
       }
       else {
         navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
@@ -59,7 +59,7 @@ const AppHoc = ({
     messaging().getInitialNotification().then(remoteMessage => {
       if (remoteMessage) {
         if (userToken) {
-          navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, targetId: '5ed9e4270b4d885979062ae7', tripDetails: { _id: remoteMessage.data.listingId } });
+          navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: true, tripDetails: { _id: remoteMessage.data.listingId } });
         }
         else {
           navigation.navigate(SCREENS.LOGIN, { fromDetails: false });
@@ -72,7 +72,7 @@ const AppHoc = ({
       console.log('error', error);
       navigation.navigate(SCREENS.HOME);
     });
-  }, [])
+  }, []);
 
   return (
     <KeyboardAvoidingView

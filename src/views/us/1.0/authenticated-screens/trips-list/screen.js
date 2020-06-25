@@ -419,7 +419,7 @@ export const Screen = ({
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Pickup Location: ${tabValue === 2 ? item.pickupLocation : item.pickupBranch.name}`}</Text>
                                             <Text style={{ color: 'rgb(155,155,155)', fontSize: scaleText(12).fontSize }}>{`Drop-off Location: ${tabValue === 2 ? item.dropoffLocation : item.dropoffBranch.name}`}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { tabValue: tabValue, tripDetails: item })} style={[styles.flexOne, { alignItems: 'flex-start', paddingTop: scaleText(3).fontSize, justifyContent: 'flex-start' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate(SCREENS.TRIP_DETAILS, { fromNotification: false, tabValue: tabValue, tripDetails: item })} style={[styles.flexOne, { alignItems: 'flex-start', paddingTop: scaleText(3).fontSize, justifyContent: 'flex-start' }]}>
                                             <Image
                                                 source={LIST_ARROW}
                                                 height={10}

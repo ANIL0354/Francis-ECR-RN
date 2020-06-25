@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, { Component, useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { DraggableCalendar } from './wrapper';
 import { scaleText } from '../../../helpers';
 import styles from './styles';
@@ -15,7 +15,6 @@ const CustomDraggableCalendar = ({
     dropoffDate,
     totalSelectable
 }) => {
-    const [pickup, setPickup] = useState(null);
     const [pickupDateValue, setPickupDateValue] = useState(new Date(pickupDate).getDate());
     const [pickupMonth, setPickupMonth] = useState(new Date(pickupDate).getMonth());
     const [pickupYear, setPickupYear] = useState(new Date(pickupDate).getFullYear());
@@ -41,9 +40,9 @@ const CustomDraggableCalendar = ({
             singleDayContainerStyle: styles.selectedDayContainer,
             beginDayContainerStyle: styles.selectedDayContainer,
             middleDayContainerStyle: styles.selectedDayContainer,
-            endDayContainerStyle: styles.selectedDayContainer
+            endDayContainerStyle: styles.selectedDayContainer,
         };
-    }
+    };
 
     return (
         <View style={{ marginVertical: scaleText(20).fontSize }}>
@@ -79,20 +78,19 @@ const CustomDraggableCalendar = ({
                     <View style={styles.indicatorRow}>
                         <View style={{
                             backgroundColor: '#f2c225',
-                            ...styles.indicatorColor
+                            ...styles.indicatorColor,
                         }} />
                         <Text style={styles.indicatorText}>{'Selected Paid Days'}</Text>
                     </View>
                 </View>
                 <View style={styles.clearSelectionWrapper}>
                     <Text
-                        onPress={() => { setStartDate(null); setEndDate(null) }}
+                        onPress={() => { setStartDate(null); setEndDate(null); }}
                         style={styles.clearSelectionText}>{'Clear Selection'}</Text>
                 </View>
             </View>
         </View>
-    )
-
-}
+    );
+};
 
 export default CustomDraggableCalendar;

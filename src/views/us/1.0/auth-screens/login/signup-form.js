@@ -71,10 +71,10 @@ const Form = ({
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     onDateChange={(date) => {
-                        changeField('signup', STRINGS.DOB_INPUT, date)
+                        changeField('signup', STRINGS.DOB_INPUT, date);
                     }}
                     saveDateString={(date) => {
-                        saveDateString(date)
+                        saveDateString(date);
                     }}
                     maxDate={new Date(maxDate)}
                     style={{ flex: 1, marginRight: scaleText(5).fontSize }}
@@ -177,7 +177,7 @@ const Form = ({
 
             <View style={{
                 flexDirection: 'row',
-                padding: scaleText(10).fontSize
+                padding: scaleText(10).fontSize,
             }}>
                 <TouchableOpacity
                     onPress={googleAuth}
@@ -195,11 +195,11 @@ const Form = ({
                     <View style={{ flex: 1, alignItems: 'center', }}>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.loginWith}</Text>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.google}</Text>
                     </View>
                 </TouchableOpacity>
@@ -218,7 +218,7 @@ const Form = ({
                     />
                     <Text style={{
                         ...styles.socialButtonTitle,
-                        fontSize: scaleText(13).fontSize
+                        fontSize: scaleText(13).fontSize,
                     }}>{LABELS.loginWithFacebook}</Text>
                 </TouchableOpacity>
             </View>
