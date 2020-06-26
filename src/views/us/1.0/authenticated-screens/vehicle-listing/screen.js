@@ -49,6 +49,7 @@ import CustomButton from '../../../../../components/atoms/CustomButton';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
 import CustomLoader from '../../../../../components/atoms/Loader';
 import ImageButton from '../../../../../components/atoms/ImageButton';
+import { STRINGS } from '../../../../../shared/constants/us/strings';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
@@ -248,7 +249,7 @@ export const Screen = ({
                                     maxWidth: 150,
                                     height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
                                     fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    lineHeight: scaledMediumFont.lineHeight,
                                 }}>
                                 {pickupLocation ? pickupLocation : ''}
                             </Text>
@@ -259,7 +260,7 @@ export const Screen = ({
                                     ...styles.subHeaderText,
                                     height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
                                     fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    lineHeight: scaledMediumFont.lineHeight,
                                 }}>
                                 {'Pick-up Date:'}
                             </Text>
@@ -268,7 +269,7 @@ export const Screen = ({
                                     ...styles.subHeaderText,
                                     height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
                                     fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    lineHeight: scaledMediumFont.lineHeight,
                                 }}>
                                 {pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : ''}
                             </Text>
@@ -283,7 +284,7 @@ export const Screen = ({
                     style={{
                         paddingVertical: scaleText(20).fontSize,
                     }}
-                    keyboardShouldPersistTaps='always'
+                    keyboardShouldPersistTaps={'always'}
                     showsVerticalScrollIndicator={false}>
                     <View
                         style={{
@@ -303,7 +304,7 @@ export const Screen = ({
                         />
 
                         <DatePicker
-                            mode='date'
+                            mode={'date'}
                             placeholder={modifiedDate
                                 ? `${moment(modifiedDate).format('DD-MM-YYYY')}` :
                                 pickupDate
@@ -314,8 +315,8 @@ export const Screen = ({
                             minDate={new Date()}
                             maxDate={new Date(maxDate)}
                             // date={modifiedDate ? modifiedDate : pickupDate}
-                            confirmBtnText='Confirm'
-                            cancelBtnText='Cancel'
+                            confirmBtnText={'Confirm'}
+                            cancelBtnText={'Cancel'}
                             style={styles.datePickerStyle}
                             getDateStr={(date) => {
                                 onDateChange(date);
@@ -378,7 +379,7 @@ export const Screen = ({
                                         'Please select a pick-up location before proceeding.',
                                         [
                                             {
-                                                text: 'Okay',
+                                                text: STRINGS.OKAY,
                                                 onPress: () => { },
                                             },
                                         ],
@@ -390,7 +391,7 @@ export const Screen = ({
                                         'Please select a pick-up date before proceeding.',
                                         [
                                             {
-                                                text: 'Okay',
+                                                text: STRINGS.OKAY,
                                                 onPress: () => { },
                                             },
                                         ],
@@ -511,7 +512,7 @@ export const Screen = ({
                                                                 'YYYY-MM-DD',
                                                             );
                                                             let selectedVehicleType = new Set();
-                                                            selectedVehicleType.add(item._id)
+                                                            selectedVehicleType.add(item._id);
                                                             setVehicleType(selectedVehicleType);
                                                             fetchVehicleListing(
                                                                 {
@@ -527,7 +528,7 @@ export const Screen = ({
                                                                     limit: LIMITS.vehicleList,
                                                                     index: 0,
                                                                 },
-                                                                () => { stopLoader() },
+                                                                () => { stopLoader(); },
                                                                 () => { },
                                                             );
                                                         }} style={styles.vehicleTypeContainer}>
@@ -546,9 +547,9 @@ export const Screen = ({
                                                                 }}
                                                             />
                                                         </TouchableOpacity>
-                                                        <SimpleImage style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
+                                                        <SimpleImage style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center' }} source={VERTICAL_LINE} />
                                                     </View>
-                                                )
+                                                );
                                             }}
                                         />
                                         <Text
@@ -563,7 +564,7 @@ export const Screen = ({
                                     </View>
                                 </View>
                             </View>
-                        )
+                        );
                     }}
                     ListEmptyComponent={<View>
                         <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles found.'}</Text>
@@ -573,7 +574,7 @@ export const Screen = ({
                             width: '100%',
                             height: 40,
                             opacity: 1,
-                            marginVertical: 10
+                            marginVertical: 10,
                         }}>
                             {fetchingData && <CustomLoader size={30} />}
                         </View>}
@@ -589,7 +590,7 @@ export const Screen = ({
                         let formattedDate = moment(pickupDate).format(
                             'YYYY-MM-DD',
                         );
-                        setFetchingData(true)
+                        setFetchingData(true);
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
@@ -615,8 +616,8 @@ export const Screen = ({
                     renderItem={({ item }) => {
                         let extraItemsString = '';
                         if (item.extraItemsData && item.extraItemsData.items) {
-                            item.extraItemsData.items.map((item, index) => {
-                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
+                            item.extraItemsData.items.map((extraItem, index) => {
+                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${extraItem.name}`;
                                 return;
                             });
                         }
@@ -630,7 +631,7 @@ export const Screen = ({
                                             style={{
                                                 ...styles.alignSelfCenter,
                                                 height: scaleText(110).fontSize,
-                                                width: scaleText(110).fontSize
+                                                width: scaleText(110).fontSize,
                                             }}
                                         />
                                     </View>
@@ -738,7 +739,7 @@ export const Screen = ({
                                     />
                                 </View>
                             </View>
-                        )
+                        );
                     }}
                 />
             }
@@ -748,17 +749,17 @@ export const Screen = ({
                         duration: 250,
                         create: {
                             property: LayoutAnimation.Properties.opacity,
-                            type: 'fadeIn'
+                            type: 'fadeIn',
                         },
                         delete: {
                             property: LayoutAnimation.Properties.opacity,
-                            type: 'fadeOut'
-                        }
-                    })
+                            type: 'fadeOut',
+                        },
+                    });
                 }}
                 source={SCROLL_UP}
-                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
-                imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
+                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize }}
+                imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize }}
                 onPress={() => scrollToTop()} />}
         </AppHoc >
     );

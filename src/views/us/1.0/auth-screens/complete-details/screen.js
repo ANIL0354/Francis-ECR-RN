@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, Button, TouchableOpacity, ScrollView, Platform } from 'react-native';
+import { View, Image, Text, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import AuthHoc from '../../../../../components/hoc/AuthHoc';
 import { APP_LOGO, MENU_LOGO, NAV_ARROW_ICON } from '../../../../../shared/constants';
 import { DetailsForm } from './form';
@@ -17,7 +17,6 @@ export const Screen = ({
     stopLoader,
     fetchProfile,
 }) => {
-    const [subscribed, setSubscribed] = useState(false);
     const [dateString, setDateString] = useState(null);
 
     useEffect(() => {
@@ -93,6 +92,6 @@ export const Screen = ({
                     </View>
                 </ScrollView>
             </View>
-        </AuthHoc >
+        </AuthHoc>
     );
-}
+};

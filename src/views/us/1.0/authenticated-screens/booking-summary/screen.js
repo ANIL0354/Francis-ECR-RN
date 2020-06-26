@@ -33,6 +33,7 @@ import {
     VEHICLE_YEAR_RANGE,
     SCREENS,
 } from '../../../../../shared/constants';
+import { STRINGS } from '../../../../../shared/constants/us/strings';
 import { scaleText } from '../../../../../helpers';
 import styles from "./styles.js";
 import IconText from "../../../../../components/atoms/IconTextComponent";
@@ -84,7 +85,7 @@ export const Screen = ({
                         style={styles.navArrowContainer}
                         onPress={() => {
                             scrollRef.current.scrollTo(0);
-                            navigation.goBack()
+                            navigation.goBack();
                         }}>
                         <Image
                             source={NAV_ARROW_ICON}
@@ -303,7 +304,7 @@ export const Screen = ({
                                                     onPress: () => { },
                                                 },
                                                 {
-                                                    text: 'Okay',
+                                                    text: STRINGS.OKAY,
                                                     onPress: () => { navigation.navigate(SCREENS.COMPLETE_DETAILS) },
                                                 },
                                             ],
@@ -315,7 +316,7 @@ export const Screen = ({
                                             'Kindly read and accept all Terms and Conditions before proceeding.',
                                             [
                                                 {
-                                                    text: 'Okay',
+                                                    text: STRINGS.OKAY,
                                                     onPress: () => { },
                                                 },
                                             ],

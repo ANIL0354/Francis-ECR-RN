@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
     return ({
         profileData: state.CommonReducer.profileData,
     });
-}
+};
 const mapDispatchToProps = (dispatch) => {
     return {
         completeProfile: (data, success, failure) => dispatch(completeProfile(data, success, failure)),
@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
         checkLogin: (credentials, success, failure) => dispatch(checkLogin(credentials, success, failure)),
         stopLoader: () => dispatch(stopLoader())
     }
-}
+};
 export const CompleteDetailsScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);
 
 

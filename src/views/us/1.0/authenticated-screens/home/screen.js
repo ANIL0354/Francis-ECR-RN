@@ -250,7 +250,7 @@ export const Screen = ({
                 'Please select a pick-up location before proceeding.',
                 [
                   {
-                    text: 'Okay',
+                    text: STRINGS.OKAY,
                     onPress: () => { },
                   },
                 ],
@@ -262,7 +262,7 @@ export const Screen = ({
                 'Please select a pick-up date before proceeding.',
                 [
                   {
-                    text: 'Okay',
+                    text: STRINGS.OKAY,
                     onPress: () => { },
                   },
                 ],
@@ -474,7 +474,7 @@ export const Screen = ({
                     'Please select a pick-up location before proceeding.',
                     [
                       {
-                        text: 'Okay',
+                        text: STRINGS.OKAY,
                         onPress: () => { },
                       },
                     ],
@@ -486,7 +486,7 @@ export const Screen = ({
                     'Please select a pick-up date before proceeding.',
                     [
                       {
-                        text: 'Okay',
+                        text: STRINGS.OKAY,
                         onPress: () => { },
                       },
                     ],

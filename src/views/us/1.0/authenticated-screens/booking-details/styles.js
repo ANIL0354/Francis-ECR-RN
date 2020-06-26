@@ -113,6 +113,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    basicBlueText: {
+        color: '#0091ff',
+        fontSize: scaleText(14).fontSize,
+    },
+    basicBlackText: {
+        color: 'black',
+        fontSize: scaleText(14).fontSize,
+    },
+    tripDetailsText: {
+        color: '#565353',
+        fontWeight: 'bold',
+        fontSize: scaleText(18).fontSize,
+    },
 });
 
 export default styles;

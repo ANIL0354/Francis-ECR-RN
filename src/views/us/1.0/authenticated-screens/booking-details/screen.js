@@ -38,6 +38,7 @@ import MultiImageViewer from '../../../../../components/atoms/MultiImageViewer';
 import CustomDraggableCalendar from '../../../../../components/atoms/CustomDraggableCalendar';
 import CollapsableWrapper from '../../../../../components/hoc/CollapsableWrapper';
 import HTML from 'react-native-render-html';
+import { STRINGS } from '../../../../../shared/constants/us/strings';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
@@ -260,27 +261,27 @@ export const Screen = ({
                         {completeDetails && <View style={styles.costSummarWrapper}>
                             <View style={{ flex: 1, }}>
                                 <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Free Days : '}</Text>
+                                    <Text style={{ flex: 1, ...styles.basicBlueText }}>{'Free Days : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${0} x ${totalSelectedDate < completeDetails.freeDays ? totalSelectedDate : completeDetails.freeDays} day${completeDetails.freeDays > 1 ? 's' : ''}`}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0}`}</Text>
+                                        <Text style={{ flex: 3, ...styles.basicBlueText }}>{`$${0} x ${totalSelectedDate < completeDetails.freeDays ? totalSelectedDate : completeDetails.freeDays} day${completeDetails.freeDays > 1 ? 's' : ''}`}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{`$${0}`}</Text>
                                     </View>
                                 </View>
                                 {(completeDetails.extraPaidDays && completeDetails.ratePerDay) && <View style={{ flexDirection: 'row', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Paid Days : '}</Text>
+                                    <Text style={{ flex: 1, ...styles.basicBlueText }}>{'Paid Days : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3, color: '#0091ff' }}>{`$${completeDetails.ratePerDay} x ${totalSelectedDate > completeDetails.freeDays ? (totalSelectedDate - completeDetails.freeDays) : 0} days`}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{' = '}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${totalSelectedDate > completeDetails.freeDays ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
+                                        <Text style={{ flex: 3, ...styles.basicBlueText }}>{`$${completeDetails.ratePerDay} x ${totalSelectedDate > completeDetails.freeDays ? (totalSelectedDate - completeDetails.freeDays) : 0} days`}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{' = '}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{`$${totalSelectedDate > completeDetails.freeDays ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
                                     </View>
                                 </View>}
                                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: scaleText(5).fontSize }}>
-                                    <Text style={{ flex: 1, color: '#0091ff' }}>{'Total : '}</Text>
+                                    <Text style={{ flex: 1, ...styles.basicBlueText }}>{'Total : '}</Text>
                                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                        <Text style={{ flex: 3, color: '#0091ff' }}>{``}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{''}</Text>
-                                        <Text style={{ flex: 1, color: '#0091ff' }}>{`$${0 + (completeDetails.extraPaidDays && completeDetails.ratePerDay && totalSelectedDate && totalSelectedDate > completeDetails.freeDays) ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
+                                        <Text style={{ flex: 3, ...styles.basicBlueText }}>{''}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{''}</Text>
+                                        <Text style={{ flex: 1, ...styles.basicBlueText }}>{`$${0 + (completeDetails.extraPaidDays && completeDetails.ratePerDay && totalSelectedDate && totalSelectedDate > completeDetails.freeDays) ? (completeDetails.ratePerDay * (totalSelectedDate - completeDetails.freeDays)) : 0}`}</Text>
                                     </View>
                                 </View>
 
@@ -294,7 +295,7 @@ export const Screen = ({
                                                 'Please select your travel dates before proceeding.',
                                                 [
                                                     {
-                                                        text: 'Okay',
+                                                        text: STRINGS.OKAY,
                                                         onPress: () => { },
                                                     },
                                                 ],
@@ -334,219 +335,216 @@ export const Screen = ({
                     </View>
                     {completeDetails && <View style={{ flex: 1, marginVertical: scaleText(10).fontSize }}>
                         <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: '#565353', fontWeight: 'bold', fontSize: scaleText(18).fontSize }}>{'Trip Details:'}</Text>
+                            <Text style={styles.tripDetailsText}>{STRINGS.TRIP_DETAILS_SUBHEADING}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Free days available:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.freeDays} day${completeDetails.freeDays > 1 ? 's' : ''}`}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.FREE_DAYS_AVAILABLE}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.freeDays} day${completeDetails.freeDays > 1 ? 's' : ''}`}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Extra Paid days available:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{(completeDetails.extraPaidDays && completeDetails.ratePerDay) ? `${completeDetails.extraPaidDays} day${completeDetails.extraPaidDays > 1 ? 's' : ''}` : 'Not Available'}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.EXTRA_DAYS_AVAILABLE}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{(completeDetails.extraPaidDays && completeDetails.ratePerDay) ? `${completeDetails.extraPaidDays} day${completeDetails.extraPaidDays > 1 ? 's' : ''}` : 'Not Available'}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Pick-up from:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{moment(completeDetails.pickupDate).format('DD-MMMM-YYYY')}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.PICKUP_FROM}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(completeDetails.pickupDate).format('DD-MMMM-YYYY')}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Pick-up time:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${moment(new Date(completeDetails.pickupTime.from).toLocaleTimeString(), 'HH:mm').format('hh:mm a')} to ${moment(new Date(completeDetails.pickupTime.to).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}`}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.PICKUP_TIME}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${moment(new Date(completeDetails.pickupTime.from).toLocaleTimeString(), 'HH:mm').format('hh:mm a')} to ${moment(new Date(completeDetails.pickupTime.to).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}`}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Drop-off time:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${moment(new Date(completeDetails.dropoffTime.from).toLocaleTimeString(), 'HH:mm').format('hh:mm a')} to ${moment(new Date(completeDetails.dropoffTime.to).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}`}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.DROPOFF_TIME}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${moment(new Date(completeDetails.dropoffTime.from).toLocaleTimeString(), 'HH:mm').format('hh:mm a')} to ${moment(new Date(completeDetails.dropoffTime.to).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}`}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Kilometer allowance:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.kmAllow ? completeDetails.kmAllow : 'Unlimited'} Kms`}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.KILOMETER_ALLOWED}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.kmAllow ? completeDetails.kmAllow : 'Unlimited'} Kms`}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                            <Text style={{ color: 'black', flex: 1.5, fontSize: scaleText(14).fontSize }}>{'Estimated travel distance:'}</Text>
-                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.estimatedDistance} Km${completeDetails.estimatedDistance > 1 ? 's' : ''}`}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.ESTIMATED_DISTANCE}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.estimatedDistance} Km${completeDetails.estimatedDistance > 1 ? 's' : ''}`}</Text>
                         </View>
                     </View>}
                     {completeDetails && <View style={{ flex: 1, marginVertical: scaleText(20).fontSize }}>
                         <View style={{ flex: 1, marginBottom: scaleText(15).fontSize }}>
-                            <Text style={{ color: '#565353', fontWeight: 'bold', fontSize: scaleText(18).fontSize }}>{'Additional Information:'}</Text>
+                            <Text style={{ color: '#565353', fontWeight: 'bold', fontSize: scaleText(18).fontSize }}>{STRINGS.ADDITIONAL_INFORMATION}</Text>
                         </View>
-                        <CollapsableWrapper wrapperLabel={'Important Details'}>
+                        <CollapsableWrapper wrapperLabel={STRINGS.IMPORTANT_DETAILS}>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
                                 {completeDetails && completeDetails.extraItemsData && completeDetails.extraItemsData.items ?
                                     <React.Fragment>
                                         <Text style={{
-                                            color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                        }}>{'This relocation includes:'}</Text>
+                                            ...styles.basicBlackText, flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize,
+                                        }}>{STRINGS.THIS_RELOCATION_INCLUDES}</Text>
                                         {completeDetails.extraItemsData && completeDetails.extraItemsData.items.map((item, index) => (
                                             <View style={{ flex: 1, paddingVertical: scaleText(3).fontSize }}>
-                                                <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${index + 1}. ${item.name} at $${item.price} ${FREQUENCY[item.frequency - 1].label}.`}</Text>
+                                                <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${index + 1}. ${item.name} at $${item.price} ${FREQUENCY[item.frequency - 1].label}.`}</Text>
                                             </View>
                                         ))}
                                     </React.Fragment>
                                     :
                                     <Text style={{
-                                        color: 'black', flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                    }}>{'No extra item found for this relocation.'}</Text>}
+                                        ...styles.basicBlackText, flex: 1, marginVertical: scaleText(5).fontSize
+                                    }}>{STRINGS.NO_EXTRA_ITEM_FOUND}</Text>}
                             </View>
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'Insurance'}>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
                                 {completeDetails && completeDetails.insuranceData
                                     ? <React.Fragment>
-                                        {/* <Text style={{
-                                            color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                        }}>{'Insurance Details'}</Text> */}
                                         <Text style={{
-                                            color: 'black', flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(15).fontSize, fontWeight: 'bold'
-                                        }}>{'Basic Details: '}</Text>
+                                            ...styles.basicBlackText, flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(15).fontSize, fontWeight: 'bold'
+                                        }}>{STRINGS.BASIC_DETAILS}</Text>
                                         <View style={{ flex: 1, paddingVertical: scaleText(3).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Insurance Name: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.insuranceData.name}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.INSURANCE_NAME}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.insuranceData.name}</Text>
                                         </View>
                                         <View style={{ flex: 1, paddingVertical: scaleText(3).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Insurance Description: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.description ? completeDetails.insuranceData.description : 'N/A'}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.INSURANCE_DESCRIPTION}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.description ? completeDetails.insuranceData.description : 'N/A'}`}</Text>
                                         </View>
                                         <Text style={{
-                                            color: 'black', flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(15).fontSize, fontWeight: 'bold'
-                                        }}>{'Other Insurance Details: '}</Text>
+                                            ...styles.basicBlackText, flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(15).fontSize, fontWeight: 'bold',
+                                        }}>{STRINGS.OTHER_INSURANCE_DETAILS}</Text>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Bond: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.bond ? completeDetails.insuranceData.bond : 0} year${completeDetails.insuranceData.bond > 1 ? 's' : ''}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.BOND}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.bond ? completeDetails.insuranceData.bond : 0} year${completeDetails.insuranceData.bond > 1 ? 's' : ''}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Excess: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.excess ? completeDetails.insuranceData.excess : 0}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.EXCESS}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.excess ? completeDetails.insuranceData.excess : 0}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, fontWeight: 'bold' }}>{'Daily Fee: '}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.dailyFee ? completeDetails.insuranceData.dailyFee : 0}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.DAILY_FEE}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.dailyFee ? completeDetails.insuranceData.dailyFee : 0}`}</Text>
                                         </View>
                                     </React.Fragment>
                                     : <Text style={{
-                                        color: 'black', flex: 1, marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                    }}>{'No insurance found for this relocation.'}</Text>}
+                                        ...styles.basicBlackText, flex: 1, marginVertical: scaleText(5).fontSize,
+                                    }}>{STRINGS.NO_INSURANCE_FOUND}</Text>}
                             </View>
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'Location'}>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
                                 <Text style={{
-                                    color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                }}>{'Pickup Branch Details'}</Text>
+                                    ...styles.basicBlackText, flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize,
+                                }}>{STRINGS.PICKUP_BRANCH_DETAILS}</Text>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Branch Name: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.pickupBranchData.name}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_NAME}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.pickupBranchData.name}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Contact: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.pickupBranchData.phoneNumber.code}${completeDetails.pickupBranchData.phoneNumber.phone}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CONTACT}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.phoneNumber.code}${completeDetails.pickupBranchData.phoneNumber.phone}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Email: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.pickupBranchData.email}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.EMAIL_TEXT}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.email}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Address: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.pickupBranchData.address}, ${completeDetails.pickupBranchData.suburb}, ${completeDetails.pickupBranchData.city}, ${completeDetails.pickupBranchData.country}, ${completeDetails.pickupBranchData.postcode}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.ADDRESS}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.pickupBranchData.address}, ${completeDetails.pickupBranchData.suburb}, ${completeDetails.pickupBranchData.city}, ${completeDetails.pickupBranchData.country}, ${completeDetails.pickupBranchData.postcode}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Branch Code: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.pickupBranchData.code}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_CODE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.code}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Opens At: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{moment(new Date(completeDetails.pickupBranchData.openFrom).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.OPENS_AT}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(new Date(completeDetails.pickupBranchData.openFrom).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Closes By: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{moment(new Date(completeDetails.pickupBranchData.closeBy).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CLOSE_BY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(new Date(completeDetails.pickupBranchData.closeBy).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
                                 </View>
                             </View>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
                                 <Text style={{
-                                    color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                }}>{'Dropoff Branch Details'}</Text>
+                                    ...styles.basicBlackText, flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize
+                                }}>{STRINGS.DROPOFF_BRANCH_DETAILS}</Text>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Branch Name: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.dropoffBranchData.name}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_NAME}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.dropoffBranchData.name}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Contact: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.dropoffBranchData.phoneNumber.code}${completeDetails.dropoffBranchData.phoneNumber.phone}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CONTACT}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.phoneNumber.code}${completeDetails.dropoffBranchData.phoneNumber.phone}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Email: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.dropoffBranchData.email}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.EMAIL}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.email}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Address: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{`${completeDetails.dropoffBranchData.address}, ${completeDetails.dropoffBranchData.suburb}, ${completeDetails.dropoffBranchData.city}, ${completeDetails.dropoffBranchData.country}, ${completeDetails.dropoffBranchData.postcode}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.ADDRESS}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.dropoffBranchData.address}, ${completeDetails.dropoffBranchData.suburb}, ${completeDetails.dropoffBranchData.city}, ${completeDetails.dropoffBranchData.country}, ${completeDetails.dropoffBranchData.postcode}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Branch Code: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.dropoffBranchData.code}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_CODE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.code}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Opens At: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{moment(new Date(completeDetails.dropoffBranchData.openFrom).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.OPENS_AT}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(new Date(completeDetails.dropoffBranchData.openFrom).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Closes By: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{moment(new Date(completeDetails.dropoffBranchData.closeBy).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CLOSE_BY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(new Date(completeDetails.dropoffBranchData.closeBy).toLocaleTimeString(), 'HH:mm').format('hh:mm a')}</Text>
                                 </View>
                             </View>
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'Vehicle Details'}>
                             <View style={{ flex: 1, marginVertical: scaleText(3).fontSize }}>
                                 <Text style={{
-                                    color: 'black', flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize, fontSize: scaleText(14).fontSize
-                                }}>{'Vehicle Details'}</Text>
+                                    ...styles.basicBlackText, flex: 1, fontWeight: 'bold', marginVertical: scaleText(5).fontSize,
+                                }}>{STRINGS.VEHICLE_DETAILS}</Text>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Vehicle Name: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.vehicleData.name}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.VEHICLE_NAME}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.vehicleData.name}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Vehicle Description: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, textTransform: 'capitalize' }}>{completeDetails.vehicleData.description}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.VEHICLE_DESCRIPTION}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.vehicleData.description}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Fuel Type:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.fuelTypeData.fuelType}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.FUEL_TYPE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.fuelTypeData.fuelType}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Transmission Type:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.transmissionData.name}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.TRANSMISSION_TYPE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.transmissionData.name}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Vehicle Type:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleTypeData.name}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.VEHICLE_TYPE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleTypeData.name}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'No. of doors:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.vehicleData.numberOfDoor} Doors`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.NO_OF_DOORS}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.numberOfDoor} Doors`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Small luggage capacity:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`${completeDetails.vehicleData.smallLuggageSpace} Bags`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.SMALL_LUGGAGE_CAPACITY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.smallLuggageSpace} Bags`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Large luggage capacity:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleData.largeLuggageSpace} Bags`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.LARGE_LUGGAGE_CAPACITY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.largeLuggageSpace} Bags`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'No. of Adult Seats:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleData.adultSeats} Seats`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.NO_OF_ADULT_SEATS}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.adultSeats} Seats`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'No. of Child Seats:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleData.childSeats} Seats`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.NO_OF_CHILD_SEATS}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.childSeats} Seats`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Air conditioning:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleData.airConditionType ? 'with AC' : 'Non-AC'}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.AIR_CONDITIONING}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.airConditionType ? 'with AC' : 'Non-AC'}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{'Vehicle Code:'}</Text>
-                                    <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize, }}>{`${completeDetails.vehicleData.vehicleCode}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.VEHICLE_CODE}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.vehicleData.vehicleCode}`}</Text>
                                 </View>
                             </View>
                         </CollapsableWrapper>
@@ -560,7 +558,7 @@ export const Screen = ({
                                         p: { color: 'black' },
                                         h1: { color: 'black' },
                                         h2: { color: 'black' },
-                                        strong: { color: 'black' }
+                                        strong: { color: 'black' },
                                     }}
                                 />
                             </View>
@@ -570,13 +568,13 @@ export const Screen = ({
                                 {
                                     faqList.length ? faqList.map((item, index) => (
                                         <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
-                                            <Text style={{ color: 'black', flex: 1, fontWeight: 'bold', fontSize: scaleText(14).fontSize }}>{`${index + 1}. ${item.question}`}</Text>
-                                            <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{item.answer}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{`${index + 1}. ${item.question}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{item.answer}</Text>
                                         </View>
                                     ))
                                         : (
                                             <View style={{ flex: 1, flexDirection: 'column', marginVertical: scaleText(10).fontSize }}>
-                                                <Text style={{ color: 'black', flex: 1, fontSize: scaleText(14).fontSize }}>{`No FAQs found.`}</Text>
+                                                <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.NO_FAQ_FOUND}</Text>
                                             </View>
                                         )
                                 }
@@ -585,16 +583,16 @@ export const Screen = ({
                     </View>}
                     <View style={{ marginBottom: scaleText(30).fontSize }}>
                         <CustomButton
-                            title={'Make a request'}
+                            title={STRINGS.MAKE_A_REQUEST}
                             titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
                             onPress={() => {
                                 if (!totalSelectedDate || !startDate || !endDate) {
                                     Alert.alert(
-                                        'Select Travel Dates',
-                                        'Please select your travel dates before proceeding.',
+                                        STRINGS.SELECT_TRAVEL_DATES,
+                                        STRINGS.SELECT_DATES_BEFORE_PROCEEDING,
                                         [
                                             {
-                                                text: 'Okay',
+                                                text: STRINGS.OKAY,
                                                 onPress: () => { },
                                             },
                                         ],
@@ -609,9 +607,9 @@ export const Screen = ({
                                                 dropoffDate: endDate,
                                                 totalSelectedDate: totalSelectedDate,
                                                 ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
-                                                freeDays: completeDetails.freeDays
+                                                freeDays: completeDetails.freeDays,
                                             },
-                                            scrollRef: scrollRef
+                                            scrollRef: scrollRef,
                                         })
                                         : navigation.navigate(SCREENS.LOGIN, {
                                             fromDetails: true,
@@ -621,10 +619,10 @@ export const Screen = ({
                                                 dropoffDate: endDate,
                                                 totalSelectedDate: totalSelectedDate,
                                                 ratePerDay: completeDetails.ratePerDay ? completeDetails.ratePerDay : 0,
-                                                freeDays: completeDetails.freeDays
+                                                freeDays: completeDetails.freeDays,
                                             },
-                                            scrollRef: scrollRef
-                                        })
+                                            scrollRef: scrollRef,
+                                        });
                                 }
                             }}
                             buttonStyle={{ ...styles.vehicleListButton, marginHorizontal: scaleText(10).fontSize }}
