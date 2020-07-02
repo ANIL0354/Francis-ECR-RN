@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         height: scaleText(50).fontSize,
-        width: scaleText(30).fontSize,
-        marginBottom: -1 * scaleText(30).fontSize,
+        width: scaleText(50).fontSize,
+        marginBottom: -1 * scaleText(20).fontSize,
         alignSelf: 'center'
     },
     textContainer: {
@@ -21,7 +21,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 15
+        marginBottom: 10
+    },
+    placeRangeContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 15
     },
     countStyle: {
         textAlign: 'center',

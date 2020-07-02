@@ -26,8 +26,8 @@ import {
   MENU_LOGO,
   USER_ICON,
   CAR,
-  CAR_WASHER,
-  CAR_CHECKLIST,
+  CAR_DRIVER,
+  CAR_RELOCATION,
   SEARCH_ICON,
   LIMITS,
   DOWN_ARROW,
@@ -610,7 +610,8 @@ export const Screen = ({
               height: 50,
               width: 50,
             }}
-            source={CAR_CHECKLIST}
+            resizeMode={'contain'}
+            source={CAR_RELOCATION}
           />
           <Text
             style={{
@@ -631,7 +632,7 @@ export const Screen = ({
               paddingVertical: 8,
             }}>
             {
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              'Vehicle relocation is a great opportunity to save on your travels. Rental vehicle companies usually need to move vehicles between cities and sometimes between islands. With that, vehicles are offered here at for free or at a low rate and you can request one to be relocated from the origin city to the destination city. Some relocation options will include fuel and ferry cost but others won’t. You will find details on each listing. Don’t wait, book your relocation vehicle today and save.'
             }
           </Text>
         </View>
@@ -644,7 +645,8 @@ export const Screen = ({
               height: 50,
               width: 50,
             }}
-            source={CAR_WASHER}
+            resizeMode={'contain'}
+            source={CAR_DRIVER}
           />
           <Text
             style={{
@@ -665,7 +667,7 @@ export const Screen = ({
               paddingVertical: 8,
             }}>
             {
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              'To relocate a vehicle you will need to be over 21 years of age and have a full drivers licence for at least 1 year without any restrictions. That’s it!'
             }
           </Text>
         </View>

@@ -12,11 +12,13 @@ const PopularPlace = ({
 }) => {
     return (
         <View style={styles.container}>
-            <Image source={icon} style={styles.iconStyle} />
+            <Image source={icon} resizeMode={'contain'} style={styles.iconStyle} />
+            <View style={styles.placeRangeContainer}>
+                <Text style={styles.placeRangeText}>{placeRange}</Text>
+            </View>
             <View style={styles.textContainer}>
                 <Text style={styles.countStyle}>{availableCount}</Text>
-                <Text style={styles.relocationText}>{`${availableCount > 1 ? 'vehicles' : 'vehicle'} available for relocation from`}</Text>
-                <Text style={styles.placeRangeText}>{placeRange}</Text>
+                <Text style={styles.relocationText}>{`${availableCount > 1 ? 'relocations' : 'relocation'} available`}</Text>
             </View>
             <CustomButton
                 title={buttonText}
