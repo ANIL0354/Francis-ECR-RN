@@ -671,7 +671,7 @@ export const Screen = ({
             }
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        {/* <View style={{ backgroundColor: 'white' }}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -683,7 +683,7 @@ export const Screen = ({
             }}>
             {'Click here for more helpful information.'}
           </Text>
-        </View>
+        </View> */}
       </ScrollView>
     </AppHoc>
   );
