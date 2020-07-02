@@ -665,6 +665,7 @@ export const Screen = ({
               color: 'black',
               paddingHorizontal: 25,
               paddingVertical: 8,
+              marginBottom: scaleText(50).fontSize,
             }}>
             {
               'To relocate a vehicle you will need to be over 21 years of age and have a full drivers licence for at least 1 year without any restrictions. That’s it!'
