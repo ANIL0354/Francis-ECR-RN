@@ -103,8 +103,9 @@ const Form = ({
                         changeField('details', STRINGS.COUNTRY_INPUT, value);
                         setSelectedCountry(value)
                     }}
-                    setCallingCode={(value) => {
+                    setCallingCode={(value, initials) => {
                         changeField('details', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('details', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     returnKeyType={'go'}
@@ -128,8 +129,9 @@ const Form = ({
                     component={CountryCodePicker}
                     countryValue={selectedCountry}
                     codeValue={selectedCountryCode}
-                    setCallingCode={(value) => {
-                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
+                    setCallingCode={(value, initials) => {
+                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('details', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     setSelectedCountry={(value) => {
@@ -145,7 +147,7 @@ const Form = ({
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
-                    maxLength={15}
+                    maxLength={18}
                     style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />

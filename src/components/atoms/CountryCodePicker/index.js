@@ -141,7 +141,7 @@ const CountryCodePicker = ({
                                     setCountryCode(AUSTRALIA_VALUES.cca2);
                                     setCountry(AUSTRALIA_VALUES.country);
                                     setSelectedCountry(AUSTRALIA_VALUES.name);
-                                    setCallingCode(AUSTRALIA_VALUES.callingCode[0]);
+                                    setCallingCode(AUSTRALIA_VALUES.callingCode[0], AUSTRALIA_VALUES.cca2);
                                 }}
                                     style={styles.topCountriesContainer}>
                                     <Emoji name="flag-au" style={styles.emojiStyle} />
@@ -155,7 +155,7 @@ const CountryCodePicker = ({
                                         setCountryCode(NEW_ZEALAND_VALUES.cca2);
                                         setCountry(NEW_ZEALAND_VALUES.country);
                                         setSelectedCountry(NEW_ZEALAND_VALUES.name);
-                                        setCallingCode(NEW_ZEALAND_VALUES.callingCode[0]);
+                                        setCallingCode(NEW_ZEALAND_VALUES.callingCode[0], NEW_ZEALAND_VALUES.cca2);
                                     }}
                                     style={styles.topCountriesContainer}>
                                     <Emoji name="flag-nz" style={styles.emojiStyle} />
@@ -187,7 +187,7 @@ const CountryCodePicker = ({
                         setCountryCode(value.cca2);
                         setCountry(value.country);
                         setSelectedCountry(value.name);
-                        setCallingCode(value.callingCode[0]);
+                        setCallingCode(value.callingCode[0], value.cca2);
                     }}
                     onClose={() => {
                         setShowCountries(false);

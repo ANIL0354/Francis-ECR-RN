@@ -21,6 +21,7 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "axios": "^0.19.2",
+    "google-libphonenumber": "^3.2.10",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",

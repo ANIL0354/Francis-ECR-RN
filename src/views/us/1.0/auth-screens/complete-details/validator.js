@@ -1,8 +1,11 @@
+import { PhoneNumberUtil } from 'google-libphonenumber';
 const { STRINGS } = require(`../../../../../shared/constants/us/strings`);
 const { VALIDATION_MESSAGES, EMAIL_REGX, PHONE_REGX } = require(`../../../../../shared/constants`)
-
+const phoneUtil = PhoneNumberUtil.getInstance();
 const validator = values => {
     const errors = {};
+    let number = values[STRINGS.PHONE_NUMBER];
+    let country = values[STRINGS.COUNTRY_CODE];
     if (!values[STRINGS.EMAIL_INPUT_NAME]) {
         errors[STRINGS.EMAIL_INPUT_NAME] =
             VALIDATION_MESSAGES.EMAIL_REQUIRED;
@@ -76,9 +79,6 @@ const validator = values => {
         errors[STRINGS.PHONE_NUMBER] =
             VALIDATION_MESSAGES.PHONE_INVALID;
     }
-    if (values[STRINGS.PHONE_NUMBER] && (values[STRINGS.PHONE_NUMBER].length < 7 || values[STRINGS.PHONE_NUMBER].length > 15)) {
-        errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 7-15 characters long.'
-    }
     if (!values[STRINGS.RE_PASSWORD_INPUT_NAME]) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.RE_ENTER_PASSWORD;
@@ -94,6 +94,24 @@ const validator = values => {
     if (values[STRINGS.RE_PASSWORD_INPUT_NAME] && values[STRINGS.PASSWORD_INPUT_NAME] && (values[STRINGS.PASSWORD_INPUT_NAME] !== values[STRINGS.RE_PASSWORD_INPUT_NAME])) {
         errors[STRINGS.RE_PASSWORD_INPUT_NAME] =
             VALIDATION_MESSAGES.PASSWORD_DOESNOT_MATCH;
+    }
+    if (values[STRINGS.COUNTRY_CODE]) {
+        country = values[STRINGS.COUNTRY_CODE];
+    }
+    if (values[STRINGS.PHONE_NUMBER]) {
+        number = values[STRINGS.PHONE_NUMBER];
+    }
+    if (values[STRINGS.PHONE_NUMBER] && country && number) {
+        if ((values[STRINGS.PHONE_NUMBER].length > 3 && values[STRINGS.PHONE_NUMBER].length < 18)) {
+            let parsedNumber = phoneUtil.parseAndKeepRawInput(number, country);
+            if (!phoneUtil.isValidNumberForRegion(parsedNumber, country)) {
+                errors[STRINGS.PHONE_NUMBER] =
+                    'Phone number not valid.';
+            }
+        }
+        else {
+            errors[STRINGS.PHONE_NUMBER] = 'Phone no. must be 3-18 characters long.';
+        }
     }
 
     return errors;

@@ -35,7 +35,8 @@ const Form = ({
     const maxDate = today.setFullYear(today.getFullYear() - 16);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
-    const [portrait, setPortraitOrientation] = useState(true)
+    const [countryCode, setCountryCode] = useState('');
+    const [portrait, setPortraitOrientation] = useState(true);
 
     useEffect(() => {
         Dimensions.addEventListener('change', () => {
@@ -98,8 +99,9 @@ const Form = ({
                         changeField('signup', STRINGS.COUNTRY_INPUT, value);
                         setSelectedCountry(value)
                     }}
-                    setCallingCode={(value) => {
+                    setCallingCode={(value, initials) => {
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('signup', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     returnKeyType={'go'}
@@ -122,8 +124,9 @@ const Form = ({
                     component={CountryCodePicker}
                     countryValue={selectedCountry}
                     codeValue={selectedCountryCode}
-                    setCallingCode={(value) => {
-                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
+                    setCallingCode={(value, initials) => {
+                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('signup', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     setSelectedCountry={(value) => {
@@ -139,7 +142,7 @@ const Form = ({
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
-                    maxLength={15}
+                    maxLength={18}
                     style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />

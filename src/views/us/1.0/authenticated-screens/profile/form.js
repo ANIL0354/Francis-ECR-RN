@@ -119,8 +119,9 @@ const Form = ({
                         changeField('edit_profile', STRINGS.COUNTRY_INPUT, value);
                         setSelectedCountry(value);
                     }}
-                    setCallingCode={(value) => {
+                    setCallingCode={(value, initials) => {
                         changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('edit_profile', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     returnKeyType={'go'}
@@ -152,8 +153,9 @@ const Form = ({
                     countryValue={selectedCountry}
                     takeErrorSpace={false}
                     codeValue={selectedCountryCode}
-                    setCallingCode={(value) => {
+                    setCallingCode={(value, initials) => {
                         changeField('edit_profile', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('edit_profile', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     setSelectedCountry={(value) => {
@@ -173,7 +175,7 @@ const Form = ({
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
-                    maxLength={15}
+                    maxLength={18}
                     takeErrorSpace={false}
                     style={{ flex: 1 }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
