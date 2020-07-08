@@ -131,10 +131,15 @@ const validator = values => {
     }
     if (values[STRINGS.PHONE_NUMBER] && country && number) {
         if ((values[STRINGS.PHONE_NUMBER].length > 3 && values[STRINGS.PHONE_NUMBER].length < 18)) {
-            let parsedNumber = phoneUtil.parseAndKeepRawInput(number, country);
-            if (!phoneUtil.isValidNumberForRegion(parsedNumber, country)) {
-                errors[STRINGS.PHONE_NUMBER] =
-                    'Phone number not valid.';
+            try {
+                let parsedNumber = phoneUtil.parseAndKeepRawInput(number, country);
+                if (!phoneUtil.isValidNumberForRegion(parsedNumber, country)) {
+                    errors[STRINGS.PHONE_NUMBER] =
+                        'Phone number not valid.';
+                }
+            }
+            catch (error) {
+                console.log('Error', error)
             }
         }
         else {
