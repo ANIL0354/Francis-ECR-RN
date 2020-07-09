@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
+import WebView from 'react-native-autoheight-webview';
 import Image from 'react-native-image-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
 import {
@@ -59,7 +60,7 @@ export const Screen = ({
     const [imageExpanded, setImageExpanded] = useState(false);
     const [availableImages, setAvailableImages] = useState([]);
     const [portrait, setPortraitOrientation] = useState(true);
-
+    const [htmlContent, setHTMLContent] = useState('');
     let { vehicleDetails, fromSummary = false } = route.params;
     useEffect(() => {
         getFaqList(
@@ -110,6 +111,17 @@ export const Screen = ({
                 : setPortraitOrientation(true);
         });
     }, []);
+
+    useEffect(() => {
+        if (completeDetails && completeDetails.termsData && completeDetails.termsData.description) {
+            let html = completeDetails.termsData.description;
+            html = html.replace(/&lt;/g, '<');
+            html = html.replace(/&gt;/g, '>');
+            html = html.replace(/&nbsp;/g, ' ');
+            console.log(html);
+            setHTMLContent(html);
+        }
+    }, [completeDetails && completeDetails.termsData && completeDetails.termsData.description])
 
     return (
         <AppHoc
@@ -550,16 +562,11 @@ export const Screen = ({
                         </CollapsableWrapper>
                         <CollapsableWrapper wrapperLabel={'Policy'}>
                             <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
-                                <HTML
-                                    html={(completeDetails.termsData || {}).description ? completeDetails.termsData.description : ''}
-                                    imagesMaxWidth={Dimensions.get('window').width}
-                                    textSelectable={false}
-                                    tagStyles={{
-                                        p: { color: 'black' },
-                                        h1: { color: 'black' },
-                                        h2: { color: 'black' },
-                                        strong: { color: 'black' },
-                                    }}
+                                <WebView
+                                    automaticallyAdjustContentInsets={false}
+                                    style={{ flex: 1, flexDirection: 'column' }}
+                                    source={{ html: htmlContent }}
+                                    scalesPageToFit={true}
                                 />
                             </View>
                         </CollapsableWrapper>
