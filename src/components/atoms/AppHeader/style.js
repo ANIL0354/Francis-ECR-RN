@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     },
     leftIconStyle: {
         height: scaleText(35).fontSize,
-        width: scaleText(35).fontSize
+        width: scaleText(90).fontSize
     },
     centerIconWrapper: {
         flex: 1,

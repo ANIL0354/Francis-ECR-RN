@@ -59,14 +59,6 @@ export const Screen = ({
     const [rideBooked, setRideBooked] = useState(false);
     const [infoTab, setInfoTab] = useState(null);
     const [accepted, setAccepted] = useState(false);
-    let skipper = null;
-
-    useEffect(()=>{
-        let skipper 
-        return () => {
-                    clearInterval(skipper);
-                }
-    },[rideBooked])
 
     useEffect(() => {
         fetchProfile(() => { }, () => { });
@@ -74,7 +66,6 @@ export const Screen = ({
 
     useEffect(() => {
         return () => {
-            clearInterval(skipper);
             getPopularPlaces(
                 {},
                 () => { },
@@ -300,7 +291,7 @@ export const Screen = ({
                                         scrollRef.current.scrollTo(0);
                                         navigation.goBack();
                                     }}
-                                    buttonStyle={{ marginHorizontal: scaleText(30).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}
+                                    buttonStyle={{ marginHorizontal: scaleText(20).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}
                                 />
                             </View>
                         </View>

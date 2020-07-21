@@ -24,7 +24,7 @@ const AppHeader = ({
                     height: scaleText(35).fontSize,
                     width: scaleText(90).fontSize,
                 }} onPress={onLeftIconTap}>
-                    <Image style={styles.leftIconStyle} source={leftIcon} resizeMode={'contain'} />
+                    <Image style={styles.leftIconStyle} source={leftIcon} />
                 </TouchableOpacity>}
             </View>
             <View style={styles.centerIconWrapper}>
