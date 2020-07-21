@@ -9,11 +9,14 @@ import {
     UIManager,
     TouchableOpacity,
     Dimensions,
-    Linking
+    LayoutAnimation,
+    Linking,
+    Slider
 } from 'react-native';
 import moment from 'moment';
 import Image from 'react-native-image-progress';
 import AppHoc from '../../../../../components/hoc/AppHoc';
+import Swiper from 'react-native-swiper'
 import Checkbox from '../../../../../components/atoms/Checkbox';
 import {
     APP_LOGO,
@@ -30,6 +33,9 @@ import {
     RIDE_BOOKED,
     CHECKBOX_ACTIVE,
     FUEL_INACTIVE,
+    DEAL_DONE,
+    SEND_IT,
+    TIME,
     VEHICLE_YEAR_RANGE,
     SCREENS,
 } from '../../../../../shared/constants';
@@ -51,7 +57,16 @@ export const Screen = ({
     let { vehicleDetails, scrollRef = {} } = route.params;
     const largeScaledFont = scaleText(18);
     const [rideBooked, setRideBooked] = useState(false);
+    const [infoTab, setInfoTab] = useState(null);
     const [accepted, setAccepted] = useState(false);
+    let skipper = null;
+
+    useEffect(()=>{
+        let skipper 
+        return () => {
+                    clearInterval(skipper);
+                }
+    },[rideBooked])
 
     useEffect(() => {
         fetchProfile(() => { }, () => { });
@@ -59,6 +74,7 @@ export const Screen = ({
 
     useEffect(() => {
         return () => {
+            clearInterval(skipper);
             getPopularPlaces(
                 {},
                 () => { },
@@ -98,7 +114,7 @@ export const Screen = ({
                     <Text
                         style={{
                             ...styles.subHeaderText,
-                            fontSize: largeScaledFont.fontSize,
+                            fontSize: scaleText(17).fontSize,
                         }}>
                         {rideBooked ? 'Thank You' : 'Summary'}
                     </Text>
@@ -106,14 +122,55 @@ export const Screen = ({
 
                 {rideBooked
                     ?
-                    <View style={{ flex: 1, paddingHorizontal: scaleText(20).fontSize, justifyContent: 'center', minHeight: Dimensions.get('window').height - scaleText(130).fontSize, }}>
+                    <View style={{ flex: 1, paddingHorizontal: scaleText(20).fontSize, justifyContent: 'center', minHeight: Dimensions.get('window').height - scaleText(130).fontSize, marginVertical:scaleText(20).fontSize }}>
 
                         <View>
-                            <SimpleImage source={RIDE_BOOKED} style={{ flex: 1, alignSelf: 'center', marginBottom: scaleText(50).fontSize, }} resizeMode={'contain'} />
+                            <SimpleImage source={RIDE_BOOKED} style={{ height:scaleText(100).fontSize,width:scaleText(300).fontSize, alignSelf: 'center', marginBottom: scaleText(10).fontSize, }} resizeMode={'contain'} />
                             <Text
-                                style={{ ...styles.carTitle, fontSize: scaleText(20).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Ride Booked!'}</Text>
-                            <Text
-                                style={{ color: 'black', fontSize: scaleText(16).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Thank you, your ride has been booked with us.'}</Text>
+                                style={{ ...styles.carTitle, fontSize: scaleText(16).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Thanks for completing your booking request with us!'}</Text>
+                                <Text
+                                style={{ ...styles.carTitle, fontSize: scaleText(14).fontSize,marginTop:scaleText(60).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'What to expect from here:'}</Text>
+                                
+                                <View style={{flex:1,flexDirection:'row'}}>
+                                    <Swiper style={{maxHeight:scaleText(200).fontSize}} autoplayTimeout={3} autoplay={true} showsButtons={false}>
+                                           <View
+                                            style={{flex:1,marginHorizontal:scaleText(5).fontSize}}>
+                                                <SimpleImage source={SEND_IT} style={{ 
+                                                    alignSelf: 'center',
+                                                    marginTop: 15,
+                                                    marginBottom: 15,
+                                                    height: 60,
+                                                    width: 60,}} resizeMode={'contain'} />
+                                                <Text
+                                                    style={{ color: 'black', fontSize: scaleText(12).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Your booking request will be sent to the rental vehicle agency.'}</Text>
+                                    
+                                            </View>
+                                            <View
+                                                style={{flex:1,marginHorizontal:scaleText(5).fontSize}}>
+                                                <SimpleImage source={TIME} style={{ 
+                                                    alignSelf: 'center',
+                                                    marginTop: 15,
+                                                    marginBottom: 15,
+                                                    height: 60,
+                                                    width: 60,}} resizeMode={'contain'} />
+                                                <Text
+                                                    style={{ color: 'black', fontSize: scaleText(12).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'Within 24-48 hrs you should hear back from the agency confirming your booking.'}</Text>
+                                    
+                                            </View>
+                                            <View 
+                                                style={{flex:1,marginHorizontal:scaleText(5).fontSize}}>
+                                                <SimpleImage source={DEAL_DONE} style={{ 
+                                                    alignSelf: 'center',
+                                                    marginTop: 15,
+                                                    marginBottom: 15,
+                                                    height: 60,
+                                                    width: 60,}} resizeMode={'contain'} />
+                                                <Text
+                                                    style={{ color: 'black', fontSize: scaleText(12).fontSize, textAlign: 'center', textAlignVertical: 'center' }}>{'If your booking has been approved, great! If your booking has been declined, please feel free to browse again for other options.'}</Text>
+                                    
+                                            </View>
+                                    </Swiper>
+                                </View>
                             <CustomButton
                                 title={'Go To Home Page'}
                                 titleStyle={{ color: 'white', textAlign: 'center', textTransform: 'uppercase' }}
@@ -203,38 +260,49 @@ export const Screen = ({
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly' }}>
+                        </View>
+                        <View style={{
+                            flex:1,
+                            backgroundColor: '#f8f8f8',
+                            paddingHorizontal: scaleText(20).fontSize,
+                            paddingVertical: scaleText(10).fontSize,
+                            borderRadius: scaleText(10).fontSize,
+                            marginBottom:scaleText(15).fontSize,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <View style={{ ...styles.rowFlex, justifyContent: 'space-evenly', marginHorizontal:scaleText(10).fontSize }}>
                                 <Text
                                     ellipsizeMode={'tail'}
                                     numberOfLines={1}
                                     style={styles.listPickupText}>{vehicleDetails.pickupBranchData.city}</Text>
-                                <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center' }} />
+                                <SimpleImage source={STRAIGHT_ARROW} style={{ alignSelf: 'center', marginHorizontal:scaleText(5).fontSize }} />
                                 <Text
                                     ellipsizeMode={'tail'}
                                     numberOfLines={1}
                                     style={styles.listPickupText}>{vehicleDetails.dropoffBranchData.city}</Text>
                             </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(10).fontSize }}>
-                            <View style={{ flex: 1 }}>
-                                <View style={{ flex: 1, flexDirection: 'row', }}>
-                                    <Text style={{ color: 'black', flex: 1, }}>{'Pick-up Date: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.pickupDate).format('DD/MM/YYYY')}</Text>
+                            <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(10).fontSize }}>
+                                <View style={{ flex: 1 }}>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                                        <Text style={{ color: 'black', flex: 1, }}>{'Pick-up Date: '}</Text>
+                                        <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.pickupDate).format('DD/MM/YYYY')}</Text>
+                                    </View>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                                        <Text style={{ color: 'black', flex: 1, }}>{'Return Date: '}</Text>
+                                        <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.dropoffDate).format('DD/MM/YYYY')}</Text>
+                                    </View>
                                 </View>
-                                <View style={{ flex: 1, flexDirection: 'row', }}>
-                                    <Text style={{ color: 'black', flex: 1, }}>{'Return Date: '}</Text>
-                                    <Text style={{ color: 'black', flex: 1, }}>{moment(vehicleDetails.dropoffDate).format('DD/MM/YYYY')}</Text>
-                                </View>
+                                <CustomButton
+                                    title={'Change'}
+                                    titleStyle={{ color: 'white', fontSize: scaleText(14).fontSize, textAlign: 'center', textAlignVertical: 'center', textTransform: 'capitalize' }}
+                                    onPress={() => {
+                                        scrollRef.current.scrollTo(0);
+                                        navigation.goBack();
+                                    }}
+                                    buttonStyle={{ marginHorizontal: scaleText(30).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}
+                                />
                             </View>
-                            <CustomButton
-                                title={'Change'}
-                                titleStyle={{ color: 'white', fontSize: scaleText(14).fontSize, textAlign: 'center', textAlignVertical: 'center', textTransform: 'capitalize' }}
-                                onPress={() => {
-                                    scrollRef.current.scrollTo(0);
-                                    navigation.goBack();
-                                }}
-                                buttonStyle={{ marginHorizontal: scaleText(40).fontSize, paddingVertical: scaleText(5).fontSize, backgroundColor: '#535050', alignSelf: 'flex-end' }}
-                            />
                         </View>
                         <View style={{
                             backgroundColor: '#f8f8f8',
@@ -341,7 +409,7 @@ export const Screen = ({
                                             },
                                             (response) => {
                                                 setRideBooked(true);
-                                            },
+                                                },
                                             () => { }
                                         );
                                     }

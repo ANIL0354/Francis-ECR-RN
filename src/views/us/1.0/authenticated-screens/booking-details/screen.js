@@ -118,7 +118,6 @@ export const Screen = ({
             html = html.replace(/&lt;/g, '<');
             html = html.replace(/&gt;/g, '>');
             html = html.replace(/&nbsp;/g, ' ');
-            console.log(html);
             setHTMLContent(html);
         }
     }, [completeDetails && completeDetails.termsData && completeDetails.termsData.description])
@@ -182,14 +181,14 @@ export const Screen = ({
                                         <IconText
                                             icon={CAR_SEATS_ICON}
                                             title={`${vehicleDetails.vehicleData.adultSeats || 0} adult${vehicleDetails.vehicleData.adultSeats > 1 ? 's' : ''}, ${vehicleDetails.vehicleData.childSeats || 0} child`}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
                                         <IconText
                                             icon={DOORS_ICON}
                                             title={`${vehicleDetails.vehicleData.numberOfDoor || 0} doors`}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
@@ -198,14 +197,14 @@ export const Screen = ({
                                         <IconText
                                             icon={LUGGAGE_ICON}
                                             title={`${vehicleDetails.vehicleData.largeLuggageSpace || 0} large, ${vehicleDetails.vehicleData.smallLuggageSpace || 0} small`}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
                                         <IconText
                                             icon={FUEL_INACTIVE}
                                             title={vehicleDetails.fuelTypeData.fuelType}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
@@ -214,27 +213,27 @@ export const Screen = ({
                                         <IconText
                                             icon={GEAR_ICON}
                                             title={vehicleDetails.transmissionData.name}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
                                         <IconText
                                             icon={AC_ICON}
                                             title={vehicleDetails.airConditionType ? 'Air Conditioning' : 'Non-AC'}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
                                     </View>
-                                    <View style={styles.rowFlex}>
+                                    {/* <View style={styles.rowFlex}>
                                         <IconText
                                             icon={VEHICLE_YEAR_RANGE}
                                             title={`${vehicleDetails.vehicleData.yearRange.from}-${vehicleDetails.vehicleData.yearRange.to}`}
-                                            titleFontSize={14}
+                                            titleFontSize={13}
                                             titleStyle={styles.iconText}
                                             containerStyle={styles.iconTextContainer}
                                         />
-                                    </View>
+                                    </View> */}
                                 </View>
                             </View>
                         </View>
@@ -359,7 +358,7 @@ export const Screen = ({
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                             <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.PICKUP_FROM}</Text>
-                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(completeDetails.pickupDate).format('DD-MMMM-YYYY')}</Text>
+                            <Text style={{ ...styles.basicBlackText, flex: 1 }}>{moment(completeDetails.pickupDate).format('Do MMMM YYYY')}</Text>
                         </View>
                         <View style={{ flex: 1, flexDirection: 'row', marginVertical: scaleText(3).fontSize }}>
                             <Text style={{ ...styles.basicBlackText, flex: 1.5 }}>{STRINGS.PICKUP_TIME}</Text>
@@ -421,7 +420,7 @@ export const Screen = ({
                                         }}>{STRINGS.OTHER_INSURANCE_DETAILS}</Text>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.BOND}</Text>
-                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.insuranceData.bond ? completeDetails.insuranceData.bond : 0} year${completeDetails.insuranceData.bond > 1 ? 's' : ''}`}</Text>
+                                            <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`$${completeDetails.insuranceData.bond ? completeDetails.insuranceData.bond : 0}`}</Text>
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                             <Text style={{ ...styles.basicBlackText, flex: 1, fontWeight: 'bold' }}>{STRINGS.EXCESS}</Text>
@@ -447,20 +446,8 @@ export const Screen = ({
                                     <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.pickupBranchData.name}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CONTACT}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.phoneNumber.code}${completeDetails.pickupBranchData.phoneNumber.phone}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.EMAIL_TEXT}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.email}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.ADDRESS}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.pickupBranchData.address}, ${completeDetails.pickupBranchData.suburb}, ${completeDetails.pickupBranchData.city}, ${completeDetails.pickupBranchData.country}, ${completeDetails.pickupBranchData.postcode}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_CODE}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.pickupBranchData.code}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CITY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.pickupBranchData.city}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                     <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.OPENS_AT}</Text>
@@ -480,20 +467,8 @@ export const Screen = ({
                                     <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{completeDetails.dropoffBranchData.name}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CONTACT}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.phoneNumber.code}${completeDetails.dropoffBranchData.phoneNumber.phone}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.EMAIL}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.email}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.ADDRESS}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.dropoffBranchData.address}, ${completeDetails.dropoffBranchData.suburb}, ${completeDetails.dropoffBranchData.city}, ${completeDetails.dropoffBranchData.country}, ${completeDetails.dropoffBranchData.postcode}`}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.BRANCH_CODE}</Text>
-                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{`${completeDetails.dropoffBranchData.code}`}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.CITY}</Text>
+                                    <Text style={{ ...styles.basicBlackText, flex: 1, textTransform: 'capitalize' }}>{`${completeDetails.dropoffBranchData.city}`}</Text>
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', paddingVertical: scaleText(3).fontSize }}>
                                     <Text style={{ ...styles.basicBlackText, flex: 1 }}>{STRINGS.OPENS_AT}</Text>

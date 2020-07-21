@@ -236,8 +236,8 @@ export const Screen = ({
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
                                 }}>
                                 {'Pick-up Location:'}
                             </Text>
@@ -247,9 +247,9 @@ export const Screen = ({
                                 style={{
                                     ...styles.subHeaderText,
                                     maxWidth: 150,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight,
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {pickupLocation ? pickupLocation : ''}
                             </Text>
@@ -258,18 +258,18 @@ export const Screen = ({
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight,
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {'Pick-up Date:'}
                             </Text>
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight,
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : ''}
                             </Text>
@@ -535,7 +535,7 @@ export const Screen = ({
                                                             <Text style={{
                                                                 fontSize: scaledSmallerFont.fontSize,
                                                                 ...styles.vehicleTypeTitle,
-                                                            }}>{item.name}</Text>
+                                                            }}>{item.name === 'Recreational Vans' ? 'Recreational' : item.name}</Text>
                                                             <Image
                                                                 source={{ uri: item.URL }}
                                                                 indicator={Progress}
@@ -614,13 +614,27 @@ export const Screen = ({
                     }}
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
-                        let extraItemsString = '';
-                        if (item.extraItemsData && item.extraItemsData.items) {
-                            item.extraItemsData.items.map((extraItem, index) => {
-                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${extraItem.name}`;
-                                return;
-                            });
-                        }
+                        let extraItemsString = `${item.kmAllow 
+                        ? `Free ${item.kmAllow} Kms` 
+                        : ''}${item.fuelOfferData&&item.fuelOfferData.value
+                        ?`${item.kmAllow
+                        ?', '
+                        :''}${item.fuelOfferData.value}`
+                        :''}${item.expenses
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow
+                        ?', ':''}${item.expenses}`
+                        :''}${item.ferryCost&&item.insurance
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?', '
+                        :''}${'Ferry cost and standard insurance'}`
+                        :`${item.ferryCost
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?' and Ferry cost.'
+                        :''}`
+                        :`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?' and standard insurance.'
+                        :''}`}`}`;
+                           
                         return (
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
@@ -643,14 +657,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={CAR_SEATS_ICON}
                                                     title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={DOORS_ICON}
                                                     title={`${item.vehicleData.numberOfDoor || 0} doors`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
@@ -659,14 +673,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={LUGGAGE_ICON}
                                                     title={`${item.vehicleData.largeLuggageSpace || 0} large, ${item.vehicleData.smallLuggageSpace || 0} small`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={FUEL_INACTIVE}
                                                     title={item.fuelTypeData.fuelType}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
@@ -675,14 +689,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={GEAR_ICON}
                                                     title={item.transmissionData.name}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={AC_ICON}
                                                     title={item.airConditionType ? 'Air Conditioning' : 'Non-AC'}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
@@ -691,14 +705,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
                                                     title={`${item.vehicleData.yearRange.from}-${item.vehicleData.yearRange.to}`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 {/* <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
                                                     title={`${item.vehicleData.manufactureYear || 'N/A'}`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 /> */}

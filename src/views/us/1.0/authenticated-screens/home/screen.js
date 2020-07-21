@@ -607,8 +607,8 @@ export const Screen = ({
               alignSelf: 'center',
               marginTop: 15,
               marginBottom: 15,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             }}
             resizeMode={'contain'}
             source={CAR_RELOCATION}
@@ -642,8 +642,8 @@ export const Screen = ({
               alignSelf: 'center',
               marginTop: 40,
               marginBottom: 15,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             }}
             resizeMode={'contain'}
             source={CAR_DRIVER}

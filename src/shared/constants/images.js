@@ -10,3 +10,6 @@ export const BIG_NORMAL_CAR = require('../../assets/images/big_car.png');
 export const SPLASH_SCREEN = require('../../assets/images/splash.png');
 export const RIDE_BOOKED = require('../../assets/images/car_mobile.png');
 export const CHANGE_PASSWORD_LOCK = require('../../assets/images/lock_illustration.png');
+export const DEAL_DONE = require('../../assets/images/deal_done.png');
+export const SEND_IT = require('../../assets/images/sendit.png');
+export const TIME = require('../../assets/images/time.png');

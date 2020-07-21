@@ -24,7 +24,7 @@ const AppHeader = ({
                     height: scaleText(35).fontSize,
                     width: scaleText(90).fontSize,
                 }} onPress={onLeftIconTap}>
-                    <Image style={styles.leftIconStyle} source={leftIcon} />
+                    <Image style={styles.leftIconStyle} source={leftIcon} resizeMode={'contain'} />
                 </TouchableOpacity>}
             </View>
             <View style={styles.centerIconWrapper}>
@@ -32,6 +32,7 @@ const AppHeader = ({
                     <Image
                         source={centerIcon}
                         style={styles.centerIconStyle}
+                        resizeMode={'contain'}
                     /></TouchableOpacity>}
                 {rightIcon &&
                     <Menu
@@ -40,6 +41,7 @@ const AppHeader = ({
                             <Image
                                 source={rightIcon}
                                 style={styles.rightIconStyle}
+                                resizeMode={'contain'}
                             />
                         </TouchableOpacity>}
                     >

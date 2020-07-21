@@ -133,6 +133,7 @@ export const STRINGS = {
   BRANCH_CODE: 'Branch Code: ',
   OPENS_AT: 'Opens At: ',
   CLOSE_BY: 'Closes By: ',
+  CITY: 'City',
   DROPOFF_BRANCH_DETAILS: 'Dropoff Branch Details',
   VEHICLE_DETAILS: 'Vehicle Details',
   VEHICLE_NAME: 'Vehicle Name: ',
