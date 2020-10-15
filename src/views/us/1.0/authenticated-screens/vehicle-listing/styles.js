@@ -1,14 +1,14 @@
-import React from 'react';
+/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { scaleText } from '../../../../../helpers';
 
 const styles = StyleSheet.create({
     rowFlex: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     alignSelfCenter: {
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     childContainer: {
         alignItems: 'center',
@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
         // minHeight: 60,
         paddingVertical: scaleText(10).fontSize,
         paddingHorizontal: scaleText(10).fontSize,
+    },
+    screenHeaderWrapper: {
+        backgroundColor: '#0091ff',
+        minHeight: scaleText(60).fontSize,
     },
     searchChildContainer: {
         flex: 1,
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 50,
         paddingVertical: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     authTabButton: {
         minWidth: 150,
@@ -46,38 +50,23 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
-        marginHorizontal: 2
+        marginHorizontal: 2,
     },
     authTabButtonText: {
         color: 'white',
         opacity: 1,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
     },
     formContainer: {
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 10,
-        padding: 10
+        padding: 10,
     },
     pickupLocationInput: {
         borderColor: 'black',
         borderRadius: 5,
         borderWidth: 0.8,
-        // backgroundColor: 'white',
-        // marginBottom: 10,
-        // paddingHorizontal: 10,
-        // paddingVertical: 2,
-        paddingBottom: 0,
-        marginBottom: 0,
-    },
-    normalLocationInput: {
-        borderColor: 'black',
-        borderRadius: 5,
-        borderWidth: 0.8,
-        backgroundColor: 'white',
-        marginBottom: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 2,
         paddingBottom: 0,
         marginBottom: 0,
     },
@@ -95,12 +84,12 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
         borderTopColor: 'lightgray',
         borderBottomColor: 'lightgray',
-        borderWidth: 1
+        borderWidth: 1,
     },
     vehicleTypeWrapper: {
         flexDirection: 'row',
         paddingVertical: 5,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     vehicleTypeContainer: {
         flexDirection: 'column',
@@ -120,7 +109,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         width: '100%',
         alignSelf: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     detailsWrapper: {
         paddingVertical: 10,
@@ -128,20 +117,20 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         marginBottom: 20,
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     iconContainerStyle: {
         alignContent: 'flex-start',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
     },
     detailsLeftContainer: {
         flexDirection: 'column',
         flex: 1,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     detailsRightContainer: {
         flexDirection: 'column',
-        flex: 2
+        flex: 2,
     },
     carTitle: {
         color: 'black',
@@ -170,17 +159,17 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
         paddingVertical: 5,
-        marginRight: scaleText(10).fontSize
+        marginRight: scaleText(10).fontSize,
     },
     iconText: {
         color: 'gray',
         textAlign: 'left',
         textAlignVertical: 'center',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
     },
     listLocationWrapper: {
         paddingVertical: scaleText(10).fontSize,
-        paddingHorizontal: scaleText(20).fontSize
+        paddingHorizontal: scaleText(20).fontSize,
     },
     listPickupText: {
         textTransform: 'uppercase',
@@ -190,18 +179,18 @@ const styles = StyleSheet.create({
     },
     listDropoffWrapper: {
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 5,
     },
     listDropoffText: {
         textTransform: 'uppercase',
         textAlign: 'left',
         textAlignVertical: 'center',
         borderRadius: 15,
-        marginLeft: 5
+        marginLeft: 5,
     },
     offerTextWrapper: {
         paddingHorizontal: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     carOfferTitle: {
         flex: 1,
@@ -212,13 +201,94 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'black',
         fontWeight: 'bold',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
     },
     vehicleListButton: {
         marginTop: scaleText(10).fontSize,
         marginHorizontal: scaleText(10).fontSize,
         backgroundColor: '#009000',
-    }
+    },
+    displayLocationWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#0091ff',
+        paddingVertical: scaleText(10).fontSize,
+        paddingHorizontal: scaleText(10).fontSize,
+    },
+    cancelText: {
+        color: 'white',
+        fontSize: scaleText(14).fontSize,
+        fontWeight: 'bold',
+        textAlign: 'right',
+        textAlignVertical: 'center',
+        marginRight: scaleText(20).fontSize,
+        marginTop: scaleText(20).fontSize,
+    },
+    modifyText: {
+        fontWeight: '700',
+        color: 'black',
+        fontSize: scaleText(16).fontSize,
+    },
+    modifyTextWrapper: {
+        backgroundColor: '#fff93e',
+        alignItems: 'center',
+        borderRadius: 5,
+        padding: scaleText(10).fontSize,
+        marginTop: scaleText(20).fontSize,
+    },
+    advanceSearchText: {
+        color: 'white',
+        fontSize: scaleText(18).fontSize,
+        textAlign: 'left',
+        marginLeft: scaleText(5).fontSize,
+        textAlignVertical: 'center',
+    },
+    advanceTextWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 5,
+        marginBottom: 2,
+    },
+    dateTouchBody: {
+        marginVertical: scaleText(20).fontSize,
+        zIndex: 10,
+    },
+    dateIcon: {
+        marginLeft: -1 * (scaleText(30).fontSize),
+        height: scaleText(25).fontSize,
+        width: scaleText(25).fontSize,
+    },
+    dateInput: {
+        textAlign: 'left',
+        minWidth: '40%',
+        margin: 0,
+        backgroundColor: 'white',
+        padding: 0,
+        height: 2.5 * scaleText(14).lineHeight,
+        borderColor: 'black',
+        borderRadius: 5,
+        borderWidth: 0.8,
+        fontSize: scaleText(14).fontSize,
+        lineHeight: scaleText(14).lineHeight,
+        paddingHorizontal: 10,
+        alignSelf: 'center',
+        paddingVertical: 2,
+        paddingBottom: 0,
+        marginBottom: 0,
+    },
+    dateText: {
+        textAlign: 'left',
+        margin: 0,
+        fontSize: scaleText(14).fontSize,
+        lineHeight: scaleText(14).lineHeight,
+        padding: 0,
+    },
+    datePickerStyle: {
+        padding: 0,
+        margin: 0,
+        width: '100%',
+    },
 });
 
 export default styles;

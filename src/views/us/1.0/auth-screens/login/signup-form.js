@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
 import { reduxForm, Field, change as changeField } from "redux-form";
 import { Button } from 'react-native-elements';
 import { View, KeyboardAvoidingView, Dimensions, Text, Image, TouchableOpacity, ScrollView } from "react-native";
@@ -34,7 +35,8 @@ const Form = ({
     const maxDate = today.setFullYear(today.getFullYear() - 16);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedCountryCode, setSelectedCountryCode] = useState('');
-    const [portrait, setPortraitOrientation] = useState(true)
+    const [countryCode, setCountryCode] = useState('');
+    const [portrait, setPortraitOrientation] = useState(true);
 
     useEffect(() => {
         Dimensions.addEventListener('change', () => {
@@ -70,10 +72,10 @@ const Form = ({
                     placeholder={STRINGS.DOB_PLACEHOLDER}
                     returnKeyType={'next'}
                     onDateChange={(date) => {
-                        changeField('signup', STRINGS.DOB_INPUT, date)
+                        changeField('signup', STRINGS.DOB_INPUT, date);
                     }}
                     saveDateString={(date) => {
-                        saveDateString(date)
+                        saveDateString(date);
                     }}
                     maxDate={new Date(maxDate)}
                     style={{ flex: 1, marginRight: scaleText(5).fontSize }}
@@ -97,8 +99,9 @@ const Form = ({
                         changeField('signup', STRINGS.COUNTRY_INPUT, value);
                         setSelectedCountry(value)
                     }}
-                    setCallingCode={(value) => {
+                    setCallingCode={(value, initials) => {
                         changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('signup', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     returnKeyType={'go'}
@@ -121,8 +124,9 @@ const Form = ({
                     component={CountryCodePicker}
                     countryValue={selectedCountry}
                     codeValue={selectedCountryCode}
-                    setCallingCode={(value) => {
-                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value)
+                    setCallingCode={(value, initials) => {
+                        changeField('signup', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('signup', STRINGS.COUNTRY_CODE, initials);
                         setSelectedCountryCode(value);
                     }}
                     setSelectedCountry={(value) => {
@@ -138,7 +142,7 @@ const Form = ({
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
-                    maxLength={15}
+                    maxLength={18}
                     style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
@@ -157,6 +161,7 @@ const Form = ({
                     name={STRINGS.RE_PASSWORD_INPUT_NAME}
                     component={CustomFormInput}
                     secureTextEntry={true}
+                    showEye={false}
                     returnKeyType={'go'}
                     maxLength={15}
                     style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
@@ -175,7 +180,7 @@ const Form = ({
 
             <View style={{
                 flexDirection: 'row',
-                padding: scaleText(10).fontSize
+                padding: scaleText(10).fontSize,
             }}>
                 <TouchableOpacity
                     onPress={googleAuth}
@@ -193,11 +198,11 @@ const Form = ({
                     <View style={{ flex: 1, alignItems: 'center', }}>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.loginWith}</Text>
                         <Text style={{
                             ...styles.socialButtonTitle,
-                            fontSize: scaleText(13).fontSize
+                            fontSize: scaleText(13).fontSize,
                         }}>{LABELS.google}</Text>
                     </View>
                 </TouchableOpacity>
@@ -216,7 +221,7 @@ const Form = ({
                     />
                     <Text style={{
                         ...styles.socialButtonTitle,
-                        fontSize: scaleText(13).fontSize
+                        fontSize: scaleText(13).fontSize,
                     }}>{LABELS.loginWithFacebook}</Text>
                 </TouchableOpacity>
             </View>
@@ -241,7 +246,7 @@ const reduxFormFunction = reduxForm({
     fields: ['email', 'password'],
     // onSubmitFail,
     validate: validator,
-    enableReinitialize: true
+    enableReinitialize: true,
 })(Form);
 
 export const SignupForm = connect(mapStateToProps, { changeField })(reduxFormFunction);

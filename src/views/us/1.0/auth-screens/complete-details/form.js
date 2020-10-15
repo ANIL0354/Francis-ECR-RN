@@ -1,70 +1,75 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect } from 'react';
 import { reduxForm, Field, change as changeField } from "redux-form";
-import { Button } from 'react-native-elements'
-import { LoginButton, LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
-import {
-    GoogleSignin,
-    GoogleSigninButton,
-    statusCodes,
-} from '@react-native-community/google-signin';
-import { View, KeyboardAvoidingView, Text, Image, TouchableOpacity, Platform } from "react-native";
+import { Button } from 'react-native-elements';
+import { View, Dimensions, Text, Image } from "react-native";
 import { connect } from 'react-redux';
 import validator from "./validator";
 import CustomFormInput from '../../../../../components/atoms/CustomFormInput';
 import CountryCodePicker from '../../../../../components/atoms/CountryCodePicker';
 import CustomDatePicker from '../../../../../components/atoms/FormDatePicker';
-import Checkbox from '../../../../../components/atoms/Checkbox';
-import { CHECKBOX_ICON, } from '../../../../../shared/constants'
+import {
+    DIVIDING_LINE,
+} from '../../../../../shared/constants'
 import { STRINGS } from "../../../../../shared/constants/us/strings";
-const { onSubmitFail } = require(`../../../../../helpers`);
+import { scaleText } from "../../../../../helpers";
+import styles from './style';
 
 const Form = ({
     handleSubmit,
     onSubmit,
     changeField,
-    email,
-    name,
-    surname,
-    subscribed,
+    initialValues,
     saveDateString,
-    setSubscribed
 }) => {
-    useEffect(() => {
-        changeField('details', 'email', email);
-        changeField('details', 'name', name);
-        changeField('details', 'surname', surname);
-    }, [name, email, surname])
-    GoogleSignin.configure({
-        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-        webClientId: '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com',
-        offlineAccess: true,
-        loginHint: '',
-        forceCodeForRefreshToken: false,
-    });
     const today = new Date();
-    const maxDate = today.setFullYear(today.getFullYear() - 16)
+    const maxDate = today.setFullYear(today.getFullYear() - 16);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountryCode, setSelectedCountryCode] = useState('');
+    const [portrait, setPortraitOrientation] = useState(true);
+
+    useEffect(() => {
+        Dimensions.addEventListener('change', () => {
+            Dimensions.get('window').width > Dimensions.get('window').height
+                ? setPortraitOrientation(false)
+                : setPortraitOrientation(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        let codeValue = initialValues['country-code'];
+        if (codeValue) {
+            codeValue = codeValue.replace(/^[+]/g, '');
+            changeField('details', STRINGS.COUNTRY_CODE_INPUT, codeValue);
+            setSelectedCountryCode(codeValue);
+        }
+        if (initialValues.country) {
+            changeField('details', STRINGS.COUNTRY_INPUT, initialValues.country);
+            setSelectedCountry(initialValues.country);
+        }
+    }, []);
+
+
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        >
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+        <React.Fragment>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.NAME_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.NAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.SURNAME_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.SURNAME_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
 
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.DOB_INPUT}
                     component={CustomDatePicker}
@@ -77,79 +82,108 @@ const Form = ({
                         saveDateString(date)
                     }}
                     maxDate={new Date(maxDate)}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.CITY_INPUT}
                     component={CustomFormInput}
                     placeholder={STRINGS.CITY_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
 
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.COUNTRY_INPUT}
-                    component={CustomFormInput}
-                    placeholder={STRINGS.COUNTRY_PLACEHOLDER}
-                    returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    component={CountryCodePicker}
+                    countryValue={selectedCountry}
+                    codeValue={selectedCountryCode}
+                    setSelectedCountry={(value) => {
+                        changeField('details', STRINGS.COUNTRY_INPUT, value);
+                        setSelectedCountry(value)
+                    }}
+                    setCallingCode={(value, initials) => {
+                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('details', STRINGS.COUNTRY_CODE, initials);
+                        setSelectedCountryCode(value);
+                    }}
+                    returnKeyType={'go'}
+                    countryDrop={true}
+                    placeholder={'Country'}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.EMAIL_INPUT_NAME}
                     component={CustomFormInput}
-                    editable={email ? false : true}
+                    keyboardType={'email-address'}
                     placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     returnKeyType={'next'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    editable={false}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                 />
             </View>
-            <View style={{ flexDirection: 'row', minWidth: '100%', justifyContent: 'space-between', }}>
+            <View style={styles.fieldsRow}>
                 <Field
                     name={STRINGS.COUNTRY_CODE_INPUT}
                     component={CountryCodePicker}
-                    setCallingCode={(value) => {
-                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value)
+                    countryValue={selectedCountry}
+                    codeValue={selectedCountryCode}
+                    setCallingCode={(value, initials) => {
+                        changeField('details', STRINGS.COUNTRY_CODE_INPUT, value);
+                        changeField('details', STRINGS.COUNTRY_CODE, initials);
+                        setSelectedCountryCode(value);
+                    }}
+                    setSelectedCountry={(value) => {
+                        changeField('details', STRINGS.COUNTRY_INPUT, value);
+                        setSelectedCountry(value);
                     }}
                     returnKeyType={'go'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
-                    placeholder={STRINGS.PASSWORD_PLACEHOLDER}
+                    placeholder={'Country Code'}
+                    style={{ flex: 1, marginRight: scaleText(5).fontSize }}
                 />
                 <Field
                     name={STRINGS.PHONE_NUMBER}
                     component={CustomFormInput}
                     returnKeyType={'next'}
                     keyboardType={'phone-pad'}
-                    style={{ minWidth: 150, maxWidth: 150 }}
+                    maxLength={18}
+                    style={{ flex: 1, marginLeft: scaleText(5).fontSize }}
                     placeholder={STRINGS.PHONE_PLACEHOLDER}
                 />
             </View>
 
-            <Checkbox
-                title={'Subscribe for news and promotions.'}
-                toggleCheck={() => setSubscribed(!subscribed)}
-                checked={subscribed}
-                checkedIcon={CHECKBOX_ICON}
-                uncheckedIcon={CHECKBOX_ICON}
-            />
+            <Image source={DIVIDING_LINE} style={styles.dividingLine} />
+            <Button
+                titleStyle={styles.loginSubmitTitle}
+                buttonStyle={styles.registerButtonStyle}
+                title={STRINGS.SAVE} onPress={handleSubmit(onSubmit)} />
 
-            <Button title={STRINGS.SAVE} onPress={handleSubmit(onSubmit)} />
-        </KeyboardAvoidingView>
+        </React.Fragment >
     );
 };
 
 const mapStateToProps = (state, props) => {
-    return {
+    let profileValues = {
+        ...props.profileData,
     };
-}
-
+    if (props.profileData.phoneNumber && props.profileData.phoneNumber.code && props.profileData.phoneNumber.phone) {
+        profileValues = {
+            ...profileValues,
+            'country-code': props.profileData.phoneNumber.code,
+            phone: props.profileData.phoneNumber.phone,
+        };
+    }
+    return {
+        initialValues: profileValues,
+    };
+};
 const reduxFormFunction = reduxForm({
     form: "details",
     // fields: ['email', 'password'],
     // onSubmitFail,
     validate: validator,
-    enableReinitialize: true
+    enableReinitialize: true,
 })(Form);
 
 export const DetailsForm = connect(mapStateToProps, { changeField })(reduxFormFunction);

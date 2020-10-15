@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
-    TextInput,
     Image as SimpleImage,
     RefreshControl,
     FlatList,
-    Animated,
     Alert,
     Keyboard,
     ScrollView,
     Dimensions,
     LayoutAnimation,
     UIManager,
+    Platform,
     TouchableOpacity,
-    BackHandler
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -25,14 +25,12 @@ import {
     APP_LOGO,
     MENU_LOGO,
     USER_ICON,
-    VEHICLE_TYPE_LISTING,
     NAV_ARROW_ICON,
     CAR_SEATS_ICON,
     AC_ICON,
     TURN_RIGHT,
     DOORS_ICON,
     VERTICAL_LINE,
-    VEHICLE_DETAILS_LISTING,
     GEAR_ICON,
     SEARCH_ICON,
     LUGGAGE_ICON,
@@ -41,16 +39,17 @@ import {
     SCREENS,
     SCROLL_UP,
     FUEL_INACTIVE,
-    VEHICLE_YEAR_RANGE
+    VEHICLE_YEAR_RANGE,
 } from '../../../../../shared/constants';
 import { scaleText } from '../../../../../helpers';
 import AdvanceSearchFilter from '../../../../../components/hoc/AdvanceSearchFilter';
-import styles from "./styles.js";
-import IconText from "../../../../../components/atoms/IconTextComponent";
-import CustomButton from "../../../../../components/atoms/CustomButton";
+import styles from './styles.js';
+import IconText from '../../../../../components/atoms/IconTextComponent';
+import CustomButton from '../../../../../components/atoms/CustomButton';
 import LocationSearch from '../../../../../components/atoms/LocationSearch';
-import CustomLoader from "../../../../../components/atoms/Loader";
+import CustomLoader from '../../../../../components/atoms/Loader';
 import ImageButton from '../../../../../components/atoms/ImageButton';
+import { STRINGS } from '../../../../../shared/constants/us/strings';
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const Screen = ({
@@ -77,6 +76,7 @@ export const Screen = ({
     pickupDate,
     setVehicleType,
     fuelTypesList,
+    getPopularPlaces,
     setDropoffLocation,
     fetchVehicleListing,
     transmissionTypesList,
@@ -87,15 +87,15 @@ export const Screen = ({
     setTransmissionType,
 }) => {
 
-    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
     const vehicleListRef = useRef();
     const today = new Date();
     const maxDate = today.setMonth(today.getMonth() + 12);
     const [filterMenu, showFilterMenu] = useState(false);
     const [modifySearch, setModifySearch] = useState(false);
+    const [detailsList, setDetailsList] = useState(null);
     const [dateValue, onDateChange] = useState(pickupDate);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [detailsList, setDetailsList] = useState(null);
     const [pageIndex, setPageIndex] = useState(0);
     const [fetchingData, setFetchingData] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -113,44 +113,49 @@ export const Screen = ({
                 showUpButton(true);
             }
         }
-    })
+    });
 
     const scaledLargerFont = scaleText(20);
     const scaledLargeFont = scaleText(18);
     const scaledMediumFont = scaleText(16);
     const scaledSmallFont = scaleText(14);
     const scaledSmallerFont = scaleText(12);
-    const scaledFont = scaleText(14)
-    let animatedValue = new Animated.Value(0);
+    const scaledFont = scaleText(14);
 
     const showSearchBarAnimation = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         setModifySearch(!modifySearch);
-    }
+    };
 
     useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => {
+        return () => {
+            getPopularPlaces(
+                {},
+                () => { },
+                () => { },
+            );
             refreshVehicleList();
             setPageIndex(0);
             stopLoader();
-        });
+        };
     }, []);
 
+
     useEffect(() => {
-        setDetailsList(vehicleListItems)
+        setDetailsList(vehicleListItems);
     }, [vehicleListItems]);
 
     useEffect(() => {
         Dimensions.addEventListener('change', () => {
             Dimensions.get('window').width > Dimensions.get('window').height
                 ? setPortraitOrientation(false)
-                : setPortraitOrientation(true)
-        })
+                : setPortraitOrientation(true);
+        });
     }, []);
 
     const scrollToTop = () => {
         vehicleListRef.current.scrollToIndex({ animated: true, index: 0 });
-    }
+    };
 
     return (
         <AppHoc
@@ -184,7 +189,7 @@ export const Screen = ({
                             adultSeats,
                             transmissionValue,
                             vehicleValue,
-                            fuelValue
+                            fuelValue,
                         } = data;
 
                         let formattedDate = moment(pickupDate).format('YYYY-MM-DD');
@@ -215,12 +220,12 @@ export const Screen = ({
                 />
             )}
             <View
-                style={{ backgroundColor: '#0091ff', minHeight: scaleText(60).fontSize }}>
-                {!modifySearch && <View style={{ ...styles.childContainer, flexDirection: 'row', }} >
+                style={styles.screenHeaderWrapper}>
+                {!modifySearch && <View style={styles.displayLocationWrapper} >
                     <TouchableOpacity
                         onPress={() => {
                             refreshVehicleList();
-                            navigation.navigate(SCREENS.HOME)
+                            navigation.navigate(SCREENS.HOME);
                         }}
                         hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}
                     >
@@ -231,8 +236,8 @@ export const Screen = ({
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
                                 }}>
                                 {'Pick-up Location:'}
                             </Text>
@@ -242,9 +247,9 @@ export const Screen = ({
                                 style={{
                                     ...styles.subHeaderText,
                                     maxWidth: 150,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {pickupLocation ? pickupLocation : ''}
                             </Text>
@@ -253,18 +258,18 @@ export const Screen = ({
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {'Pick-up Date:'}
                             </Text>
                             <Text
                                 style={{
                                     ...styles.subHeaderText,
-                                    height: Platform.OS == 'ios' ? scaledMediumFont.lineHeight + 2 : 'auto',
-                                    fontSize: scaledMediumFont.fontSize,
-                                    lineHeight: scaledMediumFont.lineHeight
+                                    height: Platform.OS == 'ios' ? scaleText(15).lineHeight + 2 : 'auto',
+                                    fontSize: scaleText(15).fontSize,
+                                    lineHeight: scaleText(15).lineHeight,
                                 }}>
                                 {pickupDate ? `${moment(pickupDate).format('DD-MM-YYYY')}` : ''}
                             </Text>
@@ -279,13 +284,13 @@ export const Screen = ({
                     style={{
                         paddingVertical: scaleText(20).fontSize,
                     }}
-                    keyboardShouldPersistTaps="always"
+                    keyboardShouldPersistTaps={'always'}
                     showsVerticalScrollIndicator={false}>
                     <View
                         style={{
                             backgroundColor: '#1e5e9e',
                             padding: scaleText(20).fontSize,
-                            marginHorizontal: scaleText(20).fontSize
+                            marginHorizontal: scaleText(20).fontSize,
                         }}>
                         <LocationSearch
                             pickupLocation={modifiedLocation || modifiedLocation === '' ? modifiedLocation : pickupLocation}
@@ -299,7 +304,7 @@ export const Screen = ({
                         />
 
                         <DatePicker
-                            mode="date"
+                            mode={'date'}
                             placeholder={modifiedDate
                                 ? `${moment(modifiedDate).format('DD-MM-YYYY')}` :
                                 pickupDate
@@ -310,56 +315,21 @@ export const Screen = ({
                             minDate={new Date()}
                             maxDate={new Date(maxDate)}
                             // date={modifiedDate ? modifiedDate : pickupDate}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            style={{
-                                padding: 0,
-                                margin: 0,
-                                width: '100%',
-                            }}
+                            confirmBtnText={'Confirm'}
+                            cancelBtnText={'Cancel'}
+                            style={styles.datePickerStyle}
                             getDateStr={(date) => {
                                 onDateChange(date);
                                 setModifiedDate(date);
                             }}
                             iconSource={DATE_ICON}
                             customStyles={{
-                                dateTouchBody: {
-                                    marginVertical: scaleText(20).fontSize,
-                                    zIndex: 10,
-                                },
-                                dateIcon: {
-                                    marginLeft: -1 * (scaleText(30).fontSize),
-                                    height: scaleText(25).fontSize,
-                                    width: scaleText(25).fontSize
-                                },
-                                dateInput: {
-                                    textAlign: 'left',
-                                    minWidth: '40%',
-                                    margin: 0,
-                                    backgroundColor: 'white',
-                                    padding: 0,
-                                    height: 2.5 * scaledFont.lineHeight,
-                                    borderColor: 'black',
-                                    borderRadius: 5,
-                                    borderWidth: 0.8,
-                                    fontSize: scaledFont.fontSize,
-                                    lineHeight: scaledFont.lineHeight,
-                                    paddingHorizontal: 10,
-                                    alignSelf: 'center',
-                                    paddingVertical: 2,
-                                    paddingBottom: 0,
-                                    marginBottom: 0,
-                                    textAlign: 'left',
-                                },
+                                dateTouchBody: styles.dateTouchBody,
+                                dateIcon: styles.dateIcon,
+                                dateInput: styles.dateInput,
+                                dateText: styles.dateText,
                                 datePickerCon: {
                                     backfaceVisibility: false,
-                                },
-                                dateText: {
-                                    textAlign: 'left',
-                                    margin: 0,
-                                    fontSize: scaledFont.fontSize,
-                                    lineHeight: scaledFont.lineHeight,
-                                    padding: 0,
                                 },
                                 placeholderText: {
                                     textAlign: 'left',
@@ -376,14 +346,14 @@ export const Screen = ({
                                 },
                                 btnConfirm: {
                                     flex: 1,
-                                    paddingHorizontal: scaleText(10).fontSize
+                                    paddingHorizontal: scaleText(10).fontSize,
                                 },
                                 btnTextCancel: {
-                                    textAlign: 'center'
+                                    textAlign: 'center',
                                 },
                                 btnTextConfirm: {
-                                    textAlign: 'center'
-                                }
+                                    textAlign: 'center',
+                                },
                             }}
                             onDateChange={(date) => {
                                 setSelectedDate(date);
@@ -391,32 +361,15 @@ export const Screen = ({
                         />
                         <TouchableOpacity
                             onPress={() => showFilterMenu(true)}
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                paddingVertical: 5,
-                                marginBottom: 2,
-                            }}>
+                            style={styles.advanceTextWrapper}>
                             <SimpleImage source={SEARCH_ICON} />
                             <Text
-                                style={{
-                                    color: 'white',
-                                    fontSize: scaleText(18).fontSize,
-                                    textAlign: 'left',
-                                    marginLeft: scaleText(5).fontSize,
-                                    textAlignVertical: 'center',
-                                }}>
+                                style={styles.advanceSearchText}>
                                 {'Advanced Search'}
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{
-                                backgroundColor: '#fff93e',
-                                alignItems: 'center',
-                                borderRadius: 5,
-                                padding: scaleText(10).fontSize,
-                                marginTop: scaleText(20).fontSize,
-                            }}
+                            style={styles.modifyTextWrapper}
                             activeOpacity={0.7}
                             onPress={() => {
                                 Keyboard.dismiss();
@@ -426,7 +379,7 @@ export const Screen = ({
                                         'Please select a pick-up location before proceeding.',
                                         [
                                             {
-                                                text: 'Okay',
+                                                text: STRINGS.OKAY,
                                                 onPress: () => { },
                                             },
                                         ],
@@ -438,7 +391,7 @@ export const Screen = ({
                                         'Please select a pick-up date before proceeding.',
                                         [
                                             {
-                                                text: 'Okay',
+                                                text: STRINGS.OKAY,
                                                 onPress: () => { },
                                             },
                                         ],
@@ -476,11 +429,7 @@ export const Screen = ({
                                 }
                             }}>
                             <Text
-                                style={{
-                                    fontWeight: '700',
-                                    color: 'black',
-                                    fontSize: scaleText(16).fontSize,
-                                }}>
+                                style={styles.modifyText}>
                                 {'Modify Search'}
                             </Text>
                         </TouchableOpacity>
@@ -491,15 +440,7 @@ export const Screen = ({
                             setModifiedLocation(null);
                             showSearchBarAnimation();
                         }}
-                        style={{
-                            color: 'white',
-                            fontSize: scaleText(14).fontSize,
-                            fontWeight: 'bold',
-                            textAlign: 'right',
-                            textAlignVertical: 'center',
-                            marginRight: scaleText(20).fontSize,
-                            marginTop: scaleText(20).fontSize
-                        }}
+                        style={styles.cancelText}
                     >{'CANCEL'}</Text>
                 </ScrollView>}
             </View>
@@ -529,7 +470,7 @@ export const Screen = ({
                                 index: 0,
                             },
                             () => {
-                                setIsRefreshing(false)
+                                setIsRefreshing(false);
                             },
                             () => { },
                         );
@@ -546,7 +487,7 @@ export const Screen = ({
                                             style={{
                                                 fontSize: scaledLargeFont.fontSize,
                                                 lineHeight: scaledLargeFont.lineHeight,
-                                                ...styles.pageHeading
+                                                ...styles.pageHeading,
                                             }}>
                                             {`We have found ${vehicleListing.totalCount ? vehicleListing.totalCount : 'no'} vehicle${vehicleListing.totalCount > 1 ? 's' : ''} available from ${pickupLocation}.`}
                                         </Text>
@@ -571,7 +512,7 @@ export const Screen = ({
                                                                 'YYYY-MM-DD',
                                                             );
                                                             let selectedVehicleType = new Set();
-                                                            selectedVehicleType.add(item._id)
+                                                            selectedVehicleType.add(item._id);
                                                             setVehicleType(selectedVehicleType);
                                                             fetchVehicleListing(
                                                                 {
@@ -587,14 +528,14 @@ export const Screen = ({
                                                                     limit: LIMITS.vehicleList,
                                                                     index: 0,
                                                                 },
-                                                                () => { stopLoader() },
+                                                                () => { stopLoader(); },
                                                                 () => { },
                                                             );
                                                         }} style={styles.vehicleTypeContainer}>
                                                             <Text style={{
                                                                 fontSize: scaledSmallerFont.fontSize,
-                                                                ...styles.vehicleTypeTitle
-                                                            }}>{item.name}</Text>
+                                                                ...styles.vehicleTypeTitle,
+                                                            }}>{item.name === 'Recreational Vans' ? 'Recreational' : item.name}</Text>
                                                             <Image
                                                                 source={{ uri: item.URL }}
                                                                 indicator={Progress}
@@ -602,13 +543,13 @@ export const Screen = ({
                                                                 style={{
                                                                     ...styles.alignSelfCenter,
                                                                     height: scaleText(60).fontSize,
-                                                                    width: scaleText(80).fontSize
+                                                                    width: scaleText(80).fontSize,
                                                                 }}
                                                             />
                                                         </TouchableOpacity>
-                                                        <SimpleImage style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center', }} source={VERTICAL_LINE} />
+                                                        <SimpleImage style={{ width: scaleText(1).fontSize, height: scaleText(40).fontSize, marginTop: scaleText(5).fontSize, alignSelf: 'center' }} source={VERTICAL_LINE} />
                                                     </View>
-                                                )
+                                                );
                                             }}
                                         />
                                         <Text
@@ -620,11 +561,10 @@ export const Screen = ({
                                             }}>
                                             {'Advanced Filters'}
                                         </Text>
-
                                     </View>
                                 </View>
                             </View>
-                        )
+                        );
                     }}
                     ListEmptyComponent={<View>
                         <Text style={{ color: 'black', textAlign: 'center', textAlignVertical: 'center' }}>{'No vehicles found.'}</Text>
@@ -634,7 +574,7 @@ export const Screen = ({
                             width: '100%',
                             height: 40,
                             opacity: 1,
-                            marginVertical: 10
+                            marginVertical: 10,
                         }}>
                             {fetchingData && <CustomLoader size={30} />}
                         </View>}
@@ -650,7 +590,7 @@ export const Screen = ({
                         let formattedDate = moment(pickupDate).format(
                             'YYYY-MM-DD',
                         );
-                        setFetchingData(true)
+                        setFetchingData(true);
                         fetchVehicleListing(
                             {
                                 fromCity: pickupLocation,
@@ -666,7 +606,7 @@ export const Screen = ({
                                 index: pageIndex + 1,
                             },
                             () => {
-                                setFetchingData(false)
+                                setFetchingData(false);
                                 setPageIndex(pageIndex + 1);
                             },
                             () => { },
@@ -674,13 +614,27 @@ export const Screen = ({
                     }}
                     keyExtractor={(item) => item._id}
                     renderItem={({ item }) => {
-                        let extraItemsString = '';
-                        if (item.extraItemsData && item.extraItemsData.items) {
-                            item.extraItemsData.items.map((item, index) => {
-                                extraItemsString = `${extraItemsString}${index ? ', ' : ''}${item.name}`;
-                                return;
-                            });
-                        }
+                        let extraItemsString = `${item.kmAllow 
+                        ? `Free ${item.kmAllow} Kms` 
+                        : ''}${item.fuelOfferData&&item.fuelOfferData.value
+                        ?`${item.kmAllow
+                        ?', '
+                        :''}${item.fuelOfferData.value}`
+                        :''}${item.expenses
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow
+                        ?', ':''}${item.expenses}`
+                        :''}${item.ferryCost&&item.insurance
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?', '
+                        :''}${'Ferry cost and standard insurance'}`
+                        :`${item.ferryCost
+                        ?`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?' and Ferry cost.'
+                        :''}`
+                        :`${(item.fuelOfferData&&item.fuelOfferData.value)||item.kmAllow||item.expenses
+                        ?' and standard insurance.'
+                        :''}`}`}`;
+                           
                         return (
                             <View style={styles.detailsWrapper}>
                                 <View style={styles.rowFlex}>
@@ -691,7 +645,7 @@ export const Screen = ({
                                             style={{
                                                 ...styles.alignSelfCenter,
                                                 height: scaleText(110).fontSize,
-                                                width: scaleText(110).fontSize
+                                                width: scaleText(110).fontSize,
                                             }}
                                         />
                                     </View>
@@ -703,14 +657,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={CAR_SEATS_ICON}
                                                     title={`${item.vehicleData.adultSeats || 0} adult${item.vehicleData.adultSeats > 1 ? 's' : ''}, ${item.vehicleData.childSeats || 0} child`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={DOORS_ICON}
                                                     title={`${item.vehicleData.numberOfDoor || 0} doors`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
@@ -719,14 +673,14 @@ export const Screen = ({
                                                 <IconText
                                                     icon={LUGGAGE_ICON}
                                                     title={`${item.vehicleData.largeLuggageSpace || 0} large, ${item.vehicleData.smallLuggageSpace || 0} small`}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={FUEL_INACTIVE}
                                                     title={item.fuelTypeData.fuelType}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
@@ -735,33 +689,33 @@ export const Screen = ({
                                                 <IconText
                                                     icon={GEAR_ICON}
                                                     title={item.transmissionData.name}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                                 <IconText
                                                     icon={AC_ICON}
                                                     title={item.airConditionType ? 'Air Conditioning' : 'Non-AC'}
-                                                    titleFontSize={14}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
                                             </View>
                                             <View style={styles.rowFlex}>
-                                                {/* <IconText
-                                                    icon={VEHICLE_YEAR_RANGE}
-                                                    title={`${item.vehicleData.vehicleYearRange.from}-${item.vehicleData.vehicleYearRange.to}`}
-                                                    titleFontSize={14}
-                                                    titleStyle={styles.iconText}
-                                                    containerStyle={styles.iconTextContainer}
-                                                /> */}
                                                 <IconText
                                                     icon={VEHICLE_YEAR_RANGE}
-                                                    title={`${item.vehicleData.manufactureYear || 'N/A'}`}
-                                                    titleFontSize={14}
+                                                    title={`${item.vehicleData.yearRange.from}-${item.vehicleData.yearRange.to}`}
+                                                    titleFontSize={13}
                                                     titleStyle={styles.iconText}
                                                     containerStyle={styles.iconTextContainer}
                                                 />
+                                                {/* <IconText
+                                                    icon={VEHICLE_YEAR_RANGE}
+                                                    title={`${item.vehicleData.manufactureYear || 'N/A'}`}
+                                                    titleFontSize={13}
+                                                    titleStyle={styles.iconText}
+                                                    containerStyle={styles.iconTextContainer}
+                                                /> */}
                                             </View>
                                         </View>
                                     </View>
@@ -792,12 +746,14 @@ export const Screen = ({
                                         <Text style={styles.carOfferTitle}>{'This relocation includes:'}</Text>
                                         <Text style={styles.carOfferText}>{!!extraItemsString ? extraItemsString : 'N/A'}</Text>
                                     </View>
-                                    <CustomButton title={'View'}
+                                    <CustomButton
+                                        title={'View'}
+                                        onPress={() => navigation.navigate(SCREENS.BOOKING_DETAILS, { vehicleDetails: item })}
                                         buttonStyle={styles.vehicleListButton}
                                     />
                                 </View>
                             </View>
-                        )
+                        );
                     }}
                 />
             }
@@ -807,17 +763,17 @@ export const Screen = ({
                         duration: 250,
                         create: {
                             property: LayoutAnimation.Properties.opacity,
-                            type: 'fadeIn'
+                            type: 'fadeIn',
                         },
                         delete: {
                             property: LayoutAnimation.Properties.opacity,
-                            type: 'fadeOut'
-                        }
-                    })
+                            type: 'fadeOut',
+                        },
+                    });
                 }}
                 source={SCROLL_UP}
-                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize, }}
-                imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize, }}
+                style={{ alignSelf: 'flex-end', position: 'absolute', bottom: scaleText(20).fontSize, right: scaleText(20).fontSize }}
+                imageStyle={{ height: scaleText(40).fontSize, width: scaleText(40).fontSize }}
                 onPress={() => scrollToTop()} />}
         </AppHoc >
     );

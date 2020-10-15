@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { scaleText } from '../../../helpers';
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        paddingVertical: scaleText(20).fontSize,
         borderWidth: 1,
         borderColor: 'transparent',
         borderBottomColor: 'rgba(0,0,0,0.2)',
-        padding: 10,
-        paddingBottom: 30
+
     },
     iconStyle: {
-        height: 50,
-        width: 30,
-        marginTop: 10,
-        marginBottom: -35,
+        height: scaleText(50).fontSize,
+        width: scaleText(50).fontSize,
+        marginBottom: -1 * scaleText(20).fontSize,
         alignSelf: 'center'
     },
     textContainer: {
@@ -20,7 +21,14 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 15
+        marginBottom: 10
+    },
+    placeRangeContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 15
     },
     countStyle: {
         textAlign: 'center',
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         backgroundColor: '#0091ff',
-        width: 150,
+        width: scaleText(150).fontSize,
         alignSelf: 'center'
     },
     buttonTitleStyle: {

@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
         borderBottomColor: 'rgba(0,0,0,0.3)',
         borderWidth: 0.8,
+        alignItems: 'center',
         paddingHorizontal: 8
     },
     emojiStyle: {
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'black',
         fontSize: 13,
-        paddingLeft: 10
+        paddingLeft: 10,
+        textAlignVertical: 'center'
     },
     themeStyle: {
     }
@@ -74,6 +76,7 @@ const CountryCodePicker = ({
     countryValue,
     codeValue,
     placeholder,
+    takeErrorSpace = true,
     countryDrop = false,
     meta: { touched, error, visited },
     setCallingCode = () => { },
@@ -107,7 +110,8 @@ const CountryCodePicker = ({
             <TouchableOpacity
                 onPress={() => setShowCountries(true)}
                 style={{
-                    height: 2.5 * scaledFont.lineHeight,
+                    height:
+                        takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     fontSize: scaledFont.fontSize,
                     lineHeight: scaledFont.lineHeight,
                     ...styles.countryDropWrapper,
@@ -122,7 +126,7 @@ const CountryCodePicker = ({
                         withAlphaFilter,
                         withCallingCode,
                         withEmoji,
-                        onSelect
+                        onSelect,
                     }}
 
                     flatListProps={{
@@ -137,7 +141,7 @@ const CountryCodePicker = ({
                                     setCountryCode(AUSTRALIA_VALUES.cca2);
                                     setCountry(AUSTRALIA_VALUES.country);
                                     setSelectedCountry(AUSTRALIA_VALUES.name);
-                                    setCallingCode(AUSTRALIA_VALUES.callingCode[0]);
+                                    setCallingCode(AUSTRALIA_VALUES.callingCode[0], AUSTRALIA_VALUES.cca2);
                                 }}
                                     style={styles.topCountriesContainer}>
                                     <Emoji name="flag-au" style={styles.emojiStyle} />
@@ -151,7 +155,7 @@ const CountryCodePicker = ({
                                         setCountryCode(NEW_ZEALAND_VALUES.cca2);
                                         setCountry(NEW_ZEALAND_VALUES.country);
                                         setSelectedCountry(NEW_ZEALAND_VALUES.name);
-                                        setCallingCode(NEW_ZEALAND_VALUES.callingCode[0]);
+                                        setCallingCode(NEW_ZEALAND_VALUES.callingCode[0], NEW_ZEALAND_VALUES.cca2);
                                     }}
                                     style={styles.topCountriesContainer}>
                                     <Emoji name="flag-nz" style={styles.emojiStyle} />
@@ -172,11 +176,9 @@ const CountryCodePicker = ({
                     containerButtonStyle={{
                         margin: 0,
                         flexDirection: 'row',
-                        margin: 0,
                         padding: 0,
                         zIndex: 0,
                         alignContent: 'center',
-                        display: codeValue && countryValue ? 'none' : 'flex',
                         display: 'none'
                     }}
                     onSelect={(value) => {
@@ -185,7 +187,7 @@ const CountryCodePicker = ({
                         setCountryCode(value.cca2);
                         setCountry(value.country);
                         setSelectedCountry(value.name);
-                        setCallingCode(value.callingCode[0]);
+                        setCallingCode(value.callingCode[0], value.cca2);
                     }}
                     onClose={() => {
                         setShowCountries(false);
@@ -208,10 +210,11 @@ const CountryCodePicker = ({
                 {countryValue !== null && (
                     <TouchableOpacity activeOpacity={1} onPress={() => setShowCountries(true)}>
                         <TextInput
-                            value={countryDrop ? `${input.value}` : codeValue ? `+${input.value}` : ''}
+                            value={countryDrop ? `${input.value}` : codeValue ? `${input.value.includes('+') ? '' : '+'}${input.value}` : ''}
                             onTouchEndCapture={() => setShowCountries(true)}
                             style={{
                                 color: 'black',
+                                height: 2.5 * scaledFont.lineHeight,
                                 fontSize: scaledFont.fontSize,
                                 lineHeight: scaledFont.lineHeight,
                                 ...styles.data
@@ -220,14 +223,14 @@ const CountryCodePicker = ({
                 )}
             </TouchableOpacity>
 
-            <Text style={{
+            {(takeErrorSpace || !!validationMessage) && <Text style={{
                 color: 'red',
                 paddingVertical: 0,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-                height: 2 * scaledFont.lineHeight,
+                height: takeErrorSpace ? 2 * scaledFont.lineHeight : scaledFont.lineHeight,
                 ...style
-            }}>{validationMessage}</Text>
+            }}>{validationMessage}</Text>}
         </View>
     )
 }

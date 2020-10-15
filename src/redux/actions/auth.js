@@ -6,6 +6,9 @@ export const SOCIAL_LOGIN = 'SOCIAL_LOGIN';
 export const SAVE_USER_INFO = 'SAVE_USER_INFO';
 export const COMPLETE_USER_PROFILE = 'COMPLETE_USER_PROFILE';
 export const SEND_RECOVERY_EMAIL = 'SEND_RECOVERY_EMAIL';
+export const FETCH_PROFILE = 'FETCH_PROFILE';
+export const SAVE_PROFILE_DATA = 'SAVE_PROFILE_DATA';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 export const setAuthorization = (userToken) => {
     return {
@@ -68,4 +71,28 @@ export const logout = (token, success, failure) => {
     return {
         type: LOGOUT_USER, token, success, failure
     }
+};
+
+export const fetchProfile = (success, failure) => {
+    return {
+        type: FETCH_PROFILE,
+        success,
+        failure,
+    };
+};
+
+export const saveProfileData = data => {
+    return {
+        type: SAVE_PROFILE_DATA,
+        data,
+    };
+};
+
+export const changePassword = (data, success, failure) => {
+    return {
+        type: CHANGE_PASSWORD,
+        data,
+        success,
+        failure,
+    };
 };

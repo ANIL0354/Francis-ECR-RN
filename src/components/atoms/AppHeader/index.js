@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import React, { useRef } from 'react';
 import { View, Image, TouchableOpacity, Text, Alert } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
+import { scaleText } from '../../../helpers';
 import styles from './style';
 
 const AppHeader = ({
@@ -16,15 +18,21 @@ const AppHeader = ({
     return (
         <View style={styles.headerContainer}>
             <View style={{
-                flex: centerIcon && rightIcon ? 3 : 7
+                flex: centerIcon && rightIcon ? 3 : 20
             }}>
-                {leftIcon && <Image style={styles.leftIconStyle} source={leftIcon} />}
+                {leftIcon && <TouchableOpacity style={{
+                    height: scaleText(35).fontSize,
+                    width: scaleText(90).fontSize,
+                }} onPress={onLeftIconTap}>
+                    <Image style={styles.leftIconStyle} source={leftIcon} />
+                </TouchableOpacity>}
             </View>
             <View style={styles.centerIconWrapper}>
                 {centerIcon && <TouchableOpacity onPress={() => onCenterIconTap()}>
                     <Image
                         source={centerIcon}
                         style={styles.centerIconStyle}
+                        resizeMode={'contain'}
                     /></TouchableOpacity>}
                 {rightIcon &&
                     <Menu
@@ -33,6 +41,7 @@ const AppHeader = ({
                             <Image
                                 source={rightIcon}
                                 style={styles.rightIconStyle}
+                                resizeMode={'contain'}
                             />
                         </TouchableOpacity>}
                     >

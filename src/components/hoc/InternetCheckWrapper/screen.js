@@ -90,6 +90,7 @@ export default InternetCheckWrapper = ({
             <Modal
                 visible={!isNetConnected}
                 onRequestClose={() => { }}
+                supportedOrientations={['portrait', 'landscape']}
             >
                 <View style={styles.container}>
                     <View style={styles.locationWrapper}>

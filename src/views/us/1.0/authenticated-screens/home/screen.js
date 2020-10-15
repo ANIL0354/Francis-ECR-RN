@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -10,6 +11,7 @@ import {
   ScrollView,
   TouchableOpacity,
   AppState,
+  Platform,
   PermissionsAndroid,
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
@@ -24,8 +26,8 @@ import {
   MENU_LOGO,
   USER_ICON,
   CAR,
-  CAR_WASHER,
-  CAR_CHECKLIST,
+  CAR_DRIVER,
+  CAR_RELOCATION,
   SEARCH_ICON,
   LIMITS,
   DOWN_ARROW,
@@ -92,6 +94,7 @@ export const Screen = ({
   const [initial, setInitial] = useState(false);
 
   const scaledFont = scaleText(14);
+
   useEffect(() => {
     Geocoder.init(GOOGLE_API_KEY);
     checkLocationPermissions();
@@ -123,6 +126,7 @@ export const Screen = ({
     if (fuelTypesList && vehicleTypesList && transmissionTypesList) {
       stopLoader();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fuelTypesList, transmissionTypesList, vehicleTypesList]);
 
   const handleAppStateChange = (nextAppState) => {
@@ -246,7 +250,7 @@ export const Screen = ({
                 'Please select a pick-up location before proceeding.',
                 [
                   {
-                    text: 'Okay',
+                    text: STRINGS.OKAY,
                     onPress: () => { },
                   },
                 ],
@@ -258,7 +262,7 @@ export const Screen = ({
                 'Please select a pick-up date before proceeding.',
                 [
                   {
-                    text: 'Okay',
+                    text: STRINGS.OKAY,
                     onPress: () => { },
                   },
                 ],
@@ -384,7 +388,7 @@ export const Screen = ({
                 dateIcon: {
                   marginLeft: -1 * (scaleText(30).fontSize),
                   height: scaleText(25).fontSize,
-                  width: scaleText(25).fontSize
+                  width: scaleText(25).fontSize,
                 },
                 dateInput: {
                   textAlign: 'left',
@@ -440,8 +444,6 @@ export const Screen = ({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingVertical: 5,
-                marginBottom: 2,
               }}>
               <Image source={SEARCH_ICON} />
               <Text
@@ -472,7 +474,7 @@ export const Screen = ({
                     'Please select a pick-up location before proceeding.',
                     [
                       {
-                        text: 'Okay',
+                        text: STRINGS.OKAY,
                         onPress: () => { },
                       },
                     ],
@@ -484,7 +486,7 @@ export const Screen = ({
                     'Please select a pick-up date before proceeding.',
                     [
                       {
-                        text: 'Okay',
+                        text: STRINGS.OKAY,
                         onPress: () => { },
                       },
                     ],
@@ -605,10 +607,11 @@ export const Screen = ({
               alignSelf: 'center',
               marginTop: 15,
               marginBottom: 15,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             }}
-            source={CAR_CHECKLIST}
+            resizeMode={'contain'}
+            source={CAR_RELOCATION}
           />
           <Text
             style={{
@@ -629,7 +632,7 @@ export const Screen = ({
               paddingVertical: 8,
             }}>
             {
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              'Vehicle relocation is a great opportunity to save on your travels. Rental vehicle companies usually need to move vehicles between cities and sometimes between islands. With that, vehicles are offered here at for free or at a low rate and you can request one to be relocated from the origin city to the destination city. Some relocation options will include fuel and ferry cost but others won’t. You will find details on each listing. Don’t wait, book your relocation vehicle today and save.'
             }
           </Text>
         </View>
@@ -639,10 +642,11 @@ export const Screen = ({
               alignSelf: 'center',
               marginTop: 40,
               marginBottom: 15,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             }}
-            source={CAR_WASHER}
+            resizeMode={'contain'}
+            source={CAR_DRIVER}
           />
           <Text
             style={{
@@ -661,13 +665,14 @@ export const Screen = ({
               color: 'black',
               paddingHorizontal: 25,
               paddingVertical: 8,
+              marginBottom: scaleText(50).fontSize,
             }}>
             {
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+              'To relocate a vehicle you will need to be over 21 years of age and have a full drivers licence for at least 1 year without any restrictions. That’s it!'
             }
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        {/* <View style={{ backgroundColor: 'white' }}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -679,7 +684,7 @@ export const Screen = ({
             }}>
             {'Click here for more helpful information.'}
           </Text>
-        </View>
+        </View> */}
       </ScrollView>
     </AppHoc>
   );

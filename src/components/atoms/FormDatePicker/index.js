@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-native-datepicker';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions, Platform } from 'react-native';
 import { scaleText } from '../../../helpers';
 import moment from 'moment';
 import styles from './style';
@@ -15,6 +15,7 @@ const CustomDatePicker = ({
     placeholder,
     fontSize = 14,
     returnKeyType,
+    takeErrorSpace = true,
     onDateChange = () => { },
     meta: { touched, error, visited },
     ...props
@@ -24,10 +25,17 @@ const CustomDatePicker = ({
         touched && error ? error : '';
     const scaledFont = scaleText(fontSize);
     const [selectedDate, setSelectedDate] = useState(null);
+    let desiredWidth = (takeErrorSpace ? Dimensions.get('screen').width / 2 : Dimensions.get('screen').width - scaleText(15).fontSize)
+
     return (
         <View
             onLayout={({ nativeEvent }) => { setParentWidth(nativeEvent.layout.width) }}
-            style={{ ...style, }}>
+            style={{
+                ...style,
+                width: desiredWidth - scaleText(20).fontSize,
+                marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
+                maxHeight: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
+            }}>
             <DatePicker
                 mode="date"
                 placeholder={input.value ? `${moment(input.value).format(dateFormat)}` : placeholder}
@@ -40,16 +48,21 @@ const CustomDatePicker = ({
                 getDateStr={(date) => { onDateChange(date) }}
                 customStyles={{
                     dateTouchBody: {
-                        width: scaleText(parentWidth).fontSize + scaleText(10).fontSize,
+                        width: desiredWidth - scaleText(Platform.OS === 'ios' ? 25 : 20).fontSize,
+                        marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
+                        padding: 0,
+                        // maxHeight: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     },
                     dateIcon: styles.dateIcon,
                     dateInput: {
                         ...style,
                         ...styles.dateInput,
-                        width: scaleText(parentWidth).fontSize,
+                        margin: 0,
+                        width: desiredWidth - scaleText(25).fontSize,
+                        marginRight: Platform.OS === 'ios' ? scaleText(25) : scaleText(5).fontSize,
                         fontSize: scaledFont.fontSize,
                         lineHeight: scaledFont.lineHeight,
-                        height: 2.5 * scaledFont.lineHeight,
+                        height: takeErrorSpace ? 2.5 * scaledFont.lineHeight : 2 * scaledFont.lineHeight,
                     },
                     datePickerCon: {
                         backfaceVisibility: false
@@ -70,12 +83,12 @@ const CustomDatePicker = ({
                 {...input}
                 {...props}
             />
-            <Text style={{
+            {(takeErrorSpace || !!validationMessage) && <Text style={{
                 ...styles.errorText,
-                height: 2 * scaledFont.lineHeight,
+                height: takeErrorSpace ? 2 * scaledFont.lineHeight : scaledFont.lineHeight,
                 fontSize: scaledFont.fontSize,
                 lineHeight: scaledFont.lineHeight,
-            }}>{validationMessage}</Text>
+            }}>{validationMessage}</Text>}
         </View>
 
     )

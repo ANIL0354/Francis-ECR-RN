@@ -20,6 +20,7 @@ const CustomDatePicker = ({
                     animated
                     visible={visible}
                     animationType='slide'
+                    supportedOrientations={['portrait', 'landscape']}
                 >
                     <SafeAreaView style={{ flex: 1 }}>
                         <DateTimePicker

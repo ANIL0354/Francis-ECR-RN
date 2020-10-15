@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   CAR,
   FUEL_ACTIVE,
@@ -24,16 +25,16 @@ const { STRINGS } = require(`./us/strings`);
 export const GOOGLE_API_KEY = 'AIzaSyCwe-4k_nGXdLcNt9YcIy0WeJzlL1Ot77k';
 
 export const EMAIL_REGX = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const NAME_REGX = /^[A-Z.a-z ]+$/;
+export const NAME_REGX = /^[A-Z.'a-z ]+$/;
 export const PHONE_REGX = /^[0-9]+$/;
 
-export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com';
+export const GOOGLE_SIGNIN_WEB_CLIENT_ID = '18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com';
 
 export const KEY_CODES = {
   enterKey: 13,
   nine: 57,
   zero: 48,
-  backSpace: 8
+  backSpace: 8,
 };
 
 export const VALIDATION_MESSAGES = {
@@ -51,7 +52,11 @@ export const VALIDATION_MESSAGES = {
   COUNTRY_CODE_REQUIRED: STRINGS.COUNTRY_CODE_REQUIRED,
   PHONE_NUMBER_REQUIRED: STRINGS.PHONE_NUMBER_REQUIRED,
   PHONE_INVALID: STRINGS.PHONE_INVALID,
-  VALUE_CANNOT_BE_EMPTY_SPACES: STRINGS.VALUE_CANNOT_BE_ONLY_SPACES
+  VALUE_CANNOT_BE_EMPTY_SPACES: STRINGS.VALUE_CANNOT_BE_ONLY_SPACES,
+  CURRENT_PASSWORD_REQUIRED: STRINGS.CURRENT_PASSWORD_REQUIRED,
+  NEW_PASSWORD_REQUIRED: STRINGS.NEW_PASSWORD_REQUIRED,
+  SUBJECT_REQUIRED: STRINGS.SUBJECT_REQUIRED,
+  BODY_REQUIRED: STRINGS.BODY_REQUIRED,
 };
 
 export const APP_MESSAGES = {
@@ -64,7 +69,7 @@ export const APP_MESSAGES = {
   TO_ENABLE_GO_TO_SETTINGS: STRINGS.TO_ENABLE_GO_TO_SETTINGS,
   OPEN_SETTINGS: STRINGS.OPEN_SETTINGS,
   ALLOW_PERMISSION: STRINGS.ALLOW_PERMISSION,
-  TURN_ON_GPS: STRINGS.TURN_ON_GPS
+  TURN_ON_GPS: STRINGS.TURN_ON_GPS,
 };
 
 export const LABELS = {
@@ -82,40 +87,53 @@ export const LABELS = {
   resetPasswordLinkSent: STRINGS.RESET_PASSWORD_LINK_SENT,
   didNotReceiveLink: STRINGS.DID_NOT_RECEIVE_LINK,
   resend: STRINGS.RESEND,
-  weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL
+  weWillSendEmail: STRINGS.WE_WILL_SEND_EMAIL,
+  yourRequest: STRINGS.YOUR_REQUEST,
+  profile: STRINGS.PROFILE,
+  changePassword: STRINGS.CHANGE_PASSWORD,
+  ratings: STRINGS.RATINGS,
+  trips: STRINGS.TRIPS,
+  ratingsDetails: STRINGS.RATING_DETAILS,
+  tripDetails: STRINGS.TRIP_DETAILS,
+  cancelReservation: STRINGS.CANCEL_RESERVATION,
+  emailAgency: STRINGS.EMAIL_AGENCY,
+  sendEmail: STRINGS.SEND_EMAIL,
+  rateTrip: STRINGS.RATE_TRIP,
+  howWasYourTrip: STRINGS.HOW_WAS_YOUR_TRIP,
+  editRating: STRINGS.EDIT_RATING,
 };
 
 export const STATUS_CODE = {
   successful: 200,
-  unAuthorized: 401
+  unAuthorized: 401,
 };
 
 export const FILTER_OPTIONS = [
   {
     title: 'Fuel Options',
     activeIcon: FUEL_ACTIVE,
-    inactiveIcon: FUEL_INACTIVE
+    inactiveIcon: FUEL_INACTIVE,
   },
   {
     title: 'Number of Seats',
     activeIcon: SEAT_ACTIVE,
-    inactiveIcon: SEAT_INACTIVE
+    inactiveIcon: SEAT_INACTIVE,
   },
   {
     title: 'Vehicle Type',
     activeIcon: VEHICLE_ACTIVE,
-    inactiveIcon: VEHICLE_INACTIVE
+    inactiveIcon: VEHICLE_INACTIVE,
   },
   {
     title: 'Transmission Options',
     activeIcon: TRANSMISSION_ACTIVE,
-    inactiveIcon: TRANSMISSION_INACTIVE
+    inactiveIcon: TRANSMISSION_INACTIVE,
   },
   {
     title: 'Free Days',
     activeIcon: FREE_ACTIVE,
-    inactiveIcon: FREE_INACTIVE
-  }
+    inactiveIcon: FREE_INACTIVE,
+  },
 ];
 
 export const FUEL_OPTIONS = [
@@ -133,7 +151,7 @@ export const VEHICLE_TYPE_OPTIONS = [
   { title: 'Cars' },
   { title: 'Passenger Vans' },
   { title: 'Recreational Vehicles' },
-  { title: 'Trucks & Vans' }
+  { title: 'Trucks & Vans' },
 ];
 
 export const POPULAR_PLACES_DATA = [
@@ -142,63 +160,63 @@ export const POPULAR_PLACES_DATA = [
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
+    buttonText: 'See All',
   }, {
     id: '2',
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
+    buttonText: 'See All',
   }, {
     id: '3',
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
+    buttonText: 'See All',
   }, {
     id: '4',
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
+    buttonText: 'See All',
   },
   {
     id: '5',
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
+    buttonText: 'See All',
   },
   {
     id: '6',
     icon: CAR,
     availableCount: 29,
     placeRange: 'Wellington to Auckland',
-    buttonText: 'See All'
-  }
+    buttonText: 'See All',
+  },
 ];
 
 export const VEHICLE_TYPE_LISTING = [
   {
     id: '1',
     title: 'Cars',
-    icon: NORMAL_CAR
+    icon: NORMAL_CAR,
   },
   {
     id: '2',
     title: 'Passenger Vans',
-    icon: PASSENGER_CAR
+    icon: PASSENGER_CAR,
   },
   {
     id: '3',
     title: 'Recreational Vehicles',
-    icon: RECREATIONAL_CAR
+    icon: RECREATIONAL_CAR,
   },
   {
     id: '4',
     title: 'Trucks & Vans',
-    icon: TRUCKS
-  }
+    icon: TRUCKS,
+  },
 ];
 
 export const VEHICLE_DETAILS_LISTING = [
@@ -214,7 +232,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 5,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insurance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance',
   },
   {
     id: '2',
@@ -228,7 +246,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 10,
     conditioning: 'Non-Air Conditioning',
     transmission: 'Manual',
-    includes: 'Unlimited kms, free tank of fuel and standard insurance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance',
   },
   {
     id: '3',
@@ -242,7 +260,7 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 5,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insurance'
+    includes: 'Unlimited kms, free tank of fuel and standard insurance',
   },
   {
     id: '4',
@@ -256,10 +274,36 @@ export const VEHICLE_DETAILS_LISTING = [
     doors: 2,
     conditioning: 'Air Conditioning',
     transmission: 'Automatic',
-    includes: 'Unlimited kms, free tank of fuel and standard insurance'
-  }
+    includes: 'Unlimited kms, free tank of fuel and standard insurance',
+  },
 ];
 
 export const LIMITS = {
   vehicleList: 10,
 };
+
+export const FREQUENCY = [
+  { label: 'per day' },
+  { label: 'per hire' },
+];
+
+export const USER_TYPES = {
+  driver: 1,
+};
+
+export const LISTING_STATUS = {
+  AVAILABLE: 1,
+  BOOKED: 2,
+  COMPLETE: 3,
+  CANCELLED_BY_DRIVER: 4,
+  CANCELLED_BY_AGENCY: 5,
+  PENDING: 6,
+  NO_SHOW: 7,
+  EXPIRE: 8,
+};
+
+export const USER_ROLE = {
+  DRIVER: 1,
+  AGENCY: 2,
+  MANAGER: 3,
+}

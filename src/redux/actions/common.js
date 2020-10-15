@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const START_LOADER = 'START_LOADER';
 export const STOP_LOADER = 'STOP_LOADER';
 export const UPDATE_INTERNET_STATUS = 'UPDATE_INTERNET_STATUS';
@@ -14,6 +15,9 @@ export const SET_FUEL_TYPE = 'SET_FUEL_TYPE';
 export const SET_PICKUP_LOCATION = 'SET_PICKUP_LOCATION';
 export const SET_PICKUP_DATE = 'SET_PICKUP_DATE';
 export const SET_DROPOFF_LOCATION = 'SET_DROPOFF_LOCATION';
+export const GET_FAQ_LIST = 'GET_FAQ_LIST';
+export const SAVE_FAQ_LIST = 'SAVE_FAQ_LIST';
+export const SAVE_DRIVER_DATA = 'SAVE_DRIVER_DATA';
 
 export const setUserLocation = userLocation => ({
     type: SET_USER_LOCATION,
@@ -113,6 +117,28 @@ export const setDropoffLocation = value => {
 export const setPickupDate = value => {
     return {
         type: SET_PICKUP_DATE,
-        value
+        value,
+    };
+};
+
+export const getFaqList = (success, failure) => {
+    return {
+        type: GET_FAQ_LIST,
+        success,
+        failure,
+    };
+};
+
+export const saveFaqList = data => {
+    return {
+        type: SAVE_FAQ_LIST,
+        data,
+    };
+};
+
+export const saveDriverData = data => {
+    return {
+        type: SAVE_DRIVER_DATA,
+        data
     }
 }

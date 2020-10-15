@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
         borderBottomColor: 'rgba(0,0,0,0.3)',
         borderWidth: 0.8,
+        alignItems: 'center',
         paddingHorizontal: 8
     },
     emojiStyle: {
@@ -37,7 +38,9 @@ const styles = StyleSheet.create({
         flex: 1,
         color: 'black',
         fontSize: 13,
-        paddingLeft: 10
+        paddingLeft: 10,
+        textAlignVertical: 'center',
+        backgroundColor: 'red',
     },
 });
 

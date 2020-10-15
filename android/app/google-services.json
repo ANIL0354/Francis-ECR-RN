@@ -1,43 +1,50 @@
 {
   "project_info": {
-    "project_number": "628352863690",
-    "firebase_url": "https://easy-car-relo.firebaseio.com",
-    "project_id": "easy-car-relo",
-    "storage_bucket": "easy-car-relo.appspot.com"
+    "project_number": "18046953276",
+    "firebase_url": "https://easycarrelo.firebaseio.com",
+    "project_id": "easycarrelo",
+    "storage_bucket": "easycarrelo.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:628352863690:android:3701df8834ab410034d333",
+        "mobilesdk_app_id": "1:18046953276:android:11c4408be510047c372039",
         "android_client_info": {
-          "package_name": "com.francis_ecr_rn"
+          "package_name": "com.easycarrelo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "628352863690-irist8iae8c3acn4bkuf1lfklduvhghl.apps.googleusercontent.com",
+          "client_id": "18046953276-l8f8doml0vcaib06pmv6lt3e36u16ohk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.francis_ecr_rn",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "package_name": "com.easycarrelo",
+            "certificate_hash": "145f5fbf19757ce887c230b293891bfc5bc70322"
           }
         },
         {
-          "client_id": "628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com",
+          "client_id": "18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6W9C7hLYZOMrKIwWAObR1mnOaNDN6NXQ"
+          "current_key": "AIzaSyCfQp9YDqdCAx_MwOZjGIIs6tA66BYrz6s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "628352863690-rktt99inolnqkp55rvojn8gi1fl7r1v7.apps.googleusercontent.com",
+              "client_id": "18046953276-ueflo8kmoukhc0cdbqvv1b34f4gr69s4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "18046953276-d7r0cskobi06nbhr6rgooqa6b0nl0eq5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.easycarrelo"
+              }
             }
           ]
         }

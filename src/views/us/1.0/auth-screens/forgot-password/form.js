@@ -45,7 +45,8 @@ const Form = ({
     const maxDate = today.setFullYear(today.getFullYear() - 16)
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === "ios" ? "padding" : 'height'}
+            style={{ flex: 1 }}
         >
 
             <Field
